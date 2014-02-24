@@ -5,15 +5,9 @@
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
 use Illuminate\Database\Eloquent\Model;
+use Jacopo\Authentication\Classes\Traits\OverrideConnectionTrait;
 
 class BaseModel extends Model
 {
-    /**
-     * @override
-     * @return \Illuminate\Database\Connection
-     */
-    public function getConnection()
-    {
-        return static::resolveConnection('authentication');
-    }
+    use OverrideConnectionTrait;
 } 

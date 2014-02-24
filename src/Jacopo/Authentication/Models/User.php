@@ -5,21 +5,15 @@
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
 use Cartalyst\Sentry\Users\Eloquent\User as CartaUser;
+use Jacopo\Authentication\Classes\Traits\OverrideConnectionTrait;
 
 class User extends CartaUser
 {
+    use OverrideConnectionTrait;
+
     protected $fillable = ["email", "password", "first_name", "last_name", "permissions", "activated", "activation_code", "activated_at", "last_login"];
 
     protected $guarded = ["id"];
-
-    /**
-     * @override
-     * @return \Illuminate\Database\Connection
-     */
-    public function getConnection()
-    {
-        return static::resolveConnection('authentication');
-    }
 
     /**
      * Validates the user and throws a number of

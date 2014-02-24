@@ -18,6 +18,7 @@ class TestCase extends \Orchestra\Testbench\TestCase  {
         return [
                 'Cartalyst\Sentry\SentryServiceProvider',
                 'Jacopo\Authentication\AuthenticationServiceProvider',
+                'Jacopo\Library\LibraryServiceProvider',
             ];
     }
 

@@ -5,6 +5,7 @@
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
+use Jacopo\Authentication\Models\Group;
 use Jacopo\Authentication\Repository\SentryGroupRepository;
 
 class SentryGroupRepositoryTest extends DbTestCase {

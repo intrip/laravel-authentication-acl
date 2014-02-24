@@ -9,14 +9,14 @@ use DB;
 
 class DbTestCase extends TestCase
 {
+    protected $artisan;
+
     public function setUp()
     {
         parent::setUp();
 
-        $artisan = $this->app->make( 'artisan' );
-
-        $this->cleanDb();
-        $this->populateDB($artisan);
+        $this->artisan = $this->app->make( 'artisan' );
+        $this->populateDB();
     }
 
     /**
@@ -27,16 +27,16 @@ class DbTestCase extends TestCase
         $this->assertTrue(true);
     }
 
+    /**
+     * @deprecated use sqlite instead
+     */
     protected function cleanDb()
     {
         $manager = DB::getDoctrineSchemaManager();
         $tables = $manager->listTableNames();
-
-        DB::Statement("SET FOREIGN_KEY_CHECKS=0");
         foreach ($tables as $key => $table) {
             DB::Statement("DROP TABLE ".$table."");
         }
-        DB::Statement("SET FOREIGN_KEY_CHECKS=1");
     }
 
     /**
@@ -50,24 +50,19 @@ class DbTestCase extends TestCase
         // reset base path to point to our package's src directory
         $app['path.base'] = __DIR__ . '/../src';
 
+        $test_connection = array(
+            'driver'   => 'sqlite',
+            'database' => ':memory:',
+            'prefix'   => '',
+        );
+
         $app['config']->set('database.default', 'testbench');
-        $app['config']->set('database.connections.testbench', array(
-                        'driver'    => 'mysql',
-                        'host'      => 'localhost',
-                        'database'  => 'authentication_test',
-                        'username'  => 'root',
-                        'password'  => 'root',
-                        'charset'   => 'utf8',
-                        'collation' => 'utf8_unicode_ci',
-                        'prefix'    => '',
-        ));
+        $app['config']->set('database.connections.testbench', $test_connection);
+
     }
 
-    /**
-     * @param $artisan
-     */
-    protected function populateDB($artisan)
+    protected function populateDB()
     {
-        $artisan->call('migrate', ["--database" => "testbench", '--path' => '../src/migrations', '--seed' => '']);
+        $this->artisan->call('migrate', ["--database" => "testbench", '--path' => '../src/migrations']);
     }
 } 

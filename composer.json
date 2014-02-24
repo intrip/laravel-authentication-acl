@@ -12,8 +12,8 @@
     ],
     "repositories": [
         {
-            "type": "composer",
-            "url": "http://95.110.212.212/package_web"
+            "type": "vcs",
+            "url": "https://intrip@bitbucket.org/intrip/library.git"
         },
         {
             "type": "vcs",
@@ -24,7 +24,9 @@
         "php": ">=5.4.0",
         "illuminate/support": "4.1.*",
         "cartalyst/sentry": "2.1.*",
-        "way/form": "dev-master"
+        "way/form": "dev-master",
+        "jacopo/library": "dev-master",
+        "way/laravel-test-helpers": "dev-master"
     },
     "require-dev": {
         "mockery/mockery": "0.9.0",

@@ -28,7 +28,7 @@ class ReminderServiceTest extends TestCase {
     public function testSendWorks()
     {
         $mock_mail = m::mock('StdClass')->shouldReceive('sendTo')->andReturn(true)->getMock();
-        App::instance('palmamailer', $mock_mail);
+        App::instance('jmailer', $mock_mail);
         $mock_auth = m::mock('StdClass')->shouldReceive()->getToken()->andReturn($this->token);
         App::instance('authenticator', $mock_auth);
         $reminder = new Reminder();
@@ -43,7 +43,7 @@ class ReminderServiceTest extends TestCase {
     public function testSendThrowsException()
     {
         $mock_mail = m::mock('StdClass')->shouldReceive('sendTo')->andReturn(false)->getMock();
-        App::instance('palmamailer', $mock_mail);
+        App::instance('jmailer', $mock_mail);
         $mock_auth = m::mock('StdClass')->shouldReceive()->getToken()->andReturn($this->token);
         App::instance('authenticator', $mock_auth);
         $reminder = new Reminder();

@@ -3,7 +3,7 @@
 use Illuminate\Support\ServiceProvider;
 use Jacopo\Authentication\Classes\SentryAuthenticator;
 use Illuminate\Foundation\AliasLoader;
-use Config;
+use Config, App;
 use Illuminate\Database\Eloquent\Model;
 
 class AuthenticationServiceProvider extends ServiceProvider {
