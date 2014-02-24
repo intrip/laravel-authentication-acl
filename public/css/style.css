@@ -1,0 +1,37 @@
+/*///////////////// structure ////////////////*/
+.container-body
+{
+    margin-top: 65px;
+}
+.img-admin
+{
+    width: 150px;
+    height: auto;
+}
+.tags
+{
+    padding: 0 5px;
+}
+.tags li
+{
+    /*display: inline;*/
+    font-size: 16px;
+    padding: 0;
+    list-style: none;
+}
+.blue
+{
+    color: #428bca;
+}
+.margin-right-30
+{
+    margin-right: 30px;
+}
+.margin-bottom-30
+{
+    margin-bottom: 30px;
+}
+.margin-left-5
+{
+    margin-left: 5px;
+}

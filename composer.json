@@ -1,0 +1,46 @@
+{
+    "name": "jacopo/authentication",
+    "description": "",
+    "version" : "0.1.0",
+    "license" : "proprietary",
+    "authors": [
+        {
+            "name": "jacopo",
+            "email": "jacopo@jacopobeschi.com",
+            "homepage": "http://www.jacopobeschi.com"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "http://95.110.212.212/package_web"
+        },
+        {
+            "type": "vcs",
+            "url": "git://github.com/orchestral/phpseclib.git"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/support": "4.1.*",
+        "cartalyst/sentry": "2.1.*",
+        "way/form": "dev-master"
+    },
+    "require-dev": {
+        "mockery/mockery": "0.9.0",
+        "orchestra/testbench": "2.1.1",
+        "doctrine/dbal": "v2.4.2"
+    },
+    "autoload": {
+        "psr-0": {
+            "Jacopo\\Authentication": "src/"
+        },
+        "psr-4": {
+            "Jacopo\\Authentication\\Tests\\" : "tests/"
+        },
+        "classmap": [
+            "src/controllers"
+        ]
+    },
+    "minimum-stability": "stable"
+}
