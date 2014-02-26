@@ -9,7 +9,7 @@ class Permission extends BaseModel
 {
     protected $table = "permission";
 
-    protected $fillable = ["description","permission", "editable"];
+    protected $fillable = ["description","permission", "protected"];
 
     protected $guarded = ["id"];
 

@@ -44,7 +44,7 @@ class SentryGroupRepositoryTest extends DbTestCase {
                                            'admin' => 1,
                                            'users' => 1,
                                        ),
-                                        "editable" => 1,
+                                        "protected" => 0,
                                   ));
         $group_find = $this->r->find($group->id);
 
@@ -89,7 +89,7 @@ class SentryGroupRepositoryTest extends DbTestCase {
                                            'admin' => 1,
                                            'users' => 1,
                                        ),
-                                       'editable'  => 1,
+                                       'protected'  => 0,
                                   ));
 
         $success = $this->r->delete($group->id);
@@ -108,7 +108,7 @@ class SentryGroupRepositoryTest extends DbTestCase {
                                            'admin' => 1,
                                            'users' => 1,
                                        ),
-                                       "editable"  => 1,
+                                       "protected"  => 0,
                                   ));
         $newname = ["name" => "new name"];
         $this->r->update($group->id, $newname);

@@ -15,7 +15,7 @@ class EditableSubscriberTest extends TestCase {
     public function it_check_if_is_editable()
     {
         $model = new \StdClass;
-        $model->editable = true;
+        $model->protected = false;
 
         $sub = new EditableSubscriber();
     }
@@ -27,7 +27,7 @@ class EditableSubscriberTest extends TestCase {
     public function it_check_if_es_editable_and_throw_new_exception()
     {
         $model = new \StdClass;
-        $model->editable = false;
+        $model->protected = true;
 
         $sub = new EditableSubscriber();
         $sub->isEditable($model);
