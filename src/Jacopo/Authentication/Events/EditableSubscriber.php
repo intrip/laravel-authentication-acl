@@ -9,13 +9,13 @@ use Jacopo\Authentication\Exceptions\PermissionException;
 
 class EditableSubscriber
 {
-    protected $editable_field = "editable";
+    protected $editable_field = "protected";
     /**
      * Check if the object is editable
      */
     public function isEditable($object)
     {
-        if($object->editable != true) throw new PermissionException;
+        if($object->{$this->editable_field} == true) throw new PermissionException;
     }
 
     /**
@@ -27,7 +27,6 @@ class EditableSubscriber
     public function subscribe($events)
     {
         $events->listen('repository.deleting', 'Jacopo\Authentication\Events\EditableSubscriber@isEditable');
-
         $events->listen('repository.updating', 'Jacopo\Authentication\Events\EditableSubscriber@isEditable');
     }
 

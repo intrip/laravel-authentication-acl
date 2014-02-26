@@ -25,7 +25,7 @@
             <li class="list-group-item">
                 <span class="glyphicon glyphicon-lock
 "></span> {{$permission->description}}
-                @if($permission->editable)
+                @if(! $permission->protected)
                 <a href="{{URL::action('Jacopo\Authentication\Controllers\PermissionController@deletePermission',['id' => $permission->id, '_token' => csrf_token()])}}" ><span class="glyphicon glyphicon-trash pull-right margin-left-5 delete">cancella </span></a>
                 <a href="{{URL::action('Jacopo\Authentication\Controllers\PermissionController@editPermission', ['id' => $permission->id])}}"><span class="glyphicon glyphicon-edit pull-right">modifica </span></a>
                 @endif

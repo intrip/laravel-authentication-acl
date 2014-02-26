@@ -4,12 +4,12 @@
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Jacopo\Library\Repository\Interfaces\BaseRepositoryInterface;
 use Jacopo\Authentication\Models\Group;
-use Cartalyst\Sentry\Groups\GroupNotFoundException;
 use Jacopo\Authentication\Exceptions\UserNotFoundException as NotFoundException;
-use App;
-use Event;
+use App, Event;
+use Cartalyst\Sentry\Groups\GroupNotFoundException;
 
 class SentryGroupRepository implements BaseRepositoryInterface
 {
@@ -74,14 +74,14 @@ class SentryGroupRepository implements BaseRepositoryInterface
     {
         try
         {
-            $user = $this->sentry->findGroupById($id);
+            $group = $this->sentry->findGroupById($id);
         }
         catch(GroupNotFoundException $e)
         {
             throw new NotFoundException;
         }
 
-        return $user;
+        return $group;
     }
 
     /**

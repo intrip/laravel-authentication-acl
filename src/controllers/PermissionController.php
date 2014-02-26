@@ -4,12 +4,11 @@
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
-use Jacopo\Authentication\Repository\PermissionRepository as Repo;
 use Jacopo\Library\Form\FormModel;
 use Jacopo\Authentication\Models\Permission;
 use Jacopo\Authentication\Validators\PermissionValidator;
 use Jacopo\Library\Exceptions\JacopoExceptionsInterface;
-use View, Input, Redirect;
+use View, Input, Redirect, App;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class PermissionController extends \BaseController
@@ -23,9 +22,9 @@ class PermissionController extends \BaseController
      */
     protected $v;
 
-    public function __construct(Repo $r, PermissionValidator $v)
+    public function __construct(PermissionValidator $v)
     {
-        $this->r = $r;
+        $this->r = App::make('permission_repository');
         $this->v = $v;
         $this->f = new FormModel($this->v, $this->r);
     }

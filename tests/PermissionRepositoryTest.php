@@ -7,7 +7,7 @@
  */
 use Mockery as m;
 use Jacopo\Authentication\Models\Permission;
-use Jacopo\Authentication\Repository\PermissionRepository;
+use Jacopo\Authentication\Repository\EloquentPermissionRepository as PermissionRepository;
 
 class PermissionRepositoryTest extends TestCase {
 

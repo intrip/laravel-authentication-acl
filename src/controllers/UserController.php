@@ -5,13 +5,12 @@
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
 use Illuminate\Support\MessageBag;
-use Jacopo\Authentication\Repository\SentryUserRepository as Repo;
 use Jacopo\Library\Form\FormModel;
 use Jacopo\Authentication\Models\User;
 use Jacopo\Authentication\Exceptions\UserNotFoundException;
 use Jacopo\Authentication\Validators\UserValidator;
 use Jacopo\Library\Exceptions\JacopoExceptionsInterface;
-use View, Input, Redirect;
+use View, Input, Redirect, App;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class UserController extends \BaseController
@@ -25,9 +24,9 @@ class UserController extends \BaseController
      */
     protected $v;
 
-    public function __construct(Repo $r, UserValidator $v)
+    public function __construct(UserValidator $v)
     {
-        $this->r = $r;
+        $this->r = App::make('user_repository');
         $this->v = $v;
         $this->f = new FormModel($this->v, $this->r);
     }

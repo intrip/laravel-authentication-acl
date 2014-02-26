@@ -30,7 +30,7 @@ class FormHelperTest extends TestCase {
         $obj2 = new Permission(["description" => $value2, "permission" => "perm2"]);
         $obj3 = new Permission(["description" => $value3, "permission" => "perm3"]);
         $objs = [$obj1, $obj2, $obj3];
-        $mock_permission = m::mock('Jacopo\Authentication\Repository\PermissionRepository');
+        $mock_permission = m::mock('Jacopo\Authentication\Repository\EloquentPermissionRepository');
         $mock_permission->shouldReceive('all')->andReturn(new Collection($objs));
 
         $helper = new FormHelper($mock_permission);

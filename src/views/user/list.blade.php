@@ -27,8 +27,10 @@
 glyphicon glyphicon-comment"></span> {{$user->email}} <span class="glyphicon glyphicon-user
 "></span> {{ucfirst($user->first_name)}} {{ucfirst($user->last_name)}}
                 <span class="glyphicon glyphicon-lock margin-left-5">Attivo:{{$user->activated ? 'Sì' : 'No'}}</span>
+                @if(! $user->protected)
                 <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@deleteUser',['id' => $user->id, '_token' => csrf_token()])}}" ><span class="glyphicon glyphicon-trash pull-right margin-left-5 delete">cancella </span></a>
                 <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@editUser', ['id' => $user->id])}}"><span class="glyphicon glyphicon-edit pull-right">modifica </span></a>
+                @endif
                 <span class="clearfix"></span>
             </li>
             @endforeach

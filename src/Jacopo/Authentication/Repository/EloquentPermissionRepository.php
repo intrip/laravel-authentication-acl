@@ -1,6 +1,6 @@
 <?php namespace Jacopo\Authentication\Repository;
 /**
- * Class PermissionRepository
+ * Class EloquentPermissionRepository
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
@@ -9,7 +9,7 @@ use Jacopo\Library\Repository\EloquentBaseRepository;
 use Event;
 use Jacopo\Authentication\Repository\SentryGroupRepository as GroupRepo;
 
-class PermissionRepository extends EloquentBaseRepository
+class EloquentPermissionRepository extends EloquentBaseRepository
 {
     protected $model_name = '\Jacopo\Authentication\Models\Permission';
     /**
@@ -21,7 +21,7 @@ class PermissionRepository extends EloquentBaseRepository
     {
         $this->group_repo = $group_repo ? $group_repo : new GroupRepo;
 
-        Event::listen('repository.deleting', '\Jacopo\Authentication\Repository\PermissionRepository@checkIsNotAssociatedToAnyGroup');
+        Event::listen('repository.deleting', '\Jacopo\Authentication\Repository\EloquentPermissionRepository@checkIsNotAssociatedToAnyGroup');
     }
 
     /**

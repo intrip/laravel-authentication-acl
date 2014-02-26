@@ -7,7 +7,6 @@ Admin area: modifica utente
 @section('content')
 
 <div class="row">
-
     {{-- model general errors from the form --}}
     @if($errors->has('model') )
     <div class="alert alert-danger">{{$errors->first('model')}}</div>
@@ -34,25 +33,8 @@ Admin area: modifica utente
     <div class="col-md-6">
         {{-- group permission form --}}
         <h3><span class="glyphicon glyphicon-lock"></span> Permessi</h3>
-        {{-- permission lists --}}
-            @include('authentication::group.perm-list')
-        {{-- add permission --}}
-        {{Form::open(["route" => "users.groups.edit.permission","role"=>"form"])}}
-        <div class="form-group">
-            {{Form::label('permissions', 'Aggiungi permesso:', ["class" => "control-label"])}}<br/>
-            {{Form::select('permissions', $permission_values, '', ["class"=>"form-control permission-select"])}}
-            <span class="text-danger">{{$errors->first('permission')}}</span>
-            {{Form::hidden('id', $group->id)}}
-            {{-- add permission operation --}}
-            {{Form::hidden('operation', 1)}}
-        </div>
-        <div class="form-group">
-            {{Form::submit('Aggiungi', ["class" => "btn btn-primary", ($group->exists) ? "" : "disabled"])}}
-            @if(! $group->exists)
-                <h5 style="color:gray">Per associare permessi bisogna prima creare il gruppo.</h5>
-            @endif
-        </div>
-        {{Form::close()}}
+        {{-- permissions --}}
+        @include('authentication::group.perm')
     </div>
 
 @stop

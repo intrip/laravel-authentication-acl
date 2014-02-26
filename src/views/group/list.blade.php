@@ -25,7 +25,7 @@
             <li class="list-group-item">
                 <span class="glyphicon glyphicon-user
 "></span> {{$group->name}}
-                @if($group->editable)
+                @if(! $group->protected)
                 <a href="{{URL::action('Jacopo\Authentication\Controllers\GroupController@deleteGroup',['id' => $group->id, '_token' => csrf_token()])}}" ><span class="glyphicon glyphicon-trash pull-right margin-left-5 delete">cancella </span></a>
                 <a href="{{URL::action('Jacopo\Authentication\Controllers\GroupController@editGroup', ['id' => $group->id])}}"><span class="glyphicon glyphicon-edit pull-right">modifica </span></a>
                 <span class="clearfix"></span>

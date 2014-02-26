@@ -22,7 +22,7 @@ class SentryAuthenticationHelper implements AuthenticationHelperInterface
         $current_user = $sentry->getUser();
         if(! $current_user)
             return false;
-        if(! $current_user->hasAnyAccess($permissions))
+        if($permissions && (! $current_user->hasAnyAccess($permissions)) )
             return false;
 
         return true;

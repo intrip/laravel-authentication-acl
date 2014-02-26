@@ -15,7 +15,7 @@
 @endif
 
 {{-- form to associate groups --}}
-{{Form::open(["action" => "Jacopo\Authentication\Controllers\UserController@addGroup"])}}
+{{Form::open(["action" => "Jacopo\Authentication\Controllers\UserController@addGroup", 'class' => 'form'])}}
 <div class="form-group">
     {{Form::label('group_id', 'Aggiungi gruppo:', ["class" => "control-label"])}}<br/>
     {{Form::select('group_id', $group_values, '', ["class"=>"form-control"])}}

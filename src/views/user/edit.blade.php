@@ -12,16 +12,21 @@ Admin area: modifica utenti
     @if( isset($message) )
     <div class="alert alert-success">{{$message}}</div>
     @endif
-
+    {{-- print errors --}}
+    @if($errors && ! $errors->isEmpty() )
+    @foreach($errors->all() as $error)
+    <div class="alert alert-danger">{{$error}}</div>
+    @endforeach
+    @endif
     <h3><i class="glyphicon glyphicon-user"></i> Modifica utente</h3>
     <div class="col-md-6">
     <h3>Dati generali</h3>
-    {{Form::model($user, [ 'url' => [URL::action('Jacopo\Authentication\Controllers\UserController@postEditUser'), $user->id], 'method' => 'post'] ) }}
+    {{Form::model($user, [ 'url' => URL::action('Jacopo\Authentication\Controllers\UserController@postEditUser')] ) }}
     {{FormField::email(["autocomplete" => "off"])}}
     <span class="text-danger">{{$errors->first('email')}}</span>
-    {{FormField::password(["label" => isset($user->id) ? "modifica password" : "password"])}}
+    {{FormField::password(["autocomplete" => "off", "label" => isset($user->id) ? "modifica password" : "password"])}}
     <span class="text-danger">{{$errors->first('password')}}</span>
-    {{FormField::last_name( ["autocomplete" => "off", "label" => "Nome"] ) }}
+    {{FormField::last_name( ["label" => "Nome"] ) }}
     <span class="text-danger">{{$errors->first('last_name')}}</span>
     {{FormField::first_name( ["label" => "Cognome"] ) }}
     <span class="text-danger">{{$errors->first('first_name')}}</span>

@@ -4,13 +4,13 @@
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
-use Jacopo\Authentication\Repository\PermissionRepository;
+use Jacopo\Authentication\Repository\EloquentPermissionRepository as PermissionRepository;
 use Jacopo\Authentication\Repository\SentryGroupRepository;
 
 class FormHelper 
 {
     /**
-     * @var \Jacopo\Authentication\Repository\PermissionRepository
+     * @var \Jacopo\Authentication\Repository\EloquentPermissionRepository
      */
     protected $rp;
     /**

@@ -27,6 +27,7 @@ use Jacopo\Authentication\Helpers\SentryAuthenticationHelper as AuthHelper;
 Route::filter('can_see', function()
 {
     $helper = new FileRouteHelper;
-    echo "<br/><br/><br/><br/>";
-    if( ! (AuthHelper::hasPermission( $helper->getPermFromCurrentRoute() ) ) ) App::abort('401');
+    $perm = $helper->getPermFromCurrentRoute();
+
+    if( $perm && (! (AuthHelper::hasPermission( $perm ))) ) App::abort('401');
 });

@@ -2,6 +2,9 @@
 
 use Illuminate\Support\ServiceProvider;
 use Jacopo\Authentication\Classes\SentryAuthenticator;
+use Jacopo\Authentication\Repository\SentryUserRepository;
+use Jacopo\Authentication\Repository\SentryGroupRepository;
+use Jacopo\Authentication\Repository\EloquentPermissionRepository;
 use Illuminate\Foundation\AliasLoader;
 use Config, App;
 use Illuminate\Database\Eloquent\Model;
@@ -34,7 +37,7 @@ class AuthenticationServiceProvider extends ServiceProvider {
     {
         $this->package('jacopo/authentication');
 
-        $this->bindAuthenticator();
+        $this->bindClasses();
 
         // include filters
         require __DIR__ . "/../../filters.php";
@@ -72,11 +75,26 @@ class AuthenticationServiceProvider extends ServiceProvider {
         $this->app['config']->getLoader()->addNamespace('form', __DIR__ . '/../../config/way-form');
     }
 
-    protected function bindAuthenticator()
+    protected function bindClasses()
     {
         $this->app->bind('authenticator', function ()
         {
             return new SentryAuthenticator;
+        });
+
+        $this->app->bind('user_repository', function ()
+        {
+            return new SentryUserRepository;
+        });
+
+        $this->app->bind('group_repository', function ()
+        {
+            return new SentryGroupRepository;
+        });
+
+        $this->app->bind('permission_repository', function ()
+        {
+            return new EloquentPermissionRepository;
         });
     }
 

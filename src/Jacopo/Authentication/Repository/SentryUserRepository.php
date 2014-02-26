@@ -8,17 +8,17 @@ namespace Jacopo\Authentication\Repository;
 use Jacopo\Authentication\Repository\Interfaces\UserRepositoryInterface;
 use Jacopo\Library\Repository\Interfaces\BaseRepositoryInterface;
 use Jacopo\Authentication\Exceptions\UserNotFoundException as NotFoundException;
-use Cartalyst\Sentry\Users\UserNotFoundException;
 use Jacopo\Authentication\Models\User;
 use Jacopo\Authentication\Models\Group;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Cartalyst\Sentry\Users\UserNotFoundException;
+use Event;
 
 class SentryUserRepository implements BaseRepositoryInterface, UserRepositoryInterface
 {
     /**
      * Sentry instance
      * @var
-     * @todo db test
      */
     protected $sentry;
 
@@ -57,6 +57,7 @@ class SentryUserRepository implements BaseRepositoryInterface, UserRepositoryInt
     {
         $this->ClearEmptyPassword($data);
         $obj = $this->find($id);
+        Event::fire('repository.updating', [$obj]);
         $obj->update($data);
         return $obj;
     }
@@ -70,6 +71,7 @@ class SentryUserRepository implements BaseRepositoryInterface, UserRepositoryInt
     public function delete($id)
     {
         $obj = $this->find($id);
+        Event::fire('repository.deleting', [$obj]);
         return $obj->delete();
     }
 
@@ -82,19 +84,19 @@ class SentryUserRepository implements BaseRepositoryInterface, UserRepositoryInt
      */
     public function find($id)
     {
-       try
-       {
+        try
+        {
             $user = $this->sentry->findUserById($id);
-       }
-       catch(UserNotFoundException $e)
-       {
+        }
+        catch(UserNotFoundException $e)
+        {
             throw new NotFoundException;
-       }
+        }
 
-       return $user;
+        return $user;
     }
 
-    /**
+        /**
      * Obtains all models
      * @return mixed
      * @todo db test

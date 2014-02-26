@@ -1,6 +1,6 @@
 <?php
 return array(
-    'default' => 'mysql',
+    'default' => 'default',
 
     'connections' => array(
 

@@ -6,14 +6,13 @@
  */
 use Illuminate\Support\MessageBag;
 use Jacopo\Authentication\Presenters\GroupPresenter;
-use Jacopo\Authentication\Repository\SentryGroupRepository as Repo;
 use Jacopo\Library\Form\FormModel;
 use Jacopo\Authentication\Helpers\FormHelper;
 use Jacopo\Authentication\Models\Group;
 use Jacopo\Authentication\Exceptions\UserNotFoundException;
 use Jacopo\Authentication\Validators\GroupValidator;
 use Jacopo\Library\Exceptions\JacopoExceptionsInterface;
-use View, Input, Redirect;
+use View, Input, Redirect, App;
 
 class GroupController extends \BaseController
 {
@@ -30,9 +29,9 @@ class GroupController extends \BaseController
      */
     protected $fh;
 
-    public function __construct(Repo $r, GroupValidator $v, FormHelper $fh)
+    public function __construct(GroupValidator $v, FormHelper $fh)
     {
-        $this->r = $r;
+        $this->r = App::make('group_repository');
         $this->v = $v;
         $this->f = new FormModel($this->v, $this->r);
         $this->fh = $fh;
