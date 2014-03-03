@@ -1,6 +1,5 @@
 <?php namespace Jacopo\Authentication\Validators;
 
-use Jacopo\Library\Validators\AbstractValidator;
 use Event;
 
 class PermissionValidator extends AbstractValidator

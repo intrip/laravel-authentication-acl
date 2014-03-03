@@ -11,6 +11,8 @@
 
     {{ HTML::style('packages/jacopo/authentication/css/bootstrap.min.css') }}
     {{ HTML::style('packages/jacopo/authentication/css/style.css') }}
+    {{ HTML::style('packages/jacopo/authentication/css/baselayout.css') }}
+    {{ HTML::style('//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css') }}
 
     @yield('head_css')
     {{-- End head css --}}
@@ -27,7 +29,7 @@
         @include('authentication::layouts.navbar')
 
         {{-- content --}}
-        <div class="container container-body">
+        <div class="container-fluid">
             @yield('container')
         </div>
 

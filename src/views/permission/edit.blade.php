@@ -17,12 +17,13 @@ Admin area: modifica permesso
     @if( isset($message) )
     <div class="alert alert-success">{{$message}}</div>
     @endif
-    <h3><i class="glyphicon glyphicon-lock"></i> Modifica permesso</h3>
+    <h3><i class="fa fa-lock"></i> Edit permission</h3>
+    <hr/>
 
     {{Form::model($permission, [ 'url' => [URL::action('Jacopo\Authentication\Controllers\PermissionController@editPermission'), $permission->id], 'method' => 'post'] ) }}
-    {{FormField::description(["label" => "Descrizione:"])}}
+    {{FormField::description(["label" => "Descrizione:", 'id' => 'slugme'])}}
     <span class="text-danger">{{$errors->first('description')}}</span>
-    {{FormField::permission(["label" => "Permesso:"])}}
+    {{FormField::permission(["label" => "Permesso:", 'id' => 'slug'])}}
     <span class="text-danger">{{$errors->first('permission')}}</span>
     {{Form::hidden('id')}}
     <a href="{{URL::action('Jacopo\Authentication\Controllers\PermissionController@deletePermission',['id' => $permission->id, '_token' => csrf_token()])}}" class="btn btn-danger pull-right margin-left-5 delete">Cancella</a>
@@ -31,9 +32,13 @@ Admin area: modifica permesso
 @stop
 
 @section('footer_scripts')
+{{HTML::script('packages/jacopo/authentication/js/slugit.js')}}
 <script>
     $(".delete").click(function(){
         return confirm("Sei sicuro di volere eliminare l'elemento selezionato?");
+    });
+    $(function(){
+        $('#slugme').slugIt();
     });
 </script>
 @stop

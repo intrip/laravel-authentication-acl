@@ -23,11 +23,10 @@
         <ul class="list-group">
         @foreach($groups as $group)
             <li class="list-group-item">
-                <span class="glyphicon glyphicon-user
-"></span> {{$group->name}}
+            <i class="fa fa-group fa-2x"></i>{{$group->name}}
                 @if(! $group->protected)
-                <a href="{{URL::action('Jacopo\Authentication\Controllers\GroupController@deleteGroup',['id' => $group->id, '_token' => csrf_token()])}}" ><span class="glyphicon glyphicon-trash pull-right margin-left-5 delete">cancella </span></a>
-                <a href="{{URL::action('Jacopo\Authentication\Controllers\GroupController@editGroup', ['id' => $group->id])}}"><span class="glyphicon glyphicon-edit pull-right">modifica </span></a>
+                <a href="{{URL::action('Jacopo\Authentication\Controllers\GroupController@deleteGroup',['id' => $group->id, '_token' => csrf_token()])}}" class="pull-right margin-left-5 delete"><i class="fa fa-trash-o fa-2x"></i> cancella</a>
+                <a href="{{URL::action('Jacopo\Authentication\Controllers\GroupController@editGroup', ['id' => $group->id])}}" class="pull-right"><i class="fa fa-edit fa-2x"></i>modifica </a>
                 <span class="clearfix"></span>
                 @endif
             </li>

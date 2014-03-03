@@ -23,11 +23,11 @@
         <ul class="list-group">
         @foreach($permissions as $permission)
             <li class="list-group-item">
-                <span class="glyphicon glyphicon-lock
-"></span> {{$permission->description}}
+                <i class="fa fa-lock
+ fa-2x"></i> {{$permission->description}}
                 @if(! $permission->protected)
-                <a href="{{URL::action('Jacopo\Authentication\Controllers\PermissionController@deletePermission',['id' => $permission->id, '_token' => csrf_token()])}}" ><span class="glyphicon glyphicon-trash pull-right margin-left-5 delete">cancella </span></a>
-                <a href="{{URL::action('Jacopo\Authentication\Controllers\PermissionController@editPermission', ['id' => $permission->id])}}"><span class="glyphicon glyphicon-edit pull-right">modifica </span></a>
+                <a href="{{URL::action('Jacopo\Authentication\Controllers\PermissionController@deletePermission',['id' => $permission->id, '_token' => csrf_token()])}}" class="pull-right margin-left-5"><i class="fa fa-trash-o delete fa-2x"></i>cancella </a>
+                <a href="{{URL::action('Jacopo\Authentication\Controllers\PermissionController@editPermission', ['id' => $permission->id])}}" class="pull-right"><i class="fa fa-pencil-square-o fa-2x"></i> modifica </a>
                 @endif
                 <span class="clearfix"></span>
             </li>

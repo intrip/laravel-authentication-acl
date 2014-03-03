@@ -22,12 +22,12 @@ Route::filter('logged', function()
 |
 */
 use Jacopo\Authentication\Helpers\FileRouteHelper;
-use Jacopo\Authentication\Helpers\SentryAuthenticationHelper as AuthHelper;
 
 Route::filter('can_see', function()
 {
     $helper = new FileRouteHelper;
+    $auth_helper = App::make('authentication_helper');
     $perm = $helper->getPermFromCurrentRoute();
 
-    if( $perm && (! (AuthHelper::hasPermission( $perm ))) ) App::abort('401');
+    if( $perm && (! ($auth_helper->hasPermission( $perm ))) ) App::abort('401');
 });

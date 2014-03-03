@@ -19,17 +19,19 @@
     @endforeach
     @endif
     <h3>Lista utenti</h3>
+    <hr/>
     @if(! $users->isEmpty() )
         <ul class="list-group">
         @foreach($users as $user)
             <li class="list-group-item">
-                <span class="
-glyphicon glyphicon-comment"></span> {{$user->email}} <span class="glyphicon glyphicon-user
-"></span> {{ucfirst($user->first_name)}} {{ucfirst($user->last_name)}}
-                <span class="glyphicon glyphicon-lock margin-left-5">Attivo:{{$user->activated ? 'Sì' : 'No'}}</span>
+                <i class="
+fa fa-envelope fa-2x"></i> {{$user->email}} <i class="fa fa-user fa-2x
+"></i> {{ucfirst($user->first_name)}} {{ucfirst($user->last_name)}}
+                <i class="fa fa-unlock fa-2x margin-left-5"></i> Attivo:{{$user->activated ? 'Sì' : 'No'}}
                 @if(! $user->protected)
-                <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@deleteUser',['id' => $user->id, '_token' => csrf_token()])}}" ><span class="glyphicon glyphicon-trash pull-right margin-left-5 delete">cancella </span></a>
-                <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@editUser', ['id' => $user->id])}}"><span class="glyphicon glyphicon-edit pull-right">modifica </span></a>
+                <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@deleteUser',['id' => $user->id, '_token' => csrf_token()])}}" class="margin-left-5 pull-right delete"><i class="fa fa-trash-o fa-2x"></i>delete</a>
+                <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@editUser', ['id' => $user->id])}}" class="pull-right margin-left-5"><i class="fa fa-pencil-square-o fa-2x"></i>edit</a>
+                <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@editProfile', ['user_id' => $user->id])}}" class="pull-right"><i class="fa fa-user fa-2x"></i> profile </a>
                 @endif
                 <span class="clearfix"></span>
             </li>

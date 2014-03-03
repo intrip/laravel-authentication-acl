@@ -12,6 +12,6 @@ interface AuthenticationHelperInterface
      * @param $permissions
      * @return boolean
      */
-    public static function hasPermission(array $permissions);
+    public function hasPermission(array $permissions);
 
 } 

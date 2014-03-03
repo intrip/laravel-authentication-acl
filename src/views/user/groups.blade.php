@@ -1,31 +1,49 @@
-<h3>Gruppi associati:</h3>
+{{-- add group --}}
+{{Form::open(["action" => "Jacopo\Authentication\Controllers\UserController@addGroup", 'class' => 'form-add-group', 'role' => 'form'])}}
+<div class="form-group">
+    <div class="input-group">
+        <span class="input-group-addon form-button button-add-group"><span class="glyphicon glyphicon-plus-sign add-input"></span></span>
+        {{Form::select('group_id', $group_values, '', ["class"=>"form-control"])}}
+        {{Form::hidden('id', $user->id)}}
+    </div>
+    <span class="text-danger">{{$errors->first('name')}}</span>
+</div>
+{{Form::hidden('id', $user->id)}}
+@if(! $user->exists)
+<div class="form-group">
+    <h5 style="color:gray">You need to create the user first.</h5>
+</div>
+@endif
+{{Form::close()}}
+
+{{-- delete group --}}
 @if( ! $user->groups->isEmpty() )
-<ul class="list-group">
-    @foreach($user->groups as $group)
-    <li class="list-group-item">
-        <span class="glyphicon glyphicon-user"></span> {{$group->name}}
-        <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@deleteGroup',['_token' => csrf_token(), 'group_id' => $group->id, 'id' => $user->id])}}
-        " ><span class="glyphicon glyphicon-trash pull-right margin-left-5 delete">cancella </span></a>
-        <span class="clearfix"></span>
-    </li>
-    @endforeach
-</ul>
-@else
-<h5>Non ci sono gruppi associati all' utente.</h5>
+@foreach($user->groups as $group)
+    {{Form::open(["action" => "Jacopo\Authentication\Controllers\UserController@deleteGroup", "role"=>"form", 'class' => 'form-del-group'])}}
+    <div class="form-group">
+        <div class="input-group">
+            <span class="input-group-addon form-button button-del-group"><span class="glyphicon glyphicon-minus-sign add-input"></span></span>
+            {{Form::text('group_name', $group->name, ['class' => 'form-control', 'readonly' => 'readonly'])}}
+            {{Form::hidden('id', $user->id)}}
+            {{Form::hidden('group_id', $group->id)}}
+        </div>
+    </div>
+    {{Form::close()}}
+@endforeach
+@elseif($user->exists)
+    <h5>There is no groups associated to the user.</h5>
 @endif
 
-{{-- form to associate groups --}}
-{{Form::open(["action" => "Jacopo\Authentication\Controllers\UserController@addGroup", 'class' => 'form'])}}
-<div class="form-group">
-    {{Form::label('group_id', 'Aggiungi gruppo:', ["class" => "control-label"])}}<br/>
-    {{Form::select('group_id', $group_values, '', ["class"=>"form-control"])}}
-    <span class="text-danger">{{$errors->first('name')}}</span>
-    {{Form::hidden('id', $user->id)}}
-</div>
-<div class="form-group">
-    {{Form::submit('Aggiungi', ["class" => "btn btn-primary", ($user->exists ) ? "" : "disabled"])}}
-    @if(! $user->exists)
-    <h5 style="color:gray">Per associare permessi bisogna prima creare il gruppo.</h5>
-    @endif
-</div>
-{{Form::close()}}
+@section('footer_scripts')
+@parent
+<script>
+    $(".button-add-group").click( function(){
+        <?php if($user->exists): ?>
+        $('.form-add-group').submit();
+        <?php endif; ?>
+    });
+    $(".button-del-group").click( function(){
+        $('.form-del-group').submit();
+    });
+</script>
+@stop

@@ -7,8 +7,6 @@ class UserValidator extends AbstractValidator
 {
     protected static $rules = array(
         "email" => ["required", "email"],
-        "first_name" => "max:255",
-        "last_name" => "max:255",
     );
 
     public function __construct()

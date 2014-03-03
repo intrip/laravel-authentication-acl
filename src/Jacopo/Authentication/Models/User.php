@@ -5,7 +5,7 @@
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
 use Cartalyst\Sentry\Users\Eloquent\User as CartaUser;
-use Jacopo\Authentication\Classes\Traits\OverrideConnectionTrait;
+use Jacopo\Authentication\Traits\OverrideConnectionTrait;
 
 class User extends CartaUser
 {
@@ -42,4 +42,8 @@ class User extends CartaUser
         return true;
     }
 
+    public function user_profile()
+    {
+        return $this->hasMany('Jacopo\Authentication\Models\UserProfile');
+    }
 } 

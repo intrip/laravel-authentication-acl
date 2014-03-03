@@ -5,7 +5,6 @@ Admin area: modifica utente
 @stop
 
 @section('content')
-
 <div class="row">
     {{-- model general errors from the form --}}
     @if($errors->has('model') )
@@ -18,7 +17,8 @@ Admin area: modifica utente
     <div class="alert alert-success">{{$message}}</div>
     @endif
 
-    <h3><i class="glyphicon glyphicon-user"></i> Modifica gruppo</h3>
+    <h3><i class="fa fa-users"></i> Edit group</h3>
+    <hr/>
     <div class="col-md-6">
         {{-- group base form --}}
         <h3>Informazioni base</h3>
@@ -31,12 +31,12 @@ Admin area: modifica utente
         {{Form::close()}}
     </div>
     <div class="col-md-6">
-        {{-- group permission form --}}
-        <h3><span class="glyphicon glyphicon-lock"></span> Permessi</h3>
+    {{-- group permission form --}}
+        <h3><i class="fa fa-lock"></i> Permission</h3>
         {{-- permissions --}}
         @include('authentication::group.perm')
     </div>
-
+</div>
 @stop
 
 @section('footer_scripts')

@@ -5,7 +5,7 @@
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
 use Cartalyst\Sentry\Groups\Eloquent\Group as SentryGroup;
-use Jacopo\Authentication\Classes\Traits\OverrideConnectionTrait;
+use Jacopo\Authentication\Traits\OverrideConnectionTrait;
 
 class Group extends SentryGroup
 {

@@ -2,9 +2,11 @@
 
 use Illuminate\Support\ServiceProvider;
 use Jacopo\Authentication\Classes\SentryAuthenticator;
+use Jacopo\Authentication\Repository\EloquentUserProfileRepository;
 use Jacopo\Authentication\Repository\SentryUserRepository;
 use Jacopo\Authentication\Repository\SentryGroupRepository;
 use Jacopo\Authentication\Repository\EloquentPermissionRepository;
+use Jacopo\Authentication\Helpers\SentryAuthenticationHelper;
 use Illuminate\Foundation\AliasLoader;
 use Config, App;
 use Illuminate\Database\Eloquent\Model;
@@ -82,6 +84,10 @@ class AuthenticationServiceProvider extends ServiceProvider {
             return new SentryAuthenticator;
         });
 
+        $this->app->bind('authentication_helper', function () {
+            return new SentryAuthenticationHelper;
+        });
+
         $this->app->bind('user_repository', function ()
         {
             return new SentryUserRepository;
@@ -95,6 +101,10 @@ class AuthenticationServiceProvider extends ServiceProvider {
         $this->app->bind('permission_repository', function ()
         {
             return new EloquentPermissionRepository;
+        });
+
+        $this->app->bind('profile_repository', function () {
+            return new EloquentUserProfileRepository;
         });
     }
 

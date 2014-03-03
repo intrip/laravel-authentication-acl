@@ -5,13 +5,13 @@
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
 use Jacopo\Authentication\Exceptions\PermissionException;
+use Jacopo\Authentication\Models\Permission;
 use Jacopo\Library\Repository\EloquentBaseRepository;
 use Event;
 use Jacopo\Authentication\Repository\SentryGroupRepository as GroupRepo;
 
 class EloquentPermissionRepository extends EloquentBaseRepository
 {
-    protected $model_name = '\Jacopo\Authentication\Models\Permission';
     /**
      * @var \Jacopo\Authentication\Repository\SentryGroupRepository
      */
@@ -22,6 +22,8 @@ class EloquentPermissionRepository extends EloquentBaseRepository
         $this->group_repo = $group_repo ? $group_repo : new GroupRepo;
 
         Event::listen('repository.deleting', '\Jacopo\Authentication\Repository\EloquentPermissionRepository@checkIsNotAssociatedToAnyGroup');
+
+        return parent::__construct(new Permission);
     }
 
     /**

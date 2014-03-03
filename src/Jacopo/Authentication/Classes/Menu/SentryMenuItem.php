@@ -49,7 +49,7 @@ class SentryMenuItem implements MenuInterface
      */
     public function havePermission()
     {
-        return SentryAuthenticationHelper::hasPermission($this->permissions);
+        return App::make('authentication_helper')->hasPermission($this->permissions);
     }
 
     /**

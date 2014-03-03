@@ -75,7 +75,7 @@ class ReminderService {
         catch(JacopoExceptionsInterface $e)
         {
             $this->errors->add('mail', 'Non esistono utenti associati a questa mail');
-            throw new NotFoundException;
+            throw new UserNotFoundException;
         }
 
         $this->preparaBody($token, $to);

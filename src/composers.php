@@ -21,12 +21,34 @@ View::composer('authentication::layouts.*', function ($view){
  */
 View::composer(['authentication::user.*', 'authentication::group.*', 'authentication::permission.*'], function ($view){
     $view->with('sidebar_items', [
-                                    "Lista utenti" => URL::route('users.list'),
-                                    "Aggiungi utente" => URL::route('users.edit'),
-                                    "Lista gruppi" => URL::route('users.groups.list'),
-                                    "Aggiungi gruppo" => URL::route('users.groups.edit'),
-                                    "Lista permessi" => URL::route('users.permission.list'),
-                                    "Aggiungi permesso" => URL::route('users.permission.edit'),
+                                     "Dashboard" => [
+                                         "url" => '#',
+                                         "icon" => '<i class="fa fa-tachometer"></i>'
+                                     ],
+                                    "Lista utenti" => [
+                                        "url" => URL::route('users.list'),
+                                        "icon" => '<i class="fa fa-user"></i>'
+                                    ],
+                                    "Aggiungi utente" => [
+                                        'url' => URL::route('users.edit'),
+                                        "icon" => '<i class="fa fa-plus-circle"></i>'
+                                    ],
+                                    "Lista gruppi" => [
+                                        'url' => URL::route('users.groups.list'),
+                                        "icon" => '<i class="fa fa-users"></i>'
+                                    ],
+                                    "Aggiungi gruppo" => [
+                                        'url' => URL::route('users.groups.edit'),
+                                        "icon" => '<i class="fa fa-plus-circle"></i>'
+                                    ],
+                                    "Lista permessi" => [
+                                        'url' => URL::route('users.permission.list'),
+                                        "icon" => '<i class="fa fa-lock"></i>'
+                                    ],
+                                    "Aggiungi permesso" => [
+                                        'url' => URL::route('users.permission.edit'),
+                                        "icon" => '<i class="fa fa-plus-circle"></i>'
+                                    ]
                                  ]);
 });
 

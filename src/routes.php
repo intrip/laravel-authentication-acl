@@ -28,14 +28,17 @@ Route::group( ['before' => ['logged', 'can_see']], function()
     Route::post('/admin/users/edit', ["before" => "csrf", 'as' => 'users.edit', 'uses' => 'Jacopo\Authentication\Controllers\UserController@postEditUser']);
     Route::get('/admin/users/delete', ["before" => "csrf", 'as' => 'users.delete', 'uses' => 'Jacopo\Authentication\Controllers\UserController@deleteUser']);
     Route::post('/admin/users/groups/add', ["before" => "csrf", 'as' => 'users.groups.add', 'uses' => 'Jacopo\Authentication\Controllers\UserController@addGroup']);
-    Route::any('/admin/users/groups/delete', ["before" => "csrf", 'as' => 'users.groups.delete', 'uses' => 'Jacopo\Authentication\Controllers\UserController@deleteGroup']);
+    Route::post('/admin/users/groups/delete', ["before" => "csrf", 'as' => 'users.groups.delete', 'uses' => 'Jacopo\Authentication\Controllers\UserController@deleteGroup']);
+    Route::post('/admin/users/editpermission', ["before" => "csrf", 'as' => 'users.edit.permission', 'uses' => 'Jacopo\Authentication\Controllers\UserController@editPermission']);
+    Route::get('/admin/users/profile/edit', ['as' => 'users.profile.edit', 'uses' => 'Jacopo\Authentication\Controllers\UserController@editProfile']);
+    Route::post('/admin/users/profile/edit', ['before' => 'csrf', 'as' => 'users.profile.edit', 'uses' => 'Jacopo\Authentication\Controllers\UserController@postEditProfile']);
 
     // groups
     Route::get('/admin/groups/list', ['as' => 'users.groups.list', 'uses' => 'Jacopo\Authentication\Controllers\GroupController@getList']);
     Route::get('/admin/groups/edit', ['as' => 'users.groups.edit', 'uses' => 'Jacopo\Authentication\Controllers\GroupController@editGroup']);
     Route::post('/admin/groups/edit', ["before" => "csrf", 'as' => 'users.groups.edit', 'uses' => 'Jacopo\Authentication\Controllers\GroupController@postEditGroup']);
     Route::get('/admin/groups/delete', ["before" => "csrf", 'as' => 'users.groups.delete', 'uses' => 'Jacopo\Authentication\Controllers\GroupController@deleteGroup']);
-    Route::any('/admin/groups/editpermission', ["before" => "csrf", 'as' => 'users.groups.edit.permission', 'uses' => 'Jacopo\Authentication\Controllers\GroupController@editPermission']);
+    Route::post('/admin/groups/editpermission', ["before" => "csrf", 'as' => 'users.groups.edit.permission', 'uses' => 'Jacopo\Authentication\Controllers\GroupController@editPermission']);
 
     // permissions
     Route::get('/admin/permissions/list', ['as' => 'users.permission.list', 'uses' => 'Jacopo\Authentication\Controllers\PermissionController@getList']);
