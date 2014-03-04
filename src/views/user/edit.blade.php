@@ -19,15 +19,15 @@ Admin area: modifica utenti
     {{Form::model($user, [ 'url' => URL::action('Jacopo\Authentication\Controllers\UserController@postEditUser')] ) }}
     {{FormField::email(["autocomplete" => "off"])}}
     <span class="text-danger">{{$errors->first('email')}}</span>
-    {{FormField::password(["autocomplete" => "off", "label" => isset($user->id) ? "modifica password" : "password"])}}
+    {{FormField::password(["autocomplete" => "off", "label" => isset($user->id) ? "Change password" : "password"])}}
     <span class="text-danger">{{$errors->first('password')}}</span>
     <div class="form-group">
         {{Form::label("activated","Utente attivo")}}
         {{Form::select('activated', ["1" => "Sì", "0" => "No"], (isset($user->activated) && $user->activated) ? $user->activated : "0", ["class"=> "form-control"] )}}
     </div>
     {{Form::hidden('id')}}
-    <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@deleteUser',['id' => $user->id, '_token' => csrf_token()])}}" class="btn btn-danger pull-right margin-left-5 delete">Cancella</a>
-    {{Form::submit('Salva', array("class"=>"btn btn-primary pull-right "))}}
+    <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@deleteUser',['id' => $user->id, '_token' => csrf_token()])}}" class="btn btn-danger pull-right margin-left-5 delete">Delete</a>
+    {{Form::submit('Save', array("class"=>"btn btn-primary pull-right "))}}
     {{Form::close()}}
     </div>
     <div class="col-md-6">

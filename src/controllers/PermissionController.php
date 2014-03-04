@@ -42,7 +42,7 @@ class PermissionController extends \BaseController
         {
             $obj = $this->r->find(Input::get('id'));
         }
-        catch(ModelNotFoundException $e)
+        catch(JacopoExceptionsInterface $e)
         {
             $obj = new Permission;
         }

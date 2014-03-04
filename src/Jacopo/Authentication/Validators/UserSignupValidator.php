@@ -1,6 +1,8 @@
 <?php namespace Jacopo\Authentication\Validators;
 
-class UserSignupValidator extends AbstractValidator
+use Jacopo\Library\Validators\OverrideConnectionValidator;
+
+class UserSignupValidator extends OverrideConnectionValidator
 {
     protected static $rules = array(
         "email" => ["required", "email", "unique:users,email"],

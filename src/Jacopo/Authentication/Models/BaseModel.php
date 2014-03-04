@@ -5,7 +5,7 @@
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
 use Illuminate\Database\Eloquent\Model;
-use Jacopo\Authentication\Traits\OverrideConnectionTrait;
+use Jacopo\Library\Traits\OverrideConnectionTrait;
 
 class BaseModel extends Model
 {

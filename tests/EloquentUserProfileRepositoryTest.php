@@ -77,17 +77,6 @@ class EloquentUserProfileRepositoryTest extends DbTestCase {
                 'last_name' => $this->faker->lastName(),
                 'phone' => $this->faker->phoneNumber(),
                 'vat' => $this->faker->randomNumber(12),
-                'cf' => $this->faker->text(12),
-                'billing_address' => $this->faker->address(),
-                'billing_address_zip' => $this->faker->postcode(),
-                'shipping_address' => $this->faker->address(),
-                'shipping_address_zip' => $this->faker->postcode(),
-                'billing_state' => $this->faker->country(),
-                'billing_city' => $this->faker->country(),
-                'billing_country' => $this->faker->country(),
-                'shipping_state' => $this->faker->country(),
-                'shipping_city' => $this->faker->country(),
-                'shipping_country' => $this->faker->country()
             ];
     }
 

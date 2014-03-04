@@ -6,15 +6,15 @@ namespace Jacopo\Authentication\Repository;
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
 use Jacopo\Authentication\Repository\Interfaces\UserRepositoryInterface;
+use Jacopo\Library\Repository\EloquentBaseRepository;
 use Jacopo\Library\Repository\Interfaces\BaseRepositoryInterface;
 use Jacopo\Authentication\Exceptions\UserNotFoundException as NotFoundException;
 use Jacopo\Authentication\Models\User;
 use Jacopo\Authentication\Models\Group;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Cartalyst\Sentry\Users\UserNotFoundException;
 use Event;
 
-class SentryUserRepository implements BaseRepositoryInterface, UserRepositoryInterface
+class SentryUserRepository extends EloquentBaseRepository implements UserRepositoryInterface
 {
     /**
      * Sentry instance
@@ -25,11 +25,13 @@ class SentryUserRepository implements BaseRepositoryInterface, UserRepositoryInt
     public function __construct()
     {
         $this->sentry = \App::make('sentry');
+        return parent::__construct(new User);
     }
 
     /**
      * Create a new object
      * @return mixed
+     * @override
      * @todo db test
      */
     public function create(array $input)
@@ -52,6 +54,7 @@ class SentryUserRepository implements BaseRepositoryInterface, UserRepositoryInt
      * @param array $data
      * @throws \Jacopo\Authentication\Exceptions\UserNotFoundException
      * @return mixed
+     * @override
      * @todo db test
      */
     public function update($id, array $data)
@@ -61,50 +64,6 @@ class SentryUserRepository implements BaseRepositoryInterface, UserRepositoryInt
         Event::fire('repository.updating', [$obj]);
         $obj->update($data);
         return $obj;
-    }
-
-    /**
-     * Deletes a new object
-     * @param $id
-     * @return mixed
-     * @todo db test
-     */
-    public function delete($id)
-    {
-        $obj = $this->find($id);
-        Event::fire('repository.deleting', [$obj]);
-        return $obj->delete();
-    }
-
-    /**
-     * Find a model by his id
-     * @param $id
-     * @return mixed
-     * @throws \Jacopo\Authentication\Exceptions\UserNotFoundException
-     * @todo db test
-     */
-    public function find($id)
-    {
-        try
-        {
-            $user = $this->sentry->findUserById($id);
-        }
-        catch(UserNotFoundException $e)
-        {
-            throw new NotFoundException;
-        }
-
-        return $user;
-    }
-
-        /**
-     * Obtains all models
-     * @return mixed
-     * @todo db test
-     */
-    public function all()
-    {
-        return User::all();
     }
 
     /**

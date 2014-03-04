@@ -27,9 +27,7 @@ class AuthenticationServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-        $this->loadOtherProviders();
 
-        $this->registerAliases();
     }
 
     /**
@@ -54,6 +52,9 @@ class AuthenticationServiceProvider extends ServiceProvider {
         $this->overwriteWayFormConfig();
 
         $this->setupConnection();
+
+        $this->loadOtherProviders();
+        $this->registerAliases();
     }
 
 	/**

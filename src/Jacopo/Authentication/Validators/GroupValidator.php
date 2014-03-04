@@ -1,9 +1,9 @@
 <?php namespace Jacopo\Authentication\Validators;
 
-use Jacopo\Library\Validators\AbstractValidator;
+use Jacopo\Library\Validators\OverrideConnectionValidator;
 use Event;
 
-class GroupValidator extends AbstractValidator
+class GroupValidator extends OverrideConnectionValidator
 {
     protected static $rules = array(
         "name" => ["required"],

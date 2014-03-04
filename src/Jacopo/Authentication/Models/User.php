@@ -5,7 +5,7 @@
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
 use Cartalyst\Sentry\Users\Eloquent\User as CartaUser;
-use Jacopo\Authentication\Traits\OverrideConnectionTrait;
+use Jacopo\Library\Traits\OverrideConnectionTrait;
 
 class User extends CartaUser
 {

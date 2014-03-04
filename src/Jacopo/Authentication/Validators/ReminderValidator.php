@@ -1,11 +1,11 @@
 <?php namespace Jacopo\Authentication\Validators;
 
-use Jacopo\Library\Validators\AbstractValidator;
+use Jacopo\Library\Validators\OverrideConnectionValidator;
 
-class ReminderValidator extends AbstractValidator
+class ReminderValidator extends OverrideConnectionValidator
 {
 
     protected static $rules = array(
         "email" => "required",
     );
-} 
+}

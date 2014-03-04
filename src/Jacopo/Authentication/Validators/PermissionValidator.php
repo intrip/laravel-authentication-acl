@@ -1,8 +1,9 @@
 <?php namespace Jacopo\Authentication\Validators;
 
 use Event;
+use Jacopo\Library\Validators\OverrideConnectionValidator;
 
-class PermissionValidator extends AbstractValidator
+class PermissionValidator extends OverrideConnectionValidator
 {
     protected static $rules = array(
         "description" => ["required", "max:255"],

@@ -1,9 +1,10 @@
 <?php namespace Jacopo\Authentication\Validators;
 
-use Jacopo\Library\Validators\AbstractValidator;
+use Jacopo\Library\Validators\OverrideConnectionValidator;
 use Event;
 
-class UserValidator extends AbstractValidator
+
+class UserValidator extends OverrideConnectionValidator
 {
     protected static $rules = array(
         "email" => ["required", "email"],

@@ -1,8 +1,9 @@
 <?php namespace Jacopo\Authentication\Validators;
 
 use Event;
+use Jacopo\Library\Validators\OverrideConnectionValidator;
 
-class UserProfileValidator extends AbstractValidator
+class UserProfileValidator extends OverrideConnectionValidator
 {
     protected static $rules = array(
         "first_name" => "max:50",
