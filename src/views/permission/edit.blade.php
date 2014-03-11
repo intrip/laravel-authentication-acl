@@ -1,7 +1,7 @@
 @extends('authentication::layouts.base-2cols')
 
 @section('title')
-Admin area: modifica permesso
+Admin area: edit permission
 @stop
 
 @section('content')
@@ -21,13 +21,13 @@ Admin area: modifica permesso
     <hr/>
 
     {{Form::model($permission, [ 'url' => [URL::action('Jacopo\Authentication\Controllers\PermissionController@editPermission'), $permission->id], 'method' => 'post'] ) }}
-    {{FormField::description(["label" => "Descrizione:", 'id' => 'slugme'])}}
+    {{FormField::description(["label" => "Description: *", 'id' => 'slugme', "type" => "text"])}}
     <span class="text-danger">{{$errors->first('description')}}</span>
-    {{FormField::permission(["label" => "Permesso:", 'id' => 'slug'])}}
+    {{FormField::permission(["label" => "Permission: *", 'id' => 'slug'])}}
     <span class="text-danger">{{$errors->first('permission')}}</span>
     {{Form::hidden('id')}}
-    <a href="{{URL::action('Jacopo\Authentication\Controllers\PermissionController@deletePermission',['id' => $permission->id, '_token' => csrf_token()])}}" class="btn btn-danger pull-right margin-left-5 delete">Cancella</a>
-    {{Form::submit('Salva', array("class"=>"btn btn-primary pull-right "))}}
+    <a href="{{URL::action('Jacopo\Authentication\Controllers\PermissionController@deletePermission',['id' => $permission->id, '_token' => csrf_token()])}}" class="btn btn-danger pull-right margin-left-5 delete">Delete</a>
+    {{Form::submit('Save', array("class"=>"btn btn-primary pull-right "))}}
     {{Form::close()}}
 @stop
 

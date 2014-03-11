@@ -11,7 +11,7 @@
     </div>
     <div class="form-group">
         @if(! $group->exists)
-        <h5 style="color:gray">Per associare permessi bisogna prima creare il gruppo.</h5>
+        <span class="text-danger"><h5>To associate permissions need to create a group first.</h5></span>
         @endif
     </div>
 {{Form::close()}}
@@ -32,7 +32,7 @@
     {{Form::close()}}
 @endforeach
 @elseif($group->exists)
-<h5>There is no permission associated to the group.</h5>
+<span class="text-warning"><h5>There is no permission associated to the group.</h5></span>
 @endif
 
 @section('footer_scripts')

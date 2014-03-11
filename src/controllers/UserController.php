@@ -19,7 +19,7 @@ use Jacopo\Authentication\Validators\UserProfileValidator;
 use View, Input, Redirect, App;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class UserController extends \BaseController
+class UserController extends \Controller
 {
     /**
      * @var \Jacopo\Authentication\Repository\SentryUserRepository

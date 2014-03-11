@@ -18,7 +18,6 @@ Admin area: Edit user profile
 
     <h3><i class="fa fa-user"></i> User profile</h3>
     <hr/>
-    <h3>Dati generali</h3>
     {{Form::model($user_profile,['route'=>'users.profile.edit', 'method' => 'post'])}}
         {{FormField::code()}}
         {{FormField::new_password(["label" => "change password:"])}}

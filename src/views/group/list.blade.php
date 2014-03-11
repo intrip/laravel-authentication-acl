@@ -1,7 +1,7 @@
 @extends('authentication::layouts.base-2cols')
 
 @section('title')
-    Admin area: lista gruppi
+    Admin area: group list
 @stop
 
 @section('content')
@@ -25,8 +25,8 @@
             <li class="list-group-item">
             <i class="fa fa-group fa-2x"></i>{{$group->name}}
                 @if(! $group->protected)
-                <a href="{{URL::action('Jacopo\Authentication\Controllers\GroupController@deleteGroup',['id' => $group->id, '_token' => csrf_token()])}}" class="pull-right margin-left-5 delete"><i class="fa fa-trash-o fa-2x"></i> cancella</a>
-                <a href="{{URL::action('Jacopo\Authentication\Controllers\GroupController@editGroup', ['id' => $group->id])}}" class="pull-right"><i class="fa fa-edit fa-2x"></i>modifica </a>
+                <a href="{{URL::action('Jacopo\Authentication\Controllers\GroupController@deleteGroup',['id' => $group->id, '_token' => csrf_token()])}}" class="pull-right margin-left-5 delete"><i class="fa fa-trash-o fa-2x"></i> delete</a>
+                <a href="{{URL::action('Jacopo\Authentication\Controllers\GroupController@editGroup', ['id' => $group->id])}}" class="pull-right"><i class="fa fa-edit fa-2x"></i>edit </a>
                 <span class="clearfix"></span>
                 @endif
             </li>
@@ -35,7 +35,7 @@
     @else
         <h5>Non ci sono gruppi presenti nel sistema.</h5>
     @endif
-    <a href="{{URL::action('Jacopo\Authentication\Controllers\GroupController@editGroup')}}" class="btn btn-primary pull-right">Aggiungi</a>
+    <a href="{{URL::action('Jacopo\Authentication\Controllers\GroupController@editGroup')}}" class="btn btn-primary pull-right">Add New</a>
 </div>
 @stop
 

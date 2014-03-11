@@ -1,7 +1,7 @@
 @extends('authentication::layouts.base-2cols')
 
 @section('title')
-    Admin area: lista utenti
+    Admin area: users list
 @stop
 
 @section('content')
@@ -27,7 +27,7 @@
                 <i class="
 fa fa-envelope fa-2x"></i> {{$user->email}} <i class="fa fa-user fa-2x
 "></i> {{ucfirst($user->first_name)}} {{ucfirst($user->last_name)}}
-                <i class="fa fa-unlock fa-2x margin-left-5"></i> Attivo:{{$user->activated ? 'Sì' : 'No'}}
+                <i class="fa fa-unlock fa-2x margin-left-5"></i> Active:{{$user->activated ? 'Sì' : 'No'}}
                 @if(! $user->protected)
                 <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@deleteUser',['id' => $user->id, '_token' => csrf_token()])}}" class="margin-left-5 pull-right delete"><i class="fa fa-trash-o fa-2x"></i>delete</a>
                 <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@editUser', ['id' => $user->id])}}" class="pull-right margin-left-5"><i class="fa fa-pencil-square-o fa-2x"></i>edit</a>
@@ -40,7 +40,7 @@ fa fa-envelope fa-2x"></i> {{$user->email}} <i class="fa fa-user fa-2x
     @else
         <h5>Non ci sono utenti presenti nel sistema.</h5>
     @endif
-    <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@editUser')}}" class="btn btn-primary pull-right">Aggiungi</a>
+    <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@editUser')}}" class="btn btn-primary pull-right">Add New</a>
 </div>
 @stop
 

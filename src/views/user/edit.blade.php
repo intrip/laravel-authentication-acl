@@ -1,7 +1,7 @@
 @extends('authentication::layouts.base-2cols')
 
 @section('title')
-Admin area: modifica utenti
+Admin area: edit user
 @stop
 
 @section('content')
@@ -17,13 +17,13 @@ Admin area: modifica utenti
     <div class="col-md-6">
     <h3><i class="fa fa-desktop"></i> Login data</h3>
     {{Form::model($user, [ 'url' => URL::action('Jacopo\Authentication\Controllers\UserController@postEditUser')] ) }}
-    {{FormField::email(["autocomplete" => "off"])}}
+    {{FormField::email(["autocomplete" => "off", "label" => "Email: *"])}}
     <span class="text-danger">{{$errors->first('email')}}</span>
     {{FormField::password(["autocomplete" => "off", "label" => isset($user->id) ? "Change password" : "password"])}}
     <span class="text-danger">{{$errors->first('password')}}</span>
     <div class="form-group">
-        {{Form::label("activated","Utente attivo")}}
-        {{Form::select('activated', ["1" => "Sì", "0" => "No"], (isset($user->activated) && $user->activated) ? $user->activated : "0", ["class"=> "form-control"] )}}
+        {{Form::label("activated","User active")}}
+        {{Form::select('activated', ["1" => "Yes", "0" => "No"], (isset($user->activated) && $user->activated) ? $user->activated : "0", ["class"=> "form-control"] )}}
     </div>
     {{Form::hidden('id')}}
     <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@deleteUser',['id' => $user->id, '_token' => csrf_token()])}}" class="btn btn-danger pull-right margin-left-5 delete">Delete</a>
@@ -44,7 +44,7 @@ Admin area: modifica utenti
 @section('footer_scripts')
 <script>
     $(".delete").click(function(){
-        return confirm("Sei sicuro di volere eliminare l'elemento selezionato?");
+        return confirm("Are you sure to delete this item?");
     });
 </script>
 @stop

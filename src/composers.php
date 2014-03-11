@@ -25,27 +25,27 @@ View::composer(['authentication::user.*', 'authentication::group.*', 'authentica
                                          "url" => '#',
                                          "icon" => '<i class="fa fa-tachometer"></i>'
                                      ],
-                                    "Lista utenti" => [
+                                    "Users list" => [
                                         "url" => URL::route('users.list'),
                                         "icon" => '<i class="fa fa-user"></i>'
                                     ],
-                                    "Aggiungi utente" => [
+                                    "Add user" => [
                                         'url' => URL::route('users.edit'),
                                         "icon" => '<i class="fa fa-plus-circle"></i>'
                                     ],
-                                    "Lista gruppi" => [
+                                    "Groups list" => [
                                         'url' => URL::route('users.groups.list'),
                                         "icon" => '<i class="fa fa-users"></i>'
                                     ],
-                                    "Aggiungi gruppo" => [
+                                    "Add group" => [
                                         'url' => URL::route('users.groups.edit'),
                                         "icon" => '<i class="fa fa-plus-circle"></i>'
                                     ],
-                                    "Lista permessi" => [
+                                    "Permissions list" => [
                                         'url' => URL::route('users.permission.list'),
                                         "icon" => '<i class="fa fa-lock"></i>'
                                     ],
-                                    "Aggiungi permesso" => [
+                                    "Add permission" => [
                                         'url' => URL::route('users.permission.edit'),
                                         "icon" => '<i class="fa fa-plus-circle"></i>'
                                     ]

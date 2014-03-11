@@ -11,7 +11,7 @@ use Jacopo\Library\Exceptions\JacopoExceptionsInterface;
 use View, Input, Redirect, App;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class PermissionController extends \BaseController
+class PermissionController extends \Controller
 {
     /**
      * @var \Jacopo\Authentication\Repository\PermissionGroupRepository

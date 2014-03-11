@@ -1,7 +1,7 @@
 @extends('authentication::layouts.base-2cols')
 
 @section('title')
-    Admin area: lista permessi
+    Admin area: permission list
 @stop
 
 @section('content')
@@ -26,24 +26,24 @@
                 <i class="fa fa-lock
  fa-2x"></i> {{$permission->description}}
                 @if(! $permission->protected)
-                <a href="{{URL::action('Jacopo\Authentication\Controllers\PermissionController@deletePermission',['id' => $permission->id, '_token' => csrf_token()])}}" class="pull-right margin-left-5"><i class="fa fa-trash-o delete fa-2x"></i>cancella </a>
-                <a href="{{URL::action('Jacopo\Authentication\Controllers\PermissionController@editPermission', ['id' => $permission->id])}}" class="pull-right"><i class="fa fa-pencil-square-o fa-2x"></i> modifica </a>
+                <a href="{{URL::action('Jacopo\Authentication\Controllers\PermissionController@deletePermission',['id' => $permission->id, '_token' => csrf_token()])}}" class="pull-right margin-left-5"><i class="fa fa-trash-o delete fa-2x"></i>delete </a>
+                <a href="{{URL::action('Jacopo\Authentication\Controllers\PermissionController@editPermission', ['id' => $permission->id])}}" class="pull-right"><i class="fa fa-pencil-square-o fa-2x"></i> edit </a>
                 @endif
                 <span class="clearfix"></span>
             </li>
             @endforeach
         </ul>
     @else
-        <h5>Non ci sono permessi presenti nel sistema.</h5>
+        <span class="text-warning"><h5>No users found.</h5></span>
     @endif
-    <a href="{{URL::action('Jacopo\Authentication\Controllers\PermissionController@editPermission')}}" class="btn btn-primary pull-right">Aggiungi</a>
+    <a href="{{URL::action('Jacopo\Authentication\Controllers\PermissionController@editPermission')}}" class="btn btn-primary pull-right">Add New</a>
 </div>
 @stop
 
 @section('footer_scripts')
     <script>
         $(".delete").click(function(){
-            return confirm("Sei sicuro di volere eliminare l'elemento selezionato?");
+            return confirm("Are you sure to delete this item?");
         });
     </script>
 @stop

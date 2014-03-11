@@ -39,8 +39,6 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
         $data = array(
                 "email" => $input["email"],
                 "password" => $input["password"],
-                "first_name" => $input["first_name"],
-                "last_name" => $input["last_name"],
                 "activated" => $input["activated"],
         );
         $user = $this->sentry->createUser($data);

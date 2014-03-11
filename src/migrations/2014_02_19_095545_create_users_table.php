@@ -24,8 +24,6 @@ class CreateUsersTable extends Migration {
             $table->timestamp('last_login')->nullable();
             $table->string('persist_code')->nullable();
             $table->string('reset_password_code')->nullable();
-            $table->string('first_name')->nullable();
-            $table->string('last_name')->nullable();
             $table->boolean('protected')->default(0);
             $table->timestamps();
             // setup index

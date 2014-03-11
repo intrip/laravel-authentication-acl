@@ -14,7 +14,7 @@ use Jacopo\Authentication\Validators\GroupValidator;
 use Jacopo\Library\Exceptions\JacopoExceptionsInterface;
 use View, Input, Redirect, App;
 
-class GroupController extends \BaseController
+class GroupController extends \Controller
 {
     /**
      * @var \Jacopo\Authentication\Repository\SentryGroupRepository

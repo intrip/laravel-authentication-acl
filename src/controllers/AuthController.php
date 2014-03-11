@@ -1,6 +1,6 @@
 <?php namespace Jacopo\Authentication\Controllers;
 
-use BaseController;
+use Controller;
 use View;
 use Sentry;
 use Input;
@@ -9,7 +9,7 @@ use Jacopo\Library\Exceptions\JacopoExceptionsInterface as Pbi;
 use Jacopo\Authentication\Classes\SentryAuthenticator;
 use Jacopo\Authentication\Classes\ReminderService;
 
-class AuthController extends BaseController {
+class AuthController extends Controller {
 
     protected $auth;
     protected $reminder;

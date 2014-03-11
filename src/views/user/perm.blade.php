@@ -12,7 +12,7 @@
 </div>
     @if(! $user->exists)
         <div class="form-group">
-            <h5 style="color:gray">You need to create the user first.
+            <span class="text-danger"><h5>You need to create the user first.</span>
         </div>
     @endif
 {{Form::close()}}
@@ -34,7 +34,7 @@
     {{Form::close()}}
 @endforeach
 @elseif($user->exists)
-    <h5>There is no permission associated to the user.</h5>
+    <span class="text-warning"><h5>There is no permission associated to the user.</h5></span>
 @endif
 
 @section('footer_scripts')
