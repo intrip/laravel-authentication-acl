@@ -1,4 +1,4 @@
-<?php namespace Jacopo\Authentication\Classes;
+<?php namespace Jacopo\Authentication\Services;
 
 use Illuminate\Support\MessageBag;
 use Jacopo\Authentication\Validators\ReminderValidator;

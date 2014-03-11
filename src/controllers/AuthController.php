@@ -7,7 +7,7 @@ use Input;
 use Redirect;
 use Jacopo\Library\Exceptions\JacopoExceptionsInterface as Pbi;
 use Jacopo\Authentication\Classes\SentryAuthenticator;
-use Jacopo\Authentication\Classes\ReminderService;
+use Jacopo\Authentication\Services\ReminderService;
 
 class AuthController extends Controller {
 

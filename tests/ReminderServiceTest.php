@@ -1,6 +1,6 @@
 <?php
 
-use Jacopo\Authentication\Classes\ReminderService as Reminder;
+use Jacopo\Authentication\Services\ReminderService as Reminder;
 use Mockery as m;
 use Jacopo\Authentication\Tests\TestCase;
 
