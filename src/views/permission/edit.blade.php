@@ -17,7 +17,7 @@ Admin area: edit permission
     @if( isset($message) )
     <div class="alert alert-success">{{$message}}</div>
     @endif
-    <h3><i class="fa fa-lock"></i> Edit permission</h3>
+    <h3><i class="fa fa-lock"></i> {{isset($permission->id) ? 'Edit' : 'Create'}} permission</h3>
     <hr/>
 
     {{Form::model($permission, [ 'url' => [URL::action('Jacopo\Authentication\Controllers\PermissionController@editPermission'), $permission->id], 'method' => 'post'] ) }}

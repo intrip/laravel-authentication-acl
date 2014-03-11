@@ -16,11 +16,16 @@ class CreateUserProfileTable extends Migration {
         {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
-            $table->string('code',50)->nullable();
+            $table->string('code',25)->nullable();
             $table->string('first_name',50)->nullable();
             $table->string('last_name',50)->nullable();
             $table->string('phone',20)->nullable();
-            $table->string('vat',50)->nullable();
+            $table->string('vat',20)->nullable();
+            $table->string('state',20)->nullable();
+            $table->string('city',50)->nullable();
+            $table->string('country',50)->nullable();
+            $table->string('zip',20)->nullable();
+            $table->string('address',100)->nullable();
             $table->timestamps();
             // foreign keys
             $table->foreign('user_id')

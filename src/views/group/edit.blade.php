@@ -17,7 +17,7 @@ Admin area: edit group
     <div class="alert alert-success">{{$message}}</div>
     @endif
 
-    <h3><i class="fa fa-users"></i> Edit group</h3>
+    <h3><i class="fa fa-users"></i> {{isset($group->id) ? 'Edit' : 'Create'}} group</h3>
     <hr/>
     <div class="col-md-6">
         {{-- group base form --}}

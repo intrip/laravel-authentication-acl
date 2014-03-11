@@ -18,7 +18,7 @@
     <div class="alert alert-danger">{{$error}}</div>
     @endforeach
     @endif
-    <h3>Lista permessi</h3>
+    <h3>Permission list</h3>
     @if( ! $permissions->isEmpty() )
         <ul class="list-group">
         @foreach($permissions as $permission)

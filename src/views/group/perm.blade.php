@@ -11,7 +11,7 @@
     </div>
     <div class="form-group">
         @if(! $group->exists)
-        <span class="text-danger"><h5>To associate permissions need to create a group first.</h5></span>
+        <span class="text-danger"><h5>You need to create a group first.</h5></span>
         @endif
     </div>
 {{Form::close()}}

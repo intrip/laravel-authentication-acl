@@ -12,15 +12,17 @@ Admin area: edit user
     @if( isset($message) )
     <div class="alert alert-success">{{$message}}</div>
     @endif
-    <h3><i class="fa fa-user"></i> Edit user</h3>
+    <h3><i class="fa fa-user"></i> {{isset($user->id) ? 'Edit' : 'Create'}} user</h3>
     <hr/>
     <div class="col-md-6">
     <h3><i class="fa fa-desktop"></i> Login data</h3>
     {{Form::model($user, [ 'url' => URL::action('Jacopo\Authentication\Controllers\UserController@postEditUser')] ) }}
     {{FormField::email(["autocomplete" => "off", "label" => "Email: *"])}}
     <span class="text-danger">{{$errors->first('email')}}</span>
-    {{FormField::password(["autocomplete" => "off", "label" => isset($user->id) ? "Change password" : "password"])}}
+    {{FormField::password(["autocomplete" => "off", "label" => isset($user->id) ? "Change password: " : "Password: "])}}
     <span class="text-danger">{{$errors->first('password')}}</span>
+    {{FormField::password_confirmation(["autocomplete" => "off", "label" => isset($user->id) ? "Confirm change password: " : "Confirm password: "])}}
+    <span class="text-danger">{{$errors->first('password_confirmation')}}</span>
     <div class="form-group">
         {{Form::label("activated","User active")}}
         {{Form::select('activated', ["1" => "Yes", "0" => "No"], (isset($user->activated) && $user->activated) ? $user->activated : "0", ["class"=> "form-control"] )}}

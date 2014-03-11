@@ -8,6 +8,7 @@ class UserValidator extends OverrideConnectionValidator
 {
     protected static $rules = array(
         "email" => ["required", "email"],
+        "password" => ["confirmed"]
     );
 
     public function __construct()
