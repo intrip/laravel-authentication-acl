@@ -15,7 +15,6 @@ class UserProfile extends BaseModel
         'first_name',
         'last_name',
         'phone',
-        'vat',
         'cf',
         'billing_address',
         'billing_address_zip',

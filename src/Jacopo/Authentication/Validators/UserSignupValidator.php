@@ -6,10 +6,8 @@ class UserSignupValidator extends OverrideConnectionValidator
 {
     protected static $rules = array(
         "email" => ["required", "email", "unique:users,email"],
-        "password" => ["required", "min:6"],
-        "first_name" => "required|max:255",
-        "last_name" => "required|max:255",
-        "vat" => "numeric",
-        "agree" => "accepted"
+        "password" => ["required", "min:6", "confirmed"],
+        "first_name" => "max:255",
+        "last_name" => "max:255",
     );
 } 

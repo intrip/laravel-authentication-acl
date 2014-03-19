@@ -9,9 +9,11 @@ use Jacopo\Authentication\Repository\Interfaces\UserRepositoryInterface;
 use Jacopo\Library\Repository\EloquentBaseRepository;
 use Jacopo\Library\Repository\Interfaces\BaseRepositoryInterface;
 use Jacopo\Authentication\Exceptions\UserNotFoundException as NotFoundException;
+use Jacopo\Authentication\Exceptions\UserExistsException;
 use Jacopo\Authentication\Models\User;
 use Jacopo\Authentication\Models\Group;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Cartalyst\Sentry\Users\UserExistsException as CartaUserExists;
 use Event;
 
 class SentryUserRepository extends EloquentBaseRepository implements UserRepositoryInterface
@@ -41,7 +43,15 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
                 "password" => $input["password"],
                 "activated" => $input["activated"],
         );
-        $user = $this->sentry->createUser($data);
+
+        try
+        {
+            $user = $this->sentry->createUser($data);
+        }
+        catch(CartaUserExists $e)
+        {
+            throw new UserExistsException;
+        }
 
         return $user;
     }
@@ -110,6 +120,21 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
         {
             throw new NotFoundException;
         }
+    }
+
+    /**
+     * Obtain a list of user from a given group
+     *
+     * @param String $group_name
+     * @throws \Palmabit\Authentication\Exceptions\UserNotFoundException
+     * @return mixed
+     */
+    public function findFromGroupName($group_name)
+    {
+        $group = $this->sentry->findGroupByName($group_name);
+        if(! $group) throw new UserNotFoundException;
+
+        return $group->users;
     }
 
     /**

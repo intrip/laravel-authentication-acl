@@ -10,6 +10,7 @@ use Jacopo\Authentication\Helpers\SentryAuthenticationHelper;
 use Illuminate\Foundation\AliasLoader;
 use Config, App;
 use Illuminate\Database\Eloquent\Model;
+use Jacopo\Authentication\Services\UserRegisterService;
 
 class AuthenticationServiceProvider extends ServiceProvider {
 
@@ -104,6 +105,10 @@ class AuthenticationServiceProvider extends ServiceProvider {
 
         $this->app->bind('profile_repository', function () {
             return new EloquentUserProfileRepository;
+        });
+
+        $this->app->bind('register_service', function () {
+            return new UserRegisterService;
         });
     }
 

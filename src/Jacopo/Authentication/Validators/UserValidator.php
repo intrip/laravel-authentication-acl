@@ -15,6 +15,10 @@ class UserValidator extends OverrideConnectionValidator
     {
         Event::listen('validating', function($input)
         {
+            // check if the input comes form the correct form
+            if(!isset($input['form_name']) || $input['form_name']!='user')
+                return true;
+
             static::$rules["email"][] = "unique:users,email,{$input['id']}";
 
             if(empty($input["id"]))

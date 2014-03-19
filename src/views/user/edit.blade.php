@@ -28,6 +28,7 @@ Admin area: edit user
         {{Form::select('activated', ["1" => "Yes", "0" => "No"], (isset($user->activated) && $user->activated) ? $user->activated : "0", ["class"=> "form-control"] )}}
     </div>
     {{Form::hidden('id')}}
+    {{Form::hidden('form_name','user')}}
     <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@deleteUser',['id' => $user->id, '_token' => csrf_token()])}}" class="btn btn-danger pull-right margin-left-5 delete">Delete</a>
     {{Form::submit('Save', array("class"=>"btn btn-primary pull-right "))}}
     {{Form::close()}}

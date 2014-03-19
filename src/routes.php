@@ -1,5 +1,5 @@
 <?php
-//////////////////// Authentication //////////////////////////
+//////////////////// Client views //////////////////////////
 /**
  * User login and logout
  */
@@ -10,9 +10,14 @@ Route::post('/user/login', ["before" => "csrf", "uses" => "Jacopo\\Authenticatio
  * Password recovery
  */
 Route::get('/user/change-password', 'Jacopo\Authentication\Controllers\AuthController@getChangePassword');
-Route::get('/user/recupero-password', "Jacopo\\Authentication\\Controllers\\AuthController@getReminder");
+Route::get('/user/recover-password', "Jacopo\\Authentication\\Controllers\\AuthController@getReminder");
 Route::post('/user/change-password/', ["before" => "csrf", 'uses' => "Jacopo\\Authentication\\Controllers\\AuthController@postChangePassword"]);
-Route::post('/user/recupero-password', ["before" => "csrf", 'uses' => "Jacopo\\Authentication\\Controllers\\AuthController@postReminder"]);
+Route::post('/user/reminder', ["before" => "csrf", 'uses' => "Jacopo\\Authentication\\Controllers\\AuthController@postReminder"]);
+/**
+ * User signup
+ */
+Route::post('/user/signup', ["before" => "csrf", 'uses' => "Jacopo\\Authentication\\Controllers\\UserController@postSignup"]);
+Route::get('/user/signup', ['uses' => "Jacopo\\Authentication\\Controllers\\UserController@signup"]);
 
 //////////////////// Admin Panel //////////////////////////
 

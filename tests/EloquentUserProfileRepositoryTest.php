@@ -72,11 +72,9 @@ class EloquentUserProfileRepositoryTest extends DbTestCase {
     {
         return [
                 'user_id' => $user_id ? $user_id : $this->faker->numberBetween(1, 100),
-                'code' => $this->faker->text(20),
                 'first_name' => $this->faker->firstName(),
                 'last_name' => $this->faker->lastName(),
                 'phone' => $this->faker->phoneNumber(),
-                'vat' => $this->faker->randomNumber(12),
             ];
     }
 

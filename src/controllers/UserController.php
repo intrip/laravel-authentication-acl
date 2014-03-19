@@ -194,4 +194,25 @@ class UserController extends \Controller
         }
         return Redirect::action('Jacopo\Authentication\Controllers\UserController@editProfile',["user_id" => $user_profile->user_id])->withMessage("Profilo modificato con successo.");
     }
+
+    public function signup()
+    {
+        return View::make('authentication::user.signup');
+    }
+
+    public function postSignup()
+    {
+        $service = App::make('register_service');
+
+        try
+        {
+            $service->register(Input::all());
+        }
+        catch(JacopoExceptionsInterface $e)
+        {
+            return Redirect::action('Jacopo\Authentication\Controllers\UserController@signup')->withErrors($service->getErrors())->withInput();
+        }
+
+        return Redirect::action('Jacopo\Authentication\Controllers\UserController@signup')->withMessage('Registration request sent successfully. Please check your email.');
+    }
 } 

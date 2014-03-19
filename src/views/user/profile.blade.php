@@ -27,8 +27,6 @@ Admin area: Edit user profile
         <span class="text-danger">{{$errors->first('last_name')}}</span>
         {{FormField::phone(["label" => "Phone:"])}}
         <span class="text-danger">{{$errors->first('phone')}}</span>
-        {{FormField::vat(["label" => "vat"])}}
-        <span class="text-danger">{{$errors->first('vat')}}</span>
         {{FormField::state(["label" => "State: "])}}
         <span class="text-danger">{{$errors->first('state')}}</span>
         {{FormField::city(["label" => "City: "])}}
