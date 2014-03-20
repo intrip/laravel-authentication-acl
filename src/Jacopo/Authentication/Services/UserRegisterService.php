@@ -36,7 +36,7 @@ class UserRegisterService
         $this->u_r = App::make('user_repository');
         $this->p_r = App::make('profile_repository');
         $this->v = $v ? $v : new UserSignupValidator;
-        Event::listen('service.registering', 'Jacopo\Authentication\Services\UserRegisterService@sendRegistrationMailToClient');
+        Event::listen('service.registered', 'Jacopo\Authentication\Services\UserRegisterService@sendRegistrationMailToClient');
     }
 
     public function register(array $input)
@@ -48,6 +48,8 @@ class UserRegisterService
 
         $user = $this->saveDbData($input);
 
+        Event::fire('service.registered', [$input]);
+
         return $user;
     }
 
@@ -57,12 +59,12 @@ class UserRegisterService
      */
     public function sendRegistrationMailToClient($input)
     {
-        if (! Config::get('authentication::email_confirmation')) return;
+        $view_file = Config::get('authentication::email_confirmation') ? "authentication::mail.registration-waiting-client" : "authentication::mail.registration-confirmed-client";
 
         $mailer = App::make('jmailer');
 
         // send email to client
-        $mailer->sendTo( $input['email'], [ "email" => $input["email"], "password" => $input["password"], "first_name" => $input["first_name"] ], "Register request to: " . \Config::get('authentication::app_name'), "authentication::mail.registration-waiting-client");
+        $mailer->sendTo( $input['email'], [ "email" => $input["email"], "password" => $input["password"], "first_name" => $input["first_name"], "token" => App::make('authenticator')->getToken($input["email"]) ], "Register request to: " . \Config::get('authentication::app_name'), $view_file);
     }
 
     protected function getActiveInputState($input)
@@ -79,7 +81,7 @@ class UserRegisterService
     {
         $mailer = App::make('jmailer');
         // if i activate a deactivated user
-        if(isset($input["activated"]) && $input["activated"] && (! $obj->activated) ) $mailer->sendTo($obj->email, [ "email" => $input["email"] ], "Your user is activated on: ".Config::get('authentication::app_name'), "authentication::mail.registration-activated-client");
+        if(isset($input["activated"]) && $input["activated"] && (! $obj->activated) ) $mailer->sendTo($obj->email, [ "email" => $input["email"] ], "Your user is activated on: ".Config::get('authentication::app_name'), "authentication::mail.registration-confirmed-client");
     }
 
     /**
@@ -136,5 +138,10 @@ class UserRegisterService
     public function getErrors()
     {
         return $this->errors;
+    }
+
+    protected function getToken()
+    {
+        return csrf_token();
     }
 } 

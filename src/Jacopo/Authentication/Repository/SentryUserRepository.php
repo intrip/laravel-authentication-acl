@@ -142,10 +142,11 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
      *
      * @param integer id
      * @return mixed
+     * @throws \Jacopo\Library\Exceptions\NotFoundException
      */
     public function activate($id)
     {
-        // TODO: Implement activate() method.
+        return $this->find($id)->update(["activated" => true]);
     }
 
     /**

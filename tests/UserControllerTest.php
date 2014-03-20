@@ -9,6 +9,11 @@ use App;
  */
 class UserControllerTest extends TestCase {
 
+    public function tearDown()
+    {
+        m::close();
+    }
+
     /**
      * @test
      **/
@@ -50,6 +55,17 @@ class UserControllerTest extends TestCase {
         $response = $this->action('GET', 'Jacopo\Authentication\Controllers\UserController@signup');
 
         $this->assertResponseOk();
+    }
+
+    /**
+     * @test
+     **/
+    public function it_show_view_with_success_if_token_is_valid()
+    {
+        $mock_auth = m::mock('StdClass')->shouldReceive('getToken')->andReturn("1")->getMock();
+        App::instance('authenticator', $mock_auth);
+
+        $this->action('GET', 'Jacopo\Authentication\Controllers\UserController@emailConfirmation', '', ["email" => "email", "token" => "1"]);
     }
 }
  

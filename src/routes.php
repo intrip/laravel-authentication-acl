@@ -18,6 +18,7 @@ Route::post('/user/reminder', ["before" => "csrf", 'uses' => "Jacopo\\Authentica
  */
 Route::post('/user/signup', ["before" => "csrf", 'uses' => "Jacopo\\Authentication\\Controllers\\UserController@postSignup"]);
 Route::get('/user/signup', ['uses' => "Jacopo\\Authentication\\Controllers\\UserController@signup"]);
+Route::get('/user/email-confirmation', ['uses' => "Jacopo\\Authentication\\Controllers\\UserController@emailConfirmation"]);
 
 //////////////////// Admin Panel //////////////////////////
 

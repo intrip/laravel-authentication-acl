@@ -55,5 +55,24 @@ class SentryUserRepositoryTest extends DbTestCase {
                           "activated" => "activated",
                       ]);
     }
+
+    /**
+     * @test
+     **/
+    public function it_activate_a_user()
+    {
+        $repo = App::make('user_repository');
+        $input = [
+            "email" => "admin@admin.com",
+            "password" => "password",
+            "activated" => 0
+        ];
+        $repo->create($input);
+
+        $repo->activate(1);
+
+        $user = $repo->find(1);
+        $this->assertTrue($user->activated);
+    }
 }
  

@@ -84,6 +84,11 @@ class AuthenticationServiceProvider extends ServiceProvider {
             return new SentryAuthenticator;
         });
 
+        $this->app->bind('Jacopo\Authentication\Interfaces\AuthenticateInterface', function ()
+        {
+            return new SentryAuthenticator;
+        });
+
         $this->app->bind('authentication_helper', function () {
             return new SentryAuthenticationHelper;
         });

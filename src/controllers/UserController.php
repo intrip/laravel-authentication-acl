@@ -17,6 +17,7 @@ use Jacopo\Authentication\Validators\UserValidator;
 use Jacopo\Library\Exceptions\JacopoExceptionsInterface;
 use Jacopo\Authentication\Validators\UserProfileValidator;
 use View, Input, Redirect, App;
+use Jacopo\Authentication\Interfaces\AuthenticateInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class UserController extends \Controller
@@ -42,7 +43,12 @@ class UserController extends \Controller
      * @var UserProfileValidator
      */
     protected $v_p;
-    public function __construct(UserValidator $v, FormHelper $fh, UserProfileValidator $vp)
+    /**
+     * @var use Jacopo\Authentication\Interfaces\AuthenticateInterface;
+     */
+    protected $auth;
+
+    public function __construct(UserValidator $v, FormHelper $fh, UserProfileValidator $vp, AuthenticateInterface $auth)
     {
         $this->r = App::make('user_repository');
         $this->v = $v;
@@ -50,6 +56,7 @@ class UserController extends \Controller
         $this->fh = $fh;
         $this->v_p = $vp;
         $this->r_p = App::make('profile_repository');
+        $this->auth = $auth;
 
     }
 
@@ -214,5 +221,13 @@ class UserController extends \Controller
         }
 
         return Redirect::action('Jacopo\Authentication\Controllers\UserController@signup')->withMessage('Registration request sent successfully. Please check your email.');
+    }
+
+    public function emailConfirmation()
+    {
+        $email = Input::get('email');
+        $token = Input::get('token');
+
+        if ($token != $this->auth->getToken($email)) ; //@todo from here
     }
 } 
