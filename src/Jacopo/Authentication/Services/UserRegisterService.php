@@ -1,13 +1,12 @@
 <?php  namespace Jacopo\Authentication\Services;
 use Illuminate\Support\Facades\App;
-use Config, Redirect, DB;
+use Config, Redirect, DB, Event;
 use Illuminate\Support\MessageBag;
 use Jacopo\Authentication\Exceptions\UserExistsException;
 use Jacopo\Authentication\Validators\UserSignupValidator;
 use Jacopo\Library\Exceptions\NotFoundException;
 use Jacopo\Library\Exceptions\JacopoExceptionsInterface;
 use Jacopo\Library\Exceptions\ValidationException;
-use Event;
 /**
  * Class UserRegisterService
  *
@@ -58,16 +57,17 @@ class UserRegisterService
      */
     public function sendRegistrationMailToClient($input)
     {
-        if (! Config::get('email_confirmation')) return;
+        if (! Config::get('authentication::email_confirmation')) return;
 
         $mailer = App::make('jmailer');
+
         // send email to client
-        $mailer->sendTo( $input['email'], [ "email" => $input["email"], "password" => $input["password"] ], "Register request to: " . \Config::get('authentication::app_name'), "authentication::mail.registration-waiting-client");
+        $mailer->sendTo( $input['email'], [ "email" => $input["email"], "password" => $input["password"], "first_name" => $input["first_name"] ], "Register request to: " . \Config::get('authentication::app_name'), "authentication::mail.registration-waiting-client");
     }
 
     protected function getActiveInputState($input)
     {
-        return Config::get('email_confirmation') ? false : true;
+        return Config::get('authentication::email_confirmation') ? false : true;
     }
 
     /**

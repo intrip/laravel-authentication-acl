@@ -43,10 +43,13 @@ class UserRegisterServiceTest extends DbTestCase {
      **/
     public function it_register_a_user()
     {
+        $this->stopEventPropagation();
+
         $input = [
             "email" => "test@test.com",
             "password" => "password@test.com",
-            "activated" => 0
+            "activated" => 0,
+            "first_name" => "first_name"
         ];
         $mock_validator = $this->getValidatorSuccess();
         $service = new UserRegisterService($mock_validator);
@@ -61,10 +64,13 @@ class UserRegisterServiceTest extends DbTestCase {
      **/
     public function it_create_a_profile()
     {
+        $this->stopEventPropagation();
+
         $input = [
             "email" => "test@test.com",
             "password" => "password@test.com",
-            "activated" => 0
+            "activated" => 0,
+            "first_name" => "first_name"
         ];
         $mock_validator = $this->getValidatorSuccess();
         $service = new UserRegisterService($mock_validator);
@@ -97,11 +103,14 @@ class UserRegisterServiceTest extends DbTestCase {
      **/
     public function it_validates_user_input()
     {
+        $this->stopEventPropagation();
+
         $mock_validator = $this->getValidatorSuccess();
         $input = [
             "email" => "test@test.com",
             "password" => "password@test.com",
-            "activated" => 0
+            "activated" => 0,
+            "first_name" => "first_name"
         ];
 
         $service = new UserRegisterService($mock_validator);
@@ -205,9 +214,10 @@ class UserRegisterServiceTest extends DbTestCase {
         Event::listen('service.registering', function($input) use(&$success)
         {
            $success = true;
-        });
+           return false;
+        },1000);
 
-        $service->register(["email" => "email", "password" => "p", "activated" => 1]);
+        $service->register(["email" => "email", "password" => "p", "activated" => 1, "first_name" => "first_name"]);
         $this->assertTrue($success);
     }
 
@@ -217,7 +227,7 @@ class UserRegisterServiceTest extends DbTestCase {
     public function it_send_registration_mail_to_client_if_activated()
     {
         Config::shouldReceive('get')->andReturn(true);
-        $mock_mailer = m::mock('StdClass')->shouldReceive('sendTo')->once()->andReturn(true)->getMock();
+        $mock_mailer = m::mock('StdClass')->shouldReceive('sendTo')->once()->with('email@email.com', m::any(), m::any(), m::any())->andReturn(true)->getMock();
         App::instance('jmailer', $mock_mailer);
         $mock_validator = $this->getValidatorSuccess();
         $user_stub = new User();
@@ -236,7 +246,7 @@ class UserRegisterServiceTest extends DbTestCase {
         App::instance('profile_repository', $mock_p_r);
         $service = new UserRegisterService($mock_validator);
 
-        $service->register(["email" => "email", "password" => "p", "activated" => 1]);
+        $service->register(["email" => "email@email.com", "password" => "p", "activated" => 1, "first_name" => "first_name"]);
     }
 
     /**

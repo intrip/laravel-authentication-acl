@@ -27,6 +27,7 @@
                 <div class="panel-heading">
                     <h3 class="panel-title">Please sign up for {{Config::get('authentication::app_name')}}</h3>
                 </div>
+                <?php $message = Session::get('message'); ?>
                 @if( isset($message) )
                 <div class="alert alert-success">{{$message}}</div>
                 @endif

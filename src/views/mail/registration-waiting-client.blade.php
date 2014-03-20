@@ -4,11 +4,13 @@
     <meta charset="utf-8">
 </head>
 <body>
-<h2>Richiesta di registrazione su {{Config::get('authentication::app_name')}}</h2>
+<h2>Registration request on: {{Config::get('authentication::app_name')}}</h2>
 <div>
-    <strong>La richiesta di registrazione è stata inoltrata con successo. Un moderatore validerà i dati da te inseriti</strong>
+    <h3>Dear: {{$body['first_name']}}</h3>
+    <strong>You account has been created. However, before you can use it you need to confirm your email address first by clicking the following link</strong>
     <br/>
-    <strong>Riepilogo dati: </strong>
+    {{-- TODO --}}
+    <strong>Please find your account details below: </strong>
     <ul>
         <li>Username: {{$body['email']}}</li>
         <li>Password: {{$body['password']}}</li>
