@@ -8,7 +8,7 @@
 <div>
     <h3>Dear: {{$body['email']}}</h3>
     <strong>You email has been confirmed succesfully.</strong>
-    You can go to our website using the <a href="{{URL::to('/')}}" target="_blank">Following link</a>
+    You can now login to our website using the <a href="{{URL::to('/user/login')}}">Following link</a>.
 </div>
 </body>
 </html>
