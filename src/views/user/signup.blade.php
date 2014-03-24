@@ -36,13 +36,13 @@
                         <div class="row">
                             <div class="col-xs-6 col-sm-6 col-md-6">
                                 <div class="form-group">
-                                    {{Form::text('first_name', '', ['id' => 'first_name', 'class' => 'form-control', 'placeholder' => 'First Name', 'required'])}}
+                                    {{Form::text('first_name', '', ['id' => 'first_name', 'class' => 'form-control', 'placeholder' => 'First Name', 'required', 'autocomplete' => 'off'])}}
                                     <span class="text-danger">{{$errors->first('first_name')}}</span>
                                 </div>
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-6">
                                 <div class="form-group">
-                                    {{Form::text('last_name', '', ['id' => 'last_name', 'class' => 'form-control', 'placeholder' => 'Last Name', 'required'])}}
+                                    {{Form::text('last_name', '', ['id' => 'last_name', 'class' => 'form-control', 'placeholder' => 'Last Name', 'required', 'autocomplete' => 'off'])}}
                                     <span class="text-danger">{{$errors->first('last_name')}}</span>
 
                                 </div>
@@ -50,7 +50,7 @@
                         </div>
 
                         <div class="form-group">
-                            {{Form::email('email', '', ['id' => 'email', 'class' => 'form-control', 'placeholder' => 'Email address', 'required'])}}
+                            {{Form::email('email', '', ['id' => 'email', 'class' => 'form-control', 'placeholder' => 'Email address', 'required', 'autocomplete' => 'off'])}}
                             <span class="text-danger">{{$errors->first('email')}}</span>
 
                         </div>
@@ -58,7 +58,7 @@
                         <div class="row">
                             <div class="col-xs-6 col-sm-6 col-md-6">
                                 <div class="form-group">
-                                    {{Form::password('password', ['id' => 'password', 'class' => 'form-control', 'placeholder' => 'Password', 'required'])}}
+                                    {{Form::password('password', ['id' => 'password', 'class' => 'form-control', 'placeholder' => 'Password', 'required', 'autocomplete' => 'off'])}}
                                     <span class="text-danger">{{$errors->first('password')}}</span>
 
                                 </div>

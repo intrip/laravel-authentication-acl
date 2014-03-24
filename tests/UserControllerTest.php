@@ -1,4 +1,6 @@
 <?php  namespace Jacopo\Authentication\Tests; 
+use Jacopo\Authentication\Exceptions\UserNotFoundException;
+use Jacopo\Library\Exceptions\NotFoundException;
 use Jacopo\Library\Exceptions\ValidationException;
 use Mockery as m;
 use App;
@@ -7,7 +9,7 @@ use App;
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
-class UserControllerTest extends TestCase {
+class UserControllerTest extends DbTestCase {
 
     public function tearDown()
     {
@@ -62,10 +64,60 @@ class UserControllerTest extends TestCase {
      **/
     public function it_show_view_with_success_if_token_is_valid()
     {
-        $mock_auth = m::mock('StdClass')->shouldReceive('getToken')->andReturn("1")->getMock();
-        App::instance('authenticator', $mock_auth);
+        $email = "mail";
+        $token = "_token";
+        $mock_service = m::mock('StdClass')->shouldReceive('checkUserActivactionCode')->once()->with($email,$token)->getMock();
+        App::instance('register_service', $mock_service);
 
-        $this->action('GET', 'Jacopo\Authentication\Controllers\UserController@emailConfirmation', '', ["email" => "email", "token" => "1"]);
+        $this->action('GET', 'Jacopo\Authentication\Controllers\UserController@emailConfirmation', '', ["email" => $email, "token" => $token]);
+
+        $this->assertResponseOk();
+    }
+
+    /**
+     * @test
+     **/
+    public function it_show_view_with_error_if_token_is_invalid()
+    {
+        $email = "mail";
+        $token = "_token";
+        $mock_service = m::mock('StdClass')->shouldReceive('checkUserActivactionCode')
+            ->once()
+            ->with($email,$token)
+            ->andThrow( new \Jacopo\Authentication\Exceptions\TokenMismatchException)
+            ->shouldReceive('getErrors')
+            ->once()
+            ->andReturn("")
+            ->getMock();
+        App::instance('register_service', $mock_service);
+
+        $this->action('GET', 'Jacopo\Authentication\Controllers\UserController@emailConfirmation', '', ["email" => $email, "token" => $token]);
+
+        $this->assertResponseOk();
+        $this->assertViewHas('errors');
+    }
+
+    /**
+     * @test
+     **/
+    public function it_show_view_errors_if_user_is_not_found()
+    {
+        $email = "mail";
+        $token = "_token";
+        $mock_service = m::mock('StdClass')->shouldReceive('checkUserActivactionCode')
+            ->once()
+            ->with($email,$token)
+            ->andThrow( new \Jacopo\Authentication\Exceptions\UserNotFoundException())
+            ->shouldReceive('getErrors')
+            ->once()
+            ->andReturn("")
+            ->getMock();
+        App::instance('register_service', $mock_service);
+
+        $this->action('GET', 'Jacopo\Authentication\Controllers\UserController@emailConfirmation', '', ["email" => $email, "token" => $token]);
+
+        $this->assertResponseOk();
+        $this->assertViewHas('errors');
     }
 }
  

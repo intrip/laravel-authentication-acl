@@ -88,14 +88,13 @@ class UserRegisterServiceTest extends DbTestCase {
     public function it_sends_activation_email_to_the_client_on_activation()
     {
         $service = new UserRegisterService;
-        $user_unactive = new \StdClass;
-        $user_unactive->email = "user@user.com";
-        $user_unactive->activated = 0;
+        $user = new \StdClass;
+        $user->email = "user@user.com";
 
         $mock_mailer = m::mock('StdClass')->shouldReceive('sendTo')->once()->with("user@user.com", m::any(), m::any(), "authentication::mail.registration-confirmed-client")->andReturn(true)->getMock();
         App::instance('jmailer', $mock_mailer);
 
-        $service->sendActivationEmailToClient($user_unactive, ["activated" => 1, "email" => '']);
+        $service->sendActivationEmailToClient($user);
     }
     
     /**
@@ -270,7 +269,7 @@ class UserRegisterServiceTest extends DbTestCase {
             ->andReturn(true)
             ->getMock();
         App::instance('profile_repository', $mock_p_r);
-        $mock_auth = m::mock('StdClass')->shouldReceive('getToken')->andReturn(true)->getMock();
+        $mock_auth = m::mock('StdClass')->shouldReceive('getActivationToken')->andReturn(true)->getMock();
         App::instance('authenticator', $mock_auth);
         $service = new UserRegisterService($mock_validator);
 
@@ -301,7 +300,7 @@ class UserRegisterServiceTest extends DbTestCase {
             ->andReturn(true)
             ->getMock();
         App::instance('profile_repository', $mock_p_r);
-        $mock_auth = m::mock('StdClass')->shouldReceive('getToken')->andReturn(true)->getMock();
+        $mock_auth = m::mock('StdClass')->shouldReceive('getActivationToken')->andReturn(true)->getMock();
         App::instance('authenticator', $mock_auth);
         $service = new UserRegisterService($mock_validator);
 
@@ -328,6 +327,105 @@ class UserRegisterServiceTest extends DbTestCase {
         $state = $service->getActiveInputState($input);
 
         $this->assertFalse($state);
+    }
+
+    /**
+     * @test
+     **/
+    public function it_check_user_activaction_code()
+    {
+        $this->stopEventPropagation();
+
+        $user_stub = new \StdClass;
+        $user_stub->activation_code = "12345_";
+        $user_stub->email = "";
+        $mock_repo = m::mock('StdClass')->shouldReceive('findByLogin')->andReturn($user_stub)
+            ->shouldReceive('activate')
+            ->once()
+            ->andReturn(true)
+            ->getMock();
+        App::instance('user_repository', $mock_repo);
+        $email = "mail@mail.com";
+        $token = "12345_";
+        $service = new UserRegisterService;
+
+        $service->checkUserActivationCode($email, $token);
+    }
+    
+    /**
+     * @test
+     **/
+    public function it_check_for_activation_and_throw_not_found_exception()
+    {
+        $service = new UserRegisterService;
+        $email = "mail@mail.com";
+        $token = "12345_";
+        $gotcha = false;
+
+        try
+        {
+            $service->checkUserActivationCode($email, $token);
+        }catch(\Jacopo\Authentication\Exceptions\UserNotFoundException $e)
+        {
+            $gotcha = true;
+        }
+
+        $this->assertTrue($gotcha);
+        $this->assertNotEmpty($service->getErrors());
+    }
+
+    /**
+     * @test
+     **/
+    public function it_check_for_activaction_code_and_throw_token_mismatch_exception_and_set_errors()
+    {
+        $user_stub = m::mock('Jacopo\Authentication\Modles\User')->makePartial()->shouldReceive('checkResetPasswordCode')->andReturn(false)->getMock();
+        $user_stub->activation_code = "";
+        $mock_repo = m::mock('StdClass')->shouldReceive('findByLogin')->andReturn($user_stub)->getMock();
+        App::instance('user_repository', $mock_repo);
+        $email = "mail@mail.com";
+        $token = "12345_";
+        $service = new UserRegisterService;
+        $gotcha = false;
+
+        try
+        {
+            $service->checkUserActivationCode($email, $token);
+        }catch(\Jacopo\Authentication\Exceptions\TokenMismatchException $e)
+        {
+            $gotcha = true;
+        }
+
+        $this->assertTrue($gotcha);
+        $this->assertNotEmpty($service->getErrors());
+    }
+    
+    /**
+     * @test
+     **/
+    public function it_fire_an_event_when_checking_for_user_mail_confirmation()
+    {
+        $user_stub = m::mock('Jacopo\Authentication\Modles\User');
+        $user_stub->activation_code = "12345_";
+        $mock_repo = m::mock('StdClass')->shouldReceive('findByLogin')->andReturn($user_stub)
+            ->shouldReceive('activate')
+            ->once()
+            ->andReturn(true)
+            ->getMock();
+        App::instance('user_repository', $mock_repo);
+        $email = "mail@mail.com";
+        $token = "12345_";
+        $service = new UserRegisterService;
+
+        $event_fired = false;
+
+        Event::listen('service.activated', function() use(&$event_fired){
+            $event_fired = true;
+            return false;
+        },1000);
+        $service->checkUserActivationCode($email, $token);
+
+        $this->assertTrue($event_fired);
     }
 
     /**

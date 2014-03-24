@@ -5,6 +5,7 @@ namespace Jacopo\Authentication\Repository;
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
+use DateTime;
 use Jacopo\Authentication\Repository\Interfaces\UserRepositoryInterface;
 use Jacopo\Library\Repository\EloquentBaseRepository;
 use Jacopo\Library\Repository\Interfaces\BaseRepositoryInterface;
@@ -14,6 +15,7 @@ use Jacopo\Authentication\Models\User;
 use Jacopo\Authentication\Models\Group;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Cartalyst\Sentry\Users\UserExistsException as CartaUserExists;
+use Cartalyst\Sentry\Users\UserNotFoundException;
 use Event;
 
 class SentryUserRepository extends EloquentBaseRepository implements UserRepositoryInterface
@@ -140,13 +142,18 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
     /**
      * Activates a user
      *
-     * @param integer id
+     * @param string login_name
      * @return mixed
      * @throws \Jacopo\Library\Exceptions\NotFoundException
      */
-    public function activate($id)
+    public function activate($login_name)
     {
-        return $this->find($id)->update(["activated" => true]);
+        $user = $this->findByLogin($login_name);
+
+        $user->activation_code = null;
+        $user->activated       = true;
+        $user->activated_at    = new DateTime;
+        return $user->save();
     }
 
     /**
@@ -170,5 +177,22 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
     public function suspend($id, $duration)
     {
         // TODO: Implement suspend() method.
+    }
+
+    /**
+     * @param $login_name
+     */
+    public function findByLogin($login_name)
+    {
+        try
+        {
+            $user = $this->sentry->findUserByLogin($login_name);
+        }
+        catch(UserNotFoundException $e)
+        {
+            throw new NotFoundException;
+        }
+
+        return $user;
     }
 }

@@ -3,7 +3,7 @@
 interface AuthenticateInterface
 {
     /**
-     * Effettua l'autenticazione di un utente
+     * Force authentication on a user
      * @param $credentials
      * @param $remember
      * @return mixed
@@ -11,7 +11,6 @@ interface AuthenticateInterface
     public function authenticate($credentials, $remember);
 
     /**
-     * Logga un'utente prestabilito
      *
      * @param $user
      * @param $remember
@@ -26,13 +25,12 @@ interface AuthenticateInterface
     public function logout();
 
     /**
-     * Ritorna errori di autenticazione o altro
      * @return mixed
      */
     public function getErrors();
 
     /**
-     * Ritorna l'utente data la sua mail
+     * Obtain the user with his email
      *
      * @param $email
      * @return mixed
@@ -42,9 +40,9 @@ interface AuthenticateInterface
     public function getUser($email);
 
     /**
-     * Ritorna il token associato alla mail
+     * Gets the user activaction token
      * @param $email
      * @return String
      */
-    public function getToken($email);
+    public function getActivationToken($email);
 }

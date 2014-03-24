@@ -32,13 +32,13 @@ class SentryAuthenticatorTest extends TestCase {
         $success = $auth->getUser("");
 	}
 
-    public function testGetTokenWorks()
+    public function testGetActivationTokenWorks()
     {
-        $mock_user = m::mock('StdClass')->shouldReceive('getResetPasswordCode')->andReturn(true)->getMock();
+        $mock_user = m::mock('StdClass')->shouldReceive('getActivationCode')->andReturn(true)->getMock();
         $mock_auth = m::mock('Jacopo\Authentication\Classes\SentryAuthenticator')->makePartial();
         $mock_auth->shouldReceive('getUser')->andReturn($mock_user);
 
-        $token = $mock_auth->getToken("");
+        $token = $mock_auth->getActivationToken("");
         $this->assertEquals(true, $token);
     }
 

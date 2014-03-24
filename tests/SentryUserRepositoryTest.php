@@ -41,7 +41,7 @@ class SentryUserRepositoryTest extends DbTestCase {
      * @test
      * @expectedException \Jacopo\Authentication\Exceptions\UserExistsException
      **/
-    public function it_trhows_exception_if_user_aready_exists()
+    public function it_throws_exception_if_user_aready_exists()
     {
         $mock_sentry = m::mock('StdClass');
         $mock_sentry->shouldReceive('createUser')
@@ -65,14 +65,45 @@ class SentryUserRepositoryTest extends DbTestCase {
         $input = [
             "email" => "admin@admin.com",
             "password" => "password",
+            "activated" => 0,
+            "activation_code" => "code"
+        ];
+        $repo->create($input);
+
+        $repo->activate("admin@admin.com");
+
+        $user = $repo->find(1);
+        $this->assertTrue($user->activated);
+        $this->assertNotEmpty($user->activated_at);
+        $this->assertNull($user->activation_code);
+    }
+
+    /**
+     * @test
+     **/
+    public function it_find_user_by_login_name()
+    {
+        $repo = App::make('user_repository');
+        $input = [
+            "email" => "admin@admin.com",
+            "password" => "password",
             "activated" => 0
         ];
         $repo->create($input);
 
-        $repo->activate(1);
+        $user = $repo->findByLogin("admin@admin.com");
+        $this->assertEquals("admin@admin.com", $user->email);
+    }
 
-        $user = $repo->find(1);
-        $this->assertTrue($user->activated);
+    /**
+     * @test
+     * @expectedException Jacopo\Authentication\Exceptions\UserNotFoundException
+     **/
+    public function it_throws_exception_if_cannot_find_user_by_login()
+    {
+        $repo = App::make('user_repository');
+        $user = $repo->findByLogin("admin@admin.com");
+        $this->assertEquals("admin@admin.com", $user->email);
     }
 }
  

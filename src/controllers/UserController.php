@@ -47,6 +47,10 @@ class UserController extends \Controller
      * @var use Jacopo\Authentication\Interfaces\AuthenticateInterface;
      */
     protected $auth;
+    /**
+     * Register Service
+     */
+    protected $s_register;
 
     public function __construct(UserValidator $v, FormHelper $fh, UserProfileValidator $vp, AuthenticateInterface $auth)
     {
@@ -57,6 +61,7 @@ class UserController extends \Controller
         $this->v_p = $vp;
         $this->r_p = App::make('profile_repository');
         $this->auth = $auth;
+        $this->s_register = App::make('register_service');
 
     }
 
@@ -228,6 +233,14 @@ class UserController extends \Controller
         $email = Input::get('email');
         $token = Input::get('token');
 
-        if ($token != $this->auth->getToken($email)) ; //@todo from here
+        try
+        {
+            $this->s_register->checkUserActivactionCode($email, $token);
+        }
+        catch(JacopoExceptionsInterface $e)
+        {
+            return View::make('authentication::auth.email-confirmation')->withErrors($this->s_register->getErrors());
+        }
+        return View::make('authentication::auth.email-confirmation');
     }
 } 

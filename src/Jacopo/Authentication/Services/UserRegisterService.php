@@ -3,10 +3,12 @@ use Illuminate\Support\Facades\App;
 use Config, Redirect, DB, Event;
 use Illuminate\Support\MessageBag;
 use Jacopo\Authentication\Exceptions\UserExistsException;
+use Jacopo\Authentication\Exceptions\UserNotFoundException;
 use Jacopo\Authentication\Validators\UserSignupValidator;
 use Jacopo\Library\Exceptions\NotFoundException;
 use Jacopo\Library\Exceptions\JacopoExceptionsInterface;
 use Jacopo\Library\Exceptions\ValidationException;
+use Jacopo\Authentication\Exceptions\TokenMismatchException;
 /**
  * Class UserRegisterService
  *
@@ -37,6 +39,7 @@ class UserRegisterService
         $this->p_r = App::make('profile_repository');
         $this->v = $v ? $v : new UserSignupValidator;
         Event::listen('service.registered', 'Jacopo\Authentication\Services\UserRegisterService@sendRegistrationMailToClient');
+        Event::listen('service.activated', 'Jacopo\Authentication\Services\UserRegisterService@sendActivationEmailToClient');
     }
 
     public function register(array $input)
@@ -64,7 +67,7 @@ class UserRegisterService
         $mailer = App::make('jmailer');
 
         // send email to client
-        $mailer->sendTo( $input['email'], [ "email" => $input["email"], "password" => $input["password"], "first_name" => $input["first_name"], "token" => App::make('authenticator')->getToken($input["email"]) ], "Register request to: " . \Config::get('authentication::app_name'), $view_file);
+        $mailer->sendTo( $input['email'], [ "email" => $input["email"], "password" => $input["password"], "first_name" => $input["first_name"], "token" => App::make('authenticator')->getActivationToken($input["email"]) ], "Register request to: " . \Config::get('authentication::app_name'), $view_file);
     }
 
     protected function getActiveInputState($input)
@@ -77,11 +80,11 @@ class UserRegisterService
      * @param $obj
      * @todo
      */
-    public function sendActivationEmailToClient($obj, array $input)
+    public function sendActivationEmailToClient($user)
     {
         $mailer = App::make('jmailer');
         // if i activate a deactivated user
-        if(isset($input["activated"]) && $input["activated"] && (! $obj->activated) ) $mailer->sendTo($obj->email, [ "email" => $input["email"] ], "Your user is activated on: ".Config::get('authentication::app_name'), "authentication::mail.registration-confirmed-client");
+        $mailer->sendTo($user->email, [ "email" => $user->email ], "Your user is activated on: ".Config::get('authentication::app_name'), "authentication::mail.registration-confirmed-client");
     }
 
     /**
@@ -135,6 +138,35 @@ class UserRegisterService
         }
     }
 
+    /**
+     * @param $email
+     * @param $token
+     * @throws Jacopo\Authentication\Exceptions\UserNotFoundException
+     * @throws Jacopo\Authentication\Exceptions\TokenMismatchException
+     */
+    public function checkUserActivationCode($email, $token)
+    {
+        $token_msg = "The given token/email are invalid.";
+
+        try
+        {
+            $user = $this->u_r->findByLogin($email);
+        }
+        catch(UserNotFoundException $e)
+        {
+            $this->errors = new MessageBag(["token" => $token_msg]);
+            throw new UserNotFoundException;
+        }
+        if( $user->activation_code != $token)
+        {
+            $this->errors = new MessageBag(["token" => $token_msg]);
+            throw new TokenMismatchException;
+        }
+
+        $this->u_r->activate($email);
+        Event::fire('service.activated', $user);
+    }
+    
     public function getErrors()
     {
         return $this->errors;

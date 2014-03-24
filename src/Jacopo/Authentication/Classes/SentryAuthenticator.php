@@ -113,10 +113,10 @@ class SentryAuthenticator implements AuthenticateInterface{
     /**
      * {@inheritdoc}
      */
-    public function getToken($email)
+    public function getActivationToken($email)
     {
         $user = $this->getUser($email);
 
-        return $user->getResetPasswordCode();
+        return $user->getActivationCode();
     }
 }
