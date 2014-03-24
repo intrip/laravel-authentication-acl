@@ -43,8 +43,6 @@ class UserRegisterServiceTest extends DbTestCase {
      **/
     public function it_register_a_user()
     {
-        $this->stopEventPropagation();
-
         $input = [
             "email" => "test@test.com",
             "password" => "password@test.com",
@@ -52,7 +50,7 @@ class UserRegisterServiceTest extends DbTestCase {
             "first_name" => "first_name"
         ];
         $mock_validator = $this->getValidatorSuccess();
-        $service = new UserRegisterService($mock_validator);
+        $service = new UserRegisterServiceNoMails($mock_validator);
 
         $user= $service->register($input);
 
@@ -64,8 +62,6 @@ class UserRegisterServiceTest extends DbTestCase {
      **/
     public function it_create_a_profile()
     {
-        $this->stopEventPropagation();
-
         $input = [
             "email" => "test@test.com",
             "password" => "password@test.com",
@@ -73,7 +69,7 @@ class UserRegisterServiceTest extends DbTestCase {
             "first_name" => "first_name"
         ];
         $mock_validator = $this->getValidatorSuccess();
-        $service = new UserRegisterService($mock_validator);
+        $service = new UserRegisterServiceNoMails($mock_validator);
 
         $service->register($input);
 
@@ -102,8 +98,6 @@ class UserRegisterServiceTest extends DbTestCase {
      **/
     public function it_validates_user_input()
     {
-        $this->stopEventPropagation();
-
         $mock_validator = $this->getValidatorSuccess();
         $input = [
             "email" => "test@test.com",
@@ -112,7 +106,7 @@ class UserRegisterServiceTest extends DbTestCase {
             "first_name" => "first_name"
         ];
 
-        $service = new UserRegisterService($mock_validator);
+        $service = new UserRegisterServiceNoMails($mock_validator);
 
         $service->register($input);
     }
@@ -155,19 +149,6 @@ class UserRegisterServiceTest extends DbTestCase {
 
     /**
      * @test
-     **/
-    public function it_doesnt_send_email_on_activation_if_client_is_aready_active()
-    {
-        $service = new UserRegisterService;
-        $user_unactive = new \StdClass;
-        $user_unactive->email = "user@user.com";
-        $user_unactive->activated = 1;
-
-        $service->sendActivationEmailToClient($user_unactive, ["activated" => 1]);
-    }
-
-    /**
-     * @test
      * @expectedException \Jacopo\Authentication\Exceptions\UserExistsException
      **/
     public function it_throws_user_exists_exception_if_user_exists()
@@ -175,9 +156,8 @@ class UserRegisterServiceTest extends DbTestCase {
         $mock_validator = $this->getValidatorSuccess();
         $mock_repo = m::mock('StdClass')->shouldReceive('create')->andThrow(new UserExistsException)->getMock();
         App::instance('user_repository', $mock_repo);
-        $this->stopEventPropagation();
 
-        $service = new UserRegisterService($mock_validator);
+        $service = new UserRegisterServiceNoMails($mock_validator);
 
         $service->register([]);
     }
@@ -199,49 +179,6 @@ class UserRegisterServiceTest extends DbTestCase {
         $service = new UserRegisterService($mock_validator);
 
         $service->register(["group_id" => 1]);
-    }
-
-    /**
-     * @test
-     **/
-    public function it_fire_an_event_before_and_after_saving_data()
-    {
-        $mock_validator = $this->getValidatorSuccess();
-        $success = false;
-        $service = new UserRegisterService($mock_validator);
-
-        // fire event before
-        Event::listen('service.registering', function($input) use(&$success)
-        {
-            $success = true;
-            return false;
-        },1000);
-
-        Event::listen('service.registered', function($input) use(&$success)
-        {
-            return false;
-        },1000);
-
-        $service->register(["email" => "email", "password" => "p", "activated" => 1, "first_name" => "first_name"]);
-
-        $this->assertTrue($success);
-
-        // fire event after
-        $success = false;
-        Event::listen('service.registering', function($input) use(&$success)
-        {
-            return false;
-        },1000);
-
-        Event::listen('service.registered', function($input) use(&$success)
-        {
-            $success = true;
-            return false;
-        },1000);
-
-        $service->register(["email" => "email2", "password" => "p", "activated" => 1, "first_name" => "first_name"]);
-
-        $this->assertTrue($success);
     }
 
     /**
@@ -334,8 +271,6 @@ class UserRegisterServiceTest extends DbTestCase {
      **/
     public function it_check_user_activaction_code()
     {
-        $this->stopEventPropagation();
-
         $user_stub = new \StdClass;
         $user_stub->activation_code = "12345_";
         $user_stub->email = "";
@@ -347,7 +282,7 @@ class UserRegisterServiceTest extends DbTestCase {
         App::instance('user_repository', $mock_repo);
         $email = "mail@mail.com";
         $token = "12345_";
-        $service = new UserRegisterService;
+        $service = new UserRegisterServiceNoMails;
 
         $service->checkUserActivationCode($email, $token);
     }
@@ -447,12 +382,12 @@ class UserRegisterServiceTest extends DbTestCase {
 
         return $mock_validator;
     }
+}
 
-    protected function stopEventPropagation()
+class UserRegisterServiceNoMails extends UserRegisterService
+{
+    protected function sendRegistrationMailToClient($input)
     {
-        Event::listen('service.registered', function()
-        {
-            return false;
-        });
+        // silence is golen...
     }
 }

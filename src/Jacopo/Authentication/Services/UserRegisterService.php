@@ -32,26 +32,29 @@ class UserRegisterService
      * @var \Illuminate\Support\MessageBag
      */
     protected $errors;
+    /**
+     * If email activation is enabled
+     * @var boolean
+     */
+    protected $activation_enabled;
 
     public function __construct(UserSignupValidator $v = null)
     {
         $this->u_r = App::make('user_repository');
         $this->p_r = App::make('profile_repository');
         $this->v = $v ? $v : new UserSignupValidator;
-        Event::listen('service.registered', 'Jacopo\Authentication\Services\UserRegisterService@sendRegistrationMailToClient');
+        $this->activation_enabled = Config::get('authentication::email_confirmation');
         Event::listen('service.activated', 'Jacopo\Authentication\Services\UserRegisterService@sendActivationEmailToClient');
     }
 
     public function register(array $input)
     {
         $this->validateInput($input);
-        $input['activated'] = $this->getActiveInputState($input);
-
-        Event::fire('service.registering', [$input]);
+        $input['activated'] = $this->getActiveInputState();
 
         $user = $this->saveDbData($input);
 
-        Event::fire('service.registered', [$input]);
+        $this->sendRegistrationMailToClient($input);
 
         return $user;
     }
@@ -60,17 +63,17 @@ class UserRegisterService
      * @param $mailer
      * @param $user
      */
-    public function sendRegistrationMailToClient($input)
+    protected function sendRegistrationMailToClient($input)
     {
-        $view_file = Config::get('authentication::email_confirmation') ? "authentication::mail.registration-waiting-client" : "authentication::mail.registration-confirmed-client";
+        $view_file = $this->activation_enabled ? "authentication::mail.registration-waiting-client" : "authentication::mail.registration-confirmed-client";
 
         $mailer = App::make('jmailer');
 
         // send email to client
-        $mailer->sendTo( $input['email'], [ "email" => $input["email"], "password" => $input["password"], "first_name" => $input["first_name"], "token" => App::make('authenticator')->getActivationToken($input["email"]) ], "Register request to: " . \Config::get('authentication::app_name'), $view_file);
+        $mailer->sendTo( $input['email'], [ "email" => $input["email"], "password" => $input["password"], "first_name" => $input["first_name"], "token" => $this->activation_enabled ? App::make('authenticator')->getActivationToken($input["email"]) :'' ], "Register request to: " . \Config::get('authentication::app_name'), $view_file);
     }
 
-    protected function getActiveInputState($input)
+    protected function getActiveInputState()
     {
         return Config::get('authentication::email_confirmation') ? false : true;
     }
@@ -78,7 +81,6 @@ class UserRegisterService
     /**
      * Send activation email to the client if it's getting activated
      * @param $obj
-     * @todo
      */
     public function sendActivationEmailToClient($user)
     {

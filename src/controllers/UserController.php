@@ -235,7 +235,7 @@ class UserController extends \Controller
 
         try
         {
-            $this->s_register->checkUserActivactionCode($email, $token);
+            $this->s_register->checkUserActivationCode($email, $token);
         }
         catch(JacopoExceptionsInterface $e)
         {

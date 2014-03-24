@@ -66,7 +66,7 @@ class UserControllerTest extends DbTestCase {
     {
         $email = "mail";
         $token = "_token";
-        $mock_service = m::mock('StdClass')->shouldReceive('checkUserActivactionCode')->once()->with($email,$token)->getMock();
+        $mock_service = m::mock('StdClass')->shouldReceive('checkUserActivationCode')->once()->with($email,$token)->getMock();
         App::instance('register_service', $mock_service);
 
         $this->action('GET', 'Jacopo\Authentication\Controllers\UserController@emailConfirmation', '', ["email" => $email, "token" => $token]);
@@ -81,7 +81,7 @@ class UserControllerTest extends DbTestCase {
     {
         $email = "mail";
         $token = "_token";
-        $mock_service = m::mock('StdClass')->shouldReceive('checkUserActivactionCode')
+        $mock_service = m::mock('StdClass')->shouldReceive('checkUserActivationCode')
             ->once()
             ->with($email,$token)
             ->andThrow( new \Jacopo\Authentication\Exceptions\TokenMismatchException)
@@ -104,7 +104,7 @@ class UserControllerTest extends DbTestCase {
     {
         $email = "mail";
         $token = "_token";
-        $mock_service = m::mock('StdClass')->shouldReceive('checkUserActivactionCode')
+        $mock_service = m::mock('StdClass')->shouldReceive('checkUserActivationCode')
             ->once()
             ->with($email,$token)
             ->andThrow( new \Jacopo\Authentication\Exceptions\UserNotFoundException())
