@@ -49,6 +49,8 @@ class AuthenticationServiceProvider extends ServiceProvider {
         require __DIR__ . "/../../composers.php";
         // include event subscribers
         require __DIR__ . "/../../subscribers.php";
+        // include custom validators
+        require __DIR__ . "/../../validators.php";
 
         $this->overwriteSentryConfig();
         $this->overwriteWayFormConfig();

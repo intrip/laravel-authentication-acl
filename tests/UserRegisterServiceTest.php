@@ -386,7 +386,7 @@ class UserRegisterServiceTest extends DbTestCase {
 
 class UserRegisterServiceNoMails extends UserRegisterService
 {
-    protected function sendRegistrationMailToClient($input)
+    public function sendRegistrationMailToClient($input)
     {
         // silence is golen...
     }

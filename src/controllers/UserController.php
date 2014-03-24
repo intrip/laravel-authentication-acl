@@ -209,7 +209,7 @@ class UserController extends \Controller
 
     public function signup()
     {
-        return View::make('authentication::user.signup');
+        return View::make('authentication::auth.signup');
     }
 
     public function postSignup()
@@ -225,7 +225,12 @@ class UserController extends \Controller
             return Redirect::action('Jacopo\Authentication\Controllers\UserController@signup')->withErrors($service->getErrors())->withInput();
         }
 
-        return Redirect::action('Jacopo\Authentication\Controllers\UserController@signup')->withMessage('Registration request sent successfully. Please check your email.');
+        return Redirect::action('Jacopo\Authentication\Controllers\UserController@signupSuccess')->withMessage('Registration request sent successfully. Please check your email.');
+    }
+
+    public function signupSuccess()
+    {
+        return View::make('authentication::auth.signup-success');
     }
 
     public function emailConfirmation()

@@ -181,6 +181,7 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
 
     /**
      * @param $login_name
+     * @throws \Jacopo\Authentication\Exceptions\UserNotFoundException
      */
     public function findByLogin($login_name)
     {

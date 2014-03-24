@@ -19,7 +19,7 @@ Route::post('/user/reminder', ["before" => "csrf", 'uses' => "Jacopo\\Authentica
 Route::post('/user/signup', ["before" => "csrf", 'uses' => "Jacopo\\Authentication\\Controllers\\UserController@postSignup"]);
 Route::get('/user/signup', ['uses' => "Jacopo\\Authentication\\Controllers\\UserController@signup"]);
 Route::get('/user/email-confirmation', ['uses' => "Jacopo\\Authentication\\Controllers\\UserController@emailConfirmation"]);
-
+Route::get('/user/signup-success', 'Jacopo\\Authentication\\Controllers\\UserController@signupSuccess');
 //////////////////// Admin Panel //////////////////////////
 
 Route::group( ['before' => ['logged', 'can_see']], function()

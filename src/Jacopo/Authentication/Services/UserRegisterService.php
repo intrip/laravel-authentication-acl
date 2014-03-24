@@ -63,7 +63,7 @@ class UserRegisterService
      * @param $mailer
      * @param $user
      */
-    protected function sendRegistrationMailToClient($input)
+    public function sendRegistrationMailToClient($input)
     {
         $view_file = $this->activation_enabled ? "authentication::mail.registration-waiting-client" : "authentication::mail.registration-confirmed-client";
 
@@ -101,10 +101,12 @@ class UserRegisterService
             DB::connection('authentication')->getPdo()->exec('SET FOREIGN_KEY_CHECKS=0;');
             DB::connection('authentication')->getPdo()->beginTransaction();
         }
+
         try
         {
             // user
             $user    = $this->u_r->create($input);
+
             // profile
             $this->p_r->create(array_merge(["user_id" => $user->id], $input) );
         }

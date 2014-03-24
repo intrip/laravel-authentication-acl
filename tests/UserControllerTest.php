@@ -25,9 +25,8 @@ class UserControllerTest extends DbTestCase {
         App::instance('register_service', $mock_register);
         $this->action('POST','Jacopo\Authentication\Controllers\UserController@postSignup');
 
-    $this->assertRedirectedToAction('Jacopo\Authentication\Controllers\UserController@signup');
+    $this->assertRedirectedToAction('Jacopo\Authentication\Controllers\UserController@signupSuccess');
 
-        $this->assertSessionHas('message');
     }
     
     /**
