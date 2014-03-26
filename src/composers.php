@@ -21,10 +21,10 @@ View::composer('authentication::layouts.*', function ($view){
  */
 View::composer(['authentication::user.*', 'authentication::group.*', 'authentication::permission.*'], function ($view){
     $view->with('sidebar_items', [
-                                     "Dashboard" => [
-                                         "url" => '#',
-                                         "icon" => '<i class="fa fa-tachometer"></i>'
-                                     ],
+//                                     "Dashboard" => [
+//                                         "url" => '#',
+//                                         "icon" => '<i class="fa fa-tachometer"></i>'
+//                                     ],
                                     "Users list" => [
                                         "url" => URL::route('users.list'),
                                         "icon" => '<i class="fa fa-user"></i>'

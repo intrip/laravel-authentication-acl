@@ -53,3 +53,10 @@ Route::group( ['before' => ['logged', 'can_see']], function()
     Route::get('/admin/permissions/delete', ["before" => "csrf", 'as' => 'users.permission.delete', 'uses' => 'Jacopo\Authentication\Controllers\PermissionController@deletePermission']);
 
 });
+
+if (Config::get('authentication::handle_404'))
+{
+    App::missing(function ($exception){
+        return View::make('authentication::exceptions.404');
+    });
+}

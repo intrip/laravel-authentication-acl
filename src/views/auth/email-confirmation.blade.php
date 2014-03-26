@@ -4,3 +4,4 @@
 @if($errors->has('email'))
     Email error
 @endif
+email
