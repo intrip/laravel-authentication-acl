@@ -1,5 +1,6 @@
 <?php  namespace Jacopo\Authentication\Tests;
-use App;
+use App, Config;
+use Jacopo\Authentication\Repository\SentryUserRepository;
 use Mockery as m;
 use Cartalyst\Sentry\Users\UserExistsException;
 /**
@@ -19,7 +20,7 @@ class SentryUserRepositoryTest extends DbTestCase {
      **/
     public function it_find_user_from_a_group()
     {
-        $repo = App::make('user_repository');
+        $repo = new SentryUserRepository();
         $input = [
             "email" => "admin@admin.com",
             "password" => "password",
@@ -48,7 +49,7 @@ class SentryUserRepositoryTest extends DbTestCase {
             ->andThrow(new UserExistsException)
             ->getMock();
         App::instance('sentry', $mock_sentry);
-        $repo = App::make('user_repository');
+        $repo = new SentryUserRepository();
         $repo->create([
                           "email" => "email",
                           "password" => "password",
@@ -61,7 +62,7 @@ class SentryUserRepositoryTest extends DbTestCase {
      **/
     public function it_activate_a_user()
     {
-        $repo = App::make('user_repository');
+        $repo = new SentryUserRepository();
         $input = [
             "email" => "admin@admin.com",
             "password" => "password",
@@ -83,7 +84,7 @@ class SentryUserRepositoryTest extends DbTestCase {
      **/
     public function it_find_user_by_login_name()
     {
-        $repo = App::make('user_repository');
+        $repo = new SentryUserRepository();
         $input = [
             "email" => "admin@admin.com",
             "password" => "password",
@@ -101,9 +102,38 @@ class SentryUserRepositoryTest extends DbTestCase {
      **/
     public function it_throws_exception_if_cannot_find_user_by_login()
     {
-        $repo = App::make('user_repository');
+        $repo = new SentryUserRepository();
         $user = $repo->findByLogin("admin@admin.com");
         $this->assertEquals("admin@admin.com", $user->email);
+    }
+    
+    /**
+     * @test
+     * @group 1
+     **/
+    public function it_gets_all_users_paginated_and_read_from_config()
+    {
+        $per_page = 5;
+        $config = m::mock('ConfigMock');
+        $config->shouldReceive('get')
+            ->once()
+            ->with('authentication::users_per_page')
+            ->andReturn(5)
+            ->getMock();
+        $repo = new SentryUserRepository($config);
+        foreach (range(1,5) as $key) {
+            $input = [
+                "email" => "admin@admin.com{$key}",
+                "password" => "password",
+                "activated" => 1
+            ];
+            $repo->create($input);
+        }
+
+        $users = $repo->all();
+        $this->assertInstanceOf('Illuminate\Pagination\Paginator', $users);
+        $this->assertEquals(5, $users->count());
+        $this->assertEquals($per_page, $users->getPerPage());
     }
 }
  

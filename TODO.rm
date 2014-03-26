@@ -8,12 +8,10 @@ GRAFICA:
     - documentazione per tutto e anche nei file di configurazione, con manuale html
 
 FUNZIONAMENTO:
-    - paginazione utenti
-    - quando fai reinviare la mail vedi di nascondere il msg di errore
-    - login throttling
     - cancella disattivo
-    - migliora gestione permessi: come a syntara quindi un permesso base per login e poi permessi specifici per edit user oltre a quello base
     - ricerca utente
+    - filtro ricerca utente
+    - migliora gestione permessi: come a syntara quindi un permesso base per login e poi permessi specifici per edit user oltre a quello base
     - install script command
     - test con postgres e mysql
 
@@ -29,7 +27,9 @@ RELEASE:
 POI:
 - dashboard
 - add oauth
+- quando fai reinviare la mail vedi di nascondere il msg di errore
 - testa anche i controllers
 - profilo editabile nei campi come la "scheda tecnica"
 - template
+- widget vari utilizzabili
 - messaggi personalizzati in file di config e traduzione di tutto con translate laravel

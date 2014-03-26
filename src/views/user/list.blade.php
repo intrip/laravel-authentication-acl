@@ -41,6 +41,9 @@ fa fa-envelope fa-2x"></i> {{$user->email}} <i class="fa fa-user fa-2x
         <h5>Non ci sono utenti presenti nel sistema.</h5>
     @endif
     <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@editUser')}}" class="btn btn-primary pull-right">Add New</a>
+        <div class="paginator">
+            {{$users->links()}}
+        </div>
 </div>
 @stop
 

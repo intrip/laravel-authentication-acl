@@ -95,9 +95,9 @@ class AuthenticationServiceProvider extends ServiceProvider {
             return new SentryAuthenticationHelper;
         });
 
-        $this->app->bind('user_repository', function ()
+        $this->app->bind('user_repository', function ($app, $config = null)
         {
-            return new SentryUserRepository;
+            return new SentryUserRepository($config);
         });
 
         $this->app->bind('group_repository', function ()

@@ -39,9 +39,8 @@ class UserSignupEmailValidator extends OverrideConnectionValidator
     }
 
     /**
-     * @param $value
      */
-    protected function resendConfirmationEmail($value)
+    protected function resendConfirmationEmail()
     {
         $data = Input::all();
         $data['password'] = 'Cannot decipher password, please use password recovery after if it\'s needed.';

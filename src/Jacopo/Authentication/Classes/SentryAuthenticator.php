@@ -24,6 +24,7 @@ class SentryAuthenticator implements AuthenticateInterface{
 
     /**
      * {@inheritdoc}
+     * @todo better test
      */
     public function authenticate($credentials, $remember = false)
     {
@@ -33,19 +34,23 @@ class SentryAuthenticator implements AuthenticateInterface{
         }
         catch (\Cartalyst\Sentry\Users\LoginRequiredException $e)
         {
-            $this->errors->add('login','Il campo login è richiesto.');
+            $this->errors->add('login','Login field is required.');
         }
         catch (\Cartalyst\Sentry\Users\UserNotFoundException $e)
         {
-            $this->errors->add('login','Login fallito.');
+            $this->errors->add('login','Login failed.');
         }
         catch (\Cartalyst\Sentry\Users\UserNotActivatedException $e)
         {
-            $this->errors->add('login','Utente non è stato attivato.');
+            $this->errors->add('login','The user is not active.');
         }
         catch(\Cartalyst\Sentry\Users\PasswordRequiredException $e)
         {
-            $this->errors->add('login','Il campo password è richiesto.');
+            $this->errors->add('login','Password field is required.');
+        }
+        catch(\Cartalyst\Sentry\Throttling\UserSuspendedException $e)
+        {
+            $this->errors->add('login','Too many login attempts, please try later.');
         }
 
         return $this->errors->isEmpty() ? $user : false;
