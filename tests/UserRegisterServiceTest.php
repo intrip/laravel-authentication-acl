@@ -282,6 +282,7 @@ class UserRegisterServiceTest extends DbTestCase {
         App::instance('user_repository', $mock_repo);
         $email = "mail@mail.com";
         $token = "12345_";
+        $this->stopEventPropagation();
         $service = new UserRegisterServiceNoMails;
 
         $service->checkUserActivationCode($email, $token);
@@ -381,6 +382,11 @@ class UserRegisterServiceTest extends DbTestCase {
         $mock_validator = m::mock('Jacopo\Authentication\Validators\UserSignupValidator')->shouldReceive('validate')->once()->andReturn(false)->getMock();
 
         return $mock_validator;
+    }
+
+    protected function stopEventPropagation()
+    {
+        Event::listen('service.activated', function(){return false;});
     }
 }
 

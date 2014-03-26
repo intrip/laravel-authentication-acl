@@ -8,12 +8,11 @@ GRAFICA:
     - documentazione per tutto e anche nei file di configurazione, con manuale html
 
 FUNZIONAMENTO:
-    - gestisci quando uno si registra + volte senza confermare la mail
-    - filtro no spam registrazioni
     - paginazione utenti
-    - migliora gestione permessi: come a syntara quindi un permesso base per login e poi permessi specifici per edit user oltre a quello base
+    - quando fai reinviare la mail vedi di nascondere il msg di errore
     - login throttling
     - cancella disattivo
+    - migliora gestione permessi: come a syntara quindi un permesso base per login e poi permessi specifici per edit user oltre a quello base
     - ricerca utente
     - install script command
     - test con postgres e mysql
