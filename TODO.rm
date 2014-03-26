@@ -1,0 +1,36 @@
+Authenticator:
+GRAFICA:
+    - finisci registazione conferma(view mail e view registrazione confermata)
+    - fix responsive grafica
+    - fai grafica pagine bella: 404, email, registrazione, login, regisrazione e conferma mail, pannello
+    - nel pannello fai logout e profilo (edita il tuo) con link
+    - finish todo vari
+    - documentazione per tutto e anche nei file di configurazione, con manuale html
+
+FUNZIONAMENTO:
+    - gestisci quando uno si registra + volte senza confermare la mail
+    - filtro no spam registrazioni
+    - paginazione utenti
+    - migliora gestione permessi: come a syntara quindi un permesso base per login e poi permessi specifici per edit user oltre a quello base
+    - login throttling
+    - cancella disattivo
+    - ricerca utente
+    - install script command
+    - test con postgres e mysql
+
+TEST:
+    - fixa tutti i test e adda i test che non sono stati fatti (sentryuserepository e vedi se altro)
+    - acceptance test con selenium
+
+RELEASE:
+- rinomina tutti i jacopo in websolutions o altro nome che tu voglia
+- carica su envato cn nome websolutions cn logo ecc
+- fix per approvazione
+
+POI:
+- dashboard
+- add oauth
+- testa anche i controllers
+- profilo editabile nei campi come la "scheda tecnica"
+- template
+- messaggi personalizzati in file di config e traduzione di tutto con translate laravel
