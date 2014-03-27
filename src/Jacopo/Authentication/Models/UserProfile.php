@@ -19,6 +19,7 @@ class UserProfile extends BaseModel
         'city',
         'country',
         'zip',
+        'code',
         'address'
 
     ];

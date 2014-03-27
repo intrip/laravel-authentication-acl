@@ -1,19 +1,19 @@
 Authenticator:
 GRAFICA:
     - finisci registazione conferma(view mail e view registrazione confermata)
-    - fix responsive grafica
     - fai grafica pagine bella: 404, email, registrazione, login, regisrazione e conferma mail, pannello
+    - per grafica prendi spunto da snippet o fai i quadrati come a syntara
     - pannello colori diverso e metti icone belle ovunque
+    - fix responsive grafica
     - nel pannello fai logout e profilo (edita il tuo) con link
     - finish todo vari
+    - fix tutti i titoli
+    - pulsante crea al top?
     - documentazione per tutto e anche nei file di configurazione, con manuale html, spiega anche come aggiungere voci di menu ecc
 
 FUNZIONAMENTO:
-    - filtro active (finisci con gui e anche profilo utente con gui)
-    - ricerca utente(first_name,email,last_name,code,zip,active) e gruppi(nome)
-    - check fist name e last name che siano settati corretti e anche altri campi di user profile magari mettendoli nel test anche prima
-    - non mostrare profilo se nn hai dati
-    - icona active diversa se attivo o no
+    - ricerca gruppi(nome)
+    - paginazione a grp e permessi e setta poi il numero a 10
     - migliora gestione permessi: come a syntara quindi un permesso base per login e poi permessi specifici per edit user oltre a quello base
     - install script command
     - test con postgres e mysql

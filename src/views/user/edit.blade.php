@@ -24,7 +24,7 @@ Admin area: edit user
     {{FormField::password_confirmation(["autocomplete" => "off", "label" => isset($user->id) ? "Confirm change password: " : "Confirm password: "])}}
     <span class="text-danger">{{$errors->first('password_confirmation')}}</span>
     <div class="form-group">
-        {{Form::label("activated","User active")}}
+        {{Form::label("activated","User activated: ")}}
         {{Form::select('activated', ["1" => "Yes", "0" => "No"], (isset($user->activated) && $user->activated) ? $user->activated : "0", ["class"=> "form-control"] )}}
     </div>
     {{Form::hidden('id')}}

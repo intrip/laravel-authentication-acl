@@ -218,19 +218,43 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
         $q = DB::table($user_table)
             ->leftJoin($profile_table,$user_table.'.id', '=', $profile_table.'.user_id');
         // filter data
-        foreach ($input_filter as $column => $value) {
-            switch($column)
-            {
+        $q = $this->applyFilters($input_filter, $q, $user_table, $profile_table);
+
+        return $q->paginate($per_page);
+    }
+
+    /**
+     * @param array $input_filter
+     * @param       $q
+     * @param       $user_table
+     * @param       $profile_table
+     * @return mixed
+     */
+    protected function applyFilters(array $input_filter = null, $q, $user_table, $profile_table)
+    {
+        if($input_filter) foreach ($input_filter as $column => $value) {
+            if( $value !== '') switch ($column) {
                 case 'activated':
-                    $q = $q->where($user_table.'.activated','=',$value);
+                    $q = $q->where($user_table . '.activated', '=', $value);
+                    break;
+                case 'email':
+                    $q = $q->where($user_table . '.email', '=', $value);
                     break;
                 case 'first_name':
-                    $q = $q->where($profile_table.'.first_name','=',$value);
+                    $q = $q->where($profile_table . '.first_name', '=', $value);
                     break;
-                //@todo finish from here
+                case 'last_name':
+                    $q = $q->where($profile_table . '.last_name', '=', $value);
+                    break;
+                case 'zip':
+                    $q = $q->where($profile_table . '.zip', '=', $value);
+                    break;
+                case 'code':
+                    $q = $q->where($profile_table . '.code', '=', $value);
+                    break;
             }
         }
 
-        return $q->paginate($per_page);
+        return $q;
     }
 }

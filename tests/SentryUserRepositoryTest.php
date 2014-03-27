@@ -175,7 +175,6 @@ class SentryUserRepositoryTest extends DbTestCase {
 
     /**
      * @test
-     * @group 1
      **/
     public function it_gets_all_user_filtered_by_first_name_last_name_zip_email_code()
     {
@@ -183,7 +182,7 @@ class SentryUserRepositoryTest extends DbTestCase {
         $config = m::mock('ConfigMock');
         $config->shouldReceive('get')
             ->with('authentication::users_per_page')
-            ->andReturn(5)
+            ->andReturn($per_page)
             ->getMock();
         $repo = new SentryUserRepository($config);
         $input = [
@@ -204,7 +203,38 @@ class SentryUserRepositoryTest extends DbTestCase {
 
         $users = $repo->all(["first_name" => "name"]);
         $this->assertEquals("name", $users->first()->first_name);
+        $users = $repo->all(["last_name" => "surname"]);
+        $this->assertEquals("surname", $users->first()->last_name);
+        $users = $repo->all(["zip" => "22222"]);
+        $this->assertEquals("22222", $users->first()->zip);
+        $users = $repo->all(["email" => "admin@admin.com"]);
+        $this->assertEquals("admin@admin.com", $users->first()->email);
+        $users = $repo->all(["code" => "12345", "email" => "admin@admin.com"]);
+        $this->assertEquals("12345", $users->first()->code);
+    }
+    
+    /**
+     * @test
+     **/
+    public function it_ignore_empty_options_with_all()
+    {
+        $per_page = 5;
+        $config = m::mock('ConfigMock');
+        $config->shouldReceive('get')
+            ->with('authentication::users_per_page')
+            ->andReturn(5)
+            ->getMock();
+        $repo = new SentryUserRepository($config);
+        foreach (range(1,5) as $key) {
+            $input = [
+                "email" => "admin@admin.com{$key}",
+                "password" => "password",
+                "activated" => ($key == 1) ? 1 : 0
+            ];
+            $repo->create($input);
+        }
 
-
+        $users = $repo->all(["activated" => ""]);
+        $this->assertEquals(5, $users->count());
     }
 }

@@ -67,7 +67,7 @@ class UserController extends \Controller
 
     public function getList()
     {
-        $users = $this->r->all();
+        $users = $this->r->all(Input::except(['page']));
 
         return View::make('authentication::user.list')->with(["users" => $users]);
     }
