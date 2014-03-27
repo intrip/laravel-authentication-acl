@@ -19,8 +19,6 @@ Admin area: Edit user profile
     <h3><i class="fa fa-user"></i> User profile</h3>
     <hr/>
     {{Form::model($user_profile,['route'=>'users.profile.edit', 'method' => 'post'])}}
-        {{FormField::code(["label" => "User code: "])}}
-        <span class="text-danger">{{$errors->first('code')}}</span>
         {{FormField::first_name(["label" => "First name:"])}}
         <span class="text-danger">{{$errors->first('first_name')}}</span>
         {{FormField::last_name(["label" => "Last name:"])}}
@@ -29,6 +27,8 @@ Admin area: Edit user profile
         <span class="text-danger">{{$errors->first('phone')}}</span>
         {{FormField::state(["label" => "State: "])}}
         <span class="text-danger">{{$errors->first('state')}}</span>
+        {{FormField::vat(["label" => "Vat: "])}}
+        <span class="text-danger">{{$errors->first('vat')}}</span>
         {{FormField::city(["label" => "City: "])}}
         <span class="text-danger">{{$errors->first('city')}}</span>
         {{FormField::country(["label" => "Country: "])}}

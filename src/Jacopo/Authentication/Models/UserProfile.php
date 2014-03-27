@@ -11,21 +11,16 @@ class UserProfile extends BaseModel
 
     protected $fillable = [
         'user_id',
-        'code',
         'first_name',
         'last_name',
         'phone',
-        'cf',
-        'billing_address',
-        'billing_address_zip',
-        'shipping_address',
-        'shipping_address_zip',
-        'billing_state',
-        'billing_city',
-        'billing_country',
-        'shipping_state',
-        'shipping_city',
-        'shipping_country'
+        'vat',
+        'state',
+        'city',
+        'country',
+        'zip',
+        'address'
+
     ];
 
     protected $guarded = ["id"];

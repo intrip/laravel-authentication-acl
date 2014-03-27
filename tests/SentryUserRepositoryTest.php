@@ -109,9 +109,8 @@ class SentryUserRepositoryTest extends DbTestCase {
     
     /**
      * @test
-     * @group 1
      **/
-    public function it_gets_all_users_paginated_and_read_from_config()
+    public function it_gets_all_users_with_profile_paginated_and_read_from_config()
     {
         $per_page = 5;
         $config = m::mock('ConfigMock');
@@ -127,13 +126,85 @@ class SentryUserRepositoryTest extends DbTestCase {
                 "password" => "password",
                 "activated" => 1
             ];
-            $repo->create($input);
+            $user = $repo->create($input);
+            $repo_profile =  App::make('profile_repository');
+            $input = [
+                "first_name" => "name",
+                "last_name" => "surname",
+                "zip" => "22222",
+                "code" => "12345",
+                "user_id" => $user->id,
+            ];
+            $repo_profile->create($input);
         }
 
         $users = $repo->all();
         $this->assertInstanceOf('Illuminate\Pagination\Paginator', $users);
         $this->assertEquals(5, $users->count());
         $this->assertEquals($per_page, $users->getPerPage());
+        $this->assertEquals("name", $users->first()->first_name);
+    }
+
+    /**
+     * @test
+     **/
+    public function it_gets_all_user_filtered_by_active_state()
+    {
+        $per_page = 5;
+        $config = m::mock('ConfigMock');
+        $config->shouldReceive('get')
+            ->with('authentication::users_per_page')
+            ->andReturn(5)
+            ->getMock();
+        $repo = new SentryUserRepository($config);
+        foreach (range(1,5) as $key) {
+            $input = [
+                "email" => "admin@admin.com{$key}",
+                "password" => "password",
+                "activated" => ($key == 1) ? 1 : 0
+            ];
+            $repo->create($input);
+        }
+
+        $users = $repo->all(["activated" => 1]);
+        $this->assertEquals(1, $users->count());
+
+        $users = $repo->all(["activated" => 0]);
+        $this->assertEquals(4, $users->count());
+    }
+
+    /**
+     * @test
+     * @group 1
+     **/
+    public function it_gets_all_user_filtered_by_first_name_last_name_zip_email_code()
+    {
+        $per_page = 5;
+        $config = m::mock('ConfigMock');
+        $config->shouldReceive('get')
+            ->with('authentication::users_per_page')
+            ->andReturn(5)
+            ->getMock();
+        $repo = new SentryUserRepository($config);
+        $input = [
+            "email" => "admin@admin.com",
+            "password" => "password",
+            "activated" => 1
+        ];
+        $user = $repo->create($input);
+        $repo_profile =  App::make('profile_repository');
+        $input = [
+            "first_name" => "name",
+            "last_name" => "surname",
+            "zip" => "22222",
+            "code" => "12345",
+            "user_id" => $user->id
+        ];
+        $repo_profile->create($input);
+
+        $users = $repo->all(["first_name" => "name"]);
+        $this->assertEquals("name", $users->first()->first_name);
+
+
     }
 }
- 

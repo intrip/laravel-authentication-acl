@@ -16,7 +16,7 @@ use Jacopo\Authentication\Models\Group;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Cartalyst\Sentry\Users\UserExistsException as CartaUserExists;
 use Cartalyst\Sentry\Users\UserNotFoundException;
-use Event, App;
+use Event, App, DB;
 use Illuminate\Support\Facades\Config;
 
 class SentryUserRepository extends EloquentBaseRepository implements UserRepositoryInterface
@@ -206,11 +206,31 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
 
     /**
      * @override
+     * @param array $input_filter
      * @return mixed|void
      */
-    public function all()
+    public function all(array $input_filter = null)
     {
         $per_page = $this->config->get('authentication::users_per_page');
-        return $this->model->paginate($per_page);
+        $user_table = $this->model->getTable();
+        $profile_table = App::make('profile_repository')->getModel()->getTable();
+        // merge tables
+        $q = DB::table($user_table)
+            ->leftJoin($profile_table,$user_table.'.id', '=', $profile_table.'.user_id');
+        // filter data
+        foreach ($input_filter as $column => $value) {
+            switch($column)
+            {
+                case 'activated':
+                    $q = $q->where($user_table.'.activated','=',$value);
+                    break;
+                case 'first_name':
+                    $q = $q->where($profile_table.'.first_name','=',$value);
+                    break;
+                //@todo finish from here
+            }
+        }
+
+        return $q->paginate($per_page);
     }
 }

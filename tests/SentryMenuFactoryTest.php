@@ -49,7 +49,6 @@ class SentryMenuFactoryTest extends TestCase {
 
     /**
      * @test
-     * @group 2
      **/
     public function it_create_collection_checking_permissions()
     {

@@ -19,7 +19,6 @@ class FormHelperTest extends TestCase {
 
     /**
      * @test
-     * @group 2
      **/
     public function it_create_permissions_array_values()
     {
