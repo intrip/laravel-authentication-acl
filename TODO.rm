@@ -15,6 +15,8 @@ FUNZIONAMENTO:
     - ricerca gruppi(nome)
     - paginazione a grp e permessi e setta poi il numero a 10
     - migliora gestione permessi: come a syntara quindi un permesso base per login e poi permessi specifici per edit user oltre a quello base
+    - metti breadcum come a syntara?
+    - guarda in giro gli altri progetti e vedi se mettere altro di carino o grafico
     - install script command
     - test con postgres e mysql
 

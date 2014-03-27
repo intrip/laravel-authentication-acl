@@ -124,4 +124,9 @@ class SentryAuthenticator implements AuthenticateInterface{
 
         return $user->getActivationCode();
     }
+
+    public function getUserById($id)
+    {
+        return $this->sentry->findUserById($id);
+    }
 }

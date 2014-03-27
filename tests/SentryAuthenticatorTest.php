@@ -42,4 +42,21 @@ class SentryAuthenticatorTest extends TestCase {
         $this->assertEquals(true, $token);
     }
 
+    /**
+     * @test
+     **/
+    public function it_get_user_by_id()
+    {
+        $user_stub = new \StdClass;
+        $user_stub->name = 1;
+        $mock_sentry = m::mock('StdClass')->shouldReceive('findUserById')
+            ->once()
+            ->andReturn($user_stub)
+            ->getMock();
+        App::instance('sentry', $mock_sentry);
+        $user = App::make('authenticator')->getUserById(1);
+
+        $this->assertEquals($user, $user_stub);
+    }
+
 }
