@@ -211,16 +211,18 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
      */
     public function all(array $input_filter = null)
     {
-        $per_page = $this->config->get('authentication::users_per_page');
-        $user_table = $this->model->getTable();
-        $profile_table = App::make('profile_repository')->getModel()->getTable();
+        $results_per_page = $this->config->get('authentication::users_per_page');
+        $user_table_name = $this->model->getTable();
+        $profile_table_name = App::make('profile_repository')->getModel()->getTable();
         // merge tables
-        $q = DB::table($user_table)
-            ->leftJoin($profile_table,$user_table.'.id', '=', $profile_table.'.user_id');
+        $q = DB::table($user_table_name)
+            ->leftJoin($profile_table_name,$user_table_name.'.id', '=', $profile_table_name.'.user_id');
         // filter data
-        $q = $this->applyFilters($input_filter, $q, $user_table, $profile_table);
+        $q = $this->applyFilters($input_filter, $q, $user_table_name, $profile_table_name);
 
-        return $q->paginate($per_page);
+        $q = $this->createAllSelect($q, $user_table_name, $profile_table_name);
+
+        return $q->paginate($results_per_page);
     }
 
     /**
@@ -238,13 +240,13 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
                     $q = $q->where($user_table . '.activated', '=', $value);
                     break;
                 case 'email':
-                    $q = $q->where($user_table . '.email', '=', $value);
+                    $q = $q->where($user_table . '.email', 'LIKE', "%{$value}%");
                     break;
                 case 'first_name':
-                    $q = $q->where($profile_table . '.first_name', '=', $value);
+                    $q = $q->where($profile_table . '.first_name', 'LIKE', "%{$value}%");
                     break;
                 case 'last_name':
-                    $q = $q->where($profile_table . '.last_name', '=', $value);
+                    $q = $q->where($profile_table . '.last_name', 'LIKE', "%{$value}%");
                     break;
                 case 'zip':
                     $q = $q->where($profile_table . '.zip', '=', $value);
@@ -254,6 +256,19 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
                     break;
             }
         }
+
+        return $q;
+    }
+
+    /**
+     * @param $q
+     * @param $user_table_name
+     * @param $profile_table_name
+     * @return mixed
+     */
+    protected function createAllSelect($q, $user_table_name, $profile_table_name)
+    {
+        $q = $q->select($user_table_name . '.*', $profile_table_name . '.first_name', $profile_table_name . '.last_name', $profile_table_name . '.zip', $profile_table_name . '.code');
 
         return $q;
     }

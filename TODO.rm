@@ -15,6 +15,7 @@ FUNZIONAMENTO:
     - ricerca gruppi(nome)
     - paginazione a grp e permessi e setta poi il numero a 10
     - migliora gestione permessi: come a syntara quindi un permesso base per login e poi permessi specifici per edit user oltre a quello base
+    - rinomina repo e validatori in nomi + chiari e altre variabili anche se riesci
     - metti breadcum come a syntara?
     - guarda in giro gli altri progetti e vedi se mettere altro di carino o grafico
     - install script command
