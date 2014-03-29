@@ -154,7 +154,7 @@ class SentryUserRepositoryTest extends DbTestCase {
         $config = m::mock('ConfigMock');
         $config->shouldReceive('get')
             ->with('authentication::users_per_page')
-            ->andReturn(5)
+            ->andReturn($per_page)
             ->getMock();
         $repo = new SentryUserRepository($config);
         foreach (range(1,5) as $key) {

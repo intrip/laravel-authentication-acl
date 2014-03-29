@@ -20,9 +20,12 @@ class SentryGroupRepository implements BaseRepositoryInterface
      */
     protected $sentry;
 
-    public function __construct()
+    protected $config_reader;
+
+    public function __construct($config_reader = null)
     {
         $this->sentry = App::make('sentry');
+        $this->config_reader = $config_reader ? $config_reader : App::make('config');
     }
 
     /**
@@ -87,11 +90,17 @@ class SentryGroupRepository implements BaseRepositoryInterface
     /**
      * Obtains all models
      *
+     * @override
+     * @param array $search_filters
      * @return mixed
      */
-    public function all()
+    public function all(array $search_filters = null)
     {
-        return Group::all();
+        $q = new Group;
+        $results_per_page = $this->config_reader->get('authentication::groups_per_page');
+        if(isset($search_filters['name']) && $search_filters['name'] !== '' ) $q = $q->where('name','LIKE', "%{$search_filters['name']}%");
+
+        return $q->paginate($results_per_page);
     }
 
 }
