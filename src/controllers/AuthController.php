@@ -11,12 +11,12 @@ use Jacopo\Authentication\Services\ReminderService;
 
 class AuthController extends Controller {
 
-    protected $auth;
+    protected $authenticator;
     protected $reminder;
 
     public function __construct(SentryAuthenticator $auth, ReminderService $reminder)
     {
-        $this->auth = $auth;
+        $this->authenticator = $auth;
         $this->reminder = $reminder;
     }
 
@@ -36,7 +36,7 @@ class AuthController extends Controller {
         $password = Input::get('password');
         $remember = Input::get('remember');
 
-        $success = $this->auth->authenticate(array(
+        $success = $this->authenticator->authenticate(array(
                                                 "email" => $email,
                                                 "password" => $password
                                              ), $remember);
@@ -46,7 +46,7 @@ class AuthController extends Controller {
         }
         else
         {
-            $errors = $this->auth->getErrors();
+            $errors = $this->authenticator->getErrors();
             return Redirect::action('Jacopo\Authentication\Controllers\AuthController@getLogin')->withInput()->withErrors($errors);
         }
     }
@@ -58,7 +58,7 @@ class AuthController extends Controller {
      */
     public function getLogout()
     {
-        $this->auth->logout();
+        $this->authenticator->logout();
 
         return Redirect::to('/user/login');
     }
