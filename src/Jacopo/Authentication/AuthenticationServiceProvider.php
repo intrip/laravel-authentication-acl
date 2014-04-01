@@ -11,6 +11,7 @@ use Illuminate\Foundation\AliasLoader;
 use Config, App;
 use Illuminate\Database\Eloquent\Model;
 use Jacopo\Authentication\Services\UserRegisterService;
+use Jacopo\Library\Form\FormModel;
 
 class AuthenticationServiceProvider extends ServiceProvider {
 

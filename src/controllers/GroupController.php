@@ -19,27 +19,27 @@ class GroupController extends \Controller
     /**
      * @var \Jacopo\Authentication\Repository\SentryGroupRepository
      */
-    protected $r;
+    protected $group_repository;
     /**
      * @var \Jacopo\Authentication\Validators\GroupValidator
      */
-    protected $v;
+    protected $group_validator;
     /**
      * @var FormHelper
      */
-    protected $fh;
+    protected $form_model;
 
     public function __construct(GroupValidator $v, FormHelper $fh)
     {
-        $this->r = App::make('group_repository');
-        $this->v = $v;
-        $this->f = new FormModel($this->v, $this->r);
-        $this->fh = $fh;
+        $this->group_repository = App::make('group_repository');
+        $this->group_validator = $v;
+        $this->f = new FormModel($this->group_validator, $this->group_repository);
+        $this->form_model = $fh;
     }
 
     public function getList()
     {
-        $groups = $this->r->all(Input::all());
+        $groups = $this->group_repository->all(Input::all());
 
         return View::make('authentication::group.list')->with(["groups" => $groups]);
     }
@@ -48,7 +48,7 @@ class GroupController extends \Controller
     {
         try
         {
-            $obj = $this->r->find(Input::get('id'));
+            $obj = $this->group_repository->find(Input::get('id'));
         }
         catch(UserNotFoundException $e)
         {
@@ -95,12 +95,12 @@ class GroupController extends \Controller
         // prepare input
         $input = Input::all();
         $operation = Input::get('operation');
-        $this->fh->prepareSentryPermissionInput($input, $operation);
+        $this->form_model->prepareSentryPermissionInput($input, $operation);
         $id = Input::get('id');
 
         try
         {
-            $obj = $this->r->update($id, $input);
+            $obj = $this->group_repository->update($id, $input);
         }
         catch(JacopoExceptionsInterface $e)
         {

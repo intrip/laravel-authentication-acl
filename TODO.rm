@@ -2,6 +2,7 @@ Authenticator:
 GRAFICA:
     - finisci registazione conferma(view mail e view registrazione confermata)
     - fai grafica pagine bella: 404, email, registrazione, login, regisrazione e conferma mail, pannello
+    - grafica con layout per 1024 che si veda bene e pou su tablet e mobile
     - per grafica prendi spunto da snippet o fai i quadrati come a syntara
     - pannello colori diverso e metti icone belle ovunque
     - fix responsive grafica
@@ -12,12 +13,20 @@ GRAFICA:
     - documentazione per tutto e anche nei file di configurazione, con manuale html, spiega anche come aggiungere voci di menu ecc
 
 FUNZIONAMENTO:
-    - rinomina repo e validatori in nomi + chiari e altre variabili anche se riesci(mini refactor a usercontroller e groupcontroller con i suoi test)
+    - fai una tabella ordinabile con i campi
+    first name, email, group, last login, active, edit/delete e poi ricarca la fai andare sotto a schermo piccolo e il link al profilo mettilo in un tab in edit
+    - filtro per gruppi e ordinamento
+    - i gruppi uguale con ordinamento solo per description
+    - aggiungi ordinamento custom utenti
+    - metti la tabella al posto della lista
+    - vedi x jquery tags plugin
+    - refactoring metodini nei test
     - migliora gestione permessi: come a syntara quindi un permesso base per login e poi permessi specifici per edit user oltre a quello base
     - metti breadcum come a syntara?
     - guarda in giro gli altri progetti e vedi se mettere altro di carino o grafico
     - install script command
     - test con postgres e mysql
+    - add alla doc di safari autocomplete bug
 
 TEST:
     - fixa tutti i test e adda i test che non sono stati fatti (sentryuserepository e vedi se altro)
@@ -33,7 +42,7 @@ POI:
 - dashboard
 - add oauth
 - quando fai reinviare la mail vedi di nascondere il msg di errore
-- testa anche i controllers
+- testa anche i controllers completamente
 - profilo editabile nei campi come la "scheda tecnica"
 - template
 - widget vari utilizzabili

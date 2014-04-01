@@ -25,24 +25,24 @@ class UserController extends \Controller
     /**
      * @var \Jacopo\Authentication\Repository\SentryUserRepository
      */
-    protected $r;
+    protected $user_repository;
     /**
      * @var \Jacopo\Authentication\Validators\UserValidator
      */
-    protected $v;
+    protected $user_validator;
     /**
      * @var \Jacopo\Authentication\Helpers\FormHelper
      */
-    protected $fh;
+    protected $form_helper;
     /**
      * Profile repository
      * @var \Jacopo\Authentication\Repository\Interfaces\UserProfileRepositoryInterface
      */
-    protected $r_p;
+    protected $profile_repository;
     /**
      * @var UserProfileValidator
      */
-    protected $v_p;
+    protected $profile_validator;
     /**
      * @var use Jacopo\Authentication\Interfaces\AuthenticateInterface;
      */
@@ -50,24 +50,24 @@ class UserController extends \Controller
     /**
      * Register Service
      */
-    protected $s_register;
+    protected $register_service;
 
     public function __construct(UserValidator $v, FormHelper $fh, UserProfileValidator $vp, AuthenticateInterface $auth)
     {
-        $this->r = App::make('user_repository');
-        $this->v = $v;
-        $this->f = new FormModel($this->v, $this->r);
-        $this->fh = $fh;
-        $this->v_p = $vp;
-        $this->r_p = App::make('profile_repository');
+        $this->user_repository = App::make('user_repository');
+        $this->user_validator = $v;
+        $this->f = App::make('form_model',[$this->user_validator, $this->user_repository]);
+        $this->form_helper = $fh;
+        $this->profile_validator = $vp;
+        $this->profile_repository = App::make('profile_repository');
         $this->auth = $auth;
-        $this->s_register = App::make('register_service');
+        $this->register_service = App::make('register_service');
 
     }
 
     public function getList()
     {
-        $users = $this->r->all(Input::except(['page']));
+        $users = $this->user_repository->all(Input::except(['page']));
 
         return View::make('authentication::user.list')->with(["users" => $users]);
     }
@@ -76,7 +76,7 @@ class UserController extends \Controller
     {
         try
         {
-            $user = $this->r->find(Input::get('id'));
+            $user = $this->user_repository->find(Input::get('id'));
         }
         catch(JacopoExceptionsInterface $e)
         {
@@ -126,7 +126,7 @@ class UserController extends \Controller
 
         try
         {
-            $this->r->addGroup($user_id, $group_id);
+            $this->user_repository->addGroup($user_id, $group_id);
         }
         catch(JacopoExceptionsInterface $e)
         {
@@ -142,7 +142,7 @@ class UserController extends \Controller
 
         try
         {
-            $this->r->removeGroup($user_id, $group_id);
+            $this->user_repository->removeGroup($user_id, $group_id);
         }
         catch(JacopoExceptionsInterface $e)
         {
@@ -156,12 +156,12 @@ class UserController extends \Controller
         // prepare input
         $input = Input::all();
         $operation = Input::get('operation');
-        $this->fh->prepareSentryPermissionInput($input, $operation);
+        $this->form_helper->prepareSentryPermissionInput($input, $operation);
         $id = Input::get('id');
 
         try
         {
-            $obj = $this->r->update($id, $input);
+            $obj = $this->user_repository->update($id, $input);
         }
         catch(JacopoExceptionsInterface $e)
         {
@@ -176,7 +176,7 @@ class UserController extends \Controller
 
         try
         {
-            $user_profile = $this->r_p->getFromUserId($user_id);
+            $user_profile = $this->profile_repository->getFromUserId($user_id);
         }
         catch(UserNotFoundException $e)
         {
@@ -193,7 +193,7 @@ class UserController extends \Controller
     public function postEditProfile()
     {
         $input = Input::all();
-        $service = new UserProfileService($this->v_p);
+        $service = new UserProfileService($this->profile_validator);
 
         try
         {
@@ -240,11 +240,11 @@ class UserController extends \Controller
 
         try
         {
-            $this->s_register->checkUserActivationCode($email, $token);
+            $this->register_service->checkUserActivationCode($email, $token);
         }
         catch(JacopoExceptionsInterface $e)
         {
-            return View::make('authentication::auth.email-confirmation')->withErrors($this->s_register->getErrors());
+            return View::make('authentication::auth.email-confirmation')->withErrors($this->register_service->getErrors());
         }
         return View::make('authentication::auth.email-confirmation');
     }

@@ -51,7 +51,7 @@ class SentryGroupRepositoryTest extends DbTestCase {
         $group_created_2 = $repo->create(array(
                                        'name'        => 'Users2',
                                   ));
-        $groups = $reop->all(["name" => "1"]);
+        $groups = $repo->all(["name" => "1"]);
 
         $this->assertEquals(1, $groups->count());
         $this->assertEquals("Users1", $groups->first()->name);

@@ -1,5 +1,6 @@
 <?php  namespace Jacopo\Authentication\Tests; 
 use Jacopo\Authentication\Exceptions\UserNotFoundException;
+use Jacopo\Authentication\Models\User;
 use Jacopo\Library\Exceptions\NotFoundException;
 use Jacopo\Library\Exceptions\ValidationException;
 use Mockery as m;
@@ -118,5 +119,35 @@ class UserControllerTest extends DbTestCase {
         $this->assertResponseOk();
         $this->assertViewHas('errors');
     }
+
+    /**
+     * @test
+     **/
+    public function it_show_user_lists_on_lists()
+    {
+        $this->action('GET','Jacopo\Authentication\Controllers\UserController@getList');
+
+        $this->assertResponseOk();
+    }
+
+    /**
+     * @test
+     **/
+    public function it_edit_user_with_success_and_redirect_to_edit_page()
+    {
+        $user_stub = new User();
+        $user_stub->id = 1;
+        $form_model_mock = m::mock('StdClass')
+            ->shouldReceive('process')
+            ->once()
+            ->andReturn($user_stub)
+            ->getMock();
+        App::instance('form_model', $form_model_mock);
+
+        $this->action('POST','Jacopo\Authentication\Controllers\UserController@postEditUser');
+
+        $this->assertRedirectedToAction('Jacopo\Authentication\Controllers\UserController@editUser',['id' => $user_stub->id]);
+    }
+
 }
  

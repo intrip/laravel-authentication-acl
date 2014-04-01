@@ -13,7 +13,9 @@
             {{Form::label('activated', 'Active: ')}}
             {{Form::select('activated', ['' => '', 1 => 'Yes', 0 => 'No'], Input::get('activated',''), ["class" => "form-control"])}}
         </div>
-        {{Form::submit('Search', ["class" => "btn btn-primary pull-right
+        {{Form::reset('Reset', ["class" => "btn btn-default
+        "])}}
+        {{Form::submit('Search', ["class" => "btn btn-primary
             "])}}
         {{Form::close()}}
     </div>

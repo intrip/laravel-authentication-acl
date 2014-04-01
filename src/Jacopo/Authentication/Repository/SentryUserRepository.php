@@ -209,18 +209,22 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
      * @param array $input_filter
      * @return mixed|void
      */
-    public function all(array $input_filter = null)
+    public function all(array $input_filter = [])
     {
         $results_per_page = $this->config->get('authentication::users_per_page');
+        // set table names
         $user_table_name = $this->model->getTable();
         $profile_table_name = App::make('profile_repository')->getModel()->getTable();
-        // merge tables
-        $q = DB::table($user_table_name)
-            ->leftJoin($profile_table_name,$user_table_name.'.id', '=', $profile_table_name.'.user_id');
-        // filter data
-        $q = $this->applyFilters($input_filter, $q, $user_table_name, $profile_table_name);
+        $user_groups_table_name = "users_groups";
+        $group_table_name = 'groups';
 
-        $q = $this->createAllSelect($q, $user_table_name, $profile_table_name);
+        $q = $this->createTableJoins($user_table_name, $profile_table_name, $user_groups_table_name, $group_table_name);
+
+        $q = $this->applySearchFilters($input_filter, $q, $user_table_name, $profile_table_name, $group_table_name);
+
+        $q = $this->applyOrderingFilter($input_filter, $q);
+
+        $q = $this->createAllSelect($q, $user_table_name, $profile_table_name, $group_table_name);
 
         return $q->paginate($results_per_page);
     }
@@ -230,9 +234,10 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
      * @param       $q
      * @param       $user_table
      * @param       $profile_table
+     * @pram        $group_table
      * @return mixed
      */
-    protected function applyFilters(array $input_filter = null, $q, $user_table, $profile_table)
+    protected function applySearchFilters(array $input_filter = null, $q, $user_table, $profile_table , $group_table)
     {
         if($input_filter) foreach ($input_filter as $column => $value) {
             if( $value !== '') switch ($column) {
@@ -254,6 +259,8 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
                 case 'code':
                     $q = $q->where($profile_table . '.code', '=', $value);
                     break;
+                case 'group_id':
+                    $q = $q->where($group_table . '.id' , '=', $value);
             }
         }
 
@@ -264,11 +271,52 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
      * @param $q
      * @param $user_table_name
      * @param $profile_table_name
+     * @param $group_table_name
      * @return mixed
      */
-    protected function createAllSelect($q, $user_table_name, $profile_table_name)
+    protected function createAllSelect($q, $user_table_name, $profile_table_name, $group_table_name)
     {
-        $q = $q->select($user_table_name . '.*', $profile_table_name . '.first_name', $profile_table_name . '.last_name', $profile_table_name . '.zip', $profile_table_name . '.code');
+        $q = $q->select($user_table_name . '.*',
+            $profile_table_name . '.first_name',
+            $profile_table_name . '.last_name',
+            $profile_table_name . '.zip',
+            $profile_table_name . '.code',
+            $group_table_name . '.name'
+        );
+
+        return $q;
+    }
+
+    /**
+     * @param array $input_filter
+     * @param       $q
+     * @return mixed
+     */
+    protected function applyOrderingFilter(array $input_filter, $q)
+    {
+        if (isset($input_filter['order_by']) )
+        {
+            // get ordering type
+            $ordering = (isset($input_filter['ordering']) && $input_filter['ordering'] == 'asc') ? 'ASC' : 'DESC';
+            $q = $q->orderBy($input_filter['order_by'], $ordering);
+        }
+
+        return $q;
+    }
+
+    /**
+     * @param $user_table_name
+     * @param $profile_table_name
+     * @param $user_groups_table_name
+     * @param $group_table_name
+     * @return mixed
+     */
+    protected function createTableJoins($user_table_name, $profile_table_name, $user_groups_table_name, $group_table_name)
+    {
+        $q = DB::table($user_table_name)
+            ->leftJoin($profile_table_name, $user_table_name . '.id', '=', $profile_table_name . '.user_id')
+            ->leftJoin($user_groups_table_name, $user_table_name . '.id', '=', $user_groups_table_name . '.user_id')
+            ->leftJoin($group_table_name, $user_groups_table_name . '.group_id', '=',$group_table_name . '.id');
 
         return $q;
     }
