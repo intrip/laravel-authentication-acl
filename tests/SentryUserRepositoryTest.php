@@ -246,19 +246,24 @@ class SentryUserRepositoryTest extends DbTestCase {
      * @test
      * @group all
      **/
-    public function it_filter_groups_with_all()
+    public function it_filter_groups_with_all_and_select_distinct_rows()
     {
         // prepare data
         $per_page = 5;
         $config = $this->mockConfigPerPage($per_page);
         list($user_repository, $user) = $this->createUser($config);
-        $group = $this->createGroup();
-        $user_repository->addGroup($user->id, $group->id);
+        $group1_name = "group 1";
+        $group2_name = "group 2";
+        $group1 = $this->createGroup($group1_name);
+        $group2 = $this->createGroup($group2_name);
+        $user_repository->addGroup($user->id, $group1->id);
+        $user_repository->addGroup($user->id, $group2->id);
 
         $users = $user_repository->all(["group_id" => 1]);
+        $this->assertEquals(1, $users->count());
         $this->assertEquals("admin@admin.com", $users->first()->email);
 
-        $users = $user_repository->all(["group_id" => 2]);
+        $users = $user_repository->all(["group_id" => 3]);
         $this->assertTrue($users->isEmpty());
     }
     
@@ -370,11 +375,11 @@ class SentryUserRepositoryTest extends DbTestCase {
         return [$user_repository, $user];
     }
 
-    protected function createGroup()
+    protected function createGroup($name = "group name")
     {
         $group_repository = App::make('group_repository');
         $input_group      = [
-            "name" => "group name",];
+            "name" => $name,];
         $group = $group_repository->create($input_group);
         return $group;
     }

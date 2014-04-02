@@ -14,16 +14,15 @@ GRAFICA:
     - documentazione per tutto e anche nei file di configurazione, con manuale html, spiega anche come aggiungere voci di menu ecc
 
 FUNZIONAMENTO:
-    - edit profile nel tab
-    - filtro per gruppi e show gruppi
-    - i gruppi uguale con ordinamento solo per description
+    - fix bug ordinamento insieme a filtri
+    - i gruppi con tabella uguale con ordinamento solo per description
     - refactoring metodini nei test
     - migliora gestione permessi: come a syntara quindi un permesso base per login e poi permessi specifici per edit user oltre a quello base
     - add form per login utente esterno no pannello admin
     - blocca utente admin
-    - guarda in giro gli altri progetti e vedi se mettere altro di carino o grafico
+    - fai grafiche varie
     - install script command
-    - test con postgres e mysql
+    - test con postgres e mysql e sqlite
     - add alla doc di safari autocomplete bug
 
 TEST:

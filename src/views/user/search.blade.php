@@ -15,7 +15,8 @@
         </div>
         <div class="form-group">
             {{Form::label('group_id', 'Group: ')}}
-            {{Form::select('group_id', array_merge([""=>""], $group_values), Input::get('group_id',''), ["class" => "form-control"])}}
+            <?php $group_values[""] = ""; ?>
+            {{Form::select('group_id', $group_values, Input::get('group_id',''), ["class" => "form-control"])}}
         </div>
         {{Form::reset('Reset', ["class" => "btn btn-default
         "])}}

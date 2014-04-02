@@ -284,6 +284,8 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
             $group_table_name . '.name'
         );
 
+        $q = $q->groupBy($user_table_name.'.email');
+
         return $q;
     }
 

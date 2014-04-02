@@ -18,13 +18,12 @@
         </div>
         <div class="row">
             <div class="col-md-12 table-responsive">
-                <table class="table">
+                <table class="table table-hover">
                     @if(! $users->isEmpty() )
                         <tr>
                             <th>Email</th>
                             <th>First name</th>
                             <th>Last name</th>
-                            <th>Groups</th>
                             <th>Active</th>
                             <th>Last login</th>
                             <th>Operations</th>
@@ -34,7 +33,6 @@
                             <td>{{$user->email}}</td>
                             <td>{{$user->first_name}}</td>
                             <td>{{$user->last_name}}</td>
-                            <td></td>
                             <td>{{$user->activated ? '<i class="fa fa-circle green"></i>' : '<i class="fa fa-circle-o red"></i>'}}</td>
                             <td>{{$user->last_login ? $user->last_login : 'not logged yet.'}}</td>
                             <td>

@@ -12,35 +12,43 @@ Admin area: edit user
     @if( isset($message) )
     <div class="alert alert-success">{{$message}}</div>
     @endif
-    <h3><i class="fa fa-user"></i> {{isset($user->id) ? 'Edit' : 'Create'}} user</h3>
+    <div class="row">
+    <div class="col-md-10">
+        <h3><i class="fa fa-pencil-square-o"></i>{{isset($user->id) ? 'Edit' : 'Create'}} user</h3>
+   </div>
+    <div class="col-md-2">
+        <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@postEditProfile',["user_id" => $user->id])}}" class="btn btn-primary btn-lg text-right"><i class="fa fa-user"></i> Edit profile</a>
+    </div>
+    </div>
     <hr/>
     <div class="col-md-6">
-    <h3><i class="fa fa-desktop"></i> Login data</h3>
-    {{Form::model($user, [ 'url' => URL::action('Jacopo\Authentication\Controllers\UserController@postEditUser')] ) }}
-    {{FormField::email(["autocomplete" => "off", "label" => "Email: *"])}}
-    <span class="text-danger">{{$errors->first('email')}}</span>
-    {{FormField::password(["autocomplete" => "off", "label" => isset($user->id) ? "Change password: " : "Password: "])}}
-    <span class="text-danger">{{$errors->first('password')}}</span>
-    {{FormField::password_confirmation(["autocomplete" => "off", "label" => isset($user->id) ? "Confirm change password: " : "Confirm password: "])}}
-    <span class="text-danger">{{$errors->first('password_confirmation')}}</span>
-    <div class="form-group">
-        {{Form::label("activated","User activated: ")}}
-        {{Form::select('activated', ["1" => "Yes", "0" => "No"], (isset($user->activated) && $user->activated) ? $user->activated : "0", ["class"=> "form-control"] )}}
-    </div>
-    {{Form::hidden('id')}}
-    {{Form::hidden('form_name','user')}}
-    <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@deleteUser',['id' => $user->id, '_token' => csrf_token()])}}" class="btn btn-danger pull-right margin-left-5 delete">Delete</a>
-    {{Form::submit('Save', array("class"=>"btn btn-primary pull-right "))}}
-    {{Form::close()}}
-    </div>
-    <div class="col-md-6">
-        <h3><i class="fa fa-users"></i> Grupps</h3>
-        @include('authentication::user.groups')
+        <h3>Login data</h3>
+        {{Form::model($user, [ 'url' => URL::action('Jacopo\Authentication\Controllers\UserController@postEditUser')] ) }}
+        {{FormField::email(["autocomplete" => "off", "label" => "Email: *"])}}
+        <span class="text-danger">{{$errors->first('email')}}</span>
+        {{FormField::password(["autocomplete" => "off", "label" => isset($user->id) ? "Change password: " : "Password: "])}}
+        <span class="text-danger">{{$errors->first('password')}}</span>
+        {{FormField::password_confirmation(["autocomplete" => "off", "label" => isset($user->id) ? "Confirm change password: " : "Confirm password: "])}}
+        <span class="text-danger">{{$errors->first('password_confirmation')}}</span>
+        <div class="form-group">
+            {{Form::label("activated","User activated: ")}}
+            {{Form::select('activated', ["1" => "Yes", "0" => "No"], (isset($user->activated) && $user->activated) ? $user->activated : "0", ["class"=> "form-control"] )}}
+        </div>
+        {{Form::hidden('id')}}
+        {{Form::hidden('form_name','user')}}
+        <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@deleteUser',['id' => $user->id, '_token' => csrf_token()])}}" class="btn btn-danger pull-right margin-left-5 delete">Delete</a>
+        {{Form::submit('Save', array("class"=>"btn btn-primary pull-right "))}}
+        {{Form::close()}}
+        </div>
+        <div class="col-md-6">
+            <h3><i class="fa fa-users"></i> Grupps</h3>
+            @include('authentication::user.groups')
 
-        {{-- group permission form --}}
-        <h3><i class="fa fa-lock"></i> Permission</h3>
-        {{-- permissions --}}
-        @include('authentication::user.perm')
+            {{-- group permission form --}}
+            <h3><i class="fa fa-lock"></i> Permission</h3>
+            {{-- permissions --}}
+            @include('authentication::user.perm')
+        </div>
     </div>
 @stop
 
