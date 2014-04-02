@@ -13,6 +13,10 @@
             {{Form::label('activated', 'Active: ')}}
             {{Form::select('activated', ['' => '', 1 => 'Yes', 0 => 'No'], Input::get('activated',''), ["class" => "form-control"])}}
         </div>
+        <div class="form-group">
+            {{Form::label('group_id', 'Group: ')}}
+            {{Form::select('group_id', array_merge([""=>""], $group_values), Input::get('group_id',''), ["class" => "form-control"])}}
+        </div>
         {{Form::reset('Reset', ["class" => "btn btn-default
         "])}}
         {{Form::submit('Search', ["class" => "btn btn-primary

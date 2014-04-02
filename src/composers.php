@@ -64,7 +64,7 @@ View::composer(['authentication::user.edit','authentication::group.edit'], funct
 /**
  * Sends the group select to the view
  */
-View::composer(['authentication::user.edit','authentication::group.edit'], function ($view){
+View::composer(['authentication::user.edit','authentication::group.edit', 'authentication::user.search'], function ($view){
     $fh = new FormHelper();
     $values_group = $fh->getSelectValuesGroups();
     $view->with('group_values', $values_group);

@@ -163,21 +163,21 @@ class SentryUserRepositoryTest extends DbTestCase {
     {
         $per_page = 5;
         $config = $this->mockConfigPerPage($per_page);
-        $repo = $this->createUserWithProfileForSearch($config);
+        $repository = $this->createUserWithProfileForSearch($config);
 
-        $users = $repo->all(["first_name" => "name"]);
+        $users = $repository->all(["first_name" => "name"]);
         $this->assertEquals("name", $users->first()->first_name);
-        $users = $repo->all(["last_name" => "urname"]);
+        $users = $repository->all(["last_name" => "urname"]);
         $this->assertEquals("surname", $users->first()->last_name);
-        $users = $repo->all(["zip" => "22222"]);
+        $users = $repository->all(["zip" => "22222"]);
         $this->assertEquals("22222", $users->first()->zip);
-        $users = $repo->all(["email" => "admin@admin.co"]);
+        $users = $repository->all(["email" => "admin@admin.co"]);
         $this->assertEquals("admin@admin.com", $users->first()->email);
-        $users = $repo->all(["code" => "12345", "email" => "admin@admin.com"]);
+        $users = $repository->all(["code" => "12345", "email" => "admin@admin.com"]);
         $this->assertEquals("12345", $users->first()->code);
         $this->assertEquals(1, $users->first()->id);
     }
-    
+
     /**
      * @test
      **/
@@ -223,6 +223,23 @@ class SentryUserRepositoryTest extends DbTestCase {
         $users = $repo->all(["ordering" => "asc", "order_by" => "activated"]);
         $this->assertEquals($users->first()->activated, 0);
 
+    }
+
+    /**
+     * @test
+     **/
+    public function it_ignore_ordering_by_empty_field()
+    {
+        $per_page = 5;
+        $config = $this->mockConfigPerPage($per_page);
+        $repo = new SentryUserRepository($config);
+
+        $this->createUserWithProfileWithSameValueOnFields($repo, 0);
+        $this->createUserWithProfileWithSameValueOnFields($repo, 1);
+
+        $users_ordered = $repo->all(["order_by" => ""]);
+        $users = $repo->all();
+        $this->assertEquals($users, $users_ordered);
     }
 
     /**

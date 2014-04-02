@@ -27,6 +27,14 @@ div.paginator
 {
     color: #428bca;
 }
+.green
+{
+    color:green;
+}
+.red
+{
+    color:red;
+}
 .margin-right-30
 {
     margin-right: 30px;
@@ -34,6 +42,10 @@ div.paginator
 .margin-bottom-30
 {
     margin-bottom: 30px;
+}
+.margin-bottom-12
+{
+    margin-bottom: 12px;
 }
 .margin-left-5
 {

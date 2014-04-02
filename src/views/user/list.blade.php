@@ -7,7 +7,7 @@
 @section('content')
 <div class="row">
     <div class="col-md-12">
-        <div class="col-md-8">
+        <div class="col-md-9">
             {{-- print messages --}}
             <?php $message = Session::get('message'); ?>
             @if( isset($message) )
@@ -19,8 +19,9 @@
                     <div class="alert alert-danger">{{$error}}</div>
                 @endforeach
             @endif
-            <h3>{{Input::all() ? 'Search results:' : 'Users list'}}</h3>
-            <hr/>
+            @include('authentication::user.all')
+
+            {{--
             @if(! $users->isEmpty() )
                 <ul class="list-group">
                 @foreach($users as $user)
@@ -42,13 +43,13 @@
                 </ul>
             @else
                 <h5 class="text-warning">No results found.</h5>
-            @endif
-            <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@editUser')}}" class="btn btn-primary pull-right">Add New</a>
                 <div class="paginator">
                     {{$users->appends(Input::except(['page']) )->links()}}
                 </div>
+            @endif
+            --}}
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             @include('authentication::user.search')
         </div>
     </div>
@@ -58,7 +59,7 @@
 @section('footer_scripts')
     <script>
         $(".delete").click(function(){
-            return confirm("Sei sicuro di volere eliminare l'elemento selezionato?");
+            return confirm("Are you sure to delete the item?");
         });
     </script>
 @stop

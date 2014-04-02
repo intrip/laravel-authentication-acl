@@ -5,6 +5,7 @@ GRAFICA:
     - grafica con layout per 1024 che si veda bene e pou su tablet e mobile
     - per grafica prendi spunto da snippet o fai i quadrati come a syntara
     - pannello colori diverso e metti icone belle ovunque
+    - iconcine ai form
     - fix responsive grafica
     - nel pannello fai logout e profilo (edita il tuo) con link
     - finish todo vari
@@ -13,16 +14,13 @@ GRAFICA:
     - documentazione per tutto e anche nei file di configurazione, con manuale html, spiega anche come aggiungere voci di menu ecc
 
 FUNZIONAMENTO:
-    - fai una tabella ordinabile con i campi
-    first name, email, group, last login, active, edit/delete e poi ricarca la fai andare sotto a schermo piccolo e il link al profilo mettilo in un tab in edit
-    - filtro per gruppi e ordinamento
+    - edit profile nel tab
+    - filtro per gruppi e show gruppi
     - i gruppi uguale con ordinamento solo per description
-    - aggiungi ordinamento custom utenti
-    - metti la tabella al posto della lista
-    - vedi x jquery tags plugin
     - refactoring metodini nei test
     - migliora gestione permessi: come a syntara quindi un permesso base per login e poi permessi specifici per edit user oltre a quello base
-    - metti breadcum come a syntara?
+    - add form per login utente esterno no pannello admin
+    - blocca utente admin
     - guarda in giro gli altri progetti e vedi se mettere altro di carino o grafico
     - install script command
     - test con postgres e mysql
@@ -45,5 +43,6 @@ POI:
 - testa anche i controllers completamente
 - profilo editabile nei campi come la "scheda tecnica"
 - template
+- supporto multipli ordering
 - widget vari utilizzabili
 - messaggi personalizzati in file di config e traduzione di tutto con translate laravel

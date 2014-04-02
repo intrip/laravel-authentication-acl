@@ -294,7 +294,7 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
      */
     protected function applyOrderingFilter(array $input_filter, $q)
     {
-        if (isset($input_filter['order_by']) )
+        if (isset($input_filter['order_by']) && ! empty($input_filter['order_by']) )
         {
             // get ordering type
             $ordering = (isset($input_filter['ordering']) && $input_filter['ordering'] == 'asc') ? 'ASC' : 'DESC';
