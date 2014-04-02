@@ -123,11 +123,13 @@ class UserControllerTest extends DbTestCase {
     /**
      * @test
      **/
-    public function it_show_user_lists_on_lists()
+    public function it_show_user_lists_on_lists_and_append_input_get()
     {
         $this->action('GET','Jacopo\Authentication\Controllers\UserController@getList');
 
         $this->assertResponseOk();
+
+        //@todo
     }
 
     /**

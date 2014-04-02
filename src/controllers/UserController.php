@@ -67,7 +67,8 @@ class UserController extends \Controller
 
     public function getList()
     {
-        $users = $this->user_repository->all(Input::except(['page']));
+        dd(Input::merge( Input::except(['page']) ));
+        $users = $this->user_repository->all( Input::except(['page']) );
 
         return View::make('authentication::user.list')->with(["users" => $users]);
     }
