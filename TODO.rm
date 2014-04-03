@@ -14,7 +14,6 @@ GRAFICA:
     - documentazione per tutto e anche nei file di configurazione, con manuale html, spiega anche come aggiungere voci di menu ecc
 
 FUNZIONAMENTO:
-    - adda filtro se sono messi campi con nomi sbagliati per ordinamento
     - i gruppi con tabella uguale con ordinamento solo per description
     - refactoring metodini nei test
     - migliora gestione permessi: come a syntara quindi un permesso base per login e poi permessi specifici per edit user oltre a quello base
@@ -24,6 +23,7 @@ FUNZIONAMENTO:
     - install script command
     - test con postgres e mysql e sqlite
     - add alla doc di safari autocomplete bug
+    - reset button non pulisce la select search
 
 TEST:
     - fixa tutti i test e adda i test che non sono stati fatti (sentryuserepository e vedi se altro)

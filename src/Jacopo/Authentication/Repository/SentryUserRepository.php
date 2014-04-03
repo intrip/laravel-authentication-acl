@@ -34,7 +34,7 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
 
     public function __construct($config = null)
     {
-        $this->sentry = \App::make('sentry');
+        $this->sentry = App::make('sentry');
         $this->config = $config ? $config : App::make('config');
         return parent::__construct(new User);
     }
@@ -186,143 +186,10 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
      * @param array $input_filter
      * @return mixed|void
      */
-    public function all(array $input_filter = [])
+    public function all(array $input_filter = [], $user_repository_search = null)
     {
-        $results_per_page = $this->config->get('authentication::users_per_page');
-        // set table names
-        $user_table_name = $this->model->getTable();
-        $profile_table_name = App::make('profile_repository')->getModel()->getTable();
-        $user_groups_table_name = "users_groups";
-        $group_table_name = 'groups';
-
-        $q = $this->createTableJoins($user_table_name, $profile_table_name, $user_groups_table_name, $group_table_name);
-
-        $q = $this->applySearchFilters($input_filter, $q, $user_table_name, $profile_table_name, $group_table_name);
-
-        $q = $this->applyOrderingFilter($input_filter, $q);
-
-        $q = $this->createAllSelect($q, $user_table_name, $profile_table_name, $group_table_name);
-
-        return $q->paginate($results_per_page);
-    }
-
-    /**
-     * @param array $input_filter
-     * @param       $q
-     * @param       $user_table
-     * @param       $profile_table
-     * @pram        $group_table
-     * @return mixed
-     */
-    protected function applySearchFilters(array $input_filter = null, $q, $user_table, $profile_table , $group_table)
-    {
-        if($input_filter) foreach ($input_filter as $column => $value) {
-            if( $value !== '') switch ($column) {
-                case 'activated':
-                    $q = $q->where($user_table . '.activated', '=', $value);
-                    break;
-                case 'email':
-                    $q = $q->where($user_table . '.email', 'LIKE', "%{$value}%");
-                    break;
-                case 'first_name':
-                    $q = $q->where($profile_table . '.first_name', 'LIKE', "%{$value}%");
-                    break;
-                case 'last_name':
-                    $q = $q->where($profile_table . '.last_name', 'LIKE', "%{$value}%");
-                    break;
-                case 'zip':
-                    $q = $q->where($profile_table . '.zip', '=', $value);
-                    break;
-                case 'code':
-                    $q = $q->where($profile_table . '.code', '=', $value);
-                    break;
-                case 'group_id':
-                    $q = $q->where($group_table . '.id' , '=', $value);
-            }
-        }
-
-        return $q;
-    }
-
-    /**
-     * @param $q
-     * @param $user_table_name
-     * @param $profile_table_name
-     * @param $group_table_name
-     * @return mixed
-     */
-    protected function createAllSelect($q, $user_table_name, $profile_table_name, $group_table_name)
-    {
-        $q = $q->select($user_table_name . '.*',
-            $profile_table_name . '.first_name',
-            $profile_table_name . '.last_name',
-            $profile_table_name . '.zip',
-            $profile_table_name . '.code',
-            $group_table_name . '.name'
-        );
-
-        $q = $q->groupBy($user_table_name.'.email');
-
-        return $q;
-    }
-
-    /**
-     * @param array $input_filter
-     * @param       $q
-     * @return mixed
-     */
-    protected function applyOrderingFilter(array $input_filter, $q)
-    {
-
-        if ( $this->isValidOrderingFilter($input_filter) )
-        {
-            $ordering = $this->guessOrderingType($input_filter);
-            $q = $q->orderBy($input_filter['order_by'], $ordering);
-        }
-
-        return $q;
-    }
-
-    /**
-     * @param $filter
-     * @return bool
-     */
-    public function isValidOrderingFilter($input_filter)
-    {
-        $valid_ordering_fields = ["first_name", "last_name", "email", "last_login", "activated", "name"];
-
-        if( ! isset($input_filter['order_by']) ) return false;
-
-        $order_by_filter = $input_filter['order_by'];
-
-        if( empty($order_by_filter) ) return false;
-        return in_array($order_by_filter, $valid_ordering_fields);
-
-    }
-
-    /**
-     * @param $user_table_name
-     * @param $profile_table_name
-     * @param $user_groups_table_name
-     * @param $group_table_name
-     * @return mixed
-     */
-    protected function createTableJoins($user_table_name, $profile_table_name, $user_groups_table_name, $group_table_name)
-    {
-        $q = DB::table($user_table_name)
-            ->leftJoin($profile_table_name, $user_table_name . '.id', '=', $profile_table_name . '.user_id')
-            ->leftJoin($user_groups_table_name, $user_table_name . '.id', '=', $user_groups_table_name . '.user_id')
-            ->leftJoin($group_table_name, $user_groups_table_name . '.group_id', '=',$group_table_name . '.id');
-
-        return $q;
-    }
-
-    /**
-     * @param array $input_filter
-     * @return string
-     */
-    protected function guessOrderingType(array $input_filter)
-    {
-        return $ordering = (isset($input_filter['ordering']) && $input_filter['ordering'] == 'desc') ? 'DESC' : 'ASC';
+        $per_page = Config::get('authentication::users_per_page');
+        $user_repository_search = $user_repository_search ? $user_repository_search : new UserRepositorySearchFilter($per_page);
+        return $user_repository_search->all($input_filter);
     }
 }
