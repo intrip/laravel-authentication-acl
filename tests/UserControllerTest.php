@@ -123,13 +123,13 @@ class UserControllerTest extends DbTestCase {
     /**
      * @test
      **/
-    public function it_show_user_lists_on_lists_and_append_input_get()
+    public function it_show_user_lists_on_lists()
     {
-        $this->action('GET','Jacopo\Authentication\Controllers\UserController@getList');
+        \Session::put('_old_input', ["intersect" => "old intersect", "old" => "old input"]);
+
+        $this->action('GET','Jacopo\Authentication\Controllers\UserController@getList', ["new" => "new input", "intersect" => "new intersect"]);
 
         $this->assertResponseOk();
-
-        //@todo
     }
 
     /**

@@ -15,21 +15,6 @@ interface UserRepositoryInterface
     public function activate($id);
 
     /**
-     * Deactivate a user
-     * @param $id
-     * @return mixed
-     */
-    public function deactivate($id);
-
-    /**
-     * Suspends a user
-     * @param $id
-     * @param $duration in minutes
-     * @return mixed
-     */
-    public function suspend($id, $duration);
-
-    /**
      * @param $group_id
      * @param $user_id
      * @return mixed

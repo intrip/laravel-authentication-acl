@@ -164,29 +164,6 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
     }
 
     /**
-     * Deactivate a user
-     *
-     * @param $id
-     * @return mixed
-     */
-    public function deactivate($id)
-    {
-        // TODO: Implement deactivate() method.
-    }
-
-    /**
-     * Suspends a user
-     *
-     * @param $id
-     * @param $duration in minutes
-     * @return mixed
-     */
-    public function suspend($id, $duration)
-    {
-        // TODO: Implement suspend() method.
-    }
-
-    /**
      * @param $login_name
      * @throws \Jacopo\Authentication\Exceptions\UserNotFoundException
      */

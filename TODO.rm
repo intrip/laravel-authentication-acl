@@ -14,7 +14,7 @@ GRAFICA:
     - documentazione per tutto e anche nei file di configurazione, con manuale html, spiega anche come aggiungere voci di menu ecc
 
 FUNZIONAMENTO:
-    - fix bug ordinamento insieme a filtri
+    - adda filtro se sono messi campi con nomi sbagliati per ordinamento
     - i gruppi con tabella uguale con ordinamento solo per description
     - refactoring metodini nei test
     - migliora gestione permessi: come a syntara quindi un permesso base per login e poi permessi specifici per edit user oltre a quello base

@@ -18,10 +18,23 @@
             <?php $group_values[""] = ""; ?>
             {{Form::select('group_id', $group_values, Input::get('group_id',''), ["class" => "form-control"])}}
         </div>
-        {{Form::reset('Reset', ["class" => "btn btn-default
-        "])}}
-        {{Form::submit('Search', ["class" => "btn btn-primary
+        <div class="row form-group">
+            <div class="col-md-12">
+                {{Form::label('Sorting: ')}}
+            </div>
+            <div class="col-md-6">
+                {{Form::select('order_by', ["" => "select column", "first_name" => "First name", "last_name" => "Last name", "email" => "Email", "last_login" => "Last login", "active" => "Active"], Input::get('order_by',''), ['class' => 'form-control'])}}
+            </div>
+            <div class="col-md-6">
+                {{Form::select('ordering', ["asc" => "Ascending", "desc" => "descending"], Input::get('ordering','asc'), ['class' =>'form-control'])}}
+            </div>
+        </div>
+        <div class="form-group">
+            {{Form::reset('Reset', ["class" => "btn btn-default
             "])}}
+            {{Form::submit('Search', ["class" => "btn btn-primary
+                "])}}
+        </div>
         {{Form::close()}}
     </div>
 </div>
