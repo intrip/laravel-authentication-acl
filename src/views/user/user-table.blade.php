@@ -50,6 +50,9 @@
                     <span class="text-warning"><h5>No results found.</h5></span>
                 @endif
             </div>
+            <div class="paginator">
+                {{$users->appends(Input::except(['page']) )->links()}}
+            </div>
         </div>
     </div>
 </div>
