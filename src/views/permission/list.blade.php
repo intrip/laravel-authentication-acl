@@ -18,25 +18,14 @@
     <div class="alert alert-danger">{{$error}}</div>
     @endforeach
     @endif
-    <h3>Permission list</h3>
-    @if( ! $permissions->isEmpty() )
-        <ul class="list-group">
-        @foreach($permissions as $permission)
-            <li class="list-group-item">
-                <i class="fa fa-lock
- fa-2x"></i> {{$permission->description}}
-                @if(! $permission->protected)
-                <a href="{{URL::action('Jacopo\Authentication\Controllers\PermissionController@deletePermission',['id' => $permission->id, '_token' => csrf_token()])}}" class="pull-right margin-left-5"><i class="fa fa-trash-o delete fa-2x"></i>delete </a>
-                <a href="{{URL::action('Jacopo\Authentication\Controllers\PermissionController@editPermission', ['id' => $permission->id])}}" class="pull-right"><i class="fa fa-pencil-square-o fa-2x"></i> edit </a>
-                @endif
-                <span class="clearfix"></span>
-            </li>
-            @endforeach
-        </ul>
-    @else
-        <span class="text-warning"><h5>No users found.</h5></span>
-    @endif
-    <a href="{{URL::action('Jacopo\Authentication\Controllers\PermissionController@editPermission')}}" class="btn btn-primary pull-right">Add New</a>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title"><i class="fa fa-lock"></i> Permissions</h3>
+        </div>
+        <div class="panel-body">
+            @include('authentication::permission.permission-table')
+        </div>
+    </div>
 </div>
 @stop
 

@@ -20,27 +20,14 @@
                     <div class="alert alert-danger">{{$error}}</div>
                 @endforeach
             @endif
-            <h3>{{Input::all() ? 'Search results:' : 'Groups list'}}</h3>
-            @if( ! $groups->isEmpty() )
-                <ul class="list-group">
-                @foreach($groups as $group)
-                    <li class="list-group-item">
-                    <i class="fa fa-group fa-2x"></i>{{$group->name}}
-                        @if(! $group->protected)
-                            <a href="{{URL::action('Jacopo\Authentication\Controllers\GroupController@deleteGroup',['id' => $group->id, '_token' => csrf_token()])}}" class="pull-right margin-left-5 delete"><i class="fa fa-trash-o fa-2x"></i> delete</a>
-                            <a href="{{URL::action('Jacopo\Authentication\Controllers\GroupController@editGroup', ['id' => $group->id])}}" class="pull-right"><i class="fa fa-edit fa-2x"></i>edit </a>
-                            <span class="clearfix"></span>
-                        @endif
-                    </li>
-                    @endforeach
-                </ul>
-            @else
-                <h5>No results found.</h5>
-            @endif
-            <a href="{{URL::action('Jacopo\Authentication\Controllers\GroupController@editGroup')}}" class="btn btn-primary pull-right">Add New</a>
-            <div class="paginator">
-                {{$groups->appends(Input::except(['page']) )->links()}}
-            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-group"></i> {{Input::all() ? 'Search results:' : 'Groups'}}</h3>
+                </div>
+                <div class="panel-body">
+                    @include('authentication::group.groups-table')
+               </div>
+           </div>
         </div>
         <div class="col-md-4">
             @include('authentication::group.search')
@@ -52,7 +39,7 @@
 @section('footer_scripts')
     <script>
         $(".delete").click(function(){
-            return confirm("Sei sicuro di volere eliminare l'elemento selezionato?");
+            return confirm("Are you sure to delete this item?");
         });
     </script>
 @stop

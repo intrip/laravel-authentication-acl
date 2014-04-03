@@ -49,8 +49,8 @@ class UserRepositorySearchFilter
      */
     protected function applySearchFilters(array $input_filter = null, $q)
     {
-        if($input_filter) foreach ($input_filter as $column => $value) {
-            if( $value !== '') switch ($column) {
+        if($this->isSettedInputFilter($input_filter)) foreach ($input_filter as $column => $value) {
+            if($this->isValidFilterValue($value)) switch ($column) {
                 case 'activated':
                     $q = $q->where($this->user_table_name . '.activated', '=', $value);
                     break;
@@ -166,5 +166,23 @@ class UserRepositorySearchFilter
     public function getPerPage()
     {
         return $this->per_page;
+    }
+
+    /**
+     * @param array $input_filter
+     * @return array
+     */
+    protected function isSettedInputFilter(array $input_filter)
+    {
+        return $input_filter;
+    }
+
+    /**
+     * @param $value
+     * @return bool
+     */
+    protected function isValidFilterValue($value)
+    {
+        return $value !== '';
     }
 }

@@ -20,7 +20,7 @@
                 @endforeach
             @endif
             {{-- user lists --}}
-            @include('authentication::user.all')
+            @include('authentication::user.user-table')
         </div>
         <div class="col-md-3">
             @include('authentication::user.search')

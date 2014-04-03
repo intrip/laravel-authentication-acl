@@ -14,12 +14,11 @@ GRAFICA:
     - documentazione per tutto e anche nei file di configurazione, con manuale html, spiega anche come aggiungere voci di menu ecc
 
 FUNZIONAMENTO:
-    - i gruppi con tabella uguale con ordinamento solo per description
+    - check look paginazione
     - refactoring metodini nei test
     - migliora gestione permessi: come a syntara quindi un permesso base per login e poi permessi specifici per edit user oltre a quello base
     - add form per login utente esterno no pannello admin
     - blocca utente admin
-    - fai grafiche varie
     - install script command
     - test con postgres e mysql e sqlite
     - add alla doc di safari autocomplete bug
@@ -38,6 +37,7 @@ RELEASE:
 POI:
 - dashboard
 - add oauth
+- add permission come list a gruppi
 - quando fai reinviare la mail vedi di nascondere il msg di errore
 - testa anche i controllers completamente
 - profilo editabile nei campi come la "scheda tecnica"
