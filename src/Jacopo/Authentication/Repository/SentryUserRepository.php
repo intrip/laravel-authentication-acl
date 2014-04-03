@@ -273,14 +273,31 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
      */
     protected function applyOrderingFilter(array $input_filter, $q)
     {
-        if (isset($input_filter['order_by']) && ! empty($input_filter['order_by']) )
+
+        if ( $this->isValidOrderingFilter($input_filter) )
         {
-            // get ordering type
-            $ordering = (isset($input_filter['ordering']) && $input_filter['ordering'] == 'asc') ? 'ASC' : 'DESC';
+            $ordering = $this->guessOrderingType($input_filter);
             $q = $q->orderBy($input_filter['order_by'], $ordering);
         }
 
         return $q;
+    }
+
+    /**
+     * @param $filter
+     * @return bool
+     */
+    public function isValidOrderingFilter($input_filter)
+    {
+        $valid_ordering_fields = ["first_name", "last_name", "email", "last_login", "activated", "name"];
+
+        if( ! isset($input_filter['order_by']) ) return false;
+
+        $order_by_filter = $input_filter['order_by'];
+
+        if( empty($order_by_filter) ) return false;
+        return in_array($order_by_filter, $valid_ordering_fields);
+
     }
 
     /**
@@ -298,5 +315,14 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
             ->leftJoin($group_table_name, $user_groups_table_name . '.group_id', '=',$group_table_name . '.id');
 
         return $q;
+    }
+
+    /**
+     * @param array $input_filter
+     * @return string
+     */
+    protected function guessOrderingType(array $input_filter)
+    {
+        return $ordering = (isset($input_filter['ordering']) && $input_filter['ordering'] == 'desc') ? 'DESC' : 'ASC';
     }
 }

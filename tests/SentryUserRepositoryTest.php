@@ -201,9 +201,8 @@ class SentryUserRepositoryTest extends DbTestCase {
     
     /**
      * @test
-     * @group order
      **/
-    public function it_allow_ordering_asc_and_desc_by_first_name_last_name_email_last_login_active_with_all()
+    public function it_allow_ordering_asc_and_desc_by_first_name_last_name_email_last_login_activated_with_all()
     {
         $per_page = 5;
         $config = $this->mockConfigPerPage($per_page);
@@ -228,7 +227,7 @@ class SentryUserRepositoryTest extends DbTestCase {
     /**
      * @test
      **/
-    public function it_ignore_ordering_by_empty_field()
+    public function it_ignore_ordering_by_empty_field_with_all()
     {
         $per_page = 5;
         $config = $this->mockConfigPerPage($per_page);
@@ -240,6 +239,37 @@ class SentryUserRepositoryTest extends DbTestCase {
         $users_ordered = $repo->all(["order_by" => ""]);
         $users = $repo->all();
         $this->assertEquals($users, $users_ordered);
+    }
+
+    /**
+     * @test
+     **/
+    public function it_validate_ordering_filter()
+    {
+        $repo = new SentryUserRepository();
+
+        $invalid_filter = ["order_by" => "invalid "];
+
+        $this->assertFalse($repo->isValidOrderingFilter($invalid_filter));
+    }
+
+    /**
+     * @test
+     * @group ordering
+     **/
+    public function it_ignore_wrong_column_name_when_ordering_all()
+    {
+        $per_page = 5;
+        $config = $this->mockConfigPerPage($per_page);
+        $repo = new SentryUserRepository($config);
+
+        $this->createUserWithProfileWithSameValueOnFields($repo, 0);
+        $this->createUserWithProfileWithSameValueOnFields($repo, 1);
+
+        $users_ordered = $repo->all(["order_by" => "wrong_column_name"]);
+        $users = $repo->all();
+        $this->assertEquals($users, $users_ordered);
+        //@todo check why pass and fix
     }
 
     /**
