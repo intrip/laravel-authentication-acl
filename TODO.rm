@@ -14,7 +14,8 @@ GRAFICA:
     - documentazione per tutto e anche nei file di configurazione, con manuale html, spiega anche come aggiungere voci di menu ecc
 
 FUNZIONAMENTO:
-    - refactoring metodini nei test
+    - refactoring metodini nei test(parti da groupPresenterTest in poi), check code: private bottom e public al top per metodi private var al top con public
+    - dropdown utente con link al suo profilo anche
     - migliora gestione permessi: come a syntara quindi un permesso base per login e poi permessi specifici per edit user oltre a quello base
     - add form per login utente esterno no pannello admin
     - blocca utente admin

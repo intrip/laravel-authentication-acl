@@ -8,11 +8,11 @@ use App;
 use DB;
 class UserRepositorySearchFilter 
 {
-    protected $per_page;
-    protected $user_table_name = "users";
-    protected $profile_table_name;
-    protected $user_groups_table_name;
-    protected $groups_table_name;
+    private $per_page;
+    private $user_table_name = "users";
+    private $profile_table_name;
+    private $user_groups_table_name;
+    private $groups_table_name;
 
     public function __construct($per_page = 5)
     {
@@ -40,6 +40,19 @@ class UserRepositorySearchFilter
     }
 
     /**
+     * @return mixed
+     */
+    private function createTableJoins()
+    {
+        $q = DB::table($this->user_table_name)
+            ->leftJoin($this->profile_table_name, $this->user_table_name . '.id', '=', $this->profile_table_name. '.user_id')
+            ->leftJoin($this->user_groups_table_name, $this->user_table_name . '.id', '=', $this->user_groups_table_name . '.user_id')
+            ->leftJoin($this->groups_table_name, $this->user_groups_table_name . '.group_id', '=',$this->groups_table_name . '.id');
+
+        return $q;
+    }
+
+    /**
      * @param array $input_filter
      * @param       $q
      * @param       $user_table
@@ -47,7 +60,7 @@ class UserRepositorySearchFilter
      * @pram        $group_table
      * @return mixed
      */
-    protected function applySearchFilters(array $input_filter = null, $q)
+    private function applySearchFilters(array $input_filter = null, $q)
     {
         if($this->isSettedInputFilter($input_filter)) foreach ($input_filter as $column => $value) {
             if($this->isValidFilterValue($value)) switch ($column) {
@@ -78,22 +91,21 @@ class UserRepositorySearchFilter
     }
 
     /**
-     * @param $q
-     * @return mixed
+     * @param array $input_filter
+     * @return array
      */
-    protected function createAllSelect($q)
+    private function isSettedInputFilter(array $input_filter)
     {
-        $q = $q->select($this->user_table_name . '.*',
-            $this->profile_table_name. '.first_name',
-            $this->profile_table_name. '.last_name',
-            $this->profile_table_name. '.zip',
-            $this->profile_table_name. '.code',
-            $this->groups_table_name . '.name'
-        );
+        return $input_filter;
+    }
 
-        $q = $q->groupBy($this->user_table_name.'.email');
-
-        return $q;
+    /**
+     * @param $value
+     * @return bool
+     */
+    private function isValidFilterValue($value)
+    {
+        return $value !== '';
     }
 
     /**
@@ -101,7 +113,7 @@ class UserRepositorySearchFilter
      * @param       $q
      * @return mixed
      */
-    protected function applyOrderingFilter(array $input_filter, $q)
+    private function applyOrderingFilter(array $input_filter, $q)
     {
 
         if ( $this->isValidOrderingFilter($input_filter) )
@@ -131,25 +143,31 @@ class UserRepositorySearchFilter
     }
 
     /**
-     * @return mixed
-     */
-    protected function createTableJoins()
-    {
-        $q = DB::table($this->user_table_name)
-            ->leftJoin($this->profile_table_name, $this->user_table_name . '.id', '=', $this->profile_table_name. '.user_id')
-            ->leftJoin($this->user_groups_table_name, $this->user_table_name . '.id', '=', $this->user_groups_table_name . '.user_id')
-            ->leftJoin($this->groups_table_name, $this->user_groups_table_name . '.group_id', '=',$this->groups_table_name . '.id');
-
-        return $q;
-    }
-
-    /**
      * @param array $input_filter
      * @return string
      */
-    protected function guessOrderingType(array $input_filter)
+    private function guessOrderingType(array $input_filter)
     {
         return $ordering = (isset($input_filter['ordering']) && $input_filter['ordering'] == 'desc') ? 'DESC' : 'ASC';
+    }
+
+    /**
+     * @param $q
+     * @return mixed
+     */
+    private function createAllSelect($q)
+    {
+        $q = $q->select($this->user_table_name . '.*',
+            $this->profile_table_name. '.first_name',
+            $this->profile_table_name. '.last_name',
+            $this->profile_table_name. '.zip',
+            $this->profile_table_name. '.code',
+            $this->groups_table_name . '.name'
+        );
+
+        $q = $q->groupBy($this->user_table_name.'.email');
+
+        return $q;
     }
 
     /**
@@ -166,23 +184,5 @@ class UserRepositorySearchFilter
     public function getPerPage()
     {
         return $this->per_page;
-    }
-
-    /**
-     * @param array $input_filter
-     * @return array
-     */
-    protected function isSettedInputFilter(array $input_filter)
-    {
-        return $input_filter;
-    }
-
-    /**
-     * @param $value
-     * @return bool
-     */
-    protected function isValidFilterValue($value)
-    {
-        return $value !== '';
     }
 }

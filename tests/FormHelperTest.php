@@ -20,15 +20,9 @@ class FormHelperTest extends TestCase {
     /**
      * @test
      **/
-    public function it_create_permissions_array_values()
+    public function it_create_permissions_array_values_and_add_underscore_prefix_if_not_present()
     {
-        $value1 = "desc1";
-        $value2 = "desc2";
-        $value3 = "desc3";
-        $obj1 = new Permission(["description" => $value1, "permission" => "perm1"]);
-        $obj2 = new Permission(["description" => $value2, "permission" => "perm2"]);
-        $obj3 = new Permission(["description" => $value3, "permission" => "perm3"]);
-        $objs = [$obj1, $obj2, $obj3];
+        $objs = $this->createArrayOfPermissions();
         $mock_permission = m::mock('Jacopo\Authentication\Repository\EloquentPermissionRepository');
         $mock_permission->shouldReceive('all')->andReturn(new Collection($objs));
 
@@ -49,6 +43,22 @@ class FormHelperTest extends TestCase {
         $helper = new FormHelper();
         $helper->prepareSentryPermissionInput($data, $operation);
         $this->assertEquals(["permission1" => 1], $data["permissions"]);
+    }
+
+    /**
+     * @return array
+     */
+    protected function createArrayOfPermissions()
+    {
+        $value1 = "desc1";
+        $value2 = "desc2";
+        $value3 = "desc3";
+        $obj1   = new Permission(["description" => $value1, "permission" => "perm1"]);
+        $obj2   = new Permission(["description" => $value2, "permission" => "perm2"]);
+        $obj3   = new Permission(["description" => $value3, "permission" => "perm3"]);
+        $objs   = [$obj1, $obj2, $obj3];
+
+        return $objs;
     }
 
 }

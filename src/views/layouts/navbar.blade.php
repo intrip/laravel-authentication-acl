@@ -12,7 +12,19 @@
                 @endif
             </ul>
             <div class="navbar-form navbar-right">
-                <a href="{{URL::to('/user/logout')}}" class="btn btn-warning">Logout</a>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li>
+                            <a href="{{URL::to('/admin/users/list')}}"><i class="fa fa-lock fa-user"></i> Edit profile</a>
+                        </li>
+                        <li class="divider"></li>
+                            <a href="{{URL::to('/user/logout')}}" class="btn btn-warning">Logout</a>
+                        </li>
+                    </ul>
+                </il>
             </div>
         </div><!--/.nav-collapse -->
     </div>
