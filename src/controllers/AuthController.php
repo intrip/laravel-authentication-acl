@@ -1,12 +1,7 @@
 <?php namespace Jacopo\Authentication\Controllers;
 
-use Controller;
-use View;
-use Sentry;
-use Input;
-use Redirect;
+use Controller, View, Sentry, Input, Redirect, App;
 use Jacopo\Library\Exceptions\JacopoExceptionsInterface;
-use Jacopo\Authentication\Classes\SentryAuthenticator;
 use Jacopo\Authentication\Services\ReminderService;
 
 class AuthController extends Controller {
@@ -14,9 +9,9 @@ class AuthController extends Controller {
     protected $authenticator;
     protected $reminder;
 
-    public function __construct(SentryAuthenticator $auth, ReminderService $reminder)
+    public function __construct(ReminderService $reminder)
     {
-        $this->authenticator = $auth;
+        $this->authenticator = App::make('authenticator');
         $this->reminder = $reminder;
     }
 
