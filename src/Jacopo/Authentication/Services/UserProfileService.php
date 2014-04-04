@@ -60,14 +60,6 @@ class UserProfileService
     }
 
     /**
-     * @return \Illuminate\Support\MessageBag
-     */
-    public function getErrors()
-    {
-        return $this->errors;
-    }
-
-    /**
      * @param $input
      * @return mixed
      * @throws \Jacopo\Library\Exceptions\InvalidException
@@ -82,9 +74,23 @@ class UserProfileService
         catch (JacopoExceptionsInterface $e) {
             $this->errors = $this->f_p->getErrors();
             throw new InvalidException;
-        }
+        }g
 
         return $user_profile;
+    }
+
+    /**
+     * @param $input
+     * @throws \Jacopo\Authentication\Exceptions\PermissionException
+     */
+    protected function checkPermission($input)
+    {
+        $auth_helper = App::make('authentication_helper');
+        if (! $auth_helper->checkProfileEditPermission($input["user_id"]))
+        {
+            $this->errors = new MessageBag(["model" => "Non hai i permessi di modificare questo profilo"]);
+            throw new PermissionException;
+        }
     }
 
     /**
@@ -107,17 +113,10 @@ class UserProfileService
     }
 
     /**
-     * @param $input
-     * @throws \Jacopo\Authentication\Exceptions\PermissionException
+     * @return \Illuminate\Support\MessageBag
      */
-    protected function checkPermission($input)
+    public function getErrors()
     {
-        $auth_helper = App::make('authentication_helper');
-        if (! $auth_helper->checkProfileEditPermission($input["user_id"]))
-        {
-            $this->errors = new MessageBag(["model" => "Non hai i permessi di modificare questo profilo"]);
-            throw new PermissionException;
-        }
+        return $this->errors;
     }
-
 } 

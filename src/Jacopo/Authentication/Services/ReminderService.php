@@ -78,7 +78,7 @@ class ReminderService {
             throw new UserNotFoundException;
         }
 
-        $this->preparaBody($token, $to);
+        $this->prepareBody($token, $to);
 
         // send email with change password link
         $success = $this->mailer->sendTo($to, $this->body, $this->subject, $this->template);
@@ -88,6 +88,11 @@ class ReminderService {
             $this->errors->add('mail', 'C\'è stato un\'errore nell\'invio della mail');
             throw new MailException;
         }
+    }
+
+    private function prepareBody($token, $to)
+    {
+        $this->body = link_to_action("Jacopo\\Authentication\\Controllers\\AuthController@getChangePassword","Clicca qui per cambiare password.", ["email"=> $to, "token"=> $token] );
     }
 
     public function reset($email, $token, $password)
@@ -122,11 +127,6 @@ class ReminderService {
     public function getErrors()
     {
         return $this->errors;
-    }
-
-    protected function preparaBody($token, $to)
-    {
-        $this->body = link_to_action("Jacopo\\Authentication\\Controllers\\AuthController@getChangePassword","Clicca qui per cambiare password.", ["email"=> $to, "token"=> $token] );
     }
 
 } 
