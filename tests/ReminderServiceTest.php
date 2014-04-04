@@ -27,10 +27,9 @@ class ReminderServiceTest extends TestCase {
 
     public function testSendWorks()
     {
-        $mock_mail = m::mock('StdClass')->shouldReceive('sendTo')->andReturn(true)->getMock();
-        App::instance('jmailer', $mock_mail);
-        $mock_auth = m::mock('StdClass')->shouldReceive()->getToken()->andReturn($this->token);
-        App::instance('authenticator', $mock_auth);
+        $return = true;
+        $this->mockMailerSendTo($return);
+        $this->mockAuthGetTokenTrue();
         $reminder = new Reminder();
 
         $success = $reminder->send("mock@mock.com");
@@ -42,12 +41,26 @@ class ReminderServiceTest extends TestCase {
      */
     public function testSendThrowsException()
     {
-        $mock_mail = m::mock('StdClass')->shouldReceive('sendTo')->andReturn(false)->getMock();
-        App::instance('jmailer', $mock_mail);
-        $mock_auth = m::mock('StdClass')->shouldReceive()->getToken()->andReturn($this->token);
-        App::instance('authenticator', $mock_auth);
+        $return = false;
+        $this->mockMailerSendTo($return);
+        $this->mockAuthGetTokenTrue();
         $reminder = new Reminder();
         $reminder->send("");
+    }
+
+    private function mockMailerSendTo($return)
+    {
+        $mock_mail = m::mock('StdClass')->shouldReceive('sendTo')->andReturn($return)->getMock();
+        App::instance('jmailer', $mock_mail);
+    }
+
+    /**
+     * @return mixed
+     */
+    private function mockAuthGetTokenTrue()
+    {
+        $mock_auth = m::mock('StdClass')->shouldReceive()->getToken()->andReturn($this->token);
+        App::instance('authenticator', $mock_auth);
     }
 
 }

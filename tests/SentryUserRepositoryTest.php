@@ -29,12 +29,7 @@ class SentryUserRepositoryTest extends DbTestCase {
      **/
     public function it_find_user_from_a_group()
     {
-        $input = [
-            "email" => "admin@admin.com",
-            "password" => "password",
-            "activated" => 1
-        ];
-        $this->user_repository->create($input);
+        $this->createUser([]);
         $group_repo = App::make('group_repository');
         $input = [
             "name" => "admin"
@@ -108,12 +103,7 @@ class SentryUserRepositoryTest extends DbTestCase {
      **/
     public function it_find_user_by_login_name()
     {
-        $input = [
-            "email" => "admin@admin.com",
-            "password" => "password",
-            "activated" => 0
-        ];
-        $this->user_repository->create($input);
+        $this->createUser([]);
 
         $user = $this->user_repository->findByLogin("admin@admin.com");
         $this->assertEquals("admin@admin.com", $user->email);

@@ -1,4 +1,4 @@
-@extends('authentication::layouts.base-1cols')
+@extends('authentication::admin.layouts.base-1cols')
 
 @section('title')
 {{$app_name}} Admin area: benvenuto

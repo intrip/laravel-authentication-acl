@@ -1,4 +1,4 @@
-@extends('authentication::layouts.baseauth')
+@extends('authentication::admin.layouts.baseauth')
 @section('container')
     <h1>Recupero password</h1>
     <?php $message = Session::get('message'); ?>

@@ -128,7 +128,7 @@ class UserRegisterService
      */
     public function sendRegistrationMailToClient($input)
     {
-        $view_file = $this->activation_enabled ? "authentication::mail.registration-waiting-client" : "authentication::mail.registration-confirmed-client";
+        $view_file = $this->activation_enabled ? "authentication::admin.mail.registration-waiting-client" : "authentication::admin.mail.registration-confirmed-client";
 
         $mailer = App::make('jmailer');
 
@@ -145,7 +145,7 @@ class UserRegisterService
     {
         $mailer = App::make('jmailer');
         // if i activate a deactivated user
-        $mailer->sendTo($user->email, [ "email" => $user->email ], "Your user is activated on: ".Config::get('authentication::app_name'), "authentication::mail.registration-confirmed-client");
+        $mailer->sendTo($user->email, [ "email" => $user->email ], "Your user is activated on: ".Config::get('authentication::app_name'), "authentication::admin.mail.registration-confirmed-client");
     }
 
     /**

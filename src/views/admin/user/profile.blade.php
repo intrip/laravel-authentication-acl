@@ -1,4 +1,4 @@
-@extends('authentication::layouts.base-2cols')
+@extends('authentication::admin.layouts.base-2cols')
 
 @section('title')
 Admin area: Edit user profile
@@ -18,15 +18,17 @@ Admin area: Edit user profile
     <div class="panel panel-default">
         <div class="panel-heading">
             <div class="row">
-                <div class="col-md-10 col-sm-6 col-xs-6">
+                <div class="col-md-12">
                     <h3 class="panel-title"><i class="fa fa-user"></i> User profile</h3>
-                </div>
-                <div class="col-md-2 col-sm-6 col-xs-6">
-                    <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@editUser',['id' => $user_profile->user_id])}}" class="btn btn-primary"><i class="fa fa-pencil-square-o"></i> Edit user</a>
                 </div>
             </div>
         </div>
         <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@editUser',['id' => $user_profile->user_id])}}" class="btn btn-primary pull-right"><i class="fa fa-pencil-square-o"></i> Edit user</a>
+                </div>
+            </div>
             {{Form::model($user_profile,['route'=>'users.profile.edit', 'method' => 'post'])}}
                 {{FormField::first_name(["label" => "First name:"])}}
                 <span class="text-danger">{{$errors->first('first_name')}}</span>

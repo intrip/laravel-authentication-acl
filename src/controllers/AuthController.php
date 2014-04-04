@@ -27,7 +27,7 @@ class AuthController extends Controller {
      */
     public function getLogin()
     {
-        return View::make('authentication::auth.login');
+        return View::make('authentication::client.auth.login');
     }
 
     public function postLogin()
@@ -68,7 +68,7 @@ class AuthController extends Controller {
      */
     public function getReminder()
     {
-        return View::make("authentication::auth.reminder");
+        return View::make("authentication::client.auth.reminder");
     }
 
     /**
@@ -97,7 +97,7 @@ class AuthController extends Controller {
         $email = Input::get('email');
         $token = Input::get('token');
 
-        return View::make("authentication::auth.changepassword", array("email" => $email, "token" => $token) );
+        return View::make("authentication::client.auth.changepassword", array("email" => $email, "token" => $token) );
     }
 
     public function postChangePassword()

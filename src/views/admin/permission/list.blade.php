@@ -1,4 +1,4 @@
-@extends('authentication::layouts.base-2cols')
+@extends('authentication::admin.layouts.base-2cols')
 
 @section('title')
     Admin area: permission list
@@ -23,7 +23,7 @@
             <h3 class="panel-title"><i class="fa fa-lock"></i> Permissions</h3>
         </div>
         <div class="panel-body">
-            @include('authentication::permission.permission-table')
+            @include('authentication::admin.permission.permission-table')
         </div>
     </div>
 </div>

@@ -18,7 +18,7 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@editProfile',['user_id' => $logged_user->id])}}"><i class="fa fa-user"></i> Your profile</a>
+                            <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@editProfile',['user_id' => isset($logged_user->id) ? $logged_user->id : ''])}}"><i class="fa fa-user"></i> Your profile</a>
                         </li>
                         <li class="divider"></li>
                         <li>

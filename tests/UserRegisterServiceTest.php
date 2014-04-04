@@ -43,12 +43,7 @@ class UserRegisterServiceTest extends DbTestCase {
      **/
     public function it_register_a_user()
     {
-        $input = [
-            "email" => "test@test.com",
-            "password" => "password@test.com",
-            "activated" => 0,
-            "first_name" => "first_name"
-        ];
+        $input          = $this->createFakeRegisterInput();
         $mock_validator = $this->getValidatorSuccess();
         $service = new UserRegisterServiceNoMails($mock_validator);
 
@@ -62,12 +57,7 @@ class UserRegisterServiceTest extends DbTestCase {
      **/
     public function it_create_a_profile()
     {
-        $input = [
-            "email" => "test@test.com",
-            "password" => "password@test.com",
-            "activated" => 0,
-            "first_name" => "first_name"
-        ];
+        $input          = $this->createFakeRegisterInput();
         $mock_validator = $this->getValidatorSuccess();
         $service = new UserRegisterServiceNoMails($mock_validator);
 
@@ -87,7 +77,7 @@ class UserRegisterServiceTest extends DbTestCase {
         $user = new \StdClass;
         $user->email = "user@user.com";
 
-        $mock_mailer = m::mock('StdClass')->shouldReceive('sendTo')->once()->with("user@user.com", m::any(), m::any(), "authentication::mail.registration-confirmed-client")->andReturn(true)->getMock();
+        $mock_mailer = m::mock('StdClass')->shouldReceive('sendTo')->once()->with("user@user.com", m::any(), m::any(), "authentication::admin.mail.registration-confirmed-client")->andReturn(true)->getMock();
         App::instance('jmailer', $mock_mailer);
 
         $service->sendActivationEmailToClient($user);
@@ -99,12 +89,7 @@ class UserRegisterServiceTest extends DbTestCase {
     public function it_validates_user_input()
     {
         $mock_validator = $this->getValidatorSuccess();
-        $input = [
-            "email" => "test@test.com",
-            "password" => "password@test.com",
-            "activated" => 0,
-            "first_name" => "first_name"
-        ];
+        $input          = $this->createFakeRegisterInput();
 
         $service = new UserRegisterServiceNoMails($mock_validator);
 
@@ -188,7 +173,7 @@ class UserRegisterServiceTest extends DbTestCase {
     public function it_sent_confirmation_email_if_is_enabled()
     {
         Config::shouldReceive('get')->andReturn(true);
-        $mock_mailer = m::mock('StdClass')->shouldReceive('sendTo')->once()->with('email@email.com', m::any(), m::any(), "authentication::mail.registration-waiting-client")->andReturn(true)->getMock();
+        $mock_mailer = m::mock('StdClass')->shouldReceive('sendTo')->once()->with('email@email.com', m::any(), m::any(), "authentication::admin.mail.registration-waiting-client")->andReturn(true)->getMock();
         App::instance('jmailer', $mock_mailer);
         $mock_validator = $this->getValidatorSuccess();
         $user_stub = new User();
@@ -219,7 +204,7 @@ class UserRegisterServiceTest extends DbTestCase {
     public function it_send_activation_mail_to_client()
     {
         Config::shouldReceive('get')->andReturn(false);
-        $mock_mailer = m::mock('StdClass')->shouldReceive('sendTo')->once()->with('email@email.com', m::any(), m::any(), "authentication::mail.registration-confirmed-client")->andReturn(true)->getMock();
+        $mock_mailer = m::mock('StdClass')->shouldReceive('sendTo')->once()->with('email@email.com', m::any(), m::any(), "authentication::admin.mail.registration-confirmed-client")->andReturn(true)->getMock();
         App::instance('jmailer', $mock_mailer);
         $mock_validator = $this->getValidatorSuccess();
         $user_stub = new User();
@@ -387,6 +372,17 @@ class UserRegisterServiceTest extends DbTestCase {
     protected function stopEventPropagation()
     {
         Event::listen('service.activated', function(){return false;});
+    }
+
+    /**
+     * @return array
+     */
+    private function createFakeRegisterInput()
+    {
+        $input = [
+            "email" => "test@test.com", "password" => "password@test.com", "activated" => 0, "first_name" => "first_name"];
+
+        return $input;
     }
 }
 

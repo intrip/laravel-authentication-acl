@@ -7,17 +7,14 @@ GRAFICA:
     - pannello colori diverso e metti icone belle ovunque
     - iconcine ai form
     - fix responsive grafica
-    - finish todo vari
     - fix tutti i titoli
-    - pulsante crea al top?
+    - finish todo vari
     - documentazione per tutto e anche nei file di configurazione, con manuale html, spiega anche come aggiungere voci di menu ecc
 
 FUNZIONAMENTO:
-    - fix header edit profile css
-    - refactoring metodini nei test(parti da groupPresenterTest in poi)
-    - nascondi edit user e è creazione utente
-    - dropdown utente con link al suo profilo anche
     - migliora gestione permessi: come a syntara quindi un permesso base per login e poi permessi specifici per edit user oltre a quello base
+    - 3 menu user group e permission
+    - separa view in admin e client
     - add form per login utente esterno no pannello admin
     - blocca utente admin
     - install script command

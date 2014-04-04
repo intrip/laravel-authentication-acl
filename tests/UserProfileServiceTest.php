@@ -29,7 +29,7 @@ class UserProfileServiceTest extends TestCase {
      **/
     public function it_create_a_profile()
     {
-        $mock_form_profile_success = m::mock('Jacopo\Library\Form\FormModel')->shouldReceive('process')->once()->andReturn(true)->getMock();
+        $mock_form_profile_success = $this->mockProfileProcessAndReturn(true);
 
         $service = new UserProfileServiceNoPermStub(new VoidValidator(), $mock_form_profile_success);
 
@@ -57,7 +57,7 @@ class UserProfileServiceTest extends TestCase {
      **/
     public function it_update_user_password_if_given()
     {
-        $mock_form_profile_success = m::mock('Jacopo\Library\Form\FormModel')->shouldReceive('process')->andReturn(true)->getMock();
+        $mock_form_profile_success = $this->mockProfileProcessAndReturn(true);
         // mock user repository
         $mock_user_repo = m::mock('StdClass')->shouldReceive('update')->once()->andReturn(true)->getMock();
         App::instance('user_repository',$mock_user_repo);
@@ -70,19 +70,19 @@ class UserProfileServiceTest extends TestCase {
      **/
     public function it_not_update_user_if_password_not_given()
     {
-        $mock_form_profile_success = m::mock('Jacopo\Library\Form\FormModel')->shouldReceive('process')->andReturn(true)->getMock();
+        $mock_form_profile_success = $this->mockProfileProcessAndReturn(true);
         // mock user repository
         App::instance('user_repository','');
         $service = new UserProfileServiceNoPermStub(new VoidValidator(), $mock_form_profile_success);
         $service->processForm(["new_password" => '', "user_id" => '']);
     }
-    
+
     /**
      * @test
      **/
     public function it_return_user_profile_if_success()
     {
-        $mock_form_profile_success = m::mock('Jacopo\Library\Form\FormModel')->shouldReceive('process')->andReturn(new UserProfile)->getMock();
+        $mock_form_profile_success = $this->mockProfileProcessAndReturn(new UserProfile());
         $service = new UserProfileServiceNoPermStub(new VoidValidator(), $mock_form_profile_success);
         $profile = $service->processForm([]);
         $this->assertInstanceOf('Jacopo\Authentication\Models\UserProfile', $profile);
@@ -118,6 +118,16 @@ class UserProfileServiceTest extends TestCase {
 
         $errors = $service->getErrors();
         $this->assertTrue($errors->has('model'));
+    }
+
+    /**
+     * @return m\MockInterface
+     */
+    private function mockProfileProcessAndReturn($return)
+    {
+        $mock_form_profile_success = m::mock('Jacopo\Library\Form\FormModel')->shouldReceive('process')->andReturn($return)->getMock();
+
+        return $mock_form_profile_success;
     }
 
 }

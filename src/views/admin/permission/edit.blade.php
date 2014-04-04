@@ -1,4 +1,4 @@
-@extends('authentication::layouts.base-2cols')
+@extends('authentication::admin.layouts.base-2cols')
 
 @section('title')
 Admin area: edit permission

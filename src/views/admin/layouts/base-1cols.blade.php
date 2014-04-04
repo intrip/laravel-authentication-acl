@@ -1,4 +1,4 @@
-@extends('authentication::layouts.base')
+@extends('authentication::admin.layouts.base')
 
 @section('container')
     <div class="col-mg-12">

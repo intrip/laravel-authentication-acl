@@ -69,7 +69,7 @@ class UserController extends \Controller
     {
         $users = $this->user_repository->all(Input::except(['page']));
 
-        return View::make('authentication::user.list')->with(["users" => $users]);
+        return View::make('authentication::admin.user.list')->with(["users" => $users]);
     }
 
     public function editUser()
@@ -84,7 +84,7 @@ class UserController extends \Controller
         }
         $presenter = new UserPresenter($user);
 
-        return View::make('authentication::user.edit')->with(["user" => $user, "presenter" => $presenter]);
+        return View::make('authentication::admin.user.edit')->with(["user" => $user, "presenter" => $presenter]);
     }
 
     public function postEditUser()
@@ -187,7 +187,7 @@ class UserController extends \Controller
             $user_profile = new UserProfile(["user_id" => $user_id]);
         }
 
-        return View::make('authentication::user.profile')->with(['user_profile' => $user_profile]);
+        return View::make('authentication::admin.user.profile')->with(['user_profile' => $user_profile]);
     }
 
     public function postEditProfile()
@@ -209,7 +209,7 @@ class UserController extends \Controller
 
     public function signup()
     {
-        return View::make('authentication::auth.signup');
+        return View::make('authentication::client.auth.signup');
     }
 
     public function postSignup()
@@ -230,7 +230,7 @@ class UserController extends \Controller
 
     public function signupSuccess()
     {
-        return View::make('authentication::auth.signup-success');
+        return View::make('authentication::client.auth.signup-success');
     }
 
     public function emailConfirmation()
@@ -244,8 +244,8 @@ class UserController extends \Controller
         }
         catch(JacopoExceptionsInterface $e)
         {
-            return View::make('authentication::auth.email-confirmation')->withErrors($this->register_service->getErrors());
+            return View::make('authentication::client.auth.email-confirmation')->withErrors($this->register_service->getErrors());
         }
-        return View::make('authentication::auth.email-confirmation');
+        return View::make('authentication::client.auth.email-confirmation');
     }
 } 

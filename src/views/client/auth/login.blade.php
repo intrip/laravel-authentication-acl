@@ -1,4 +1,4 @@
-@extends('authentication::layouts.baseauth')
+@extends('authentication::admin.layouts.baseauth')
 @section('container')
     <h1>Login amministratore</h1>
     @if($errors && ! $errors->isEmpty() )

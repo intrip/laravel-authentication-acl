@@ -18,7 +18,7 @@ use Jacopo\Authentication\Classes\Menu\SentryMenuFactory;
 /**
  * Send the menu items
  */
-View::composer('authentication::layouts.*', function ($view){
+View::composer('authentication::admin.layouts.*', function ($view){
     $menu_items = SentryMenuFactory::create()->getItemListAvailable();
     $view->with('menu_items', $menu_items);
 });
@@ -26,7 +26,7 @@ View::composer('authentication::layouts.*', function ($view){
 /**
  * Create users sidebar
  */
-View::composer(['authentication::user.*', 'authentication::group.*', 'authentication::permission.*'], function ($view){
+View::composer(['authentication::admin.user.*', 'authentication::admin.group.*', 'authentication::admin.permission.*'], function ($view){
     $view->with('sidebar_items', [
 //                                     "Dashboard" => [
 //                                         "url" => '#',
@@ -63,7 +63,7 @@ use Jacopo\Authentication\Helpers\FormHelper;
 /**
  * Sends the permission select to the view
  */
-View::composer(['authentication::user.edit','authentication::group.edit'], function ($view){
+View::composer(['authentication::admin.user.edit','authentication::admin.group.edit'], function ($view){
     $fh = new FormHelper();
     $values_permission = $fh->getSelectValuesPermission();
     $view->with('permission_values', $values_permission);
@@ -71,7 +71,7 @@ View::composer(['authentication::user.edit','authentication::group.edit'], funct
 /**
  * Sends the group select to the view
  */
-View::composer(['authentication::user.edit','authentication::group.edit', 'authentication::user.search'], function ($view){
+View::composer(['authentication::admin.user.edit','authentication::admin.group.edit', 'authentication::admin.user.search'], function ($view){
     $fh = new FormHelper();
     $values_group = $fh->getSelectValuesGroups();
     $view->with('group_values', $values_group);

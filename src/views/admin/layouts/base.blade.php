@@ -26,7 +26,7 @@
 
     <body>
         {{-- navbar --}}
-        @include('authentication::layouts.navbar')
+        @include('authentication::admin.layouts.navbar')
 
         {{-- content --}}
         <div class="container-fluid">

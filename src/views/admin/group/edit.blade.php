@@ -1,4 +1,4 @@
-@extends('authentication::layouts.base-2cols')
+@extends('authentication::admin.layouts.base-2cols')
 
 @section('title')
 Admin area: edit group
@@ -36,7 +36,7 @@ Admin area: edit group
             {{-- group permission form --}}
                 <h4><i class="fa fa-lock"></i> Permissions</h4>
                 {{-- permissions --}}
-                @include('authentication::group.perm')
+                @include('authentication::admin.group.perm')
             </div>
        </div>
     </div>

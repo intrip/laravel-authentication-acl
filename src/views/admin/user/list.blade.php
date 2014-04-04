@@ -1,14 +1,13 @@
-@extends('authentication::layouts.base-2cols')
+@extends('authentication::admin.layouts.base-2cols')
 
 @section('title')
-    Admin area: Groups list
+    Admin area: users list
 @stop
 
 @section('content')
-
 <div class="row">
     <div class="col-md-12">
-        <div class="col-md-8">
+        <div class="col-md-9">
             {{-- print messages --}}
             <?php $message = Session::get('message'); ?>
             @if( isset($message) )
@@ -20,17 +19,11 @@
                     <div class="alert alert-danger">{{$error}}</div>
                 @endforeach
             @endif
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title"><i class="fa fa-group"></i> {{Input::all() ? 'Search results:' : 'Groups'}}</h3>
-                </div>
-                <div class="panel-body">
-                    @include('authentication::group.groups-table')
-               </div>
-           </div>
+            {{-- user lists --}}
+            @include('authentication::admin.user.user-table')
         </div>
-        <div class="col-md-4">
-            @include('authentication::group.search')
+        <div class="col-md-3">
+            @include('authentication::admin.user.search')
         </div>
     </div>
 </div>

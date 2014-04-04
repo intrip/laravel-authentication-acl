@@ -5,7 +5,6 @@
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
-use Jacopo\Authentication\Models\Group;
 use Jacopo\Authentication\Repository\SentryGroupRepository;
 use Mockery as m;
 
@@ -45,12 +44,7 @@ class SentryGroupRepositoryTest extends DbTestCase {
     public function it_find_all_groups_filtered_by_description()
     {
         $repo = $this->createRepoMock();
-        $group_created_1 = $repo->create(array(
-                                       'name'        => 'Users1',
-                                  ));
-        $group_created_2 = $repo->create(array(
-                                       'name'        => 'Users2',
-                                  ));
+        $this->createTwoGroups($repo);
         $groups = $repo->all(["name" => "1"]);
 
         $this->assertEquals(1, $groups->count());
@@ -63,12 +57,8 @@ class SentryGroupRepositoryTest extends DbTestCase {
     public function it_find_all_groups()
     {
         $repo = $this->createRepoMock();
-        $group_created_1 = $repo->create(array(
-                                            'name' => 'Users1',
-                                           ));
-        $group_created_2 = $repo->create(array(
-                                            'name' => 'Users2',
-                                           ));
+        $this->createTwoGroups($repo);
+
         $groups = $repo->all(["name" => ""]);
         $this->assertEquals(2, $groups->count());
 
@@ -82,14 +72,7 @@ class SentryGroupRepositoryTest extends DbTestCase {
     public function it_find_group()
     {
 
-        $group = $this->group_repository->create(array(
-                                       'name'        => 'Users',
-                                       'permissions' => array(
-                                           'admin' => 1,
-                                           'users' => 1,
-                                       ),
-                                        "protected" => 0,
-                                  ));
+        $group = $this->createAGroup();
         $group_find = $this->group_repository->find($group->id);
 
         $this->assertEquals($group_find->toArray(), $group->toArray());
@@ -110,13 +93,7 @@ class SentryGroupRepositoryTest extends DbTestCase {
      **/
     public function it_return_all_models()
     {
-        $group = $this->group_repository->create(array(
-                                       'name'        => 'Users',
-                                       'permissions' => array(
-                                           'admin' => 1,
-                                           'users' => 1,
-                                       ),
-                                  ));
+        $group = $this->createAGroup();
 
         $all = $this->group_repository->all();
         $this->assertEquals(1, count($all));
@@ -127,14 +104,7 @@ class SentryGroupRepositoryTest extends DbTestCase {
      **/
     public function it_delete_a_group()
     {
-        $group = $this->group_repository->create(array(
-                                       'name'        => 'Users',
-                                       'permissions' => array(
-                                           'admin' => 1,
-                                           'users' => 1,
-                                       ),
-                                       'protected'  => 0,
-                                  ));
+        $group = $this->createAGroup();
 
         $success = $this->group_repository->delete($group->id);
         $this->assertTrue($success);
@@ -146,14 +116,7 @@ class SentryGroupRepositoryTest extends DbTestCase {
      **/
     public function it_update_a_group()
     {
-        $group = $this->group_repository->create(array(
-                                       'name'        => 'Users',
-                                       'permissions' => array(
-                                           'admin' => 1,
-                                           'users' => 1,
-                                       ),
-                                       "protected"  => 0,
-                                  ));
+        $group = $this->createAGroup();
         $newname = ["name" => "new name"];
         $this->group_repository->update($group->id, $newname);
 
@@ -174,5 +137,28 @@ class SentryGroupRepositoryTest extends DbTestCase {
         return $repo;
     }
 
+    /**
+     * @param $repo
+     */
+    private function createTwoGroups($repo)
+    {
+        $repo->create(array(
+                           'name' => 'Users1',));
+        $repo->create(array(
+                           'name' => 'Users2',));
+    }
+
+
+    public function createAGroup()
+    {
+        return $this->group_repository->create(array(
+                                                    'name'        => 'Users',
+                                                    'permissions' => array(
+                                                        'admin' => 1,
+                                                        'users' => 1,
+                                                    ),
+                                                    "protected" => 0,
+                                               ));
+    }
 }
  

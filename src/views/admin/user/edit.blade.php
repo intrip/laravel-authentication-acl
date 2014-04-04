@@ -1,4 +1,4 @@
-@extends('authentication::layouts.base-2cols')
+@extends('authentication::admin.layouts.base-2cols')
 
 @section('title')
 Admin area: edit user
@@ -15,15 +15,17 @@ Admin area: edit user
     <div class="panel panel-default">
         <div class="panel-heading">
             <div class="row">
-            <div class="col-md-10 col-sm-6 col-xs-6">
-                <h3 class="panel-title">{{isset($user->id) ? 'Edit' : 'Create'}} user</h3>
-           </div>
-            <div class="col-md-2 col-sm-6 col-xs-6">
-                <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@postEditProfile',["user_id" => $user->id])}}" class="btn btn-primary text-right" {{! isset($user->id) ? 'disabled="disabled"' : ''}}><i class="fa fa-user"></i> Edit profile</a>
-            </div>
+                <div class="col-md-12">
+                    <h3 class="panel-title">{{isset($user->id) ? 'Edit' : 'Create'}} user</h3>
+                </div>
             </div>
         </div>
         <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@postEditProfile',["user_id" => $user->id])}}" class="btn btn-primary pull-right" {{! isset($user->id) ? 'disabled="disabled"' : ''}}><i class="fa fa-user"></i> Edit profile</a>
+                </div>
+            </div>
             <div class="col-md-6">
                 <h4>Login data</h4>
                 {{Form::model($user, [ 'url' => URL::action('Jacopo\Authentication\Controllers\UserController@postEditUser')] ) }}
@@ -45,12 +47,12 @@ Admin area: edit user
                 </div>
                 <div class="col-md-6">
                     <h4><i class="fa fa-users"></i> Groups</h4>
-                    @include('authentication::user.groups')
+                    @include('authentication::admin.user.groups')
 
                     {{-- group permission form --}}
                     <h4><i class="fa fa-lock"></i> Permission</h4>
                     {{-- permissions --}}
-                    @include('authentication::user.perm')
+                    @include('authentication::admin.user.perm')
                 </div>
             </div>
         </div>
