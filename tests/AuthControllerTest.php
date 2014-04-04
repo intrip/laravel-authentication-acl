@@ -84,7 +84,7 @@ class AuthControllerTest extends TestCase {
 
         $this->mockAuthenticationFails($email, $password, $remember);
 
-        $this->action('POST',g'Jacopo\Authentication\Controllers\AuthController@postAdminLogin', ["email" => $email, "password" => $password, "remember" => $remember]);
+        $this->action('POST','Jacopo\Authentication\Controllers\AuthController@postAdminLogin', ["email" => $email, "password" => $password, "remember" => $remember]);
 
         $this->assertRedirectedToAction('Jacopo\Authentication\Controllers\AuthController@getAdminLogin');
         $this->assertSessionHasErrors();

@@ -39,8 +39,10 @@
                                 <td>{{$user->activated ? '<i class="fa fa-circle green"></i>' : '<i class="fa fa-circle-o red"></i>'}}</td>
                                 <td>{{$user->last_login ? $user->last_login : 'not logged yet.'}}</td>
                                 <td>
-                                    <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@editUser', ['id' => $user->id])}}" class="margin-left-5"><i class="fa fa-pencil-square-o fa-2x"></i></a>
-                                    <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@deleteUser',['id' => $user->id, '_token' => csrf_token()])}}" class="margin-left-5 delete"><i class="fa fa-trash-o fa-2x"></i></a>
+                                    @if(! $user->protected)
+                                        <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@editUser', ['id' => $user->id])}}" class="margin-left-5"><i class="fa fa-pencil-square-o fa-2x"></i></a>
+                                        <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@deleteUser',['id' => $user->id, '_token' => csrf_token()])}}" class="margin-left-5 delete"><i class="fa fa-trash-o fa-2x"></i></a>
+                                    @endif
                                 </td>
                             </tr>
                         </tbody>

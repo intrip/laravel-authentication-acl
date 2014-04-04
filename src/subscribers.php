@@ -7,4 +7,5 @@
 | Check if the current record is editable
 |
 */
-Event::subscribe(new \Jacopo\Authentication\Events\EditableSubscriber());
+use Jacopo\Authentication\Events\EditableSubscriber;
+Event::subscribe(new EditableSubscriber());

@@ -65,7 +65,7 @@ class PermissionController extends \Controller
             return Redirect::route("users.permission.edit", $id ? ["id" => $id]: [])->withInput()->withErrors($errors);
         }
 
-        return Redirect::action('Jacopo\Authentication\Controllers\PermissionController@editPermission',["id" => $obj->id])->withMessage("Permesso modificato con successo.");
+        return Redirect::action('Jacopo\Authentication\Controllers\PermissionController@editPermission',["id" => $obj->id])->withMessage("Permission edited with success.");
     }
 
     public function deletePermission()
@@ -79,6 +79,6 @@ class PermissionController extends \Controller
             $errors = $this->f->getErrors();
             return Redirect::action('Jacopo\Authentication\Controllers\PermissionController@getList')->withErrors($errors);
         }
-        return Redirect::action('Jacopo\Authentication\Controllers\PermissionController@getList')->withMessage("Permesso cancellato con successo.");
+        return Redirect::action('Jacopo\Authentication\Controllers\PermissionController@getList')->withMessage("Permission deleted with success.");
     }
 } 

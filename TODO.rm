@@ -14,7 +14,8 @@ GRAFICA:
 FUNZIONAMENTO:
     - migliora gestione permessi: come a syntara quindi un permesso base per login e poi permessi specifici per edit user oltre a
     quello base(create user, create permission e create groups 2 gruppi un admin che crea tuttoe uno slo per i gruppi)
-    - install script command(crea solo 1 utente superadmin e bloccato)
+    - fix bug quando cancelli permesso pialla anche dall'utente tutti i permessi oppure nel check fai eliminare i permessi anche all'utente
+    - install script command(popola il db come è in quello ora)
     - test con postgres e mysql e sqlite
     - add alla doc di safari autocomplete bug
     - reset button non pulisce la select search
