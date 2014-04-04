@@ -13,8 +13,6 @@ GRAFICA:
 
 FUNZIONAMENTO:
     - migliora gestione permessi: come a syntara quindi un permesso base per login e poi permessi specifici per edit user oltre a quello base
-    - 3 menu user group e permission
-    - separa view in admin e client
     - add form per login utente esterno no pannello admin
     - blocca utente admin
     - install script command

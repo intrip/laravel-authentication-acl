@@ -1,4 +1,4 @@
-{{Form::open(["route" => "users.groups.edit.permission","role"=>"form", 'class' => 'form-add-perm'])}}
+{{Form::open(["route" => "groups.edit.permission","role"=>"form", 'class' => 'form-add-perm'])}}
 <div class="form-group">
     <div class="input-group">
         <span class="input-group-addon form-button button-add-perm"><span class="glyphicon glyphicon-plus-sign add-input"></span></span>
@@ -18,7 +18,7 @@
 
 @if( $presenter->permissions )
 @foreach($presenter->permissions_obj as $permission)
-    {{Form::open(["route" => "users.groups.edit.permission", "role"=>"form", 'class' => 'form-del-perm'])}}
+    {{Form::open(["route" => "groups.edit.permission", "role"=>"form", 'class' => 'form-del-perm'])}}
     <div class="form-group">
         <div class="input-group">
             <span class="input-group-addon form-button button-del-perm"><span class="glyphicon glyphicon-minus-sign add-input"></span></span>
