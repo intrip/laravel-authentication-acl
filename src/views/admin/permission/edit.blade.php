@@ -40,7 +40,7 @@ Admin area: edit permission
 {{HTML::script('packages/jacopo/authentication/js/slugit.js')}}
 <script>
     $(".delete").click(function(){
-        return confirm("Sei sicuro di volere eliminare l'elemento selezionato?");
+        return confirm("Are you sure to delete this item?");
     });
     $(function(){
         $('#slugme').slugIt();

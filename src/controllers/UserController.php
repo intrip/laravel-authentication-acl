@@ -102,7 +102,7 @@ class UserController extends \Controller
             return Redirect::route("users.edit", $id ? ["id" => $id]: [])->withInput()->withErrors($errors);
         }
 
-        return Redirect::action('Jacopo\Authentication\Controllers\UserController@editUser',["id" => $obj->id])->withMessage("Utente modificato con successo.");
+        return Redirect::action('Jacopo\Authentication\Controllers\UserController@editUser',["id" => $obj->id])->withMessage("User edited with success.");
     }
 
     public function deleteUser()
@@ -116,7 +116,7 @@ class UserController extends \Controller
             $errors = $this->f->getErrors();
             return Redirect::action('Jacopo\Authentication\Controllers\UserController@getList')->withErrors($errors);
         }
-        return Redirect::action('Jacopo\Authentication\Controllers\UserController@getList')->withMessage("Utente cancellato con successo.");
+        return Redirect::action('Jacopo\Authentication\Controllers\UserController@getList')->withMessage("User deleted with success.");
     }
 
     public function addGroup()
@@ -130,9 +130,9 @@ class UserController extends \Controller
         }
         catch(JacopoExceptionsInterface $e)
         {
-            return Redirect::action('Jacopo\Authentication\Controllers\UserController@editUser', ["id" => $user_id])->withErrors(new MessageBag(["name" => "Gruppo non presente."]));
+            return Redirect::action('Jacopo\Authentication\Controllers\UserController@editUser', ["id" => $user_id])->withErrors(new MessageBag(["name" => "Group nt present."]));
         }
-        return Redirect::action('Jacopo\Authentication\Controllers\UserController@editUser',["id" => $user_id])->withMessage("Gruppo aggiunto con successo.");
+        return Redirect::action('Jacopo\Authentication\Controllers\UserController@editUser',["id" => $user_id])->withMessage("Group added with success.");
     }
 
     public function deleteGroup()
@@ -146,9 +146,9 @@ class UserController extends \Controller
         }
         catch(JacopoExceptionsInterface $e)
         {
-            return Redirect::action('Jacopo\Authentication\Controllers\UserController@editUser', ["id" => $user_id])->withErrors(new MessageBag(["name" => "Gruppo non presente."]));
+            return Redirect::action('Jacopo\Authentication\Controllers\UserController@editUser', ["id" => $user_id])->withErrors(new MessageBag(["name" => "Group not present."]));
         }
-        return Redirect::action('Jacopo\Authentication\Controllers\UserController@editUser',["id" => $user_id])->withMessage("Gruppo cancellato con successo.");
+        return Redirect::action('Jacopo\Authentication\Controllers\UserController@editUser',["id" => $user_id])->withMessage("Group deleted with success.");
     }
 
     public function editPermission()
@@ -165,9 +165,9 @@ class UserController extends \Controller
         }
         catch(JacopoExceptionsInterface $e)
         {
-            return Redirect::route("users.edit")->withInput()->withErrors(new MessageBag(["permissions" => "Permesso non trovato"]));
+            return Redirect::route("users.edit")->withInput()->withErrors(new MessageBag(["permissions" => "Permission not found"]));
         }
-        return Redirect::action('Jacopo\Authentication\Controllers\UserController@editUser',["id" => $obj->id])->withMessage("Permesso modificato con successo.");
+        return Redirect::action('Jacopo\Authentication\Controllers\UserController@editUser',["id" => $obj->id])->withMessage("Permission edited with success.");
     }
 
     public function editProfile()
@@ -180,7 +180,7 @@ class UserController extends \Controller
         }
         catch(UserNotFoundException $e)
         {
-            return Redirect::action('Jacopo\Authentication\Controllers\UserController@getList')->withErrors(new MessageBag(['model' => 'Utente non presente.']));
+            return Redirect::action('Jacopo\Authentication\Controllers\UserController@getList')->withErrors(new MessageBag(['model' => 'User not found.']));
         }
         catch(ProfileNotFoundException $e)
         {
@@ -204,7 +204,7 @@ class UserController extends \Controller
             $errors = $service->getErrors();
             return Redirect::route("users.profile.edit", ["user_id" => $input['user_id'] ])->withInput()->withErrors($errors);
         }
-        return Redirect::action('Jacopo\Authentication\Controllers\UserController@editProfile',["user_id" => $user_profile->user_id])->withMessage("Profilo modificato con successo.");
+        return Redirect::action('Jacopo\Authentication\Controllers\UserController@editProfile',["user_id" => $user_profile->user_id])->withMessage("Profile edited with success.");
     }
 
     public function signup()

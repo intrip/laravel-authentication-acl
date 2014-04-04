@@ -12,6 +12,9 @@ Admin area: edit user
     @if( isset($message) )
     <div class="alert alert-success">{{$message}}</div>
     @endif
+    @if($errors->has('model') )
+        <div class="alert alert-danger">{{$errors->first('model')}}</div>
+    @endif
     <div class="panel panel-default">
         <div class="panel-heading">
             <div class="row">
