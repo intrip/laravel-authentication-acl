@@ -74,7 +74,7 @@ class UserProfileService
         catch (JacopoExceptionsInterface $e) {
             $this->errors = $this->f_p->getErrors();
             throw new InvalidException;
-        }g
+        }
 
         return $user_profile;
     }

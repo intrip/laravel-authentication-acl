@@ -7,14 +7,15 @@ GRAFICA:
     - pannello colori diverso e metti icone belle ovunque
     - iconcine ai form
     - fix responsive grafica
-    - nel pannello fai logout e profilo (edita il tuo) con link
     - finish todo vari
     - fix tutti i titoli
     - pulsante crea al top?
     - documentazione per tutto e anche nei file di configurazione, con manuale html, spiega anche come aggiungere voci di menu ecc
 
 FUNZIONAMENTO:
-    - refactoring metodini nei test(parti da groupPresenterTest in poi), check code: private bottom e public al top per metodi private var al top con public
+    - fix header edit profile css
+    - refactoring metodini nei test(parti da groupPresenterTest in poi)
+    - nascondi edit user e è creazione utente
     - dropdown utente con link al suo profilo anche
     - migliora gestione permessi: come a syntara quindi un permesso base per login e poi permessi specifici per edit user oltre a quello base
     - add form per login utente esterno no pannello admin

@@ -7,6 +7,13 @@ View::composer('authentication::*', function ($view){
     $view->with('app_name', Config::get('authentication::app_name') );
 });
 
+/**
+ * Send to the view the logged user
+ */
+View::composer('authentication::*', function ($view){
+    $view->with('logged_user', App::make('authenticator')->getLoggedUser() );
+});
+
 use Jacopo\Authentication\Classes\Menu\SentryMenuFactory;
 /**
  * Send the menu items

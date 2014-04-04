@@ -59,17 +59,6 @@ class AuthenticationServiceProvider extends ServiceProvider {
         $this->setupConnection();
     }
 
-	/**
-	 * Get the services provided by the provider.
-	 *
-	 * @return array
-     * @override
-	 */
-	public function provides()
-	{
-		return array();
-	}
-
     protected function overwriteSentryConfig()
     {
         $this->app['config']->getLoader()->addNamespace('cartalyst/sentry', __DIR__ . '/../../config/sentry');
@@ -153,6 +142,17 @@ class AuthenticationServiceProvider extends ServiceProvider {
     protected function setupPresenceVerifierConnection()
     {
         $this->app['validation.presence']->setConnection('authentication');
+    }
+
+    /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     * @override
+     */
+    public function provides()
+    {
+        return array();
     }
 
 }

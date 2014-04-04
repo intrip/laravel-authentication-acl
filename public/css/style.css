@@ -57,10 +57,22 @@ div.paginator
     cursor: pointer;
 }
 /*///////////////// signup form ////////////////*/
-.centered-form{
+.centered-form
+{
     margin-top: 60px;
 }
-.centered-form .panel{
+.centered-form .panel
+{
     background: rgba(255, 255, 255, 0.8);
     box-shadow: rgba(0, 0, 0, 0.3) 20px 20px 20px;
+}
+/*///////////////// navbar ////////////////*/
+.navbar.dropdown-user a:hover
+{
+    text-decoration: none;
+}
+.navbar-top-links li a
+{
+    padding: 15px;
+    min-height: 50px;
 }

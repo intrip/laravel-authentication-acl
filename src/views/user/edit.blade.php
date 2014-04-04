@@ -19,7 +19,7 @@ Admin area: edit user
                 <h3 class="panel-title">{{isset($user->id) ? 'Edit' : 'Create'}} user</h3>
            </div>
             <div class="col-md-2 col-sm-6 col-xs-6">
-                <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@postEditProfile',["user_id" => $user->id])}}" class="btn btn-primary text-right"><i class="fa fa-user"></i> Edit profile</a>
+                <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@postEditProfile',["user_id" => $user->id])}}" class="btn btn-primary text-right" {{! isset($user->id) ? 'disabled="disabled"' : ''}}><i class="fa fa-user"></i> Edit profile</a>
             </div>
             </div>
         </div>

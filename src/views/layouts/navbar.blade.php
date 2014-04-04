@@ -11,21 +11,22 @@
                     @endforeach
                 @endif
             </ul>
-            <div class="navbar-form navbar-right">
-                <li class="dropdown">
+            <div class="navbar-nav nav navbar-right">
+                <li class="dropdown dropdown-user">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                        <i class="fa fa-user fa-fw"></i> Account <i class="fa fa-caret-down"></i>
                     </a>
-                    <ul class="dropdown-menu dropdown-user">
+                    <ul class="dropdown-menu">
                         <li>
-                            <a href="{{URL::to('/admin/users/list')}}"><i class="fa fa-lock fa-user"></i> Edit profile</a>
+                            <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@editProfile',['user_id' => $logged_user->id])}}"><i class="fa fa-user"></i> Your profile</a>
                         </li>
                         <li class="divider"></li>
-                            <a href="{{URL::to('/user/logout')}}" class="btn btn-warning">Logout</a>
+                        <li>
+                            <a href="{{URL::action('Jacopo\Authentication\Controllers\AuthController@getLogout')}}"><i class="fa fa-sign-out"></i> Logout</a>
                         </li>
                     </ul>
-                </il>
-            </div>
+                </li>
+            </div><!-- nav-right -->
         </div><!--/.nav-collapse -->
     </div>
 </div>

@@ -47,6 +47,11 @@ class UserRegisterService
         Event::listen('service.activated', 'Jacopo\Authentication\Services\UserRegisterService@sendActivationEmailToClient');
     }
 
+
+    /**
+     * @param array $input
+     * @return mixed
+     */
     public function register(array $input)
     {
         $this->validateInput($input);
@@ -60,33 +65,16 @@ class UserRegisterService
     }
 
     /**
-     * @param $mailer
-     * @param $user
+     * @param array $input
+     * @throws \Jacopo\Library\Exceptions\ValidationException
      */
-    public function sendRegistrationMailToClient($input)
+    protected function validateInput(array $input)
     {
-        $view_file = $this->activation_enabled ? "authentication::mail.registration-waiting-client" : "authentication::mail.registration-confirmed-client";
-
-        $mailer = App::make('jmailer');
-
-        // send email to client
-        $mailer->sendTo( $input['email'], [ "email" => $input["email"], "password" => $input["password"], "first_name" => $input["first_name"], "token" => $this->activation_enabled ? App::make('authenticator')->getActivationToken($input["email"]) :'' ], "Register request to: " . \Config::get('authentication::app_name'), $view_file);
-    }
-
-    protected function getActiveInputState()
-    {
-        return Config::get('authentication::email_confirmation') ? false : true;
-    }
-
-    /**
-     * Send activation email to the client if it's getting activated
-     * @param $obj
-     */
-    public function sendActivationEmailToClient($user)
-    {
-        $mailer = App::make('jmailer');
-        // if i activate a deactivated user
-        $mailer->sendTo($user->email, [ "email" => $user->email ], "Your user is activated on: ".Config::get('authentication::app_name'), "authentication::mail.registration-confirmed-client");
+        if (!$this->v->validate($input))
+        {
+            $this->errors = $this->v->getErrors();
+            throw new ValidationException;
+        }
     }
 
     /**
@@ -129,17 +117,35 @@ class UserRegisterService
         return $user;
     }
 
-    /**
-     * @param array $input
-     * @throws \Jacopo\Library\Exceptions\ValidationException
-     */
-    protected function validateInput(array $input)
+    protected function getActiveInputState()
     {
-        if (!$this->v->validate($input))
-        {
-            $this->errors = $this->v->getErrors();
-            throw new ValidationException;
-        }
+        return Config::get('authentication::email_confirmation') ? false : true;
+    }
+
+    /**
+     * @param $mailer
+     * @param $user
+     */
+    public function sendRegistrationMailToClient($input)
+    {
+        $view_file = $this->activation_enabled ? "authentication::mail.registration-waiting-client" : "authentication::mail.registration-confirmed-client";
+
+        $mailer = App::make('jmailer');
+
+        // send email to client
+        $mailer->sendTo( $input['email'], [ "email" => $input["email"], "password" => $input["password"], "first_name" => $input["first_name"], "token" => $this->activation_enabled ? App::make('authenticator')->getActivationToken($input["email"]) :'' ], "Register request to: " . \Config::get('authentication::app_name'), $view_file);
+    }
+
+
+    /**
+     * Send activation email to the client if it's getting activated
+     * @param $obj
+     */
+    public function sendActivationEmailToClient($user)
+    {
+        $mailer = App::make('jmailer');
+        // if i activate a deactivated user
+        $mailer->sendTo($user->email, [ "email" => $user->email ], "Your user is activated on: ".Config::get('authentication::app_name'), "authentication::mail.registration-confirmed-client");
     }
 
     /**

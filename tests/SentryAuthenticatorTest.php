@@ -1,9 +1,9 @@
-<?php
+<?php namespace Jacopo\Authentication\Tests;
 use Mockery as m;
 use Jacopo\Authentication\Classes\SentryAuthenticator;
-use Jacopo\Authentication\Tests\TestCase;
+use App;
 
-class SentryAuthenticatorTest extends TestCase {
+class SentryAuthenticatorTest extends DbTestCase {
 
     public function tearDown()
     {
@@ -15,8 +15,8 @@ class SentryAuthenticatorTest extends TestCase {
         $mock_sentry = m::mock('StdClass')->shouldReceive('findUserByLogin')->andReturn(true)->getMock();
         App::instance('sentry', $mock_sentry);
 
-        $auth = new SentryAuthenticator();
-        $success = $auth->getUser("");
+        $authenticator = new SentryAuthenticator;
+        $success = $authenticator->getUser("");
         $this->assertTrue($success);
 	}
 
@@ -29,7 +29,7 @@ class SentryAuthenticatorTest extends TestCase {
         App::instance('sentry', $mock_sentry);
 
         $auth = new SentryAuthenticator();
-        $success = $auth->getUser("");
+        $auth->getUser("");
 	}
 
     public function testGetActivationTokenWorks()
@@ -49,14 +49,35 @@ class SentryAuthenticatorTest extends TestCase {
     {
         $user_stub = new \StdClass;
         $user_stub->name = 1;
-        $mock_sentry = m::mock('StdClass')->shouldReceive('findUserById')
-            ->once()
-            ->andReturn($user_stub)
-            ->getMock();
-        App::instance('sentry', $mock_sentry);
+        $this->mockSentryFindUserById($user_stub);
         $user = App::make('authenticator')->getUserById(1);
 
         $this->assertEquals($user, $user_stub);
+    }
+
+    /**
+     * @test
+     **/
+    public function it_get_logged_user()
+    {
+        $sentry_mock = m::mock('StdClass')
+            ->shouldReceive('getUser')
+            ->once()
+            ->andReturn(true)
+            ->getMock();
+        App::instance('sentry', $sentry_mock);
+
+        $authenticator = new SentryAuthenticator;
+        $authenticator->getLoggedUser();
+    }
+
+    /**
+     * @param $user_stub
+     */
+    private function mockSentryFindUserById($user_stub)
+    {
+        $mock_sentry = m::mock('StdClass')->shouldReceive('findUserById')->once()->andReturn($user_stub)->getMock();
+        App::instance('sentry', $mock_sentry);
     }
 
 }
