@@ -32,12 +32,20 @@ class EloquentPermissionRepository extends EloquentBaseRepository
      */
     public function checkIsNotAssociatedToAnyGroup($obj)
     {
-        // obtain all groups
         $all_groups = $this->group_repo->all();
-        // spin trough groups to check if any of em has the permission
+        $this->permissionIsPresentInTheCollection($obj, $all_groups);
+    }
+
+    /**
+     * @param $obj
+     * @param $all_groups
+     * @throws \Jacopo\Authentication\Exceptions\PermissionException
+     */
+    private function permissionIsPresentInTheCollection($obj, $all_groups)
+    {
         foreach ($all_groups as $group) {
             $perm = $group->permissions;
-            if(array_key_exists($obj->permission, $perm )) throw new PermissionException;
+            if (array_key_exists($obj->permission, $perm)) throw new PermissionException;
         }
     }
 }
