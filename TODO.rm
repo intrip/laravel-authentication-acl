@@ -12,30 +12,26 @@ GRAFICA:
     - documentazione per tutto e anche nei file di configurazione, con manuale html, spiega anche come aggiungere voci di menu ecc
 
 FUNZIONAMENTO:
-    - migliora gestione permessi: come a syntara quindi un permesso base per login e poi permessi specifici per edit user oltre a quello base
-    - add form per login utente esterno no pannello admin
-    - blocca utente admin
-    - install script command
+    - migliora gestione permessi: come a syntara quindi un permesso base per login e poi permessi specifici per edit user oltre a
+    quello base(create user, create permission e create groups 2 gruppi un admin che crea tuttoe uno slo per i gruppi)
+    - install script command(crea solo 1 utente superadmin e bloccato)
     - test con postgres e mysql e sqlite
     - add alla doc di safari autocomplete bug
     - reset button non pulisce la select search
 
-TEST:
-    - fixa tutti i test e adda i test che non sono stati fatti (sentryuserepository e vedi se altro)
-    - acceptance test con selenium
-
 RELEASE:
 - vedi atri pacchetti e se puoi aggiungere qualcosa al tuo prima della 1 release
 - rinomina tutti i jacopo in websolutions o altro nome che tu voglia
+- testa tutto
 - carica su envato cn nome websolutions cn logo ecc
 - fix per approvazione
 
-POI:
+POI (0.2.0):
+- testa anche i controllers completamente e check code coverage in modo da testare il possibile
 - dashboard
 - add oauth
 - add permission come list a gruppi
 - quando fai reinviare la mail vedi di nascondere il msg di errore
-- testa anche i controllers completamente
 - profilo editabile nei campi come la "scheda tecnica"
 - template
 - supporto multipli ordering

@@ -1,4 +1,5 @@
 <?php namespace Jacopo\Authentication\Tests;
+use Jacopo\Authentication\Exceptions\AuthenticationErrorException;
 use Mockery as m;
 use Jacopo\Authentication\Classes\SentryAuthenticator;
 use App;
@@ -19,6 +20,33 @@ class SentryAuthenticatorTest extends DbTestCase {
         $success = $authenticator->getUser("");
         $this->assertTrue($success);
 	}
+
+    /**
+     * @test
+     **/
+    public function it_authenticate_user_succesfully()
+    {
+        $credentials = [];
+        $remember = false;
+
+        $this->mockSentryAuthenticateSuccess($credentials, $remember);
+        $authenticator = new SentryAuthenticator;
+        $authenticator->authenticate($credentials, $remember);
+    }
+
+    /**
+     * @test
+     * @expectedException Jacopo\Authentication\Exceptions\AuthenticationErrorException
+     **/
+    public function it_throw_authenticationErrorException_on_authenticate()
+    {
+        $credentials = [];
+        $remember = false;
+
+        $this->mockSentryAuthenticateError($credentials, $remember);
+        $authenticator = new SentryAuthenticator;
+        $authenticator->authenticate($credentials, $remember);
+    }
 
     /**
      * @expectedException Jacopo\Authentication\Exceptions\UserNotFoundException
@@ -78,6 +106,28 @@ class SentryAuthenticatorTest extends DbTestCase {
     {
         $mock_sentry = m::mock('StdClass')->shouldReceive('findUserById')->once()->andReturn($user_stub)->getMock();
         App::instance('sentry', $mock_sentry);
+    }
+
+    /**
+     * @param $credentials
+     * @param $remember
+     */
+    private function mockSentryAuthenticateSuccess($credentials, $remember)
+    {
+        $mock_sentry_authenticate = m::mock('StdClass')->shouldReceive('authenticate')->once()->with($credentials, $remember)->getMock();
+        App::instance('sentry', $mock_sentry_authenticate);
+    }
+
+    /**
+     * @param $credentials
+     * @param $remember
+     */
+    private function mockSentryAuthenticateError($credentials, $remember)
+    {
+        $mock_sentry_authenticate = m::mock('StdClass')->shouldReceive('authenticate')->once()->with($credentials, $remember)
+            ->andThrow(new \Cartalyst\Sentry\Users\UserNotFoundException())
+            ->getMock();
+        App::instance('sentry', $mock_sentry_authenticate);
     }
 
 }

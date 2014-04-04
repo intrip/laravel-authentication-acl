@@ -3,9 +3,11 @@
 /**
  * User login and logout
  */
-Route::get('/user/login', "Jacopo\\Authentication\\Controllers\\AuthController@getLogin");
+Route::get('/user/login', "Jacopo\\Authentication\\Controllers\\AuthController@getAdminLogin");
+Route::get('/login', "Jacopo\\Authentication\\Controllers\\AuthController@getClientLogin");
 Route::get('/user/logout', "Jacopo\\Authentication\\Controllers\\AuthController@getLogout");
-Route::post('/user/login', ["before" => "csrf", "uses" => "Jacopo\\Authentication\\Controllers\\AuthController@postLogin"]);
+Route::post('/user/login', ["before" => "csrf", "uses" => "Jacopo\\Authentication\\Controllers\\AuthController@postAdminLogin"]);
+Route::post('/login', ["before" => "csrf", "uses" => "Jacopo\\Authentication\\Controllers\\AuthController@postClientLogin"]);
 /**
  * Password recovery
  */

@@ -6,7 +6,7 @@
                 <div class="alert alert-danger">{{$error}}</div>
             @endforeach
     @endif
-    {{Form::open(array('url' => URL::action("Jacopo\Authentication\Controllers\AuthController@postClientLogin"), 'method' => 'post') )}}
+    {{Form::open(array('url' => URL::action("Jacopo\Authentication\Controllers\AuthController@postAdminLogin"), 'method' => 'post') )}}
             {{FormField::email(array('label' => "email") )}}
             {{FormField::password(array('label' => 'password' ))}}
             <div class='form-group'>

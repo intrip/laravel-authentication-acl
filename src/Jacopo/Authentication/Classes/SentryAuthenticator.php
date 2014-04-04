@@ -7,6 +7,7 @@
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
 use Illuminate\Support\MessageBag;
+use Jacopo\Authentication\Exceptions\AuthenticationErrorException;
 use Jacopo\Authentication\Exceptions\UserNotFoundException;
 use Jacopo\Authentication\Interfaces\AuthenticateInterface;
 
@@ -53,7 +54,8 @@ class SentryAuthenticator implements AuthenticateInterface{
             $this->errors->add('login','Too many login attempts, please try later.');
         }
 
-        return $this->errors->isEmpty() ? $user : false;
+        if (! $this->errors->isEmpty() )
+            throw new AuthenticationErrorException;
     }
 
     /**

@@ -5,7 +5,7 @@ use View;
 use Sentry;
 use Input;
 use Redirect;
-use Jacopo\Library\Exceptions\JacopoExceptionsInterface as Pbi;
+use Jacopo\Library\Exceptions\JacopoExceptionsInterface;
 use Jacopo\Authentication\Classes\SentryAuthenticator;
 use Jacopo\Authentication\Services\ReminderService;
 
@@ -20,35 +20,54 @@ class AuthController extends Controller {
         $this->reminder = $reminder;
     }
 
-    /**
-     * Usato per effettuare il login utente
-     *
-     * @return Response
-     */
-    public function getLogin()
+    public function getClientLogin()
     {
         return View::make('authentication::client.auth.login');
     }
 
-    public function postLogin()
+    public function getAdminLogin()
     {
-        $email = Input::get('email');
-        $password = Input::get('password');
-        $remember = Input::get('remember');
+        return View::make('authentication::admin.auth.login');
+    }
 
-        $success = $this->authenticator->authenticate(array(
+    public function postAdminLogin()
+    {
+        list($email, $password, $remember) = $this->getLoginInput();
+
+        try
+        {
+            $this->authenticator->authenticate(array(
                                                 "email" => $email,
                                                 "password" => $password
                                              ), $remember);
-        if($success)
-        {
-            return Redirect::to('/admin/users/list');
         }
-        else
+        catch(JacopoExceptionsInterface $e)
         {
             $errors = $this->authenticator->getErrors();
-            return Redirect::action('Jacopo\Authentication\Controllers\AuthController@getLogin')->withInput()->withErrors($errors);
+            return Redirect::action('Jacopo\Authentication\Controllers\AuthController@getAdminLogin')->withInput()->withErrors($errors);
         }
+
+        return Redirect::to('/admin/users/list');
+    }
+
+    public function postClientLogin()
+    {
+        list($email, $password, $remember) = $this->getLoginInput();
+
+        try
+        {
+            $this->authenticator->authenticate(array(
+                                                    "email" => $email,
+                                                    "password" => $password
+                                               ), $remember);
+        }
+        catch(JacopoExceptionsInterface $e)
+        {
+            $errors = $this->authenticator->getErrors();
+            return Redirect::action('Jacopo\Authentication\Controllers\AuthController@getClientLogin')->withInput()->withErrors($errors);
+        }
+
+        return Redirect::to('/');
     }
 
     /**
@@ -60,7 +79,7 @@ class AuthController extends Controller {
     {
         $this->authenticator->logout();
 
-        return Redirect::to('/user/login');
+        return Redirect::to('/');
     }
 
     /**
@@ -85,7 +104,7 @@ class AuthController extends Controller {
             $this->reminder->send($email);
             return Redirect::action("Jacopo\\Authentication\\Controllers\\AuthController@getReminder")->with(array("message"=> "Abbiamo inviato un mail per il recupero password. Per piaciere controlla la tua mail box."));
         }
-        catch(Pbi $e)
+        catch(JacopoExceptionsInterface $e)
         {
             $errors = $this->reminder->getErrors();
             return Redirect::action("Jacopo\\Authentication\\Controllers\\AuthController@getReminder")->withErrors($errors);
@@ -111,11 +130,23 @@ class AuthController extends Controller {
             $this->reminder->reset($email, $token, $password);
             return Redirect::action("Jacopo\\Authentication\\Controllers\\AuthController@getChangePassword")->with(array("message"=> "Password modificata con successo!"));
         }
-        catch(Pbi $e)
+        catch(JacopoExceptionsInterface $e)
         {
             $errors = $this->reminder->getErrors();
             return Redirect::action("Jacopo\\Authentication\\Controllers\\AuthController@getChangePassword")->withErrors($errors);
         }
 
+    }
+
+    /**
+     * @return array
+     */
+    private function getLoginInput()
+    {
+        $email    = Input::get('email');
+        $password = Input::get('password');
+        $remember = Input::get('remember');
+
+        return array($email, $password, $remember);
     }
 }

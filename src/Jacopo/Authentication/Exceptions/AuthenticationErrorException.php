@@ -1,6 +1,6 @@
 <?php namespace Jacopo\Authentication\Exceptions;
 /**
- * Class UserNotFoundException
+ * Class AuthenticationErrorException
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
@@ -8,4 +8,4 @@
 use Exception;
 use Jacopo\Library\Exceptions\JacopoExceptionsInterface;
 
-class LoginRequiredException extends Exception implements JacopoExceptionsInterface {}
+class AuthenticationErrorException extends Exception implements JacopoExceptionsInterface {}
