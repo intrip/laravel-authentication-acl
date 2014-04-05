@@ -1,4 +1,3 @@
-{{-- Layout base admin panel --}}
 <!DOCTYPE html>
 <head>
     <meta charset="utf-8">
@@ -10,9 +9,8 @@
 
 
     {{ HTML::style('packages/jacopo/authentication/css/bootstrap.min.css') }}
-    {{ HTML::style('packages/jacopo/authentication/css/style.css') }}
-    {{ HTML::style('packages/jacopo/authentication/css/baselayout.css') }}
     {{ HTML::style('packages/jacopo/authentication/css/bootstrap-custom.css') }}
+    {{ HTML::style('packages/jacopo/authentication/css/style.css') }}
     {{ HTML::style('//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css') }}
 
     @yield('head_css')
@@ -26,21 +24,8 @@
 </head>
 
     <body>
-        {{-- navbar --}}
-        @include('authentication::admin.layouts.navbar')
-
-        {{-- content --}}
-        <div class="container-fluid">
-            @yield('container')
+        <div class="container">
+            @yield('content')
         </div>
-
-        {{-- Start footer scripts --}}
-        @yield('before_footer_scripts')
-
-        {{ HTML::script('packages/jacopo/authentication/js/jquery-1.10.2.min.js') }}
-        {{ HTML::script('packages/jacopo/authentication/js/bootstrap.min.js') }}
-
-        @yield('footer_scripts')
-        {{-- End footer scripts --}}
     </body>
 </html>

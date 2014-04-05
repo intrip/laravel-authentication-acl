@@ -51,6 +51,10 @@ div.paginator
 {
     margin-left: 5px;
 }
+.middle-panel
+{
+    margin-top: 25%;
+}
 /*///////////////// forms ////////////////*/
 .form-button
 {

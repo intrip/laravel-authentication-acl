@@ -59,6 +59,6 @@ Route::group( ['before' => ['logged', 'can_see']], function()
 if (Config::get('authentication::handle_404'))
 {
     App::missing(function ($exception){
-        return View::make('authentication::exceptions.404');
+        return View::make('authentication::client.exceptions.404');
     });
 }
