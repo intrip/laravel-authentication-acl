@@ -26,8 +26,8 @@ class EditableSubscriber
      */
     public function subscribe($events)
     {
-        $events->listen('repository.deleting', 'Jacopo\Authentication\Events\EditableSubscriber@isEditable');
-        $events->listen('repository.updating', 'Jacopo\Authentication\Events\EditableSubscriber@isEditable');
+        $events->listen('repository.deleting', 'Jacopo\Authentication\Events\EditableSubscriber@isEditable',10);
+        $events->listen('repository.updating', 'Jacopo\Authentication\Events\EditableSubscriber@isEditable',10);
     }
 
 } 
