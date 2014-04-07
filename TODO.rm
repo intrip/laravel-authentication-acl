@@ -1,11 +1,10 @@
 Authenticator:
 GRAFICA:
-    - grafica form modifica pass con view success e login
-    - metti tutti i titoli giusti
     - view signup success(con 2 view diverse a seconda se attivo o no la conferma password)
     - finisci registazione mails(view mail e view registrazione confermata e view recupero password)
     - fai grafica pagine bella: email, conferma registrazione, conferma recupero pass, pannello
     - grafica con layout per 1024 che si veda bene e pou su tablet e mobile e fai search che va sotto gestisci tutti i margini ecc
+    - metti tutti i titoli giusti
     - metti iconcine ai field form
     - per grafica prendi spunto da snippet o fai i quadrati come a syntara
     - pannello colori diverso e metti icone belle ovunque
@@ -33,6 +32,7 @@ POI (0.2.0):
     - testa anche i controllers completamente e check code coverage in modo da testare il possibile
     - dashboard
     - add oauth
+    - quando recuperi password link ai login diversi a seconda del tipo utente
     - add permission come list a gruppi
     - quando fai reinviare la mail vedi di nascondere il msg di errore
     - profilo editabile nei campi come la "scheda tecnica"

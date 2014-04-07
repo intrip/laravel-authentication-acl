@@ -123,13 +123,14 @@ class AuthController extends Controller {
         try
         {
             $this->reminder->reset($email, $token, $password);
-            return Redirect::action("Jacopo\\Authentication\\Controllers\\AuthController@getChangePassword")->with(array("message"=> "Password modificata con successo!"));
         }
         catch(JacopoExceptionsInterface $e)
         {
             $errors = $this->reminder->getErrors();
             return Redirect::action("Jacopo\\Authentication\\Controllers\\AuthController@getChangePassword")->withErrors($errors);
         }
+
+        return Redirect::to("user/change-password-success");
 
     }
 

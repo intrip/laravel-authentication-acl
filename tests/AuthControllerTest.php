@@ -136,6 +136,41 @@ class AuthControllerTest extends TestCase {
         $this->assertRedirectedToAction('Jacopo\Authentication\Controllers\AuthController@getReminder');
         $this->assertSessionHasErrors();
     }
+    
+    /**
+     * @test
+     **/
+    public function it_change_password_with_success()
+    {
+        $mock_reminder_service = m::mock('Jacopo\Authentication\Services\ReminderService')
+            ->shouldReceive('reset')
+            ->once()
+            ->getMock();
+
+        $this->app->instance('Jacopo\Authentication\Services\ReminderService', $mock_reminder_service);
+
+        $this->action('POST','Jacopo\Authentication\Controllers\AuthController@postChangePassword');
+        $this->assertRedirectedTo('/user/change-password-success');
+    }
+    
+    /**
+     * @test
+     **/
+    public function it_change_password_with_error()
+    {
+        $mock_reminder_service = m::mock('Jacopo\Authentication\Services\ReminderService')
+            ->shouldReceive('reset')
+            ->once()
+            ->andThrow(new AuthenticationErrorException)
+            ->shouldReceive('getErrors')
+            ->getMock();
+        $this->app->instance('Jacopo\Authentication\Services\ReminderService', $mock_reminder_service);
+
+        $this->action('POST','Jacopo\Authentication\Controllers\AuthController@postChangePassword');
+
+        $this->assertRedirectedToAction('Jacopo\Authentication\Controllers\AuthController@getChangePassword');
+        $this->assertSessionHasErrors();
+    }
 
 }
  
