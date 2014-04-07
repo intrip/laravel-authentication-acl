@@ -1,8 +1,9 @@
 Authenticator:
 GRAFICA:
-    - fai il login simile al register
+    - grafica form modifica pass con view success e login
     - metti tutti i titoli giusti
-    - finisci registazione conferma(view mail e view registrazione confermata e view recupero password)
+    - view signup success(con 2 view diverse a seconda se attivo o no la conferma password)
+    - finisci registazione mails(view mail e view registrazione confermata e view recupero password)
     - fai grafica pagine bella: email, conferma registrazione, conferma recupero pass, pannello
     - grafica con layout per 1024 che si veda bene e pou su tablet e mobile e fai search che va sotto gestisci tutti i margini ecc
     - metti iconcine ai field form
