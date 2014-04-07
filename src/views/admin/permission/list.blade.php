@@ -18,7 +18,7 @@
     <div class="alert alert-danger">{{$error}}</div>
     @endforeach
     @endif
-    <div class="panel panel-default">
+    <div class="panel panel-info">
         <div class="panel-heading">
             <h3 class="panel-title"><i class="fa fa-lock"></i> Permissions</h3>
         </div>

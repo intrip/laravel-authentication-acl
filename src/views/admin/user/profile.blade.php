@@ -15,7 +15,7 @@ Admin area: Edit user profile
     @if( $errors->has('model') )
         <div class="alert alert-danger">{{$errors->first('model')}}</div>
     @endif
-    <div class="panel panel-default">
+    <div class="panel panel-info">
         <div class="panel-heading">
             <div class="row">
                 <div class="col-md-12">
@@ -26,7 +26,7 @@ Admin area: Edit user profile
         <div class="panel-body">
             <div class="row">
                 <div class="col-md-12">
-                    <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@editUser',['id' => $user_profile->user_id])}}" class="btn btn-primary pull-right"><i class="fa fa-pencil-square-o"></i> Edit user</a>
+                    <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@editUser',['id' => $user_profile->user_id])}}" class="btn btn-info pull-right"><i class="fa fa-pencil-square-o"></i> Edit user</a>
                 </div>
             </div>
             {{Form::model($user_profile,['route'=>'users.profile.edit', 'method' => 'post'])}}
@@ -50,7 +50,7 @@ Admin area: Edit user profile
                 <span class="text-danger">{{$errors->first('address')}}</span>
                 {{Form::hidden('user_id', $user_profile->user_id)}}
                 {{Form::hidden('id', $user_profile->id)}}
-                {{Form::submit('Save',['class' =>'btn btn-primary pull-right margin-bottom-30'])}}
+                {{Form::submit('Save',['class' =>'btn btn-info pull-right margin-bottom-30'])}}
             {{Form::close()}}
         </div>
     </div>

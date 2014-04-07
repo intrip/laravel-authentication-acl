@@ -1,6 +1,6 @@
 <div class="row margin-bottom-12">
     <div class="col-md-12">
-        <a href="{{URL::action('Jacopo\Authentication\Controllers\GroupController@editGroup')}}" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Add New</a>
+        <a href="{{URL::action('Jacopo\Authentication\Controllers\GroupController@editGroup')}}" class="btn btn-info pull-right"><i class="fa fa-plus"></i> Add New</a>
     </div>
 </div>
 @if( ! $groups->isEmpty() )

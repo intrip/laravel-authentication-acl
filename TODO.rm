@@ -1,18 +1,22 @@
 Authenticator:
 GRAFICA:
+    - fai il login simile al register
+    - metti tutti i titoli giusti
+    - linka login a signup come in fism
     - finisci registazione conferma(view mail e view registrazione confermata)
-    - fai grafica pagine bella: 404, email, registrazione, login, regisrazione e conferma mail, pannello
-    - grafica con layout per 1024 che si veda bene e pou su tablet e mobile
+    - fai grafica pagine bella: email, registrazione, login, regisrazione e conferma mail, pannello
+    - grafica con layout per 1024 che si veda bene e pou su tablet e mobile e fai search che va sotto gestisci tutti i margini ecc
+    - metti iconcine ai field form
     - per grafica prendi spunto da snippet o fai i quadrati come a syntara
     - pannello colori diverso e metti icone belle ovunque
     - iconcine ai form
     - fix responsive grafica
     - fix tutti i titoli
     - finish todo vari
-    - metti iconcine ai field form
     - documentazione per tutto e anche nei file di configurazione, con manuale html, spiega anche come aggiungere voci di menu ecc
 
 FUNZIONAMENTO:
+    - fai login utente client
     - install script command(popola il db come è in quello ora)
     - test con postgres e mysql e sqlite
     - add alla doc di safari autocomplete bug

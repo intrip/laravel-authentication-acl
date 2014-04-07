@@ -12,6 +12,6 @@
     @endif
     {{Form::open(array('url' => URL::action("Jacopo\Authentication\Controllers\AuthController@postReminder"), 'method' => 'post') )}}
     {{FormField::email(array('label' => "email") )}}
-    {{Form::submit('Invia', array("class"=>"btn btn-large btn-primary"))}}
+    {{Form::submit('Invia', array("class"=>"btn btn-large btn-info"))}}
     {{Form::close()}}
 @stop

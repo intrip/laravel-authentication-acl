@@ -16,7 +16,7 @@ Admin area: edit group
     @if( isset($message) )
     <div class="alert alert-success">{{$message}}</div>
     @endif
-    <div class="panel panel-default">
+    <div class="panel panel-info">
         <div class="panel-heading">
                 <h3 class="panel-title"><i class="fa fa-users"></i> {{isset($group->id) ? 'Edit' : 'Create'}} group</h3>
         </div>
@@ -29,7 +29,7 @@ Admin area: edit group
                 <span class="text-danger">{{$errors->first('name')}}</span>
                 {{Form::hidden('id')}}
                 <a href="{{URL::action('Jacopo\Authentication\Controllers\GroupController@deleteGroup',['id' => $group->id, '_token' => csrf_token()])}}" class="btn btn-danger pull-right margin-left-5 delete">Delete</a>
-                {{Form::submit('Save', array("class"=>"btn btn-primary pull-right "))}}
+                {{Form::submit('Save', array("class"=>"btn btn-info pull-right "))}}
                 {{Form::close()}}
             </div>
             <div class="col-md-6">

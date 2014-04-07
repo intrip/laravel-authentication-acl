@@ -14,7 +14,7 @@
             <div class="navbar-nav nav navbar-right">
                 <li class="dropdown dropdown-user">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-user fa-fw"></i> Account <i class="fa fa-caret-down"></i>
+                        <i class="fa fa-user fa-fw"></i> {{isset($logged_user) ? $logged_user->email : 'User'}} <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu">
                         <li>

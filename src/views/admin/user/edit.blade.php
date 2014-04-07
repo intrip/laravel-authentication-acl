@@ -15,7 +15,7 @@ Admin area: edit user
     @if($errors->has('model') )
         <div class="alert alert-danger">{{$errors->first('model')}}</div>
     @endif
-    <div class="panel panel-default">
+    <div class="panel panel-info">
         <div class="panel-heading">
             <div class="row">
                 <div class="col-md-12">
@@ -26,7 +26,7 @@ Admin area: edit user
         <div class="panel-body">
             <div class="row">
                 <div class="col-md-12">
-                    <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@postEditProfile',["user_id" => $user->id])}}" class="btn btn-primary pull-right" {{! isset($user->id) ? 'disabled="disabled"' : ''}}><i class="fa fa-user"></i> Edit profile</a>
+                    <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@postEditProfile',["user_id" => $user->id])}}" class="btn btn-info pull-right" {{! isset($user->id) ? 'disabled="disabled"' : ''}}><i class="fa fa-user"></i> Edit profile</a>
                 </div>
             </div>
             <div class="col-md-6">
@@ -45,7 +45,7 @@ Admin area: edit user
                 {{Form::hidden('id')}}
                 {{Form::hidden('form_name','user')}}
                 <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@deleteUser',['id' => $user->id, '_token' => csrf_token()])}}" class="btn btn-danger pull-right margin-left-5 delete">Delete user</a>
-                {{Form::submit('Save', array("class"=>"btn btn-primary pull-right "))}}
+                {{Form::submit('Save', array("class"=>"btn btn-info pull-right "))}}
                 {{Form::close()}}
                 </div>
                 <div class="col-md-6">

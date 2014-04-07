@@ -1,4 +1,4 @@
-<div class="panel panel-default">
+<div class="panel panel-info">
     <div class="panel-heading">
         <h3 class="panel-title">User search</h3>
     </div>
@@ -32,7 +32,7 @@
         <div class="form-group">
             {{Form::reset('Reset', ["class" => "btn btn-default
             "])}}
-            {{Form::submit('Search', ["class" => "btn btn-primary
+            {{Form::submit('Search', ["class" => "btn btn-info
                 "])}}
         </div>
         {{Form::close()}}

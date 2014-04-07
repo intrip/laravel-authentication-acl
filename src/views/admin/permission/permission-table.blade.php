@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-12 margin-bottom-12">
-        <a href="{{URL::action('Jacopo\Authentication\Controllers\PermissionController@editPermission')}}" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Add New</a>
+        <a href="{{URL::action('Jacopo\Authentication\Controllers\PermissionController@editPermission')}}" class="btn btn-info pull-right"><i class="fa fa-plus"></i> Add New</a>
     </div>
 </div>
 @if( ! $permissions->isEmpty() )

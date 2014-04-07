@@ -14,6 +14,6 @@
             {{FormField::password(array('label' => 'password' ))}}
             {{Form::hidden('email',$email)}}
             {{Form::hidden('token',$token)}}
-            {{Form::submit('Cambia', array("class"=>"btn btn-large btn-primary"))}}
+            {{Form::submit('Cambia', array("class"=>"btn btn-large btn-info"))}}
     {{Form::close()}}
 @stop

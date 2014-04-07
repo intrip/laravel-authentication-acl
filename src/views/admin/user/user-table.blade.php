@@ -1,4 +1,4 @@
-<div class="panel panel-default">
+<div class="panel panel-info">
     <div class="panel-heading">
         <h3 class="panel-title"><i class="fa fa-user"></i> {{Input::all() ? 'Search results:' : 'Users'}}</h3>
     </div>
@@ -9,11 +9,11 @@
                 {{Form::open(['method' => 'get', 'class' => 'form-inline'])}}
                     {{Form::select('order_by', ["" => "select column", "first_name" => "First name", "last_name" => "Last name", "email" => "Email", "last_login" => "Last login", "active" => "Active"], Input::get('order_by',''), ['class' => 'form-control'])}}
                     {{Form::select('ordering', ["asc" => "Ascending", "desc" => "descending"], Input::get('ordering','asc'), ['class' =>'form-control'])}}
-                    {{Form::submit('Order', ['class' => 'btn btn-primary'])}}
+                    {{Form::submit('Order', ['class' => 'btn btn-info'])}}
                 {{Form::close()}}
             </div>
             <div class="col-md-1 ">
-                    <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@editUser')}}" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Add New</a>
+                    <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@editUser')}}" class="btn btn-info pull-right"><i class="fa fa-plus"></i> Add New</a>
             </div>
         </div>
         <div class="row">
