@@ -57,6 +57,8 @@ class ReminderService {
      */
     protected $auth;
 
+    protected static $INVALID_USER_MAIL = 'There is no user associated with this email.';
+
     public function __construct(ReminderValidator $validator = null)
     {
         $this->auth = \App::make('authenticator');
@@ -74,7 +76,7 @@ class ReminderService {
         }
         catch(JacopoExceptionsInterface $e)
         {
-            $this->errors->add('mail', 'Non esistono utenti associati a questa mail');
+            $this->errors->add('mail', static::$INVALID_USER_MAIL);
             throw new UserNotFoundException;
         }
 
@@ -85,14 +87,14 @@ class ReminderService {
 
         if(! $success)
         {
-            $this->errors->add('mail', 'C\'è stato un\'errore nell\'invio della mail');
+            $this->errors->add('mail', 'There was an error sending the email');
             throw new MailException;
         }
     }
 
     private function prepareBody($token, $to)
     {
-        $this->body = link_to_action("Jacopo\\Authentication\\Controllers\\AuthController@getChangePassword","Clicca qui per cambiare password.", ["email"=> $to, "token"=> $token] );
+        $this->body = link_to_action("Jacopo\\Authentication\\Controllers\\AuthController@getChangePassword","Click here to change your password.", ["email"=> $to, "token"=> $token] );
     }
 
     public function reset($email, $token, $password)
@@ -103,7 +105,7 @@ class ReminderService {
         }
         catch(JacopoExceptionsInterface $e)
         {
-            $this->errors->add('user', 'Non esistono utenti associati a questa mail.');
+            $this->errors->add('user', static::$INVALID_USER_MAIL);
             throw new UserNotFoundException;
         }
 
@@ -113,13 +115,13 @@ class ReminderService {
             // Attempt to reset the user password
             if (! $user->attemptResetPassword($token, $password))
             {
-                $this->errors->add('user', 'Non è stato possibile modificare la password.');
+                $this->errors->add('user', 'There was a problem changing the password.');
                 throw new InvalidException();
             }
         }
         else
         {
-            $this->errors->add('user', 'Il codice di conferma non è valido.');
+            $this->errors->add('user', 'Confirmation code is not valid.');
             throw new InvalidException();
         }
     }

@@ -1,6 +1,6 @@
 @extends('authentication::admin.layouts.baseauth')
 @section ('title')
-
+Password recovery
 @stop
 @section('container')
 <div class="row">

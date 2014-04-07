@@ -15,6 +15,7 @@ Route::get('/user/change-password', 'Jacopo\Authentication\Controllers\AuthContr
 Route::get('/user/recover-password', "Jacopo\\Authentication\\Controllers\\AuthController@getReminder");
 Route::post('/user/change-password/', ["before" => "csrf", 'uses' => "Jacopo\\Authentication\\Controllers\\AuthController@postChangePassword"]);
 Route::post('/user/reminder', ["before" => "csrf", 'uses' => "Jacopo\\Authentication\\Controllers\\AuthController@postReminder"]);
+Route::get('/user/reminder-success', function(){return View::make('authentication::client.auth.reminder-success');});
 /**
  * User signup
  */

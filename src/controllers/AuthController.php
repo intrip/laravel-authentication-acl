@@ -97,7 +97,7 @@ class AuthController extends Controller {
         try
         {
             $this->reminder->send($email);
-            return Redirect::action("Jacopo\\Authentication\\Controllers\\AuthController@getReminder")->with(array("message"=> "Abbiamo inviato un mail per il recupero password. Per piaciere controlla la tua mail box."));
+            return Redirect::to("/user/reminder-success");
         }
         catch(JacopoExceptionsInterface $e)
         {

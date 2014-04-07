@@ -100,6 +100,18 @@ class SentryAuthenticatorTest extends DbTestCase {
     }
 
     /**
+     * @test
+     **/
+    public function it_gets_csrf_token()
+    {
+        $email = "test@mailtest.com";
+        $mock_user     = $this->createMockUserForPasswordCode();
+        $authenticator = $this->createMockGetUser($email, $mock_user);
+
+        $authenticator->getToken($email);
+    }
+    
+    /**
      * @param $user_stub
      */
     private function mockSentryFindUserById($user_stub)
@@ -128,6 +140,28 @@ class SentryAuthenticatorTest extends DbTestCase {
             ->andThrow(new \Cartalyst\Sentry\Users\UserNotFoundException())
             ->getMock();
         App::instance('sentry', $mock_sentry_authenticate);
+    }
+
+    /**
+     * @param $email
+     * @param $mock_user
+     * @return mixed
+     */
+    private function createMockGetUser($email, $mock_user)
+    {
+        $authenticator = m::mock('Jacopo\Authentication\Classes\SentryAuthenticator')->makePartial()->shouldReceive('getUser')->once()->with($email)->andReturn($mock_user)->getMock();
+
+        return $authenticator;
+    }
+
+    /**
+     * @return m\MockInterface
+     */
+    private function createMockUserForPasswordCode()
+    {
+        $mock_user = m::mock('StdClass')->shouldReceive('getResetPasswordCode')->once()->getMock();
+
+        return $mock_user;
     }
 
 }

@@ -101,6 +101,41 @@ class AuthControllerTest extends TestCase {
                                                                                             "email" => $email, "password" => $password], $remember)->once()->andThrow(new AuthenticationErrorException())->shouldReceive('getErrors')->once()->andReturn([])->getMock();
         App::instance('authenticator', $mock_authenticator_fail);
     }
+    
+    /**
+     * @test
+     **/
+    public function it_process_recovery_data_and_redirect_with_success()
+    {
+        $mock_reminder_service = m::mock('Jacopo\Authentication\Services\ReminderService')
+            ->shouldReceive('send')
+            ->once()
+            ->getMock();
+
+        $this->app->instance('Jacopo\Authentication\Services\ReminderService', $mock_reminder_service);
+
+        $this->action('POST','Jacopo\Authentication\Controllers\AuthController@postReminder');
+        $this->assertRedirectedTo('/user/reminder-success');
+    }
+
+    /**
+     * @test
+     **/
+    public function it_process_recovery_and_show_errors()
+    {
+        $mock_reminder_service = m::mock('Jacopo\Authentication\Services\ReminderService')
+            ->shouldReceive('send')
+            ->once()
+            ->andThrow(new AuthenticationErrorException)
+            ->shouldReceive('getErrors')
+            ->getMock();
+        $this->app->instance('Jacopo\Authentication\Services\ReminderService', $mock_reminder_service);
+
+        $this->action('POST','Jacopo\Authentication\Controllers\AuthController@postReminder');
+
+        $this->assertRedirectedToAction('Jacopo\Authentication\Controllers\AuthController@getReminder');
+        $this->assertSessionHasErrors();
+    }
 
 }
  
