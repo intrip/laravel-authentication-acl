@@ -1,21 +1,16 @@
 Authenticator:
 GRAFICA:
     - finisci registazione mails anche graficamente + fighe(view mail e view registrazione confermata e view recupero password)
-    - fai grafica pagine bella: email, pannello
+    - fai grafica pagine bella: emails, pannello
     - grafica con layout per 1024 che si veda bene e pou su tablet e mobile e fai search che va sotto gestisci tutti i margini ecc
     - metti tutti i titoli giusti
     - metti iconcine ai field form
-    - per grafica prendi spunto da snippet o fai i quadrati come a syntara
     - pannello colori diverso e metti icone belle ovunque
-    - iconcine ai form
-    - fix responsive grafica
     - fix tutti i titoli
     - finish todo vari
     - documentazione per tutto e anche nei file di configurazione, con manuale html, spiega anche come aggiungere voci di menu ecc
 
 FUNZIONAMENTO:
-    - fix test config con config:set
-    - fai login utente client
     - install script command(popola il db come è in quello ora)
     - test con postgres e mysql e sqlite
     - reset button non pulisce la select search

@@ -86,7 +86,7 @@ class SentryUserRepositoryTest extends DbTestCase {
      **/
     public function it_search_input_with_all()
     {
-        $mock_config = $this->mockConfigPerPage();
+        $mock_config = $this->setConfigPerPage();
         $user_repository = new SentryUserRepository($mock_config);
         $input = [];
         $mock_search_repository = m::mock('StdClass')
@@ -148,11 +148,8 @@ class SentryUserRepositoryTest extends DbTestCase {
     /**
      * @return m\MockInterface|\Yay_MockObject
      */
-    protected function mockConfigPerPage($per_page = 5)
+    protected function setConfigPerPage($per_page = 5)
     {
-        $config   = m::mock('ConfigMock');
-        $config->shouldReceive('get')->with('authentication::users_per_page')->andReturn($per_page)->getMock();
-
-        return $config;
+        Config::set('authentication::users_per_page', $per_page);
     }
 }

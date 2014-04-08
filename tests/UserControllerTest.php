@@ -86,13 +86,7 @@ class UserControllerTest extends DbTestCase {
 
     private function mockConfigGetEmailConfirmation($active)
     {
-        $app = m::mock('AppMock');
-        $app->shouldReceive('instance')->andReturn($app);
-
-        Facade::setFacadeApplication($app);
-        Config::swap($config = m::mock('ConfigMock'));
-
-        $config->shouldReceive('get')->with('authentication::email_confirmation')->andReturn($active);
+        Config::set('authentication::email_confirmation', $active);
     }
 
     /**

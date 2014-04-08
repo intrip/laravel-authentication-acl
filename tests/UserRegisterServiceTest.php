@@ -172,7 +172,7 @@ class UserRegisterServiceTest extends DbTestCase {
      **/
     public function it_sent_confirmation_email_if_is_enabled()
     {
-        Config::shouldReceive('get')->andReturn(true);
+        $this->enableEmailConfirmation();
         $mock_mailer = m::mock('StdClass')->shouldReceive('sendTo')->once()->with('email@email.com', m::any(), m::any(), "authentication::admin.mail.registration-waiting-client")->andReturn(true)->getMock();
         App::instance('jmailer', $mock_mailer);
         $mock_validator = $this->getValidatorSuccess();
@@ -198,12 +198,17 @@ class UserRegisterServiceTest extends DbTestCase {
         $service->register(["email" => "email@email.com", "password" => "p", "activated" => 1, "first_name" => "first_name"]);
     }
 
+    private function enableEmailConfirmation()
+    {
+        Config::set('authentication::email_confirmation', true);
+    }
+
     /**
      * @test
      **/
     public function it_send_activation_mail_to_client()
     {
-        Config::shouldReceive('get')->andReturn(false);
+        $this->disableEmailConfirmation();
         $mock_mailer = m::mock('StdClass')->shouldReceive('sendTo')->once()->with('email@email.com', m::any(), m::any(), "authentication::admin.mail.registration-confirmed-client")->andReturn(true)->getMock();
         App::instance('jmailer', $mock_mailer);
         $mock_validator = $this->getValidatorSuccess();
@@ -229,12 +234,17 @@ class UserRegisterServiceTest extends DbTestCase {
         $service->register(["email" => "email@email.com", "password" => "p", "activated" => 1, "first_name" => "first_name"]);
     }
 
+    private function disableEmailConfirmation()
+    {
+        Config::set('authentication::email_confirmation', false);
+    }
+
     /**
      * @test
      **/
     public function it_setup_active_state_of_user()
     {
-        Config::shouldReceive('get')->andReturn(false)->once();
+        $this->disableEmailConfirmation();
         $service = m::mock('Jacopo\Authentication\Services\UserRegisterService');
         $input = [];
 

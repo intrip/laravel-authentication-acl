@@ -5,7 +5,7 @@
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
-use App, Input, Session;
+use App, Input, Session, Config;
 use Jacopo\Authentication\Validators\UserSignupEmailValidator;
 use Mockery as m;
 class UserSignupEmailValidatorTest extends DbTestCase {
@@ -47,6 +47,7 @@ class UserSignupEmailValidatorTest extends DbTestCase {
     public function it_send_email_if_user_exists_and_is_not_active_and_set_message()
     {
         $user_repo = App::make('user_repository');
+        $this->enableEmailConfirmation();
         $fake_mail = "email@email.com";
         $input = [
             "email" => $fake_mail,
@@ -66,6 +67,11 @@ class UserSignupEmailValidatorTest extends DbTestCase {
 
         $this->assertFalse($validator->validateEmail("email", $fake_mail, $input));
         $this->assertTrue(Session::has('message'));
+    }
+
+    private function enableEmailConfirmation()
+    {
+        Config::set('authentication::email_confirmation', true);
     }
 
 }

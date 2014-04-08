@@ -26,16 +26,10 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
      * @var
      */
     protected $sentry;
-    /**
-     * Config file reader
-     * @var Mixed
-     */
-    protected $config;
 
-    public function __construct($config = null)
+    public function __construct()
     {
         $this->sentry = App::make('sentry');
-        $this->config = $config ? $config : App::make('config');
         return parent::__construct(new User);
     }
 
