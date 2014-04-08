@@ -22,17 +22,21 @@ class ReminderServiceTest extends TestCase {
 
 	public function testCanCreate()
 	{
-        $reminder = new Reminder();
+        new Reminder();
 	}
 
     public function testSendWorks()
     {
         $return = true;
-        $this->mockMailerSendTo($return);
+        $template = "";
+        $to = "destination@mail.com";
+        $this->mockMailerSendTo($return, $template, $to);
         $this->mockAuthGetTokenTrue();
         $reminder = new Reminder();
+        $reminder->setTemplate($template);
 
-        $success = $reminder->send("mock@mock.com");
+        $success = $reminder->send($to);
+
         $this->assertEquals(null, $success);
     }
 
@@ -42,15 +46,23 @@ class ReminderServiceTest extends TestCase {
     public function testSendThrowsException()
     {
         $return = false;
-        $this->mockMailerSendTo($return);
+        $template = "";
+        $to = "destination@mail.com";
+        $this->mockMailerSendTo($return, $template, $to);
         $this->mockAuthGetTokenTrue();
         $reminder = new Reminder();
-        $reminder->send("");
+        $reminder->setTemplate($template);
+
+        $reminder->send($to);
     }
 
-    private function mockMailerSendTo($return)
+    private function mockMailerSendTo($return, $template, $to)
     {
-        $mock_mail = m::mock('StdClass')->shouldReceive('sendTo')->andReturn($return)->getMock();
+        $mock_mail = m::mock('StdClass')->shouldReceive('sendTo')
+            ->once($to, m::any(), m::any(), $template)
+            ->with()
+            ->andReturn($return)
+            ->getMock();
         App::instance('jmailer', $mock_mail);
     }
 

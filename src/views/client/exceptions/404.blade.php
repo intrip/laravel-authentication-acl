@@ -1,20 +1,16 @@
-@extends('authentication::client.layout.base')
-
+@extends('authentication::client.layouts.base-fullscreen')
+@section ('title')
+404
+@stop
 @section('content')
-    <div class="row">
-        <div class="col-md-4 col-md-offset-4">
-            <div class="login-panel panel middle-panel panel-warning">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Ooops....</h3>
-                </div>
-                <div class="panel-body">
-                    <h1>404!</h1>
-                    <p class="error-para">Sorry, this is not the page you were looking for.
-                    </p>
-                    <br>
-                    <a href="{{URL::to('/')}}" class="btn btn-lg btn-warning btn-block"><i class="fa fa-home"></i> Go to home</a>
-                </div>
-            </div>
-        </div>
+<div class="row">
+    <div class="col-lg-12 text-center v-center">
+
+        <h1><i class="fa fa-exclamation-triangle"></i> 404</h1>
+        <p class="lead">
+            Sorry, this is not the page you were looking for.
+            <a href="{{URL::to('/')}}"><i class="fa fa-home"></i> Go to homepage</a>
+        </p>
     </div>
+</div>
 @stop

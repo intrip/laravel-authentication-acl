@@ -1,5 +1,5 @@
 <?php
-//////////////////// Client views //////////////////////////
+//////////////////// Client side //////////////////////////
 /**
  * User login and logout
  */
@@ -24,15 +24,17 @@ Route::post('/user/signup', ["before" => "csrf", 'uses' => "Jacopo\\Authenticati
 Route::get('/user/signup', ['uses' => "Jacopo\\Authentication\\Controllers\\UserController@signup"]);
 Route::get('/user/email-confirmation', ['uses' => "Jacopo\\Authentication\\Controllers\\UserController@emailConfirmation"]);
 Route::get('/user/signup-success', 'Jacopo\\Authentication\\Controllers\\UserController@signupSuccess');
-//////////////////// Admin Panel //////////////////////////
+
+//////////////////// Admin side //////////////////////////
 
 Route::group( ['before' => ['logged', 'can_see']], function()
 {
     Route::get('/admin/home', ['as' => 'home', function(){
         return View::make('authentication::home.home');
     }]);
-
-    // user
+    /**
+     * user
+     */
     Route::get('/admin/users/list', ['as' => 'users.list', 'uses' => 'Jacopo\Authentication\Controllers\UserController@getList']);
     Route::get('/admin/users/edit', ['as' => 'users.edit', 'uses' => 'Jacopo\Authentication\Controllers\UserController@editUser']);
     Route::post('/admin/users/edit', ["before" => "csrf", 'as' => 'users.edit', 'uses' => 'Jacopo\Authentication\Controllers\UserController@postEditUser']);
@@ -42,25 +44,36 @@ Route::group( ['before' => ['logged', 'can_see']], function()
     Route::post('/admin/users/editpermission', ["before" => "csrf", 'as' => 'users.edit.permission', 'uses' => 'Jacopo\Authentication\Controllers\UserController@editPermission']);
     Route::get('/admin/users/profile/edit', ['as' => 'users.profile.edit', 'uses' => 'Jacopo\Authentication\Controllers\UserController@editProfile']);
     Route::post('/admin/users/profile/edit', ['before' => 'csrf', 'as' => 'users.profile.edit', 'uses' => 'Jacopo\Authentication\Controllers\UserController@postEditProfile']);
-
-    // groups
+    /**
+     * groups
+     */
     Route::get('/admin/groups/list', ['as' => 'groups.list', 'uses' => 'Jacopo\Authentication\Controllers\GroupController@getList']);
     Route::get('/admin/groups/edit', ['as' => 'groups.edit', 'uses' => 'Jacopo\Authentication\Controllers\GroupController@editGroup']);
     Route::post('/admin/groups/edit', ["before" => "csrf", 'as' => 'groups.edit', 'uses' => 'Jacopo\Authentication\Controllers\GroupController@postEditGroup']);
     Route::get('/admin/groups/delete', ["before" => "csrf", 'as' => 'groups.delete', 'uses' => 'Jacopo\Authentication\Controllers\GroupController@deleteGroup']);
     Route::post('/admin/groups/editpermission', ["before" => "csrf", 'as' => 'groups.edit.permission', 'uses' => 'Jacopo\Authentication\Controllers\GroupController@editPermission']);
-
-    // permissions
+    /**
+     * permissions
+     */
     Route::get('/admin/permissions/list', ['as' => 'permission.list', 'uses' => 'Jacopo\Authentication\Controllers\PermissionController@getList']);
     Route::get('/admin/permissions/edit', ['as' => 'permission.edit', 'uses' => 'Jacopo\Authentication\Controllers\PermissionController@editPermission']);
     Route::post('/admin/permissions/edit', ["before" => "csrf", 'as' => 'permission.edit', 'uses' => 'Jacopo\Authentication\Controllers\PermissionController@postEditPermission']);
     Route::get('/admin/permissions/delete', ["before" => "csrf", 'as' => 'permission.delete', 'uses' => 'Jacopo\Authentication\Controllers\PermissionController@deletePermission']);
-
 });
 
-if (Config::get('authentication::handle_404'))
+//////////////////// Other routes //////////////////////////
+
+if (Config::get('authentication::handle_errors'))
 {
-    App::missing(function ($exception){
-        return View::make('authentication::client.exceptions.404');
+    App::error(function(RuntimeException $exception, $code){
+        switch($code)
+        {
+            case '404':
+                return View::make('authentication::client.exceptions.404');
+                break;
+            case '401':
+                return View::make('authentication::client.exceptions.401');
+                break;
+        }
     });
 }

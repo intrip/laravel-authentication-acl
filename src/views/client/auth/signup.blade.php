@@ -39,8 +39,8 @@
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-user"></i></span>
                                         {{Form::text('first_name', '', ['id' => 'first_name', 'class' => 'form-control', 'placeholder' => 'First Name', 'required', 'autocomplete' => 'off'])}}
-                                        <span class="text-danger">{{$errors->first('first_name')}}</span>
                                     </div>
+                                    <span class="text-danger">{{$errors->first('first_name')}}</span>
                                 </div>
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-6">
@@ -48,8 +48,8 @@
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-user"></i></span>
                                         {{Form::text('last_name', '', ['id' => 'last_name', 'class' => 'form-control', 'placeholder' => 'Last Name', 'required', 'autocomplete' => 'off'])}}
-                                        <span class="text-danger">{{$errors->first('last_name')}}</span>
                                     </div>
+                                    <span class="text-danger">{{$errors->first('last_name')}}</span>
                                 </div>
                             </div>
                         </div>
@@ -58,8 +58,8 @@
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
                                 {{Form::email('email', '', ['id' => 'email', 'class' => 'form-control', 'placeholder' => 'Email address', 'required', 'autocomplete' => 'off'])}}
-                                <span class="text-danger">{{$errors->first('email')}}</span>
                             </div>
+                            <span class="text-danger">{{$errors->first('email')}}</span>
                         </div>
 
                         <div class="row">
@@ -68,9 +68,8 @@
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-lock"></i></span>
                                         {{Form::password('password', ['id' => 'password', 'class' => 'form-control', 'placeholder' => 'Password', 'required', 'autocomplete' => 'off'])}}
-                                        <span class="text-danger">{{$errors->first('password')}}</span>
-
                                     </div>
+                                    <span class="text-danger">{{$errors->first('password')}}</span>
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
@@ -78,7 +77,6 @@
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-lock"></i></span>
                                         {{Form::password('password_confirmation', ['id' => 'password_confirmation', 'class' => 'form-control', 'placeholder' => 'Confirm password', 'required'])}}
-
                                     </div>
                                 </div>
                             </div>

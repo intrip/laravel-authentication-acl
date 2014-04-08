@@ -133,7 +133,7 @@ class UserRegisterService
         $mailer = App::make('jmailer');
 
         // send email to client
-        $mailer->sendTo( $input['email'], [ "email" => $input["email"], "password" => $input["password"], "first_name" => $input["first_name"], "token" => $this->activation_enabled ? App::make('authenticator')->getActivationToken($input["email"]) :'' ], "Register request to: " . \Config::get('authentication::app_name'), $view_file);
+        $mailer->sendTo( $input['email'], [ "email" => $input["email"], "password" => $input["password"], "first_name" => $input["first_name"], "token" => $this->activation_enabled ? App::make('authenticator')->getActivationToken($input["email"]) :'' ], "Registration request to: " . \Config::get('authentication::app_name'), $view_file);
     }
 
 

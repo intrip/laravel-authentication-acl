@@ -39,13 +39,13 @@ class ReminderService {
     /**
      * Email subject
      */
-    protected $subject = "Recupero password";
+    protected $subject = "Password recovery request";
     /**
      * Femplate mail file
      *
      * @var string
      */
-    protected $template = "authentication::auth.mailmessage";
+    protected $template = "authentication::admin.mail.reminder";
     /**
      * Errors
      *
@@ -80,7 +80,7 @@ class ReminderService {
             throw new UserNotFoundException;
         }
 
-        $this->prepareBody($token, $to);
+        $this->prepareResetPasswordLink($token, $to);
 
         // send email with change password link
         $success = $this->mailer->sendTo($to, $this->body, $this->subject, $this->template);
@@ -92,7 +92,7 @@ class ReminderService {
         }
     }
 
-    private function prepareBody($token, $to)
+    private function prepareResetPasswordLink($token, $to)
     {
         $this->body = link_to_action("Jacopo\\Authentication\\Controllers\\AuthController@getChangePassword","Click here to change your password.", ["email"=> $to, "token"=> $token] );
     }
@@ -129,6 +129,22 @@ class ReminderService {
     public function getErrors()
     {
         return $this->errors;
+    }
+
+    /**
+     * @param string $template
+     */
+    public function setTemplate($template)
+    {
+        $this->template = $template;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTemplate()
+    {
+        return $this->template;
     }
 
 } 

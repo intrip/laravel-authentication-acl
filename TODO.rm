@@ -1,25 +1,25 @@
 Authenticator:
 GRAFICA:
-    - finisci registazione mails anche graficamente + fighe(view mail e view registrazione confermata e view recupero password)
-    - fai grafica pagine bella: emails, pannello
+    - fai grafica pagine bella: pannello
     - grafica con layout per 1024 che si veda bene e pou su tablet e mobile e fai search che va sotto gestisci tutti i margini ecc
     - metti tutti i titoli giusti
     - metti iconcine ai field form
     - pannello colori diverso e metti icone belle ovunque
-    - fix tutti i titoli
     - finish todo vari
     - documentazione per tutto e anche nei file di configurazione, con manuale html, spiega anche come aggiungere voci di menu ecc
 
 FUNZIONAMENTO:
+    - login throttling
     - install script command(popola il db come è in quello ora)
     - test con postgres e mysql e sqlite
     - reset button non pulisce la select search
     - fai icona app e roba x caricarla previo invio mail a loro
+    - config in un solo file
     - add alla doc di safari autocomplete bug
 
 RELEASE:
+    - chiedi se puoi usare composer per il tuo pacchetto git oppure solo sorgente a loro
     - vedi atri pacchetti e se puoi aggiungere qualcosa al tuo prima della 1 release
-    - rinomina tutti i jacopo in websolutions o altro nome che tu voglia
     - testa tutto
     - carica su envato cn nome websolutions cn logo ecc
     - fix per approvazione
@@ -28,6 +28,7 @@ POI (0.2.0):
     - testa anche i controllers completamente e check code coverage in modo da testare il possibile
     - dashboard
     - add oauth
+    - estendi form builder per i tuoi custom form
     - quando recuperi password link ai login diversi a seconda del tipo utente
     - add permission come list a gruppi
     - quando fai reinviare la mail vedi di nascondere il msg di errore
