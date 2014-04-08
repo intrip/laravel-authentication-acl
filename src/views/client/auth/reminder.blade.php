@@ -1,8 +1,8 @@
-@extends('authentication::admin.layouts.baseauth')
+@extends('authentication::client.layouts.base')
 @section ('title')
     Password recovery
 @stop
-@section('container')
+@section('content')
 <div class="row centered-form">
     <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
         <div class="panel panel-info">
@@ -30,7 +30,7 @@
                 {{Form::close()}}
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 margin-top-10">
-                        {{link_to_action('Jacopo\Authentication\Controllers\AuthController@getClientLogin','Back to login')}}
+                        <a href="{{URL::Action('Jacopo\Authentication\Controllers\AuthController@getClientLogin')}}"><i class="fa fa-arrow-left"></i> Back to login</a>
                     </div>
                 </div>
             </div>

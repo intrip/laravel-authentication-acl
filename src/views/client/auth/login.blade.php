@@ -1,8 +1,8 @@
-@extends('authentication::admin.layouts.baseauth')
+@extends('authentication::client.layouts.base')
 @section('title')
 User login
 @stop
-@section('container')
+@section('content')
 <div class="row centered-form">
     <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
         <div class="panel panel-info">
@@ -47,7 +47,7 @@ User login
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 margin-top-10">
         {{link_to_action('Jacopo\Authentication\Controllers\AuthController@getReminder','Forgot password?')}}
-        or {{link_to_action('Jacopo\Authentication\Controllers\UserController@signup','New user? Signup here')}}
+        or <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@signup')}}"><i class="fa fa-sign-in"></i> Signup here</a>
             </div>
         </div>
             </div>
