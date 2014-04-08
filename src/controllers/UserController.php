@@ -16,7 +16,7 @@ use Jacopo\Authentication\Exceptions\UserNotFoundException;
 use Jacopo\Authentication\Validators\UserValidator;
 use Jacopo\Library\Exceptions\JacopoExceptionsInterface;
 use Jacopo\Authentication\Validators\UserProfileValidator;
-use View, Input, Redirect, App;
+use View, Input, Redirect, App, Config;
 use Jacopo\Authentication\Interfaces\AuthenticateInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -225,12 +225,13 @@ class UserController extends \Controller
             return Redirect::action('Jacopo\Authentication\Controllers\UserController@signup')->withErrors($service->getErrors())->withInput();
         }
 
-        return Redirect::action('Jacopo\Authentication\Controllers\UserController@signupSuccess')->withMessage('Registration request sent successfully. Please check your email.');
+        return Redirect::action('Jacopo\Authentication\Controllers\UserController@signupSuccess');
     }
 
     public function signupSuccess()
     {
-        return View::make('authentication::client.auth.signup-success');
+        $email_confirmation_enabled = Config::get('authentication::email_confirmation');
+        return $email_confirmation_enabled ? View::make('authentication::client.auth.signup-email-confirmation') : View::make('authentication::client.auth.signup-success');
     }
 
     public function emailConfirmation()

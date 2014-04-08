@@ -1,10 +1,9 @@
 <?php  namespace Jacopo\Authentication\Tests; 
-use Jacopo\Authentication\Exceptions\UserNotFoundException;
 use Jacopo\Authentication\Models\User;
 use Jacopo\Library\Exceptions\NotFoundException;
 use Jacopo\Library\Exceptions\ValidationException;
 use Mockery as m;
-use App;
+use App, Config, Illuminate\Support\Facades\Facade;
 /**
  * Test UserControllerTest
  *
@@ -20,7 +19,7 @@ class UserControllerTest extends DbTestCase {
     /**
      * @test
      **/
-    public function it_run_register_and_return_success_on_post_register()
+    public function it_run_signup_and_return_success_on_post_signup()
     {
         $mock_register = m::mock('StdClass')->shouldReceive('register')->once()->getMock();
         App::instance('register_service', $mock_register);
@@ -33,7 +32,7 @@ class UserControllerTest extends DbTestCase {
     /**
      * @test
      **/
-    public function it_run_register_and_return_errors_on_post_register()
+    public function it_run_signup_and_return_errors_on_post_signup()
     {
         $mock_register = m::mock('StdClass')->shouldReceive('register')
             ->once()
@@ -57,6 +56,43 @@ class UserControllerTest extends DbTestCase {
         $response = $this->action('GET', 'Jacopo\Authentication\Controllers\UserController@signup');
 
         $this->assertResponseOk();
+    }
+    
+    /**
+     * @test
+     **/
+    public function it_showConfirmationEmailSuccessOnSignup_ifEmailConfirmationIsEnabled()
+    {
+        $active = true;
+        $this->mockConfigGetEmailConfirmation($active);
+
+        \View::shouldReceive('make')->once()->with('authentication::client.auth.signup-email-confirmation');
+
+        $this->action('GET', 'Jacopo\Authentication\Controllers\UserController@signupSuccess');
+    }
+
+    /**
+     * @test
+     **/
+    public function it_showSuccessSignup_ifEmailConfirmationIsDisabled()
+    {
+        $active = false;
+        $this->mockConfigGetEmailConfirmation($active);
+
+        \View::shouldReceive('make')->once()->with('authentication::client.auth.signup-success');
+
+        $this->action('GET', 'Jacopo\Authentication\Controllers\UserController@signupSuccess');
+    }
+
+    private function mockConfigGetEmailConfirmation($active)
+    {
+        $app = m::mock('AppMock');
+        $app->shouldReceive('instance')->andReturn($app);
+
+        Facade::setFacadeApplication($app);
+        Config::swap($config = m::mock('ConfigMock'));
+
+        $config->shouldReceive('get')->with('authentication::email_confirmation')->andReturn($active);
     }
 
     /**
