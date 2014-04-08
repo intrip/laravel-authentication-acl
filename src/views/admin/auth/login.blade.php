@@ -1,6 +1,6 @@
 @extends('authentication::admin.layouts.baseauth')
 @section('title')
-User login
+Admin login
 @stop
 @section('container')
     <div class="row centered-form">

@@ -1,6 +1,6 @@
 <div class="panel panel-info">
     <div class="panel-heading">
-        <h3 class="panel-title">Group search</h3>
+        <h3 class="panel-title"><i class="fa fa-search"></i> Group search</h3>
     </div>
     <div class="panel-body">
         {{Form::open(['action' => 'Jacopo\Authentication\Controllers\GroupController@getList','method' => 'get'])}}

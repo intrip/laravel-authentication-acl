@@ -1,18 +1,12 @@
 Authenticator:
 GRAFICA:
-    - fai grafica pagine bella: pannello
-    - grafica con layout per 1024 che si veda bene e pou su tablet e mobile e fai search che va sotto gestisci tutti i margini ecc
-    - metti tutti i titoli giusti
-    - metti iconcine ai field form
-    - pannello colori diverso e metti icone belle ovunque
+    - aggiusta tutto il discorso responsiveness
     - finish todo vari
     - documentazione per tutto e anche nei file di configurazione, con manuale html, spiega anche come aggiungere voci di menu ecc
 
 FUNZIONAMENTO:
-    - login throttling
-    - install script command(popola il db come è in quello ora)
     - test con postgres e mysql e sqlite
-    - reset button non pulisce la select search
+    - install script command(popola il db come è in quello ora)
     - fai icona app e roba x caricarla previo invio mail a loro
     - config in un solo file
     - add alla doc di safari autocomplete bug
@@ -25,11 +19,11 @@ RELEASE:
     - fix per approvazione
 
 POI (0.2.0):
+    - reset button non pulisce la select search
     - testa anche i controllers completamente e check code coverage in modo da testare il possibile
     - dashboard
     - add oauth
-    - estendi form builder per i tuoi custom form
-    - quando recuperi password link ai login diversi a seconda del tipo utente
+    - metti iconcine ai field form nel pannello admin anche
     - add permission come list a gruppi
     - quando fai reinviare la mail vedi di nascondere il msg di errore
     - profilo editabile nei campi come la "scheda tecnica"

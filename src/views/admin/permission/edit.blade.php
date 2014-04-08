@@ -19,7 +19,7 @@ Admin area: edit permission
     @endif
     <div class="panel panel-info">
         <div class="panel-heading">
-            <h3 class="panel-title"><i class="fa fa-lock"></i> {{isset($permission->id) ? 'Edit' : 'Create'}} permission</h3>
+            <h3 class="panel-title">{{isset($permission->id) ? '<i class="fa fa-pencil"></i> Edit' : '<i class="fa fa-lock"></i> Create'}} permission</h3>
         </div>
         <div class="panel-body">
             {{Form::model($permission, [ 'url' => [URL::action('Jacopo\Authentication\Controllers\PermissionController@editPermission'), $permission->id], 'method' => 'post'] ) }}

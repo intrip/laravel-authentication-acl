@@ -18,7 +18,7 @@ Admin area: edit group
     @endif
     <div class="panel panel-info">
         <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-users"></i> {{isset($group->id) ? 'Edit' : 'Create'}} group</h3>
+                <h3 class="panel-title">{{isset($group->id) ? '<i class="fa fa-pencil"></i> Edit' : '<i class="fa fa-users"></i> Create'}} group</h3>
         </div>
         <div class="panel-body">
             <div class="col-md-6">
