@@ -7,6 +7,6 @@ return [
      * Handle 404 and 401 errors gracefylly
      */
     "handle_errors" => true,
-    "users_per_page" => 10,
-    "groups_per_page" => 10
+    "users_per_page" => 1,
+    "groups_per_page" => 1
 ];

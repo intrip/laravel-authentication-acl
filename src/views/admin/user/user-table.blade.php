@@ -4,29 +4,33 @@
     </div>
     <div class="panel-body">
 
-        <div class="row margin-bottom-12">
-            <div class="col-md-11">
+        <div class="row">
+            <div class="col-md-11 col-sm-11 col-xs-12 margin-bottom-12">
                 {{Form::open(['method' => 'get', 'class' => 'form-inline'])}}
-                    {{Form::select('order_by', ["" => "select column", "first_name" => "First name", "last_name" => "Last name", "email" => "Email", "last_login" => "Last login", "active" => "Active"], Input::get('order_by',''), ['class' => 'form-control'])}}
-                    {{Form::select('ordering', ["asc" => "Ascending", "desc" => "descending"], Input::get('ordering','asc'), ['class' =>'form-control'])}}
-                    {{Form::submit('Order', ['class' => 'btn btn-info'])}}
+                    <div class="form-group">
+                        {{Form::select('order_by', ["" => "select column", "first_name" => "First name", "last_name" => "Last name", "email" => "Email", "last_login" => "Last login", "active" => "Active"], Input::get('order_by',''), ['class' => 'form-control'])}}
+                    </div>
+                    <div class="form-group">
+                        {{Form::select('ordering', ["asc" => "Ascending", "desc" => "descending"], Input::get('ordering','asc'), ['class' =>'form-control'])}}
+                    </div>
+                    {{Form::submit('Order', ['class' => 'btn btn-default'])}}
                 {{Form::close()}}
             </div>
-            <div class="col-md-1 ">
-                    <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@editUser')}}" class="btn btn-info pull-right"><i class="fa fa-plus"></i> Add New</a>
+            <div class="col-md-1 col-sm-1 col-xs-12">
+                    <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@editUser')}}" class="btn btn-info"><i class="fa fa-plus"></i> Add New</a>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12 table-responsive">
+            <div class="col-md-12">
                 @if(! $users->isEmpty() )
                 <table class="table table-hover">
                         <thead>
                             <tr>
                                 <th>Email</th>
-                                <th>First name</th>
-                                <th>Last name</th>
+                                <th class="hidden-xs">First name</th>
+                                <th class="hidden-xs">Last name</th>
                                 <th>Active</th>
-                                <th>Last login</th>
+                                <th class="hidden-xs">Last login</th>
                                 <th>Operations</th>
                             </tr>
                         </thead>
@@ -34,10 +38,10 @@
                             @foreach($users as $user)
                             <tr>
                                 <td>{{$user->email}}</td>
-                                <td>{{$user->first_name}}</td>
-                                <td>{{$user->last_name}}</td>
+                                <td class="hidden-xs">{{$user->first_name}}</td>
+                                <td class="hidden-xs">{{$user->last_name}}</td>
                                 <td>{{$user->activated ? '<i class="fa fa-circle green"></i>' : '<i class="fa fa-circle-o red"></i>'}}</td>
-                                <td>{{$user->last_login ? $user->last_login : 'not logged yet.'}}</td>
+                                <td class="hidden-xs">{{$user->last_login ? $user->last_login : 'not logged yet.'}}</td>
                                 <td>
                                     @if(! $user->protected)
                                         <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@editUser', ['id' => $user->id])}}" class="margin-left-5"><i class="fa fa-pencil-square-o fa-2x"></i></a>

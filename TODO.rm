@@ -1,8 +1,9 @@
 Authenticator:
 GRAFICA:
-    - aggiusta tutto il discorso responsiveness (solo admin panel)
+    - aggiusta tutto il discorso responsiveness (solo admin panel, user(tabella i pulsanti sopra che vanno imparte in mobile e fix padding fai sempre da dx a sx e poi verso l'esterno) poi grp e poi perm)
     - finish todo vari
-    - documentazione per tutto e anche nei file di configurazione, con manuale html, spiega anche come aggiungere voci di menu ecc
+    - riogranizza css in meno file e fai un check generale che tutto vada
+    - documentazione per tutto e anche nei file di configurazione, con manuale html, spiega anche come aggiungere voci di menu ecc(discorso menu modificabile)
 
 FUNZIONAMENTO:
     - test con postgres e mysql e sqlite
@@ -17,6 +18,9 @@ RELEASE:
     - testa tutto
     - carica su envato cn nome websolutions cn logo ecc
     - fix per approvazione
+REQUISITI:
+    - php 5.4 e poi guarda bootstrap
+
 
 POI (0.2.0):
     - reset button non pulisce la select search

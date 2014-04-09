@@ -8,6 +8,24 @@ body {
     font-family: Helvetica, "Helvetica Neue", Arial, sans-serif;
 }
 
+/*
+ * General structure
+ */
+.pagination>.active>span, .pagination>.active>span:hover
+{
+    background-color: #5bc0de;
+    border: 1px solid #46b8da;
+}
+.navbar {
+    background-color: #292C2D;
+}
+a{
+    color: #5bc0de;
+}
+a:hover {
+    color: #4597AF;
+}
+
 
 /*
  * Global add-ons
@@ -22,11 +40,6 @@ body {
 /*
  * Sidebar
  */
-
-/* Hide for mobile, show later */
-.sidebar {
-    display: none;
-}
 @media (min-width: 768px) {
     .sidebar {
         position: fixed;
@@ -39,13 +52,17 @@ body {
         background-color: #f5f5f5;
         border-right: 1px solid #eee;
     }
-}
 
-/* Sidebar navigation */
-.nav-sidebar {
-    margin-left: -20px;
-    margin-right: -21px; /* 20px padding + 1px border */
-    margin-bottom: 20px;
+    /* Sidebar navigation */
+    .nav-sidebar {
+        margin-left: -20px;
+        margin-right: -21px; /* 20px padding + 1px border */
+        margin-bottom: 20px;
+    }
+}
+.nav-sidebar
+{
+    border-bottom: 1px solid #d9edf7;
 }
 .nav-sidebar > li > a {
     padding-left: 20px;
@@ -66,8 +83,8 @@ body {
 }
 @media (min-width: 768px) {
     .main {
-        padding-left: 40px;
-        padding-right: 40px;
+        padding-left: 20px;
+        padding-right: 20px;
     }
 }
 .main .page-header {
