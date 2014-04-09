@@ -1,9 +1,15 @@
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container">
+    <div class="container-fluid margin-right-15">
         <div class="navbar-header">
             <a class="navbar-brand" href="#">{{$app_name}}</a>
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#nav-main-menu">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
         </div>
-        <div class="collapse navbar-collapse">
+        <div class="collapse navbar-collapse" id="nav-main-menu">
             <ul class="nav navbar-nav">
                 @if(isset($menu_items))
                     @foreach($menu_items as $item)

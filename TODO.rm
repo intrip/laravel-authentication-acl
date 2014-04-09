@@ -1,6 +1,6 @@
 Authenticator:
 GRAFICA:
-    - aggiusta tutto il discorso responsiveness
+    - aggiusta tutto il discorso responsiveness (solo admin panel)
     - finish todo vari
     - documentazione per tutto e anche nei file di configurazione, con manuale html, spiega anche come aggiungere voci di menu ecc
 
