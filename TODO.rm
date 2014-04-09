@@ -1,6 +1,6 @@
 Authenticator:
 GRAFICA:
-    - aggiusta tutto il discorso responsiveness (solo admin panel, user(tabella i pulsanti sopra che vanno imparte in mobile e fix padding fai sempre da dx a sx e poi verso l'esterno) poi grp e poi perm)
+    - aggiusta tutto il discorso responsiveness (fai sempre da dx a sx e poi verso l'esterno) user add e poi grp e poi perm e user profile)
     - finish todo vari
     - riogranizza css in meno file e fai un check generale che tutto vada
     - documentazione per tutto e anche nei file di configurazione, con manuale html, spiega anche come aggiungere voci di menu ecc(discorso menu modificabile)
