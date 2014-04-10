@@ -20,6 +20,9 @@
                 <a href="{{URL::action('Jacopo\Authentication\Controllers\GroupController@editGroup', ['id' => $group->id])}}"><i class="fa fa-edit fa-2x"></i></a>
                 <a href="{{URL::action('Jacopo\Authentication\Controllers\GroupController@deleteGroup',['id' => $group->id, '_token' => csrf_token()])}}" class="margin-left-5 delete"><i class="fa fa-trash-o fa-2x"></i></a>
                 <span class="clearfix"></span>
+            @else
+                <i class="fa fa-times fa-2x light-blue"></i>
+                <i class="fa fa-times fa-2x margin-left-12 light-blue"></i>
             @endif
             </td>
         </tr>

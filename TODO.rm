@@ -1,8 +1,7 @@
 Authenticator:
 GRAFICA:
-    - se nn hai permesso di edit metti un'icona che lo mostra
     - finish todo vari
-    - riogranizza css in meno file e fai un check generale che tutto vada
+    - riorganizza css in meno file e fai un check generale che tutto vada
     - documentazione per tutto e anche nei file di configurazione, con manuale html, spiega anche come aggiungere voci di menu ecc(discorso menu modificabile)
 
 FUNZIONAMENTO:

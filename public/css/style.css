@@ -29,11 +29,15 @@ div.paginator
 }
 .green
 {
-    color:green;
+    color: green;
 }
 .red
 {
-    color:red;
+    color: red;
+}
+.light-blue
+{
+    color: #5bc0de;
 }
 .margin-left-5
 {
@@ -62,6 +66,10 @@ div.paginator
 .margin-top-5
 {
     margin-top: 5px;
+}
+.margin-left-12
+{
+    margin-left: 12px;
 }
 .middle-panel
 {
