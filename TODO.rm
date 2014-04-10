@@ -1,6 +1,5 @@
 Authenticator:
 GRAFICA:
-    - aggiusta tutto il discorso responsiveness grp e poi perm
     - se nn hai permesso di edit metti un'icona che lo mostra
     - finish todo vari
     - riogranizza css in meno file e fai un check generale che tutto vada

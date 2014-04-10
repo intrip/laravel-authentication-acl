@@ -7,23 +7,25 @@
 @section('content')
 
 <div class="row">
-    {{-- print messages --}}
-    <?php $message = Session::get('message'); ?>
-    @if( isset($message) )
-    <div class="alert alert-success">{{$message}}</div>
-    @endif
-    {{-- print errors --}}
-    @if($errors && ! $errors->isEmpty() )
-    @foreach($errors->all() as $error)
-    <div class="alert alert-danger">{{$error}}</div>
-    @endforeach
-    @endif
-    <div class="panel panel-info">
-        <div class="panel-heading">
-            <h3 class="panel-title"><i class="fa fa-lock"></i> Permissions</h3>
-        </div>
-        <div class="panel-body">
-            @include('authentication::admin.permission.permission-table')
+    <div class="col-md-12">
+        {{-- print messages --}}
+        <?php $message = Session::get('message'); ?>
+        @if( isset($message) )
+        <div class="alert alert-success">{{$message}}</div>
+        @endif
+        {{-- print errors --}}
+        @if($errors && ! $errors->isEmpty() )
+        @foreach($errors->all() as $error)
+        <div class="alert alert-danger">{{$error}}</div>
+        @endforeach
+        @endif
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-lock"></i> Permissions</h3>
+            </div>
+            <div class="panel-body">
+                @include('authentication::admin.permission.permission-table')
+            </div>
         </div>
     </div>
 </div>
