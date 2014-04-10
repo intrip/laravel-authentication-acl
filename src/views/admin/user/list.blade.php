@@ -7,7 +7,6 @@
 @section('content')
 <div class="row">
     <div class="col-md-12">
-        <div class="row">
             <div class="col-md-9">
                 {{-- print messages --}}
                 <?php $message = Session::get('message'); ?>
@@ -27,7 +26,6 @@
                 @include('authentication::admin.user.search')
             </div>
         </div>
-    </div>
 </div>
 @stop
 

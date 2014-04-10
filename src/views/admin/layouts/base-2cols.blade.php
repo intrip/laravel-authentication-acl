@@ -1,7 +1,7 @@
 @extends('authentication::admin.layouts.base')
 
 @section('container')
-    <div class="row">
+    <div class="row-fluid">
         <div class="col-sm-3 col-md-2 col-xs-12 sidebar">
             @include('authentication::admin.layouts.sidebar')
         </div>

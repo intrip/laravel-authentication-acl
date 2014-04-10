@@ -1,7 +1,6 @@
 Authenticator:
 GRAFICA:
     - finish todo vari
-    - riorganizza css in meno file e fai un check generale che tutto vada
     - documentazione per tutto e anche nei file di configurazione, con manuale html, spiega anche come aggiungere voci di menu ecc(discorso menu modificabile)
 
 FUNZIONAMENTO:

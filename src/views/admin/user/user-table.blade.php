@@ -46,7 +46,7 @@
                             <td class="hidden-xs">{{$user->last_login ? $user->last_login : 'not logged yet.'}}</td>
                             <td>
                                 @if(! $user->protected)
-                                    <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@editUser', ['id' => $user->id])}}" class="margin-left-5"><i class="fa fa-pencil-square-o fa-2x"></i></a>
+                                    <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@editUser', ['id' => $user->id])}}"><i class="fa fa-pencil-square-o fa-2x"></i></a>
                                     <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@deleteUser',['id' => $user->id, '_token' => csrf_token()])}}" class="margin-left-5 delete"><i class="fa fa-trash-o fa-2x"></i></a>
                                 @else
                                     <i class="fa fa-times fa-2x light-blue"></i>
