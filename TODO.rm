@@ -1,6 +1,7 @@
 Authenticator:
 GRAFICA:
-    - aggiusta tutto il discorso responsiveness (fai sempre da dx a sx e poi verso l'esterno) user add e poi grp e poi perm e user profile)
+    - aggiusta tutto il discorso responsiveness grp e poi perm
+    - se nn hai permesso di edit metti un'icona che lo mostra
     - finish todo vari
     - riogranizza css in meno file e fai un check generale che tutto vada
     - documentazione per tutto e anche nei file di configurazione, con manuale html, spiega anche come aggiungere voci di menu ecc(discorso menu modificabile)

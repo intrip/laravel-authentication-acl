@@ -26,11 +26,11 @@ Admin area: edit user
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-12 col-xs-12">
                         <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@postEditProfile',["user_id" => $user->id])}}" class="btn btn-info pull-right" {{! isset($user->id) ? 'disabled="disabled"' : ''}}><i class="fa fa-user"></i> Edit profile</a>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 col-xs-12">
                     <h4>Login data</h4>
                     {{Form::model($user, [ 'url' => URL::action('Jacopo\Authentication\Controllers\UserController@postEditUser')] ) }}
                     {{FormField::email(["autocomplete" => "off", "label" => "Email: *"])}}
@@ -49,7 +49,7 @@ Admin area: edit user
                     {{Form::submit('Save', array("class"=>"btn btn-info pull-right "))}}
                     {{Form::close()}}
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6 col-xs-12">
                         <h4><i class="fa fa-users"></i> Groups</h4>
                         @include('authentication::admin.user.groups')
 
