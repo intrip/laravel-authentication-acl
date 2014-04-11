@@ -1,7 +1,6 @@
 {
     "name": "jacopo/authentication",
     "description": "",
-    "version" : "0.1.0",
     "license" : "proprietary",
     "authors": [
         {
@@ -42,7 +41,9 @@
             "Jacopo\\Authentication\\Tests\\" : "tests/"
         },
         "classmap": [
-            "src/controllers"
+            "src/controllers",
+            "src/commands",
+            "src/seeds"
         ]
     },
     "minimum-stability": "stable"

@@ -3,7 +3,7 @@ GRAFICA:
     - documentazione per tutto e anche nei file di configurazione, con manuale html, spiega anche come aggiungere voci di menu ecc(discorso menu modificabile e che file config si devono toccare)
 
 FUNZIONAMENTO:
-    - install script command(vari config publish e migration)
+    - install script command(fai migration e poi tutti gli step e poi mettili in istall command, metti copia incolla da vendor e tutto in TDD)
     - fai icona app e roba x caricarla previo invio mail a loro
 
 RELEASE:
