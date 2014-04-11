@@ -1,26 +1,22 @@
 Authenticator:
 GRAFICA:
-    - finish todo vari
-    - documentazione per tutto e anche nei file di configurazione, con manuale html, spiega anche come aggiungere voci di menu ecc(discorso menu modificabile)
+    - documentazione per tutto e anche nei file di configurazione, con manuale html, spiega anche come aggiungere voci di menu ecc(discorso menu modificabile e che file config si devono toccare)
 
 FUNZIONAMENTO:
-    - test con postgres e mysql e sqlite
-    - install script command(popola il db come è in quello ora)
+    - install script command(vari config publish e migration)
     - fai icona app e roba x caricarla previo invio mail a loro
-    - config in un solo file
-    - add alla doc di safari autocomplete bug
 
 RELEASE:
     - chiedi se puoi usare composer per il tuo pacchetto git oppure solo sorgente a loro
-    - vedi atri pacchetti e se puoi aggiungere qualcosa al tuo prima della 1 release
-    - testa tutto
     - carica su envato cn nome websolutions cn logo ecc
     - fix per approvazione
+
 REQUISITI:
     - php 5.4 e poi guarda bootstrap
 
 
 POI (0.2.0):
+    - add alla doc di safari autocomplete bug
     - reset button non pulisce la select search
     - testa anche i controllers completamente e check code coverage in modo da testare il possibile
     - dashboard
@@ -31,5 +27,6 @@ POI (0.2.0):
     - profilo editabile nei campi come la "scheda tecnica"
     - template
     - supporto multipli ordering
+    - multilingua
     - widget vari utilizzabili
     - messaggi personalizzati in file di config e traduzione di tutto con translate laravel
