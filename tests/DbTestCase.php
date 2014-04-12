@@ -16,7 +16,7 @@ class DbTestCase extends TestCase
         parent::setUp();
 
         $this->artisan = $this->app->make( 'artisan' );
-        $this->populateDB();
+        $this->createDbSchema();
     }
 
     /**
@@ -27,17 +27,6 @@ class DbTestCase extends TestCase
         $this->assertTrue(true);
     }
 
-    /**
-     * @deprecated use sqlite instead
-     */
-    protected function cleanDb()
-    {
-        $manager = DB::getDoctrineSchemaManager();
-        $tables = $manager->listTableNames();
-        foreach ($tables as $key => $table) {
-            DB::Statement("DROP TABLE ".$table."");
-        }
-    }
 
     /**
      * Define environment setup.
@@ -61,7 +50,7 @@ class DbTestCase extends TestCase
 
     }
 
-    protected function populateDB()
+    protected function createDbSchema()
     {
         $this->artisan->call('migrate', ["--database" => "testbench", '--path' => '../src/migrations']);
     }

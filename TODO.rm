@@ -3,7 +3,9 @@ GRAFICA:
     - documentazione per tutto e anche nei file di configurazione, con manuale html, spiega anche come aggiungere voci di menu ecc(discorso menu modificabile e che file config si devono toccare)
 
 FUNZIONAMENTO:
+    - agg formattazione codice per array a capo e riformatta i test ecc
     - install script command(fai migration e poi tutti gli step e poi mettili in istall command, metti copia incolla da vendor e tutto in TDD)
+    - migliora i test che creano il db usantoun creatore generale che override i valori e fa n volte e porta faker a classe superiore
     - fai icona app e roba x caricarla previo invio mail a loro
 
 RELEASE:
@@ -18,7 +20,7 @@ REQUISITI:
 POI (0.2.0):
     - add alla doc di safari autocomplete bug
     - reset button non pulisce la select search
-    - testa anche i controllers completamente e check code coverage in modo da testare il possibile
+    - testa anche i controllers completamente e check code coverage in modo da testare il possibile(assolutamente testa sentry user repo)
     - dashboard
     - add oauth
     - metti iconcine ai field form nel pannello admin anche

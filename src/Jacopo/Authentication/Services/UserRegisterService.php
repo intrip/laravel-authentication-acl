@@ -19,15 +19,15 @@ class UserRegisterService
     /**
      * @var \Jacopo\Authentication\Repository\Interfaces\UserRepositoryInterface
      */
-    protected $u_r;
+    protected $user_repository;
     /**
      * @var \Jacopo\Authentication\Repository\Interfaces\UserProfileRepositoryInterface
      */
-    protected $p_r;
+    protected $profile_repository;
     /**
      * @var \Jacopo\Authentication\Validators\UserSignupValidator
      */
-    protected $v;
+    protected $user_signup_validator;
     /**
      * @var \Illuminate\Support\MessageBag
      */
@@ -40,9 +40,9 @@ class UserRegisterService
 
     public function __construct(UserSignupValidator $v = null)
     {
-        $this->u_r = App::make('user_repository');
-        $this->p_r = App::make('profile_repository');
-        $this->v = $v ? $v : new UserSignupValidator;
+        $this->user_repository = App::make('user_repository');
+        $this->profile_repository = App::make('profile_repository');
+        $this->user_signup_validator = $v ? $v : new UserSignupValidator;
         $this->activation_enabled = Config::get('authentication::email_confirmation');
         Event::listen('service.activated', 'Jacopo\Authentication\Services\UserRegisterService@sendActivationEmailToClient');
     }
@@ -70,9 +70,9 @@ class UserRegisterService
      */
     protected function validateInput(array $input)
     {
-        if (!$this->v->validate($input))
+        if (!$this->user_signup_validator->validate($input))
         {
-            $this->errors = $this->v->getErrors();
+            $this->errors = $this->user_signup_validator->getErrors();
             throw new ValidationException;
         }
     }
@@ -83,20 +83,12 @@ class UserRegisterService
      */
     protected function saveDbData(array $input)
     {
-        if(App::environment() != 'testing')
-        {
-            // temporary disable reference integrity check
-            DB::connection('authentication')->getPdo()->exec('SET FOREIGN_KEY_CHECKS=0;');
-            DB::connection('authentication')->getPdo()->beginTransaction();
-        }
+      $this->startTransactionWithoutForeignKeysCheck();
 
-        try
+      try
         {
-            // user
-            $user    = $this->u_r->create($input);
-
-            // profile
-            $this->p_r->create(array_merge(["user_id" => $user->id], $input) );
+            $user    = $this->user_repository->create($input);
+            $this->profile_repository->create($this->createProfileInput($input, $user));
         }
         catch(UserExistsException $e)
         {
@@ -108,13 +100,9 @@ class UserRegisterService
             throw new UserExistsException;
         }
 
-        if(App::environment() != 'testing')
-        {
-            DB::connection('authentication')->getPdo()->commit();
-            // reactivate integrity check
-            DB::connection('authentication')->getPdo()->exec('SET FOREIGN_KEY_CHECKS=1;');
-        }
-        return $user;
+      $this->stopTransactionWithoutForeignKeysCheck();
+
+      return $user;
     }
 
     protected function getActiveInputState()
@@ -160,7 +148,7 @@ class UserRegisterService
 
         try
         {
-            $user = $this->u_r->findByLogin($email);
+            $user = $this->user_repository->findByLogin($email);
         }
         catch(UserNotFoundException $e)
         {
@@ -173,7 +161,7 @@ class UserRegisterService
             throw new TokenMismatchException;
         }
 
-        $this->u_r->activate($email);
+        $this->user_repository->activate($email);
         Event::fire('service.activated', $user);
     }
     
@@ -186,4 +174,30 @@ class UserRegisterService
     {
         return csrf_token();
     }
+
+  protected function startTransactionWithoutForeignKeysCheck () {
+    if (App::environment() != 'testing') {
+      // temporary disable reference integrity check
+      DB::connection('authentication')->getPdo()->exec('SET FOREIGN_KEY_CHECKS=0;');
+      DB::connection('authentication')->getPdo()->beginTransaction();
+    }
+  }
+
+  protected function stopTransactionWithoutForeignKeysCheck () {
+    if (App::environment() != 'testing') {
+      DB::connection('authentication')->getPdo()->commit();
+      // reactivate integrity check
+      DB::connection('authentication')->getPdo()->exec('SET FOREIGN_KEY_CHECKS=1;');
+    }
+  }
+
+  /**
+   * @param array $input
+   * @param       $user
+   * @return array
+   */
+  private function createProfileInput (array $input, $user) {
+    return array_merge(["user_id" => $user->id],
+                       array_except($input, ["email", "password", "activated"]));
+  }
 } 

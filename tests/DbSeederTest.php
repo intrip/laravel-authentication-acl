@@ -1,7 +1,8 @@
 <?php  namespace Jacopo\Authentication\Tests;
 
-use Jacopo\Authentication\Seeds\DbSeeder;
 use App;
+use Jacopo\Authentication\Models\User;
+use Jacopo\Authentication\Seeds\DbSeeder;
 
 /**
  * Test UserSeederTest
@@ -10,29 +11,34 @@ use App;
  */
 class DbSeederTest extends DbTestCase {
 
-    /**
-     * @test
-     **/
-    public function it_clear_table_and_create_admin_user()
-    {
-      $admin_email = "admin@admin.com";
-      $user_repository = App::make('user_repository');
-      $seeder = new DbSeeder();
+  protected $user_repository;
 
-      $seeder->run();
+  public function setUp () {
+    parent::setUp();
 
-      $users = $user_repository->all();
-      $this->assertCount(1, $users);
-      $this->assertEquals($admin_email, $users->first()->email);
-    }
-  
-    /**
-     * @test
-     **/
-    public function it_clear_table_and_create_base_groups()
-    {
-        
-    }
+    $this->user_repository = App::make('user_repository');
+  }
+
+  /**
+   * @test
+   **/
+  public function it_clear_table_and_create_admin_user () {
+    $seeder = new DbSeeder();
+
+    $seeder->run();
+
+    $users = $this->user_repository->all();
+
+    $this->assertCount(1, $users);
+    $default_user   = $this->getDefaultUser();
+    $this->assertEquals($default_user->email, $users->first()->email);
+  }
+
+  private function getDefaultUser () {
+    return new User([
+                       "email" => "admin@admin.com",
+                    ]);
+  }
 
 }
  
