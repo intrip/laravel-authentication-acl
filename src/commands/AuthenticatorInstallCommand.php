@@ -18,7 +18,7 @@ class AuthenticatorInstallCommand extends Command {
 	 *
 	 * @var string
 	 */
-	protected $description = 'Install authentication module.';
+	protected $description = 'Install authentication package.';
 
 	/**
 	 * Create a new command instance.
@@ -37,31 +37,8 @@ class AuthenticatorInstallCommand extends Command {
 	 */
 	public function fire()
 	{
-		//
-	}
-
-	/**
-	 * Get the console command arguments.
-	 *
-	 * @return array
-	 */
-	protected function getArguments()
-	{
-		return array(
-			array('example', InputArgument::REQUIRED, 'An example argument.'),
-		);
-	}
-
-	/**
-	 * Get the console command options.
-	 *
-	 * @return array
-	 */
-	protected function getOptions()
-	{
-		return array(
-			array('example', null, InputOption::VALUE_OPTIONAL, 'An example option.', null),
-		);
+		//@todo
+    // con TDD publish config e setup migration
 	}
 
 }

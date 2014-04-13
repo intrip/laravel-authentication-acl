@@ -1,158 +1,177 @@
 <?php namespace Jacopo\Authentication;
 
+use App;
+use AuthenticatorInstallCommand;
+use Config;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 use Jacopo\Authentication\Classes\SentryAuthenticator;
-use Jacopo\Authentication\Repository\EloquentUserProfileRepository;
-use Jacopo\Authentication\Repository\SentryUserRepository;
-use Jacopo\Authentication\Repository\SentryGroupRepository;
-use Jacopo\Authentication\Repository\EloquentPermissionRepository;
 use Jacopo\Authentication\Helpers\SentryAuthenticationHelper;
-use Illuminate\Foundation\AliasLoader;
-use Config, App;
-use Illuminate\Database\Eloquent\Model;
+use Jacopo\Authentication\Repository\EloquentPermissionRepository;
+use Jacopo\Authentication\Repository\EloquentUserProfileRepository;
+use Jacopo\Authentication\Repository\SentryGroupRepository;
+use Jacopo\Authentication\Repository\SentryUserRepository;
 use Jacopo\Authentication\Services\UserRegisterService;
 use Jacopo\Library\Form\FormModel;
 
-class AuthenticationServiceProvider extends ServiceProvider {
+class AuthenticationServiceProvider extends ServiceProvider
+{
 
-	/**
-	 * Indicates if loading of the provider is deferred.
-	 *
-	 * @var bool
-	 */
-	protected $defer = false;
+  /**
+   * Indicates if loading of the provider is deferred.
+   *
+   * @var bool
+   */
+  protected $defer = false;
 
-	/**
-	 * Register the service provider.
-	 * @override
-	 * @return void
-	 */
-	public function register()
-	{
-        $this->loadOtherProviders();
-        $this->registerAliases();
-    }
+  /**
+   * Register the service provider.
+   *
+   * @override
+   * @return void
+   */
+  public function register ()
+  {
+    $this->loadOtherProviders();
+    $this->registerAliases();
+  }
 
-    /**
-     * @override
-     */
-    public function boot()
+  /**
+   * @override
+   */
+  public function boot ()
+  {
+    $this->package('jacopo/authentication');
+
+    $this->bindClasses();
+
+    // include filters
+    require __DIR__ . "/../../filters.php";
+    // include routes.php
+    require __DIR__ . "/../../routes.php";
+    // include view composers
+    require __DIR__ . "/../../composers.php";
+    // include event subscribers
+    require __DIR__ . "/../../subscribers.php";
+    // include custom validators
+    require __DIR__ . "/../../validators.php";
+
+    $this->overwriteSentryConfig();
+    $this->overwriteWayFormConfig();
+
+    $this->setupConnection();
+
+    $this->registerInstallCommand();
+  }
+
+  protected function overwriteSentryConfig ()
+  {
+    $this->app['config']->getLoader()->addNamespace('cartalyst/sentry',
+                                                    __DIR__ . '/../../config/sentry');
+  }
+
+  protected function overwriteWayFormConfig ()
+  {
+    $this->app['config']->getLoader()->addNamespace('form', __DIR__ . '/../../config/way-form');
+  }
+
+  protected function bindClasses ()
+  {
+    $this->app->bind('authenticator', function ()
     {
-        $this->package('jacopo/authentication');
+      return new SentryAuthenticator;
+    });
 
-        $this->bindClasses();
-
-        // include filters
-        require __DIR__ . "/../../filters.php";
-        // include routes.php
-        require __DIR__ . "/../../routes.php";
-        // include view composers
-        require __DIR__ . "/../../composers.php";
-        // include event subscribers
-        require __DIR__ . "/../../subscribers.php";
-        // include custom validators
-        require __DIR__ . "/../../validators.php";
-
-        $this->overwriteSentryConfig();
-        $this->overwriteWayFormConfig();
-
-        $this->setupConnection();
-    }
-
-    protected function overwriteSentryConfig()
+    $this->app->bind('Jacopo\Authentication\Interfaces\AuthenticateInterface', function ()
     {
-        $this->app['config']->getLoader()->addNamespace('cartalyst/sentry', __DIR__ . '/../../config/sentry');
-    }
+      return new SentryAuthenticator;
+    });
 
-    protected function overwriteWayFormConfig()
+    $this->app->bind('authentication_helper', function ()
     {
-        $this->app['config']->getLoader()->addNamespace('form', __DIR__ . '/../../config/way-form');
-    }
+      return new SentryAuthenticationHelper;
+    });
 
-    protected function bindClasses()
+    $this->app->bind('user_repository', function ($app, $config = null)
     {
-        $this->app->bind('authenticator', function ()
-        {
-            return new SentryAuthenticator;
-        });
+      return new SentryUserRepository($config);
+    });
 
-        $this->app->bind('Jacopo\Authentication\Interfaces\AuthenticateInterface', function ()
-        {
-            return new SentryAuthenticator;
-        });
-
-        $this->app->bind('authentication_helper', function () {
-            return new SentryAuthenticationHelper;
-        });
-
-        $this->app->bind('user_repository', function ($app, $config = null)
-        {
-            return new SentryUserRepository($config);
-        });
-
-        $this->app->bind('group_repository', function ()
-        {
-            return new SentryGroupRepository;
-        });
-
-        $this->app->bind('permission_repository', function ()
-        {
-            return new EloquentPermissionRepository;
-        });
-
-        $this->app->bind('profile_repository', function () {
-            return new EloquentUserProfileRepository;
-        });
-
-        $this->app->bind('register_service', function () {
-            return new UserRegisterService;
-        });
-    }
-
-    protected function loadOtherProviders()
+    $this->app->bind('group_repository', function ()
     {
-        $this->app->register('Cartalyst\Sentry\SentryServiceProvider');
-        $this->app->register('Way\Form\FormServiceProvider');
-    }
+      return new SentryGroupRepository;
+    });
 
-    protected function registerAliases()
+    $this->app->bind('permission_repository', function ()
     {
-        AliasLoader::getInstance()->alias("Sentry", 'Cartalyst\Sentry\Facades\Laravel\Sentry');
-    }
+      return new EloquentPermissionRepository;
+    });
 
-    protected function setupConnection()
+    $this->app->bind('profile_repository', function ()
     {
-        $connection = Config::get('authentication::database.default');
+      return new EloquentUserProfileRepository;
+    });
 
-        if ($connection !== 'default')
-        {
-            $authenticator_conn = Config::get('authentication::database.connections.'.$connection);
-        }
-        else
-        {
-            $connection = Config::get('database.default');
-            $authenticator_conn = Config::get('database.connections.'.$connection);
-        }
-
-        Config::set('database.connections.authentication', $authenticator_conn);
-
-        $this->setupPresenceVerifierConnection();
-    }
-
-    protected function setupPresenceVerifierConnection()
+    $this->app->bind('register_service', function ()
     {
-        $this->app['validation.presence']->setConnection('authentication');
+      return new UserRegisterService;
+    });
+  }
+
+  protected function loadOtherProviders ()
+  {
+    $this->app->register('Cartalyst\Sentry\SentryServiceProvider');
+    $this->app->register('Way\Form\FormServiceProvider');
+  }
+
+  protected function registerAliases ()
+  {
+    AliasLoader::getInstance()->alias("Sentry", 'Cartalyst\Sentry\Facades\Laravel\Sentry');
+  }
+
+  protected function setupConnection ()
+  {
+    $connection = Config::get('authentication::database.default');
+
+    if ($connection !== 'default')
+    {
+      $authenticator_conn = Config::get('authentication::database.connections.' . $connection);
+    } else
+    {
+      $connection         = Config::get('database.default');
+      $authenticator_conn = Config::get('database.connections.' . $connection);
     }
 
-    /**
-     * Get the services provided by the provider.
-     *
-     * @return array
-     * @override
-     */
-    public function provides()
+    Config::set('database.connections.authentication', $authenticator_conn);
+
+    $this->setupPresenceVerifierConnection();
+  }
+
+  protected function setupPresenceVerifierConnection ()
+  {
+    $this->app['validation.presence']->setConnection('authentication');
+  }
+
+  /**
+   * Get the services provided by the provider.
+   *
+   * @return array
+   * @override
+   */
+  public function provides ()
+  {
+    return array ();
+  }
+
+  private function registerInstallCommand ()
+  {
+    $this->app['authentication.install'] = $this->app->share(function ($app)
     {
-        return array();
-    }
+      return new AuthenticatorInstallCommand;
+    });
+
+    $this->commands('authentication.install');
+  }
 
 }

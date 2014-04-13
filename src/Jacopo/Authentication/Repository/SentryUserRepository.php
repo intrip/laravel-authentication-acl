@@ -129,7 +129,7 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
      * Obtain a list of user from a given group
      *
      * @param String $group_name
-     * @throws \Palmabit\Authentication\Exceptions\UserNotFoundException
+     * @throws \Jacopo\Authentication\Exceptions\UserNotFoundException
      * @return mixed
      */
     public function findFromGroupName($group_name)

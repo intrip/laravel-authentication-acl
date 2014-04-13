@@ -149,7 +149,7 @@ class SentryGroupRepositoryTest extends DbTestCase {
     }
 
 
-    public function createAGroup()
+    private function createAGroup()
     {
         return $this->group_repository->create(array(
                                                     'name'        => 'Users',

@@ -3,8 +3,8 @@ GRAFICA:
     - documentazione per tutto e anche nei file di configurazione, con manuale html, spiega anche come aggiungere voci di menu ecc(discorso menu modificabile e che file config si devono toccare)
 
 FUNZIONAMENTO:
-    - agg formattazione codice per array a capo e riformatta i test ecc
-    - install script command(fai migration e poi tutti gli step e poi mettili in istall command, metti copia incolla da vendor e tutto in TDD)
+    - install script command(tutti gli step e poi mettili in install command, metti copia incolla da vendor e tutto in TDD)
+    - configura a prova il mess decector
     - migliora i test che creano il db usantoun creatore generale che override i valori e fa n volte e porta faker a classe superiore
     - fai icona app e roba x caricarla previo invio mail a loro
 
@@ -15,7 +15,6 @@ RELEASE:
 
 REQUISITI:
     - php 5.4 e poi guarda bootstrap
-
 
 POI (0.2.0):
     - add alla doc di safari autocomplete bug
