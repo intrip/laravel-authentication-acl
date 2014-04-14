@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Console\Command;
+use Jacopo\Authentication\Seeds\DbSeeder;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
@@ -20,14 +21,18 @@ class AuthenticatorInstallCommand extends Command {
 	 */
 	protected $description = 'Install authentication package.';
 
+  protected $call_wrapper;
+
 	/**
 	 * Create a new command instance.
 	 *
 	 * @return void
 	 */
-	public function __construct()
+	public function __construct($call_wrapper = null, $db_seeder = null)
 	{
-		parent::__construct();
+    $this->call_wrapper = $call_wrapper ? $call_wrapper : new CallWrapper($this);
+    $this->db_seeder = $db_seeder ? $db_seeder : new DbSeeder();
+    parent::__construct();
 	}
 
 	/**
@@ -37,8 +42,12 @@ class AuthenticatorInstallCommand extends Command {
 	 */
 	public function fire()
 	{
-		//@todo
-    // con TDD publish config e setup migration
-	}
+    $this->call_wrapper->call('config:publish', ['package' => 'jacopo/authentication' ] );
+
+    $this->db_seeder->run();
+
+    $this->info('## Authenticator Installed successfully ##');
+
+  }
 
 }
