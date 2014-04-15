@@ -16,7 +16,7 @@ use Jacopo\Authentication\Models\Group;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Cartalyst\Sentry\Users\UserExistsException as CartaUserExists;
 use Cartalyst\Sentry\Users\UserNotFoundException;
-use Event, App, DB;
+use Event, App;
 use Illuminate\Support\Facades\Config;
 
 class SentryUserRepository extends EloquentBaseRepository implements UserRepositoryInterface

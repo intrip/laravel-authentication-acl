@@ -6,8 +6,12 @@
  */
 use App;
 use DB;
-class UserRepositorySearchFilter 
+use Jacopo\Library\Traits\ConnectionTrait;
+
+class UserRepositorySearchFilter
 {
+  use ConnectionTrait;
+
     private $per_page;
     private $user_table_name = "users";
     private $profile_table_name;
@@ -44,7 +48,8 @@ class UserRepositorySearchFilter
      */
     private function createTableJoins()
     {
-        $q = DB::table($this->user_table_name)
+        $q = DB::connection($this->getConnectionName());
+        $q = $q->table($this->user_table_name)
             ->leftJoin($this->profile_table_name, $this->user_table_name . '.id', '=', $this->profile_table_name. '.user_id')
             ->leftJoin($this->user_groups_table_name, $this->user_table_name . '.id', '=', $this->user_groups_table_name . '.user_id')
             ->leftJoin($this->groups_table_name, $this->user_groups_table_name . '.group_id', '=',$this->groups_table_name . '.id');

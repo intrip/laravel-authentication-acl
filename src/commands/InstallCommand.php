@@ -42,7 +42,7 @@ class InstallCommand extends Command {
 	 */
 	public function fire()
 	{
-    $this->call_wrapper->call('migrate', ['package' => 'jacopo/authentication' ] );
+    $this->call_wrapper->call('migrate', ['--package' => 'jacopo/authentication', '--database' => "authentication" ] );
 
     $this->db_seeder->run();
 

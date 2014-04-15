@@ -24,7 +24,7 @@ class InstallCommandTest extends TestCase {
       $mock_call = m::mock('StdClass')
               ->shouldReceive('call')
               ->once()
-              ->with('migrate', ['package' => 'jacopo/authentication' ])
+              ->with('migrate', ['--package' => 'jacopo/authentication', '--database' => "authentication" ])
               ->andReturn(true)
               ->getMock();
 

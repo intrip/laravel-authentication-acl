@@ -1,14 +1,17 @@
 Authenticator:
 GRAFICA:
-    - documentazione per tutto e anche nei file di configurazione, con manuale html, spiega anche come aggiungere voci di menu ecc(discorso menu modificabile e che file config si devono toccare)
+    -fix no results found in user e group
+    - popolazione ricerca fix
+    - documentazione per tutto e anche nei file di configurazione, con manuale d'uso html, spiega anche come aggiungere voci di menu ecc(discorso menu modificabile e che file config si devono toccare)
 
 FUNZIONAMENTO:
-    - install script command(provalo)
-    - configura a prova il mess decector
-    - migliora i test che creano il db usantoun creatore generale che override i valori e fa n volte e porta faker a classe superiore
+    -per ogni db adda connection in modo che usi quella giusta(usa un metodo che ti fa la dedaulf connection se testing o no default o authentication)
+    - install script command(provalo: fix script migration nn va con config file custom, usa un solo service provider e non 2 nel file di app)
+    - migliora i test che creano il db usanto con un creatore generale che override i valori e fa n volte e porta faker a classe superiore
     - fai icona app e roba x caricarla previo invio mail a loro
 
 RELEASE:
+    - setta versione pacchetti tutti a 0.1.0
     - chiedi se puoi usare composer per il tuo pacchetto git oppure solo sorgente a loro
     - carica su envato cn nome websolutions cn logo ecc
     - fix per approvazione
