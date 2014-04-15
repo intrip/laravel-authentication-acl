@@ -21,48 +21,48 @@
                     <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@editUser')}}" class="btn btn-info"><i class="fa fa-plus"></i> Add New</a>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            @if(! $users->isEmpty() )
-            <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Email</th>
-                            <th class="hidden-xs">First name</th>
-                            <th class="hidden-xs">Last name</th>
-                            <th>Active</th>
-                            <th class="hidden-xs">Last login</th>
-                            <th>Operations</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($users as $user)
-                        <tr>
-                            <td>{{$user->email}}</td>
-                            <td class="hidden-xs">{{$user->first_name}}</td>
-                            <td class="hidden-xs">{{$user->last_name}}</td>
-                            <td>{{$user->activated ? '<i class="fa fa-circle green"></i>' : '<i class="fa fa-circle-o red"></i>'}}</td>
-                            <td class="hidden-xs">{{$user->last_login ? $user->last_login : 'not logged yet.'}}</td>
-                            <td>
-                                @if(! $user->protected)
-                                    <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@editUser', ['id' => $user->id])}}"><i class="fa fa-pencil-square-o fa-2x"></i></a>
-                                    <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@deleteUser',['id' => $user->id, '_token' => csrf_token()])}}" class="margin-left-5 delete"><i class="fa fa-trash-o fa-2x"></i></a>
-                                @else
-                                    <i class="fa fa-times fa-2x light-blue"></i>
-                                    <i class="fa fa-times fa-2x margin-left-12 light-blue"></i>
-                                @endif
-                            </td>
-                        </tr>
-                    </tbody>
-                    @endforeach
-            </table>
-            @else
-                <span class="text-warning"><h5>No results found.</h5></span>
-            @endif
-        </div>
-        <div class="paginator">
-            {{$users->appends(Input::except(['page']) )->links()}}
-        </div>
+      <div class="row">
+          <div class="col-md-12">
+              @if(! $users->isEmpty() )
+              <table class="table table-hover">
+                      <thead>
+                          <tr>
+                              <th>Email</th>
+                              <th class="hidden-xs">First name</th>
+                              <th class="hidden-xs">Last name</th>
+                              <th>Active</th>
+                              <th class="hidden-xs">Last login</th>
+                              <th>Operations</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          @foreach($users as $user)
+                          <tr>
+                              <td>{{$user->email}}</td>
+                              <td class="hidden-xs">{{$user->first_name}}</td>
+                              <td class="hidden-xs">{{$user->last_name}}</td>
+                              <td>{{$user->activated ? '<i class="fa fa-circle green"></i>' : '<i class="fa fa-circle-o red"></i>'}}</td>
+                              <td class="hidden-xs">{{$user->last_login ? $user->last_login : 'not logged yet.'}}</td>
+                              <td>
+                                  @if(! $user->protected)
+                                      <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@editUser', ['id' => $user->id])}}"><i class="fa fa-pencil-square-o fa-2x"></i></a>
+                                      <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@deleteUser',['id' => $user->id, '_token' => csrf_token()])}}" class="margin-left-5 delete"><i class="fa fa-trash-o fa-2x"></i></a>
+                                  @else
+                                      <i class="fa fa-times fa-2x light-blue"></i>
+                                      <i class="fa fa-times fa-2x margin-left-12 light-blue"></i>
+                                  @endif
+                              </td>
+                          </tr>
+                      </tbody>
+                      @endforeach
+              </table>
+              <div class="paginator">
+                  {{$users->appends(Input::except(['page']) )->links()}}
+              </div>
+              @else
+                  <span class="text-warning"><h5>No results found.</h5></span>
+              @endif
+          </div>
+      </div>
     </div>
 </div>

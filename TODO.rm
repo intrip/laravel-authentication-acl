@@ -1,7 +1,6 @@
 Authenticator:
 GRAFICA:
-    -fix no results found in user e group
-    - popolazione ricerca fix
+    - fix menu quando vai in mobile ha i padding non li voglio e check di nuovo di tutta la gui
     - documentazione per tutto e anche nei file di configurazione, con manuale d'uso html, spiega anche come aggiungere voci di menu ecc(discorso menu modificabile e che file config si devono toccare)
 
 FUNZIONAMENTO:
@@ -13,6 +12,7 @@ FUNZIONAMENTO:
 RELEASE:
     - setta versione pacchetti tutti a 0.1.0
     - chiedi se puoi usare composer per il tuo pacchetto git oppure solo sorgente a loro
+    - fatti un giro di tutto
     - carica su envato cn nome websolutions cn logo ecc
     - fix per approvazione
 
