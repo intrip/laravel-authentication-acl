@@ -1,7 +1,8 @@
 <?php namespace Jacopo\Authentication;
 
 use App;
-use AuthenticatorInstallCommand;
+use InstallCommand;
+use PrepareCommand;
 use Config;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\AliasLoader;
@@ -62,7 +63,7 @@ class AuthenticationServiceProvider extends ServiceProvider
 
     $this->setupConnection();
 
-    $this->registerInstallCommand();
+    $this->registerCommands();
   }
 
   protected function overwriteSentryConfig ()
@@ -168,10 +169,26 @@ class AuthenticationServiceProvider extends ServiceProvider
   {
     $this->app['authentication.install'] = $this->app->share(function ($app)
     {
-      return new AuthenticatorInstallCommand;
+      return new InstallCommand;
     });
 
     $this->commands('authentication.install');
+  }
+
+  private function registerPrepareCommand()
+  {
+    $this->app['authentication.prepare'] = $this->app->share(function ($app)
+    {
+      return new PrepareCommand;
+    });
+
+    $this->commands('authentication.prepare');
+  }
+
+  private function registerCommands()
+  {
+    $this->registerInstallCommand();
+    $this->registerPrepareCommand();
   }
 
 }
