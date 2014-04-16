@@ -3,8 +3,8 @@ GRAFICA:
     -doc: installazione, requisiti, configurazione e cosa si può settare: ad esempio menu, come integrarsi con il framework, manuale d'uso
 
 FUNZIONAMENTO:
-    - riprova setup completo copiando solo da vendor(adda assets publish)
-    - migliora i test che creano il db usando con un creatore generale che override i valori e fa n volte e porta faker a classe superiore
+    - riprova setup completo copiando solo da vendor
+    - migliora i test che creano il db usando con un creatore generale che override i valori e fa n volte e porta faker a classe superiore e non usare il mock di config
     - fai icona app e roba x caricarla previo invio mail a loro
 
 RELEASE:

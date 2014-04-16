@@ -26,6 +26,10 @@ class InstallCommandTest extends TestCase {
               ->once()
               ->with('migrate', ['--package' => 'jacopo/authentication', '--database' => "authentication" ])
               ->andReturn(true)
+              ->shouldReceive('call')
+              ->once()
+              ->with('asset:publish', ['--package' => 'jacopo/authentication'])
+              ->andReturn(true)
               ->getMock();
 
       $mock_seeder = m::mock('DbSeeder')
