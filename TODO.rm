@@ -1,18 +1,15 @@
 Authenticator:
 GRAFICA:
-    -doc: installazione, requisiti, configurazione e cosa si può settare: ad esempio menu, come integrarsi con il framework, manuale d'uso
+    -doc: installazione(con composer), requisiti, configurazione e cosa si può settare: ad esempio menu, come integrarsi con il framework, manuale d'uso
 
 FUNZIONAMENTO:
-    - riprova setup completo copiando solo da vendor
-    - migliora i test che creano il db usando con un creatore generale che override i valori e fa n volte e porta faker a classe superiore e non usare il mock di config
+    - prova un install con composer artiface
     - fai icona app e roba x caricarla previo invio mail a loro
 
 RELEASE:
-    - setta versione pacchetti tutti a 0.1.0
-    - chiedi se puoi usare composer per il tuo pacchetto git oppure solo sorgente a loro
+    - setta versione pacchetti master tutti a 0.1.0
     - fatti un giro di tutto
     - carica su envato cn nome websolutions cn logo ecc
-    - fix per approvazione
 
 REQUISITI:
     - php 5.4 e poi guarda bootstrap

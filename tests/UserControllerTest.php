@@ -23,6 +23,7 @@ class UserControllerTest extends DbTestCase {
     {
         $mock_register = m::mock('StdClass')->shouldReceive('register')->once()->getMock();
         App::instance('register_service', $mock_register);
+
         $this->action('POST','Jacopo\Authentication\Controllers\UserController@postSignup');
 
     $this->assertRedirectedToAction('Jacopo\Authentication\Controllers\UserController@signupSuccess');
@@ -41,10 +42,10 @@ class UserControllerTest extends DbTestCase {
             ->once()
             ->getMock();
         App::instance('register_service', $mock_register);
+
         $this->action('POST','Jacopo\Authentication\Controllers\UserController@postSignup');
 
         $this->assertRedirectedToAction('Jacopo\Authentication\Controllers\UserController@signup');
-
         $this->assertSessionHasErrors();
     }
 
@@ -53,7 +54,7 @@ class UserControllerTest extends DbTestCase {
      **/
     public function it_show_the_signup_view_on_signup()
     {
-        $response = $this->action('GET', 'Jacopo\Authentication\Controllers\UserController@signup');
+        $this->action('GET', 'Jacopo\Authentication\Controllers\UserController@signup');
 
         $this->assertResponseOk();
     }

@@ -10,7 +10,8 @@ use Mockery as m;
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
-class UserRepositorySearchFilterTest extends DbTestCase {
+class UserRepositorySearchFilterTest extends DbTestCase
+{
 
   protected $repository_search;
   protected $user_repository;
@@ -22,7 +23,8 @@ class UserRepositorySearchFilterTest extends DbTestCase {
    */
   protected $per_page = 5;
 
-  public function setUp () {
+  public function setUp()
+  {
     parent::setUp();
 
     $this->repository_search  = new UserRepositorySearchFilter;
@@ -30,15 +32,18 @@ class UserRepositorySearchFilterTest extends DbTestCase {
     $this->profile_repository = App::make('profile_repository');
   }
 
-  public function tearDown () {
+  public function tearDown()
+  {
     m::close();
   }
 
   /**
    * @test
    **/
-  public function it_gets_all_users_with_profile_paginated_and_read_from_config () {
-    foreach (range(1, 5) as $key) {
+  public function it_gets_all_users_with_profile_paginated_and_read_from_config()
+  {
+    foreach(range(1, 5) as $key)
+    {
       $user_input    = [
         "email" => "admin@admin.com{$key}", "password" => "password", "activated" => 1
       ];
@@ -61,7 +66,8 @@ class UserRepositorySearchFilterTest extends DbTestCase {
   /**
    * @test
    **/
-  public function it_gets_all_user_filtered_by_active_state () {
+  public function it_gets_all_user_filtered_by_active_state()
+  {
     $this->create4Active1InactiveUsers();
 
     $users = $this->repository_search->all(["activated" => 1]);
@@ -72,9 +78,26 @@ class UserRepositorySearchFilterTest extends DbTestCase {
   }
 
   /**
+   * @param $config
+   * @return SentryUserRepository
+   */
+  protected function create4Active1InactiveUsers()
+  {
+    foreach(range(1, 5) as $key)
+    {
+      $input = [
+        "email"     => "admin@admin.com{$key}", "password" => "password",
+        "activated" => ($key == 1) ? 1 : 0
+      ];
+      $this->user_repository->create($input);
+    }
+  }
+
+  /**
    * @test
    **/
-  public function it_gets_all_user_filtered_by_first_name_last_name_zip_email_code () {
+  public function it_gets_all_user_filtered_by_first_name_last_name_zip_email_code()
+  {
     $this->createUserWithProfileForSearch();
 
     $users = $this->repository_search->all(["first_name" => "name"]);
@@ -91,10 +114,29 @@ class UserRepositorySearchFilterTest extends DbTestCase {
   }
 
   /**
+   * @param $config
+   * @return SentryUserRepository
+   */
+  protected function createUserWithProfileForSearch()
+  {
+    $input = [
+      "email" => "admin@admin.com", "password" => "password", "activated" => 1
+    ];
+    $user  = $this->user_repository->create($input);
+    $input = [
+      "first_name" => "name", "last_name" => "surname", "zip" => "22222", "code" => "12345",
+      "user_id"    => $user->id
+    ];
+    $this->profile_repository->create($input);
+  }
+
+  /**
    * @test
    **/
-  public function it_ignore_empty_options_with_all () {
-    foreach (range(1, 5) as $key) {
+  public function it_ignore_empty_options_with_all()
+  {
+    foreach(range(1, 5) as $key)
+    {
       $input = [
         "email"     => "admin@admin.com{$key}", "password" => "password",
         "activated" => ($key == 1) ? 1 : 0
@@ -109,7 +151,8 @@ class UserRepositorySearchFilterTest extends DbTestCase {
   /**
    * @test
    **/
-  public function it_allow_ordering_asc_and_desc_by_first_name_last_name_email_last_login_activated_with_all () {
+  public function it_allow_ordering_asc_and_desc_by_first_name_last_name_email_last_login_activated_with_all()
+  {
     $this->createUserWithProfileWithSameValueOnFields(0);
     $this->createUserWithProfileWithSameValueOnFields(1);
 
@@ -129,7 +172,8 @@ class UserRepositorySearchFilterTest extends DbTestCase {
   /**
    * @test
    **/
-  public function it_ignore_ordering_by_empty_field_with_all () {
+  public function it_ignore_ordering_by_empty_field_with_all()
+  {
     $this->createUserWithProfileWithSameValueOnFields(0);
     $this->createUserWithProfileWithSameValueOnFields(1);
 
@@ -141,7 +185,8 @@ class UserRepositorySearchFilterTest extends DbTestCase {
   /**
    * @test
    **/
-  public function it_validate_ordering_filter () {
+  public function it_validate_ordering_filter()
+  {
     $invalid_filter = ["order_by" => "invalid "];
     $this->assertFalse($this->repository_search->isValidOrderingFilter($invalid_filter));
   }
@@ -149,7 +194,8 @@ class UserRepositorySearchFilterTest extends DbTestCase {
   /**
    * @test
    **/
-  public function it_ignore_wrong_column_name_when_ordering_all () {
+  public function it_ignore_wrong_column_name_when_ordering_all()
+  {
     $this->createUserWithProfileWithSameValueOnFields(0);
     $this->createUserWithProfileWithSameValueOnFields(1);
 
@@ -161,7 +207,8 @@ class UserRepositorySearchFilterTest extends DbTestCase {
   /**
    * @test
    **/
-  public function it_filter_groups_with_all_and_select_distinct_rows () {
+  public function it_filter_groups_with_all_and_select_distinct_rows()
+  {
     $user        = $this->createUser();
     $group1_name = "group 1";
     $group2_name = "group 2";
@@ -181,7 +228,8 @@ class UserRepositorySearchFilterTest extends DbTestCase {
   /**
    * @test
    **/
-  public function it_order_groups_with_all () {
+  public function it_order_groups_with_all()
+  {
     $this->create4Active1InactiveUsers();
     $group = $this->createGroup();
     $this->user_repository->addGroup(2, $group->id);
@@ -192,41 +240,13 @@ class UserRepositorySearchFilterTest extends DbTestCase {
     $this->assertEquals(2, $users->first()->id);
   }
 
-  /**
-   * @param $config
-   * @return SentryUserRepository
-   */
-  protected function createUserWithProfileForSearch () {
-    $input = [
-      "email" => "admin@admin.com", "password" => "password", "activated" => 1
-    ];
-    $user  = $this->user_repository->create($input);
-    $input = [
-      "first_name" => "name", "last_name" => "surname", "zip" => "22222", "code" => "12345",
-      "user_id"    => $user->id
-    ];
-    $this->profile_repository->create($input);
-  }
-
-  /**
-   * @param $config
-   * @return SentryUserRepository
-   */
-  protected function create4Active1InactiveUsers () {
-    foreach (range(1, 5) as $key) {
-      $input = [
-        "email"     => "admin@admin.com{$key}", "password" => "password",
-        "activated" => ($key == 1) ? 1 : 0
-      ];
-      $this->user_repository->create($input);
-    }
-  }
 
   /**
    * @param $config
    * @return array
    */
-  protected function createUser () {
+  protected function createUser()
+  {
     $input_user = [
       "email" => "admin@admin.com", "password" => "password", "activated" => 1
     ];
@@ -238,7 +258,8 @@ class UserRepositorySearchFilterTest extends DbTestCase {
   /**
    * @param $repo
    */
-  protected function createUserWithProfileWithSameValueOnFields ($value) {
+  protected function createUserWithProfileWithSameValueOnFields($value)
+  {
     $input_user = [
       "email" => "{$value}@email.com", "password" => "{$value}", "activated" => $value,
     ];
@@ -255,7 +276,8 @@ class UserRepositorySearchFilterTest extends DbTestCase {
     $this->profile_repository->create($input_profile);
   }
 
-  protected function createGroup ($name = "group name") {
+  protected function createGroup($name = "group name")
+  {
     $group_repository = App::make('group_repository');
     $input_group      = [
       "name" => $name,

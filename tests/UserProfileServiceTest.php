@@ -62,6 +62,7 @@ class UserProfileServiceTest extends TestCase {
         $mock_user_repo = m::mock('StdClass')->shouldReceive('update')->once()->andReturn(true)->getMock();
         App::instance('user_repository',$mock_user_repo);
         $service = new UserProfileServiceNoPermStub(new VoidValidator(), $mock_form_profile_success);
+
         $service->processForm(["new_password" => 'pass', "user_id" => '']);
     }
 
