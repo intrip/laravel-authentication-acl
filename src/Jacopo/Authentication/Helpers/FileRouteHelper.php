@@ -13,7 +13,7 @@ class FileRouteHelper implements AuthenticationRoutesInterface
     /**
      * @var string
      */
-    protected $config_path = "authentication::menu";
+    protected $config_path = "authentication::menu.list";
     /**
      * @var string
      */

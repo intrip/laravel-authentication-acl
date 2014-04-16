@@ -1,12 +1,10 @@
 Authenticator:
 GRAFICA:
-    - fix menu quando vai in mobile ha i padding non li voglio e check di nuovo di tutta la gui
-    - documentazione per tutto e anche nei file di configurazione, con manuale d'uso html, spiega anche come aggiungere voci di menu ecc(discorso menu modificabile e che file config si devono toccare)
+    -doc: installazione, requisiti, configurazione e cosa si può settare: ad esempio menu, come integrarsi con il framework, manuale d'uso
 
 FUNZIONAMENTO:
-    -per ogni db adda connection in modo che usi quella giusta(usa un metodo che ti fa la dedaulf connection se testing o no default o authentication)
-    - install script command(provalo: fix script migration nn va con config file custom, usa un solo service provider e non 2 nel file di app)
-    - migliora i test che creano il db usanto con un creatore generale che override i valori e fa n volte e porta faker a classe superiore
+    - riprova setup completo copiando solo da vendor(adda assets publish)
+    - migliora i test che creano il db usando con un creatore generale che override i valori e fa n volte e porta faker a classe superiore
     - fai icona app e roba x caricarla previo invio mail a loro
 
 RELEASE:

@@ -9,7 +9,7 @@ use Config;
 
 class SentryMenuFactory
 {
-    protected static $config_file = "authentication::menu";
+    protected static $config_file = "authentication::menu.list";
 
     public static function create($config_file = null)
     {

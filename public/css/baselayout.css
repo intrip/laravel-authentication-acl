@@ -36,7 +36,9 @@ a:hover {
     border-bottom: 1px solid #eee;
 }
 
-
+.sidebar{
+  padding: 0;
+}
 /*
  * Sidebar
  */
