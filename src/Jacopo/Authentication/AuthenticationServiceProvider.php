@@ -122,6 +122,7 @@ class AuthenticationServiceProvider extends ServiceProvider
 
   protected function loadOtherProviders ()
   {
+    $this->app->register('Jacopo\Library\LibraryServiceProvider');
     $this->app->register('Cartalyst\Sentry\SentryServiceProvider');
     $this->app->register('Way\Form\FormServiceProvider');
   }
