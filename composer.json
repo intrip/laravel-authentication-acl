@@ -1,6 +1,7 @@
 {
     "name": "jacopo/authentication",
     "description": "",
+    "version" : "0.1.0",
     "license" : "proprietary",
     "authors": [
         {
@@ -24,7 +25,7 @@
         "illuminate/support": "4.1.*",
         "cartalyst/sentry": "2.1.*",
         "way/form": "dev-master",
-        "jacopo/library": "dev-master",
+        "jacopo/library": "0.1.0",
         "way/laravel-test-helpers": "dev-master"
     },
     "require-dev": {

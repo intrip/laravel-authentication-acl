@@ -3,7 +3,7 @@ GRAFICA:
     -doc: installazione(con composer), requisiti, configurazione e cosa si può settare: ad esempio menu, come integrarsi con il framework, manuale d'uso
 
 FUNZIONAMENTO:
-    - prova un install con composer artiface
+    - prova un install con composer artifact(per artifact pulisci git e todo e add version, forse nn va pkè mac zip crea una cartella in automatico)
     - fai icona app e roba x caricarla previo invio mail a loro
 
 RELEASE:
