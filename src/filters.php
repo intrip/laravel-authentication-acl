@@ -10,7 +10,7 @@
 
 Route::filter('logged', function()
 {
-    if (! Sentry::check()) return Redirect::to('/user/login');
+    if (! Sentry::check()) return Redirect::to('/admin/login');
 });
 
 /*
