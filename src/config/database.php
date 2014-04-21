@@ -1,5 +1,15 @@
 <?php
 return array(
+    /*
+    |--------------------------------------------------------------------------
+    | Connection name
+    |--------------------------------------------------------------------------
+    |
+    | Set the connection name to use, if you want to use your application default
+    | connection leave the flag as 'default'. Otherwise write the connection
+    | name: for example 'mysql'.
+    |
+    */
     'default' => 'default',
 
     'connections' => array(

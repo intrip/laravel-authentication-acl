@@ -1,28 +1,23 @@
 Authenticator:
-GRAFICA:
-    -doc: usa quel boilerplate e aggiusta i colori + installazione(con composer e artifact: pulisci git e todo e prepara i pacchetti), requisiti, configurazione e cosa si può settare: ad esempio menu, come integrarsi con il framework, manuale d'uso
-    - commenta bene i file di config e add how to run test in manual
-
-FUNZIONAMENTO:
-    - fai icona app e roba x caricarla previo invio mail a loro
-
 RELEASE:
-    - fatti un giro di tutto
-    - carica su envato cn nome websolutions cn logo ecc
+    - preparati i pacchetti e provali partendo dalla doc(no .git e TODO file)
+    - riprova tutte le features e test app caricata
+    - leggi su envato i requirements e carica
     - setta il tuo profilo
 
+POST-RELEASE:
+    - fai icone varie e pubblica features ecc?
+
 POI (0.2.0):
-    - add alla doc di safari autocomplete bug
+    - fix autocomplete bug on add user
     - reset button non pulisce la select search
     - testa anche i controllers completamente e check code coverage in modo da testare il possibile(assolutamente testa sentry user repo)
     - dashboard
     - add oauth
-    - metti iconcine ai field form nel pannello admin anche
-    - add permission come list a gruppi
     - quando fai reinviare la mail vedi di nascondere il msg di errore
     - profilo editabile nei campi come la "scheda tecnica"
     - template
-    - supporto multipli ordering
-    - multilingua
-    - widget vari utilizzabili
     - messaggi personalizzati in file di config e traduzione di tutto con translate laravel
+    - supporto multipli ordering con ricerca in contemporanea
+    - widget vari utilizzabili
+    - multilingua

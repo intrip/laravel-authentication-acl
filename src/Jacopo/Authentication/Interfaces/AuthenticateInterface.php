@@ -5,11 +5,11 @@ interface AuthenticateInterface
   /**
    * Force authentication on a user
    *
-   * @param $credentials
-   * @param $remember
+   * @param array $credentials: an array with the following structure: ["email" => "user_email", "password" => "user_password"]
+   * @param boolean $remember
    * @return mixed
    */
-  public function authenticate($credentials, $remember);
+  public function authenticate(array $credentials, $remember);
 
   /**
    * @param $user

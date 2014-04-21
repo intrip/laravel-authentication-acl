@@ -27,7 +27,7 @@ class SentryAuthenticator implements AuthenticateInterface{
      * {@inheritdoc}
      * @todo better test
      */
-    public function authenticate($credentials, $remember = false)
+    public function authenticate(array $credentials, $remember = false)
     {
         try
         {
