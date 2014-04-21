@@ -1,6 +1,6 @@
 Authenticator:
 RELEASE:
-    - preparati i pacchetti e provali partendo dalla doc(no .git e TODO file)
+    - add il discorso di bloccare un utente dal db editing
     - riprova tutte le features e test app caricata
     - leggi su envato i requirements e carica
     - setta il tuo profilo
