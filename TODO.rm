@@ -1,18 +1,15 @@
 Authenticator:
 GRAFICA:
-    -doc: installazione(con composer), requisiti, configurazione e cosa si può settare: ad esempio menu, come integrarsi con il framework, manuale d'uso
+    -doc: usa quel boilerplate e aggiusta i colori + installazione(con composer e artifact: pulisci git e todo e prepara i pacchetti), requisiti, configurazione e cosa si può settare: ad esempio menu, come integrarsi con il framework, manuale d'uso
+    - commenta bene i file di config e add how to run test in manual
 
 FUNZIONAMENTO:
-    - prova un install con composer artifact(per artifact pulisci git e todo e add version, forse nn va pkè mac zip crea una cartella in automatico)
     - fai icona app e roba x caricarla previo invio mail a loro
 
 RELEASE:
-    - setta versione pacchetti master tutti a 0.1.0
     - fatti un giro di tutto
     - carica su envato cn nome websolutions cn logo ecc
-
-REQUISITI:
-    - php 5.4 e poi guarda bootstrap
+    - setta il tuo profilo
 
 POI (0.2.0):
     - add alla doc di safari autocomplete bug
