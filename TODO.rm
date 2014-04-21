@@ -10,6 +10,7 @@ POST-RELEASE:
 
 POI (0.2.0):
     - fix autocomplete bug on add user
+    - non usare way form
     - reset button non pulisce la select search
     - testa anche i controllers completamente e check code coverage in modo da testare il possibile(assolutamente testa sentry user repo)
     - dashboard
