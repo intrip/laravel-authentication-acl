@@ -20,6 +20,6 @@ class Permission extends BaseModel
      */
     public function setPermissionAttribute($value)
     {
-        $this->attributes["permission"] = ($value[0] != "_") ? "_{$value}" : $value;
+        if(!empty($value) ) $this->attributes["permission"] = ($value[0] != "_") ? "_{$value}" : $value;
     }
 } 

@@ -45,7 +45,7 @@ class EloquentPermissionRepository extends EloquentBaseRepository
         foreach ($all_groups as $group)
         {
             $perm = $group->permissions;
-            if (array_key_exists($obj->permission, $perm)) throw new PermissionException;
+            if (! empty($perm) && array_key_exists($obj->permission, $perm)) throw new PermissionException;
         }
     }
 

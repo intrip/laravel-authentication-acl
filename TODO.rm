@@ -1,6 +1,5 @@
 Authenticator:
 RELEASE:
-    - add il discorso di bloccare un utente dal db editing
     - riprova tutte le features e test app caricata
     - leggi su envato i requirements e carica
     - setta il tuo profilo
