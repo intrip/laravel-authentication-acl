@@ -28,7 +28,7 @@ class UserSignupEmailValidatorTest extends DbTestCase {
         ];
         $user_repo->create($input);
         $validator = new UserSignupEmailValidator();
-        $this->assertFalse($validator->validateEmail("email", $fake_mail, $input));
+        $this->assertFalse($validator->validateEmailUnique("email", $fake_mail, $input));
 
         $user_repo = App::make('user_repository');
         $fake_mail = "email2@email.com";
@@ -38,7 +38,7 @@ class UserSignupEmailValidatorTest extends DbTestCase {
             "activated" => 0
         ];
         $validator = new UserSignupEmailValidator();
-        $this->assertTrue($validator->validateEmail("email", $fake_mail, $input));
+        $this->assertTrue($validator->validateEmailUnique("email", $fake_mail, $input));
     }
     
     /**
@@ -65,7 +65,7 @@ class UserSignupEmailValidatorTest extends DbTestCase {
         App::instance('jmailer', $mock_mail);
         Input::shouldReceive('all')->once()->andReturn($input);
 
-        $this->assertFalse($validator->validateEmail("email", $fake_mail, $input));
+        $this->assertFalse($validator->validateEmailUnique("email", $fake_mail, $input));
         $this->assertTrue(Session::has('message'));
     }
 

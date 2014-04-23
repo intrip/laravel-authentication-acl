@@ -55,7 +55,7 @@ class ReminderServiceTest extends TestCase {
 
         $reminder->send($to);
     }
-
+  
     private function mockMailerSendTo($return, $template, $to)
     {
         $mock_mail = m::mock('StdClass')->shouldReceive('sendTo')

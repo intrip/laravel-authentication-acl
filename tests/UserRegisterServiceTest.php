@@ -105,7 +105,7 @@ class UserRegisterServiceTest extends DbTestCase
 
     $mock_mailer = m::mock('StdClass')->shouldReceive('sendTo')
             ->once()
-            ->with($user->email,m::any(), m::any(),"authentication::admin.mail.registration-confirmed-client")
+            ->with($user->email,m::any(), m::any(),"authentication::admin.mail.registration-activated-client")
             ->andReturn(true)
             ->getMock();
     App::instance('jmailer', $mock_mailer);

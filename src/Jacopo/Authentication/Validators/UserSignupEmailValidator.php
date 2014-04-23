@@ -4,14 +4,15 @@
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\MessageBag;
-use Jacopo\Library\Validators\OverrideConnectionValidator;
 use Jacopo\Authentication\Exceptions\UserNotFoundException;
 use App, Session, Input, Config;
+use Jacopo\Library\Validators\OverrideConnectionValidator;
 
 class UserSignupEmailValidator extends OverrideConnectionValidator
 {
-    public function validateEmail($attribute, $value, $parameters)
+    public function validateEmailUnique($attribute, $value, $parameters)
     {
         $repository = App::make('user_repository');
         try

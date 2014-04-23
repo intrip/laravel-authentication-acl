@@ -1,6 +1,13 @@
 Authenticator:
 RELEASE:
-    - riprova tutte le features e test app caricata
+    - test ancora features di produzione(
+        - user signup e login
+        - pass recovery
+        - crud utente e ricerca
+        - crud grp e ricerca
+        - crud perm
+        - edit profilo da admin panel
+
     - leggi su envato i requirements e carica
     - setta il tuo profilo
 

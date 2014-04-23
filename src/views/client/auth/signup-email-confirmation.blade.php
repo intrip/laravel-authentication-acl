@@ -8,7 +8,7 @@ Registration request received
 
         <h1><i class="fa fa-download"></i> Request received</h1>
         <p class="lead">You account has been created. However, before you can use it you need to confirm your email address.<br/>
-            We send you a confirmation email, please check your inbox.</p>
+            We sent you a confirmation email, please check your inbox.</p>
     </div>
 </div>
 @stop

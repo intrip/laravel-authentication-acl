@@ -25,12 +25,6 @@ class ReminderService {
      */
     protected $mailer;
     /**
-     * Input validator
-     *
-     * @var
-     */
-    protected $validator;
-    /**
      * Email body
      *
      * @var string
@@ -59,11 +53,10 @@ class ReminderService {
 
     protected static $INVALID_USER_MAIL = 'There is no user associated with this email.';
 
-    public function __construct(ReminderValidator $validator = null)
+    public function __construct()
     {
         $this->auth = \App::make('authenticator');
         $this->mailer = \App::make('jmailer');
-        $this->reminderValidator = $validator ? $validator : new ReminderValidator();
         $this->errors = new MessageBag();
     }
 

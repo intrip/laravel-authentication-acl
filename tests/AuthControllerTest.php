@@ -1,4 +1,5 @@
 <?php  namespace Jacopo\Authentication\Tests; 
+use Illuminate\Support\Facades\Session;
 use Jacopo\Authentication\Exceptions\AuthenticationErrorException;
 use Mockery as m;
 use App;
@@ -149,7 +150,7 @@ class AuthControllerTest extends TestCase {
 
         $this->app->instance('Jacopo\Authentication\Services\ReminderService', $mock_reminder_service);
 
-        $this->action('POST','Jacopo\Authentication\Controllers\AuthController@postChangePassword');
+        $this->action('POST','Jacopo\Authentication\Controllers\AuthController@postChangePassword',["password" => "newpassword"]);
         $this->assertRedirectedTo('/user/change-password-success');
     }
     
@@ -166,11 +167,23 @@ class AuthControllerTest extends TestCase {
             ->getMock();
         $this->app->instance('Jacopo\Authentication\Services\ReminderService', $mock_reminder_service);
 
-        $this->action('POST','Jacopo\Authentication\Controllers\AuthController@postChangePassword');
+        $this->action('POST','Jacopo\Authentication\Controllers\AuthController@postChangePassword', ["password" => "newpassword"]);
 
         $this->assertRedirectedToAction('Jacopo\Authentication\Controllers\AuthController@getChangePassword');
         $this->assertSessionHasErrors();
     }
 
+    /**
+     * @test
+     **/
+    public function itValidatePasswordOnChangePassword()
+    {
+      $this->action('POST','Jacopo\Authentication\Controllers\AuthController@postChangePassword', ["password" => ""]);
+
+      $this->assertRedirectedToAction('Jacopo\Authentication\Controllers\AuthController@getChangePassword');
+      $this->assertSessionHasErrors();
+      $this->assertSessionHas("_old_input");
+    }
+  
 }
  

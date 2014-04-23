@@ -138,7 +138,7 @@ class UserRegisterService {
     // if i activate a deactivated user
     $mailer->sendTo($user->email, ["email" => $user->email],
                     "Your user is activated on: " . Config::get('authentication::app_name'),
-                    "authentication::admin.mail.registration-confirmed-client");
+                    "authentication::admin.mail.registration-activated-client");
   }
 
   /**

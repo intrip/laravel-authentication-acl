@@ -1,18 +1,22 @@
 <?php namespace Jacopo\Authentication\Controllers;
 
 use Controller, View, Sentry, Input, Redirect, App;
+use Jacopo\Authentication\Validators\ReminderValidator;
 use Jacopo\Library\Exceptions\JacopoExceptionsInterface;
 use Jacopo\Authentication\Services\ReminderService;
+use Jacopo\Library\Exceptions\ValidationException;
 
 class AuthController extends Controller {
 
     protected $authenticator;
     protected $reminder;
+    protected $reminder_validator;
 
-    public function __construct(ReminderService $reminder)
+    public function __construct(ReminderService $reminder, ReminderValidator $reminder_validator)
     {
         $this->authenticator = App::make('authenticator');
         $this->reminder = $reminder;
+        $this->reminder_validator = $reminder_validator;
     }
 
     public function getClientLogin()
@@ -119,6 +123,11 @@ class AuthController extends Controller {
         $email = Input::get('email');
         $token = Input::get('token');
         $password = Input::get('password');
+
+        if (! $this->reminder_validator->validate(Input::all()) )
+        {
+          return Redirect::action("Jacopo\\Authentication\\Controllers\\AuthController@getChangePassword")->withErrors($this->reminder_validator->getErrors())->withInput();
+        }
 
         try
         {
