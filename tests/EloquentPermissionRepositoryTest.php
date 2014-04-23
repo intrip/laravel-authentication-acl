@@ -31,7 +31,7 @@ class EloquentPermissionRepositoryTest extends TestCase {
     {
         $this->mockGroupRepositoryWithPerm1();
         $perm_repo = new PermissionRepository();
-        $permission_obj = new Permission(["description" => "desc", "permission" => ""]);
+        $permission_obj = new Permission(["description" => "desc", "permission" => []]);
         $perm_repo->checkIsNotAssociatedToAnyGroup($permission_obj);
     }
 
@@ -42,7 +42,7 @@ class EloquentPermissionRepositoryTest extends TestCase {
     {
         $this->mockUserRepositoryWithPerm1();
         $perm_repo = new PermissionRepository();
-        $permission_obj = new Permission(["description" => "desc", "permission" => ""]);
+        $permission_obj = new Permission(["description" => "desc", "permission" => []]);
         $perm_repo->checkIsNotAssociatedToAnyUser($permission_obj);
     }
 
