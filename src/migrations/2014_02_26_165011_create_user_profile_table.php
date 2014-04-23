@@ -17,6 +17,7 @@ class CreateUserProfileTable extends Migration {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->string('code',25)->nullable();
+            $table->string('vat',20)->nullable();
             $table->string('first_name',50)->nullable();
             $table->string('last_name',50)->nullable();
             $table->string('phone',20)->nullable();

@@ -31,6 +31,8 @@ Admin area: Edit user profile
                     </div>
                 </div>
                 {{Form::model($user_profile,['route'=>'users.profile.edit', 'method' => 'post'])}}
+                    {{FormField::code(["label" => "User code:"])}}
+                    <span class="text-danger">{{$errors->first('code')}}</span>
                     {{FormField::first_name(["label" => "First name:"])}}
                     <span class="text-danger">{{$errors->first('first_name')}}</span>
                     {{FormField::last_name(["label" => "Last name:"])}}

@@ -11,7 +11,6 @@ class UserProfileValidator extends OverrideConnectionValidator
         "code" => "max:25",
         "phone" => "max:20",
         "vat" => "max:20",
-        "vat" => "max:20",
         "state" => "max:20",
         "city" => "max:50",
         "country" => "max:50",
