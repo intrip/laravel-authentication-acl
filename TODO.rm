@@ -1,12 +1,5 @@
 Authenticator:
 RELEASE:
-    - test ancora features di produzione(
-        - user signup e login (OK)
-        - pass recovery (OK)
-        - crud utente e ricerca (OK)
-        - crud grp e ricerca (OK)
-        - crud perm
-        - edit profilo da admin panel
     - ritagga tutto a 0.1.0 anche la doc
 
     - leggi su envato i requirements e carica

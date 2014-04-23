@@ -19,8 +19,8 @@ class EloquentPermissionRepository extends EloquentBaseRepository
         $this->group_repo = App::make('group_repository');
         $this->user_repo = App::make('user_repository');
 
-        Event::listen('repository.deleting', '\Jacopo\Authentication\Repository\EloquentPermissionRepository@checkIsNotAssociatedToAnyUser');
-        Event::listen('repository.deleting', '\Jacopo\Authentication\Repository\EloquentPermissionRepository@checkIsNotAssociatedToAnyGroup');
+        Event::listen(['repository.deleting','repository.updating'], '\Jacopo\Authentication\Repository\EloquentPermissionRepository@checkIsNotAssociatedToAnyUser');
+        Event::listen(['repository.deleting','repository.updating'], '\Jacopo\Authentication\Repository\EloquentPermissionRepository@checkIsNotAssociatedToAnyGroup');
 
         return parent::__construct(new Permission);
     }
