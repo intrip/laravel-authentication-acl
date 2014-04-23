@@ -19,8 +19,8 @@ class EloquentPermissionRepository extends EloquentBaseRepository
         $this->group_repo = App::make('group_repository');
         $this->user_repo = App::make('user_repository');
 
-        Event::listen('repository.deleting', '\Jacopo\Authentication\Repository\EloquentPermissionRepository@checkIsNotAssociatedToAnyGroup');
         Event::listen('repository.deleting', '\Jacopo\Authentication\Repository\EloquentPermissionRepository@checkIsNotAssociatedToAnyUser');
+        Event::listen('repository.deleting', '\Jacopo\Authentication\Repository\EloquentPermissionRepository@checkIsNotAssociatedToAnyGroup');
 
         return parent::__construct(new Permission);
     }
@@ -37,15 +37,15 @@ class EloquentPermissionRepository extends EloquentBaseRepository
 
     /**
      * @param $obj
-     * @param $all_groups
+     * @param $collection
      * @throws \Jacopo\Authentication\Exceptions\PermissionException
      */
-    private function validateIfPermissionIsInCollection($obj, $all_groups)
+    private function validateIfPermissionIsInCollection($obj, $collection)
     {
-        foreach ($all_groups as $group)
+        foreach ($collection as $item)
         {
-            $perm = $group->permissions;
-            if (! empty($perm) && is_array($perm) && array_key_exists($obj->permission, $perm)) throw new PermissionException;
+            $perm = $item->permissions;
+            if (! empty($perm) && array_key_exists($obj->permission, $perm)) throw new PermissionException;
         }
     }
 
@@ -55,7 +55,7 @@ class EloquentPermissionRepository extends EloquentBaseRepository
      */
     public function checkIsNotAssociatedToAnyUser($permission_obj)
     {
-        $all_users = $this->user_repo->all();
+        $all_users = $this->user_repo->allModel();
         $this->validateIfPermissionIsInCollection($permission_obj, $all_users);
     }
 }

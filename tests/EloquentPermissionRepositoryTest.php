@@ -54,7 +54,7 @@ class EloquentPermissionRepositoryTest extends TestCase {
     {
         $this->mockUserRepositoryWithPerm1();
         $perm_repo = new PermissionRepository();
-        $permission_obj = new Permission(["description" => "desc", "permission" => "_perm"]);
+        $permission_obj = new Permission(["description" => "desc", "permission" => "_perm" ]);
         $perm_repo->checkIsNotAssociatedToAnyUser($permission_obj);
     }
 

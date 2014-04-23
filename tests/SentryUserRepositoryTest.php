@@ -120,6 +120,19 @@ class SentryUserRepositoryTest extends DbTestCase {
     }
 
     /**
+     * @test
+     **/
+    public function canCallAllOnModel()
+    {
+        $mock_model_all = m::mock('StdClass')
+                ->shouldReceive('all')
+                ->once()
+                ->getMock();
+        $this->user_repository->setModel($mock_model_all);
+        $this->user_repository->allModel();
+    }
+
+    /**
      * @param $config
      * @return array
      */
