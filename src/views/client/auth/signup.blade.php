@@ -7,9 +7,11 @@
     <meta name="keywords" content="">
     <meta name="author" content="">
 
-{{ HTML::style('packages/jacopo/authentication/css/bootstrap.min.css') }}
-{{ HTML::style('packages/jacopo/authentication/css/style.css') }}
-{{ HTML::style('//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css') }}
+    {{ HTML::style('packages/jacopo/authentication/css/bootstrap.min.css') }}
+    {{ HTML::style('packages/jacopo/authentication/css/style.css') }}
+    {{ HTML::style('packages/jacopo/authentication/password_strength/strength.css') }}
+    {{ HTML::style('//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css') }}
+    {{ HTML::style('packages/jacopo/authentication/css/fonts.css') }}
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -24,7 +26,7 @@
         <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Please sign up for {{Config::get('authentication::app_name')}}</h3>
+                    <h3 class="panel-title bariol-thin">Please sign up for {{Config::get('authentication::app_name')}}</h3>
                 </div>
                 <?php $message = Session::get('message'); ?>
                 @if( isset($message) )
@@ -66,7 +68,7 @@
                                 <div class="form-group">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                                        {{Form::password('password', ['id' => 'password', 'class' => 'form-control', 'placeholder' => 'Password', 'required', 'autocomplete' => 'off'])}}
+                                        {{Form::password('password', ['id' => 'password1', 'class' => 'form-control', 'placeholder' => 'Password', 'required', 'autocomplete' => 'off'])}}
                                     </div>
                                     <span class="text-danger">{{$errors->first('password')}}</span>
                                 </div>
@@ -75,9 +77,14 @@
                                 <div class="form-group">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                                        {{Form::password('password_confirmation', ['id' => 'password_confirmation', 'class' => 'form-control', 'placeholder' => 'Confirm password', 'required'])}}
+                                        {{Form::password('password_confirmation', ['id' => 'password_confirmation', 'class' => 'form-control', 'id' =>'password2', 'placeholder' => 'Confirm password', 'required'])}}
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                              <div class="form-group">
+                                <div id="pass-info"></div>
+                              </div>
                             </div>
                         </div>
                         <input type="submit" value="Register" class="btn btn-info btn-block">
@@ -92,5 +99,20 @@
         </div>
     </div>
 </div>
+  {{-- Js files --}}
+  {{ HTML::script('packages/jacopo/authentication/js/jquery-1.10.2.min.js') }}
+  {{ HTML::script('packages/jacopo/authentication/password_strength/strength.js') }}
+  <script>
+    $(document).ready(function() {
+      //------------------------------------
+      // password checking
+      //------------------------------------
+      var password1 		= $('#password1'); //id of first password field
+      var password2		= $('#password2'); //id of second password field
+      var passwordsInfo 	= $('#pass-info'); //id of indicator element
+
+      passwordStrengthCheck(password1,password2,passwordsInfo);
+    });
+  </script>
 </body>
 </html>

@@ -35,8 +35,8 @@ class PermissionSeeder
                     ];
     $permission_repository->create($permission2);
     $permission3 = [
-                    "description" => "grup editor",
-                    "permission" => "_grup-editor"
+                    "description" => "group editor",
+                    "permission" => "_group-editor"
                     ];
     $permission_repository->create($permission3);
     $permission4 = [

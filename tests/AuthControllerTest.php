@@ -42,7 +42,7 @@ class AuthControllerTest extends TestCase {
 
         $this->action('POST','Jacopo\Authentication\Controllers\AuthController@postAdminLogin', ["email" => $email, "password" => $password, "remember" => $remember]);
 
-        $this->assertRedirectedTo('/admin/users/list');
+        $this->assertRedirectedTo('/admin/users/dashboard');
     }
 
     /**

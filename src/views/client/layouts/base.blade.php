@@ -11,6 +11,7 @@
     {{ HTML::style('packages/jacopo/authentication/css/bootstrap.min.css') }}
     {{ HTML::style('packages/jacopo/authentication/css/style.css') }}
     {{ HTML::style('packages/jacopo/authentication/css/baselayout.css') }}
+    {{ HTML::style('packages/jacopo/authentication/css/fonts.css') }}
     {{ HTML::style('//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css') }}
 
     @yield('head_css')

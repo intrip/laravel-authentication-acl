@@ -57,8 +57,8 @@ class DbSeederTest extends DbTestCase
                                   "permission" => "_user-editor"
                                   ]);
     $permission3 = new Permission([
-                                  "description" => "grup editor",
-                                  "permission" => "_grup-editor"
+                                  "description" => "group editor",
+                                  "permission" => "_group-editor"
                                   ]);
     $permission4 = new Permission([
                                   "description" => "permission editor",

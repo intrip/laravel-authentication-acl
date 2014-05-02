@@ -20,7 +20,7 @@ Admin area: edit user
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-md-12">
-                        <h3 class="panel-title">{{isset($user->id) ? '<i class="fa fa-pencil"></i> Edit' : '<i class="fa fa-user"></i> Create'}} user</h3>
+                        <h3 class="panel-title bariol-thin">{{isset($user->id) ? '<i class="fa fa-pencil"></i> Edit' : '<i class="fa fa-user"></i> Create'}} user</h3>
                     </div>
                 </div>
             </div>

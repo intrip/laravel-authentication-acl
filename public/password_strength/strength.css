@@ -1,0 +1,39 @@
+#pass-info{
+  width: 100%;
+  height: 25px;
+  border: 1px solid #DDD;
+  border-radius: 4px;
+  color: #829CBD;
+  text-align: center;
+  font: 12px/25px Arial, Helvetica, sans-serif;
+}
+#pass-info.weakpass{
+  border: 1px solid #FF9191;
+  background: #FFC7C7;
+  color: #94546E;
+  text-shadow: 1px 1px 1px #FFF;
+}
+#pass-info.stillweakpass {
+  border: 1px solid #FBB;
+  background: #FDD;
+  color: #945870;
+  text-shadow: 1px 1px 1px #FFF;
+}
+#pass-info.goodpass {
+  border: 1px solid #C4EEC8;
+  background: #E4FFE4;
+  color: #51926E;
+  text-shadow: 1px 1px 1px #FFF;
+}
+#pass-info.strongpass {
+  border: 1px solid #6ED66E;
+  background: #79F079;
+  color: #348F34;
+  text-shadow: 1px 1px 1px #FFF;
+}
+#pass-info.vrystrongpass {
+  border: 1px solid #379137;
+  background: #48B448;
+  color: #CDFFCD;
+  text-shadow: 1px 1px 1px #296429;
+}

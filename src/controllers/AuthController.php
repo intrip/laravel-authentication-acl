@@ -46,7 +46,7 @@ class AuthController extends Controller {
             return Redirect::action('Jacopo\Authentication\Controllers\AuthController@getAdminLogin')->withInput()->withErrors($errors);
         }
 
-        return Redirect::to('/admin/users/list');
+        return Redirect::to('/admin/users/dashboard');
     }
 
     public function postClientLogin()

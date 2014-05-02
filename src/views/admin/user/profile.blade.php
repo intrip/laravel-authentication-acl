@@ -20,7 +20,7 @@ Admin area: Edit user profile
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-md-12">
-                        <h3 class="panel-title"><i class="fa fa-user"></i> User profile</h3>
+                        <h3 class="panel-title bariol-thin"><i class="fa fa-user"></i> User profile</h3>
                     </div>
                 </div>
             </div>

@@ -29,9 +29,7 @@ Route::get('/user/signup-success', 'Jacopo\\Authentication\\Controllers\\UserCon
 
 Route::group( ['before' => ['logged', 'can_see']], function()
 {
-    Route::get('/admin/home', ['as' => 'home', function(){
-        return View::make('authentication::home.home');
-    }]);
+    Route::get('/admin/users/dashboard', ['as' => 'users.dashboard', 'uses' => 'Jacopo\Authentication\Controllers\UserController@dashboard']);
     /**
      * user
      */

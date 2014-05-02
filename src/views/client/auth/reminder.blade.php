@@ -20,7 +20,7 @@
                     <div class="col-xs-12 col-sm-12 col-md-12">
                         <div class="form-group">
                             {{Form::label('email','Email:')}}
-                            <div class="input-group">
+                            <div class="input-group" id="password-field">
                                 <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
                                 {{Form::email('email', '', ['id' => 'email', 'class' => 'form-control', 'placeholder' => 'Your account email', 'required', 'autocomplete' => 'off'])}}
                             </div>

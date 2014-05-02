@@ -55,7 +55,7 @@ class EloquentPermissionRepository extends EloquentBaseRepository
      */
     public function checkIsNotAssociatedToAnyUser($permission_obj)
     {
-        $all_users = $this->user_repo->allModel();
+        $all_users = $this->user_repo->all();
         $this->validateIfPermissionIsInCollection($permission_obj, $all_users);
     }
 }

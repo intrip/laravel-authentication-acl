@@ -1,6 +1,6 @@
 <div class="panel panel-info">
     <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-user"></i> {{Input::all() ? 'Search results:' : 'Users'}}</h3>
+        <h3 class="panel-title bariol-thin"><i class="fa fa-user"></i> {{Input::all() ? 'Search results:' : 'Users'}}</h3>
     </div>
     <div class="panel-body">
         <div class="row">

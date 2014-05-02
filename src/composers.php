@@ -28,10 +28,10 @@ View::composer('authentication::admin.layouts.*', function ($view){
  */
 View::composer(['authentication::admin.user.*'], function ($view){
     $view->with('sidebar_items', [
-//                                     "Dashboard" => [
-//                                         "url" => '#',
-//                                         "icon" => '<i class="fa fa-tachometer"></i>'
-//                                     ],
+                                     "Dashboard" => [
+                                         "url" => URL::route('users.dashboard'),
+                                         "icon" => '<i class="fa fa-tachometer"></i>'
+                                     ],
                                     "Users list" => [
                                         "url" => URL::route('users.list'),
                                         "icon" => '<i class="fa fa-user"></i>'

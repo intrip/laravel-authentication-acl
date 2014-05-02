@@ -1,0 +1,19 @@
+@font-face
+{
+	font-family: bariolThin;
+	src: url('/fonts/Bariol_Thin.otf');
+}
+@font-face
+{
+	font-family: bariolLight;
+	src: url('/fonts/Bariol_Light.otf');
+}
+@font-face
+{
+	font-family: bariolBold;
+	src: url('/fonts/Bariol_Bold.otf');
+}
+
+.bariol-thin { font-family: bariolThin }
+.bariol-bold { font-family: bariolBold }
+.bariol-light { font-family: bariolLight }

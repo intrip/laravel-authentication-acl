@@ -65,7 +65,12 @@ class UserController extends \Controller
 
     }
 
-    public function getList()
+  public function dashboard()
+  {
+    return View::make('authentication::admin.user.dashboard');
+  }
+
+  public function getList()
     {
         $users = $this->user_repository->all(Input::except(['page']));
 

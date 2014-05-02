@@ -1,24 +1,24 @@
 Authenticator:
-RELEASE:
-    - ritagga tutto a 0.1.0 anche la doc
-
-    - leggi su envato i requirements e carica
-    - setta il tuo profilo
-
-POST-RELEASE:
-    - fai icone varie e pubblica features ecc?
+Per RELEASE:
+- add ban user e filtro x bannati
+- dashboard: vedi come farla sennò toglila(metti totale utenti registrati, utenti attivi e utenti pending, utenti bannati)
+- Captcha integration from PlayThru.com or reCAPTCHA
+- foto profilo utente cn preview in panel admin
+- infinite custom profile fields (pubblicizzala bene!)
+- esempio usabile su aruba cloud
+- add alla doc le cose nuove e l'hashing algorithm(profile edit con photo e custom profile fields e come ottenere l'utente profilo corrente x view lato client)
 
 POI (0.2.0):
+    - multilingua
+    - view lato client base disponibile da esempio
     - fix autocomplete bug on add user
+    - add facebook e twitter login
+    - template
+    - widget vari utilizzabili
+    - supporto multipli ordering con ricerca in contemporanea
+    - messaggi personalizzati in file di config e traduzione di tutto con translate laravel
+    - usa validation exception class con message ad esso associato
     - non usare way form
     - reset button non pulisce la select search
     - testa anche i controllers completamente e check code coverage in modo da testare il possibile(assolutamente testa sentry user repo)
-    - dashboard
-    - add oauth
     - quando fai reinviare la mail vedi di nascondere il msg di errore
-    - profilo editabile nei campi come la "scheda tecnica"
-    - template
-    - messaggi personalizzati in file di config e traduzione di tutto con translate laravel
-    - supporto multipli ordering con ricerca in contemporanea
-    - widget vari utilizzabili
-    - multilingua

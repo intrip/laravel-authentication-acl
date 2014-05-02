@@ -1,7 +1,7 @@
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container-fluid margin-right-15">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">{{$app_name}}</a>
+            <a class="navbar-brand bariol-thin" href="#">{{$app_name}}</a>
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#nav-main-menu">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
