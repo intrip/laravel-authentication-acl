@@ -78,6 +78,20 @@ class UserRepositorySearchFilterTest extends DbTestCase
   }
 
   /**
+   * @test
+   **/
+  public function itGetsAllUsersFilteredByBlockedState()
+  {
+      $this->create4Unblocked1BannedUsers();
+
+      $users = $this->repository_search->all(["banned" => 1]);
+      $this->assertEquals(1, $users->count());
+
+      $users = $this->repository_search->all(["banned" => 0]);
+      $this->assertEquals(4, $users->count());
+  }
+    
+  /**
    * @param $config
    * @return SentryUserRepository
    */
@@ -92,6 +106,19 @@ class UserRepositorySearchFilterTest extends DbTestCase
       $this->user_repository->create($input);
     }
   }
+
+    protected function create4Unblocked1BannedUsers()
+    {
+        foreach(range(1, 5) as $key)
+        {
+            $input = [
+                "email"     => "admin@admin.com{$key}", "password" => "password",
+                "banned" => ($key == 1) ? 1 : 0,
+                "activated" => 1
+            ];
+            $this->user_repository->create($input);
+        }
+    }
 
   /**
    * @test

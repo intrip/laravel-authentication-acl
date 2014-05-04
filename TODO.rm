@@ -1,14 +1,15 @@
 Authenticator:
 Per RELEASE:
-- add ban user e filtro x bannati
-- dashboard: vedi come farla sennò toglila(metti totale utenti registrati, utenti attivi e utenti pending, utenti bannati)
-- Captcha integration from PlayThru.com or reCAPTCHA
+- fix bug popolazione password con campo hidden come copia
+- Captcha integration attivabile from PlayThru.com or reCAPTCHA
+- modifica il banning per farlo ad ore
 - foto profilo utente cn preview in panel admin
 - infinite custom profile fields (pubblicizzala bene!)
 - esempio usabile su aruba cloud
 - add alla doc le cose nuove e l'hashing algorithm(profile edit con photo e custom profile fields e come ottenere l'utente profilo corrente x view lato client)
 
 POI (0.2.0):
+    - acceptance test alcuni cn behat
     - multilingua
     - view lato client base disponibile da esempio
     - fix autocomplete bug on add user

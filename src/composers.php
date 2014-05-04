@@ -73,8 +73,7 @@ View::composer(['authentication::admin.permission.*'], function ($view){
                                  ]);
 });
 
-
-
+use Jacopo\Authentication\Classes\Statistics\UserStatistics;
 use Jacopo\Authentication\Helpers\FormHelper;
 /**
  * permission select
@@ -91,4 +90,14 @@ View::composer(['authentication::admin.user.edit','authentication::admin.group.e
     $fh = new FormHelper();
     $values_group = $fh->getSelectValuesGroups();
     $view->with('group_values', $values_group);
+});
+
+View::composer(['authentication::admin.user.dashboard'], function($view){
+    $user_statistics = new UserStatistics();
+    $registered = $user_statistics->getRegisteredUserNumber();
+    $active = $user_statistics->getActiveUserNumber();
+    $pending = $user_statistics->getPendingUserNumber();
+    $banned = $user_statistics->getBannedUserNumber();
+
+    $view->with(['registered' => $registered,"active" => $active,"pending" => $pending,"banned" => $banned]);
 });

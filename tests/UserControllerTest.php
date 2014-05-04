@@ -179,7 +179,7 @@ class UserControllerTest extends DbTestCase
   {
     $mock_authenticator = m::mock('StdClass');
     $mock_authenticator->shouldReceive('getLoggedUser')
-      ->andThrow(new User());
+      ->andReturn(new User());
     App::instance('authenticator', $mock_authenticator);
 
     $this->action('GET', 'Jacopo\Authentication\Controllers\UserController@dashboard');

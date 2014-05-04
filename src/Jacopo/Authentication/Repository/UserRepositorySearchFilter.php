@@ -72,6 +72,9 @@ class UserRepositorySearchFilter
                 case 'activated':
                     $q = $q->where($this->user_table_name . '.activated', '=', $value);
                     break;
+                case 'banned':
+                    $q = $q->where($this->user_table_name . '.banned', '=', $value);
+                    break;
                 case 'email':
                     $q = $q->where($this->user_table_name. '.email', 'LIKE', "%{$value}%");
                     break;

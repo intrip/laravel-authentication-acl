@@ -46,8 +46,10 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
   public function create(array $input)
   {
     $data = array(
-      "email"     => $input["email"], "password" => $input["password"],
+      "email"     => $input["email"],
+      "password" => $input["password"],
       "activated" => $input["activated"],
+      "banned" => isset($input["banned"]) ? $input["banned"] : 0
     );
 
     try

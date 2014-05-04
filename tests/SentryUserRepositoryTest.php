@@ -27,6 +27,25 @@ class SentryUserRepositoryTest extends DbTestCase {
     /**
      * @test
      **/
+    public function canCreateAnUser()
+    {
+        $user_data = [
+            "email" => "user@mail.com",
+            "password" => "testpassword",
+            "activated" => 1,
+            "banned" => 1
+        ];
+
+        $this->user_repository->create($user_data);
+
+        $saved_user = $this->user_repository->findByLogin($user_data["email"]);
+
+        $this->objectHasAllArrayAttributes($user_data, $saved_user, ["password"]);
+    }
+
+    /**
+     * @test
+     **/
     public function it_find_user_from_a_group()
     {
         $this->createUser([]);

@@ -19,6 +19,7 @@ class CreateUsersTable extends Migration {
             $table->string('password');
             $table->text('permissions')->nullable();
             $table->boolean('activated')->default(0);
+            $table->boolean('banned')->default(0);
             $table->string('activation_code')->nullable();
             $table->timestamp('activated_at')->nullable();
             $table->timestamp('last_login')->nullable();

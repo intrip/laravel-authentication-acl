@@ -7,8 +7,9 @@ This is a Laravel4 package for:
 - Can create groups and permissions and associate permissions to user or group
 - Any user can have multiple groups and permissions
 - Handles login throttling and password recovery
-- Captcha integration from PlayThru.com or reCAPTCHA
-- Password strength
+- Configurable captcha integration
+- Password strength check
+- User banning
 - Dashboard
 - Infinite custom profile fields!
 - Can create custom menu items with configurable permissions

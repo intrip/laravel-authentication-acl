@@ -43,6 +43,10 @@ Admin area: edit user
                         {{Form::label("activated","User active: ")}}
                         {{Form::select('activated', ["1" => "Yes", "0" => "No"], (isset($user->activated) && $user->activated) ? $user->activated : "0", ["class"=> "form-control"] )}}
                     </div>
+                    <div class="form-group">
+                        {{Form::label("banned","Banned: ")}}
+                        {{Form::select('banned', ["1" => "Yes", "0" => "No"], (isset($user->banned) && $user->banned) ? $user->banned : "0", ["class"=> "form-control"] )}}
+                    </div>
                     {{Form::hidden('id')}}
                     {{Form::hidden('form_name','user')}}
                     <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@deleteUser',['id' => $user->id, '_token' => csrf_token()])}}" class="btn btn-danger pull-right margin-left-5 delete">Delete user</a>

@@ -11,11 +11,15 @@
         {{FormField::code(['label' => 'User code:'])}}
         <div class="form-group">
             {{Form::label('activated', 'Active: ')}}
-            {{Form::select('activated', ['' => '', 1 => 'Yes', 0 => 'No'], Input::get('activated',''), ["class" => "form-control"])}}
+            {{Form::select('activated', ['' => 'Any', 1 => 'Yes', 0 => 'No'], Input::get('activated',''), ["class" => "form-control"])}}
+        </div>
+        <div class="form-group">
+            {{Form::label('banned', 'Banned: ')}}
+            {{Form::select('banned', ['' => 'Any', 1 => 'Yes', 0 => 'No'], Input::get('banned',''), ["class" => "form-control"])}}
         </div>
         <div class="form-group">
             {{Form::label('group_id', 'Group: ')}}
-            <?php $group_values[""] = ""; ?>
+            <?php $group_values[""] = "Any"; ?>
             {{Form::select('group_id', $group_values, Input::get('group_id',''), ["class" => "form-control"])}}
         </div>
         <div class="row form-group">

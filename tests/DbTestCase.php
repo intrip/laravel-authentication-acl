@@ -55,11 +55,11 @@ class DbTestCase extends TestCase
         $this->artisan->call('migrate', ["--database" => "testbench", '--path' => '../src/migrations']);
     }
 
-    protected function objectHasAllArrayAttributes(array $attributes, $object)
+    protected function objectHasAllArrayAttributes(array $attributes, $object, array $except = [])
     {
       foreach($attributes as $key => $value)
       {
-        $this->assertEquals($value, $object->$key);
+        if(! in_array($key, $except)) $this->assertEquals($value, $object->$key);
       }
 
     }
