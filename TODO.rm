@@ -1,8 +1,6 @@
 Authenticator:
 Per RELEASE:
-- fix bug popolazione password con campo hidden come copia
 - Captcha integration attivabile from PlayThru.com or reCAPTCHA
-- modifica il banning per farlo ad ore
 - foto profilo utente cn preview in panel admin
 - infinite custom profile fields (pubblicizzala bene!)
 - esempio usabile su aruba cloud
@@ -10,7 +8,9 @@ Per RELEASE:
 
 POI (0.2.0):
     - acceptance test alcuni cn behat
+    - modifica il banning per farlo ad ore
     - multilingua
+    - usa form exception con suo msg e catch globale
     - view lato client base disponibile da esempio
     - fix autocomplete bug on add user
     - add facebook e twitter login

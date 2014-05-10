@@ -34,10 +34,8 @@
             </div>
         </div>
         <div class="form-group">
-            {{Form::reset('Reset', ["class" => "btn btn-default
-            "])}}
-            {{Form::submit('Search', ["class" => "btn btn-info
-                "])}}
+            <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@getList')}}" class="btn btn-default">Reset</a>
+            {{Form::submit('Search', ["class" => "btn btn-info"])}}
         </div>
         {{Form::close()}}
     </div>

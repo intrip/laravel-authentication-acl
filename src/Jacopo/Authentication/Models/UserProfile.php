@@ -29,4 +29,9 @@ class UserProfile extends BaseModel
     {
         return $this->belongsTo('Jacopo\Authentication\Models\User', "user_id");
     }
+
+    public function profile_field()
+    {
+        return $this->hasMany('Jacopo\Authentication\Models\ProfileField');
+    }
 } 
