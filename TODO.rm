@@ -1,10 +1,12 @@
 Authenticator:
+- infinite custom profile fields (fix profile type id, pubblicizzala bene!)
+- continua cn field: fix test anche
 Per RELEASE:
 - Captcha integration attivabile from PlayThru.com or reCAPTCHA
 - foto profilo utente cn preview in panel admin
-- infinite custom profile fields (pubblicizzala bene!)
-- esempio usabile su aruba cloud
+- test coverage e check installation
 - add alla doc le cose nuove e l'hashing algorithm(profile edit con photo e custom profile fields e come ottenere l'utente profilo corrente x view lato client)
+- esempio usabile su aruba cloud
 
 POI (0.2.0):
     - acceptance test alcuni cn behat

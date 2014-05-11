@@ -95,7 +95,9 @@ class CustomProfileRepositoryTest extends DbTestCase {
         $this->assertNotEmpty($created_fields);
         $this->assertCount(2, $created_fields);
         $this->assertEquals($created_fields[0]->value, $value);
+        $this->assertEquals(1, $created_fields[0]->id);
         $this->assertNull($created_fields[1]->value, $value);
+        $this->assertEquals(2, $created_fields[1]->id);
     }
 
     /**

@@ -11,20 +11,27 @@ class customProfileFormHelperTest extends DbTestCase {
     /**
      * @test
      **/
-    public function canPopulateAllProfileFields()
+    public function itSaveAllFields()
     {
-        // add fields
-        // check that are stored internally as array of profile_field with or without a value
-
+        
+        
     }
     
     /**
      * @test
      **/
-    public function canShowAllCustomProfileFormFields()
+    public function itAddNewTypeField()
     {
-        //@todo create 2 fields type one with value
-        //check that the fields are created
+        
+        
+    }
+    
+    /**
+     * @test
+     **/
+    public function itDeleteTypeField()
+    {
+        
     }
     
 }

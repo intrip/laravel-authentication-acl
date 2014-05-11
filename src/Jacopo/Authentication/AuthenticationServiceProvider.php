@@ -2,6 +2,7 @@
 
 use App;
 use InstallCommand;
+use Jacopo\Authentication\Classes\CustomProfile\Repository\CustomProfileRepository;
 use PrepareCommand;
 use Config;
 use Illuminate\Database\Eloquent\Model;
@@ -79,45 +80,50 @@ class AuthenticationServiceProvider extends ServiceProvider
 
   protected function bindClasses ()
   {
-    $this->app->bind('authenticator', function ()
-    {
-      return new SentryAuthenticator;
-    });
+      $this->app->bind('authenticator', function ()
+      {
+          return new SentryAuthenticator;
+      });
 
-    $this->app->bind('Jacopo\Authentication\Interfaces\AuthenticateInterface', function ()
-    {
-      return new SentryAuthenticator;
-    });
+      $this->app->bind('Jacopo\Authentication\Interfaces\AuthenticateInterface', function ()
+      {
+          return new SentryAuthenticator;
+      });
 
-    $this->app->bind('authentication_helper', function ()
-    {
-      return new SentryAuthenticationHelper;
-    });
+      $this->app->bind('authentication_helper', function ()
+      {
+          return new SentryAuthenticationHelper;
+      });
 
-    $this->app->bind('user_repository', function ($app, $config = null)
-    {
-      return new SentryUserRepository($config);
-    });
+      $this->app->bind('user_repository', function ($app, $config = null)
+      {
+          return new SentryUserRepository($config);
+      });
 
-    $this->app->bind('group_repository', function ()
-    {
-      return new SentryGroupRepository;
-    });
+      $this->app->bind('group_repository', function ()
+      {
+          return new SentryGroupRepository;
+      });
 
-    $this->app->bind('permission_repository', function ()
-    {
-      return new EloquentPermissionRepository;
-    });
+      $this->app->bind('permission_repository', function ()
+      {
+          return new EloquentPermissionRepository;
+      });
 
-    $this->app->bind('profile_repository', function ()
-    {
-      return new EloquentUserProfileRepository;
-    });
+      $this->app->bind('profile_repository', function ()
+      {
+          return new EloquentUserProfileRepository;
+      });
 
-    $this->app->bind('register_service', function ()
-    {
-      return new UserRegisterService;
-    });
+      $this->app->bind('register_service', function ()
+      {
+          return new UserRegisterService;
+      });
+
+      $this->app->bind('custom_profile_repository', function ($app, $profile_id = null)
+      {
+          return new CustomProfileRepository($profile_id);
+      });
   }
 
   protected function loadOtherProviders ()

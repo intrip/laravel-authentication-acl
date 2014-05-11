@@ -191,8 +191,9 @@ class UserController extends \Controller
         {
             $user_profile = new UserProfile(["user_id" => $user_id]);
         }
+        $custom_profile_repo = App::make('custom_profile_repository', $user_profile->id);
 
-        return View::make('authentication::admin.user.profile')->with(['user_profile' => $user_profile]);
+        return View::make('authentication::admin.user.profile')->with(['user_profile' => $user_profile, "custom_profile" => $custom_profile_repo]);
     }
 
     public function postEditProfile()

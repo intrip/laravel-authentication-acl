@@ -63,6 +63,7 @@ class CustomProfileRepository
                 ->leftJoin('profile_field','profile_field_type.id','=','profile_field.profile_field_type_id')
                 ->where('profile_field.profile_id','=',$this->profile_id)
                 ->orWhere('profile_field.profile_id','=',null)
+                ->select(['profile_field_type.*','profile_field.value'])
                 ->get();
     }
 

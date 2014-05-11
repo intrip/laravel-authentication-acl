@@ -15,8 +15,8 @@ class CreateProfileField extends Migration {
         Schema::create('profile_field', function($table)
         {
             $table->increments('id');
-            $table->integer('profile_id');
-            $table->integer('profile_field_type_id');
+            $table->integer('profile_id')->unsigned();
+            $table->integer('profile_field_type_id')->unsigned();
             $table->string('value');
             // relations
             $table->foreign('profile_id')

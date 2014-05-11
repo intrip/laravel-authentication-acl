@@ -51,6 +51,15 @@ Admin area: Edit user profile
                     <span class="text-danger">{{$errors->first('zip')}}</span>
                     {{FormField::address(["label" => "Address: "])}}
                     <span class="text-danger">{{$errors->first('address')}}</span>
+
+                    {{-- custom profile fields --}}
+                    @foreach($custom_profile->getAllTypesWithValues() as $profile_data)
+                        <div class="form-group">
+                        {{Form::label($profile_data->description)}}
+                        {{Form::text($profile_data->id, $profile_data->value, ["class" => "form-control"])}}
+                        </div>
+                    @endforeach
+
                     {{Form::hidden('user_id', $user_profile->user_id)}}
                     {{Form::hidden('id', $user_profile->id)}}
                     {{Form::submit('Save',['class' =>'btn btn-info pull-right margin-bottom-30'])}}
