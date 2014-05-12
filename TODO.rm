@@ -1,9 +1,10 @@
 Authenticator:
-- infinite custom profile fields (fix profile type id, pubblicizzala bene!)
+- infinite custom profile fields (refactor profile repo in 2 classi pkè fa troppo, pubblicizzala bene!)
 - continua cn field: fix test anche
 Per RELEASE:
 - Captcha integration attivabile from PlayThru.com or reCAPTCHA
 - foto profilo utente cn preview in panel admin
+- metti modifica password in un'altro form per evitare problemi
 - test coverage e check installation
 - add alla doc le cose nuove e l'hashing algorithm(profile edit con photo e custom profile fields e come ottenere l'utente profilo corrente x view lato client)
 - esempio usabile su aruba cloud
@@ -12,7 +13,7 @@ POI (0.2.0):
     - acceptance test alcuni cn behat
     - modifica il banning per farlo ad ore
     - multilingua
-    - usa form exception con suo msg e catch globale
+    - usa form validation exception con suo msg e catch globale
     - view lato client base disponibile da esempio
     - fix autocomplete bug on add user
     - add facebook e twitter login

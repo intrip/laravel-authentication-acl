@@ -29,6 +29,11 @@ class CustomProfileRepository
         return ProfileFieldType::create(["description" => $description]);
     }
 
+    public function deleteType($id)
+    {
+        return ProfileFieldType::findOrFail($id)->delete();
+    }
+
     public function setField($profile_type_field_id, $field_value)
     {
         try

@@ -42,6 +42,8 @@ Route::group( ['before' => ['logged', 'can_see']], function()
     Route::post('/admin/users/editpermission', ["before" => "csrf", 'as' => 'users.edit.permission', 'uses' => 'Jacopo\Authentication\Controllers\UserController@editPermission']);
     Route::get('/admin/users/profile/edit', ['as' => 'users.profile.edit', 'uses' => 'Jacopo\Authentication\Controllers\UserController@editProfile']);
     Route::post('/admin/users/profile/edit', ['before' => 'csrf', 'as' => 'users.profile.edit', 'uses' => 'Jacopo\Authentication\Controllers\UserController@postEditProfile']);
+    Route::post('/admin/users/profile/addField', ['before' => 'csrf', 'as' => 'users.profile.addfield', 'uses' => 'Jacopo\Authentication\Controllers\UserController@addCustomFieldType']);
+    Route::post('/admin/users/profile/deleteField', ['before' => 'csrf', 'as' => 'users.profile.deletefield', 'uses' => 'Jacopo\Authentication\Controllers\UserController@deleteCustomFieldType']);
     /**
      * groups
      */

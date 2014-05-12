@@ -59,6 +59,35 @@ class CustomProfileRepositoryTest extends DbTestCase {
         $created_profile = ProfileField::first();
         $this->assertEquals($field_value, $created_profile->value);
     }
+    
+    /**
+     * @test
+     **/
+    public function canDeleteCustomFieldTypeAndValues()
+    {
+        //@todo refactor creation e add check for exception findOrFail
+        $description  = "description";
+        $profile_type = $this->custom_profile->addNewType($description);
+        $profile_type_field_id = $profile_type->id;
+        $profile_1 = 2;
+        ProfileField::create([
+                             "profile_id"            => $profile_1,
+                             "profile_field_type_id" => $profile_type_field_id,
+                             "value"                 => "value1"
+                             ]);
+
+        $profile_2 = 1;
+        ProfileField::create([
+                             "profile_id"            => $profile_2,
+                             "profile_field_type_id" => $profile_type_field_id,
+                             "value"                 => "value2"
+                             ]);
+
+        $this->custom_profile->deleteType($profile_type_field_id);
+
+        $fields_found = $this->custom_profile->getAllTypesWithValues();
+        $this->assertCount(0,$fields_found);
+    }
 
     /**
      * @test

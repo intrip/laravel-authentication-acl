@@ -16,41 +16,29 @@ use Jacopo\Authentication\Exceptions\UserNotFoundException;
 use Jacopo\Authentication\Validators\UserValidator;
 use Jacopo\Library\Exceptions\JacopoExceptionsInterface;
 use Jacopo\Authentication\Validators\UserProfileValidator;
-use View, Input, Redirect, App, Config;
+use View, Input, Redirect, App, Config, Controller;
 use Jacopo\Authentication\Interfaces\AuthenticateInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class UserController extends \Controller
+class UserController extends Controller
 {
     /**
      * @var \Jacopo\Authentication\Repository\SentryUserRepository
      */
     protected $user_repository;
-    /**
-     * @var \Jacopo\Authentication\Validators\UserValidator
-     */
     protected $user_validator;
     /**
      * @var \Jacopo\Authentication\Helpers\FormHelper
      */
     protected $form_helper;
-    /**
-     * Profile repository
-     * @var \Jacopo\Authentication\Repository\Interfaces\UserProfileRepositoryInterface
-     */
     protected $profile_repository;
-    /**
-     * @var UserProfileValidator
-     */
     protected $profile_validator;
     /**
      * @var use Jacopo\Authentication\Interfaces\AuthenticateInterface;
      */
     protected $auth;
-    /**
-     * Register Service
-     */
     protected $register_service;
+    protected $custom_profile_repository;
 
     public function __construct(UserValidator $v, FormHelper $fh, UserProfileValidator $vp, AuthenticateInterface $auth)
     {
@@ -62,7 +50,7 @@ class UserController extends \Controller
         $this->profile_repository = App::make('profile_repository');
         $this->auth = $auth;
         $this->register_service = App::make('register_service');
-
+        $this->custom_profile_repository = App::make('custom_profile_repository');
     }
 
   public function dashboard()
@@ -254,5 +242,23 @@ class UserController extends \Controller
             return View::make('authentication::client.auth.email-confirmation')->withErrors($this->register_service->getErrors());
         }
         return View::make('authentication::client.auth.email-confirmation');
+    }
+
+    public function addCustomFieldType()
+    {
+        $description = Input::get('description');
+
+        $this->custom_profile_repository->addNewType($description);
+
+        return Redirect::action('Jacopo\Authentication\Controllers\UserController@postEditProfile')->with('message', "Field {$description} added succesfully.");
+    }
+
+    public function deleteCustomFieldType()
+    {
+        $id = Input::get('id');
+
+        $this->custom_profile_repository->deleteType($id);
+
+        return Redirect::action('Jacopo\Authentication\Controllers\UserController@postEditProfile')->with('message', "Field removed succesfully.");
     }
 } 
