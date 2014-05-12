@@ -3,35 +3,19 @@
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\DB;
 use Jacopo\Authentication\Models\ProfileField;
-use Jacopo\Authentication\Models\ProfileFieldType;
 
 /**
- * Class CustomProfileRepository
+ * Class ProfileFieldRepository
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
-class CustomProfileRepository
+class ProfileFieldRepository
 {
     protected $profile_id;
 
     public function __construct($profile_id)
     {
         $this->profile_id = $profile_id;
-    }
-
-    public static function getAllTypes()
-    {
-        return ProfileFieldType::all();
-    }
-
-    public static function addNewType($description)
-    {
-        return ProfileFieldType::create(["description" => $description]);
-    }
-
-    public static function deleteType($id)
-    {
-        return ProfileFieldType::findOrFail($id)->delete();
     }
 
     public function setField($profile_type_field_id, $field_value)

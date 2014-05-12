@@ -1,5 +1,5 @@
 Authenticator:
-- infinite custom profile fields (refactor profile repo in 2 classi pkè fa troppo, pubblicizzala bene!)
+- infinite custom profile fields (metti pulsantini e fai il save, pubblicizzala bene!)
 - continua cn field: fix test anche
 Per RELEASE:
 - Captcha integration attivabile from PlayThru.com or reCAPTCHA
