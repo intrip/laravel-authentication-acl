@@ -1,10 +1,9 @@
 Authenticator:
-- infinite custom profile fields (metti pulsantini e fai il save, pubblicizzala bene!)
-- continua cn field: fix test anche
+- infinite custom profile fields (gestione permessi per edit custom field, crea dei field generici base e fix migrations cn permessi anche e vedi se sn bloccati giusti)
 Per RELEASE:
 - Captcha integration attivabile from PlayThru.com or reCAPTCHA
-- foto profilo utente cn preview in panel admin
 - metti modifica password in un'altro form per evitare problemi
+- foto profilo utente cn preview in panel admin
 - test coverage e check installation
 - add alla doc le cose nuove e l'hashing algorithm(profile edit con photo e custom profile fields e come ottenere l'utente profilo corrente x view lato client)
 - esempio usabile su aruba cloud

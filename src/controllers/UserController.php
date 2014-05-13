@@ -187,6 +187,7 @@ class UserController extends Controller
     public function postEditProfile()
     {
         $input = Input::all();
+
         $service = new UserProfileService($this->profile_validator);
 
         try
@@ -247,18 +248,27 @@ class UserController extends Controller
     public function addCustomFieldType()
     {
         $description = Input::get('description');
+        $user_id = Input::get('user_id');
 
         $this->custom_profile_repository->addNewType($description);
 
-        return Redirect::action('Jacopo\Authentication\Controllers\UserController@postEditProfile')->with('message', "Field {$description} added succesfully.");
+        return Redirect::action('Jacopo\Authentication\Controllers\UserController@postEditProfile',["user_id" => $user_id])->with('message', "Field {$description} added succesfully.");
     }
 
     public function deleteCustomFieldType()
     {
         $id = Input::get('id');
+        $user_id = Input::get('user_id');
 
-        $this->custom_profile_repository->deleteType($id);
+        try
+        {
+            $this->custom_profile_repository->deleteType($id);
+        }
+        catch(ModelNotFoundException $e)
+        {
+            return Redirect::action('Jacopo\Authentication\Controllers\UserController@postEditProfile', ["user_id" => $user_id])->withErrors(new MessageBag(["model" => "Cannot find the custom field."]));
+        }
 
-        return Redirect::action('Jacopo\Authentication\Controllers\UserController@postEditProfile')->with('message', "Field removed succesfully.");
+        return Redirect::action('Jacopo\Authentication\Controllers\UserController@postEditProfile', ["user_id" => $user_id])->with('message', "Field removed succesfully.");
     }
 } 

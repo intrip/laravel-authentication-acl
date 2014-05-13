@@ -16,7 +16,6 @@ use Jacopo\Library\Form\FormModel;
 
 class UserProfileService
 {
-
     /**
      * User repository
      */
@@ -37,6 +36,7 @@ class UserProfileService
      * @var \Illuminate\Support\MessageBag
      */
     protected $errors;
+    protected $custom_profile_field_prefix = "custom_profile_";
 
     function __construct($v_p, $f_p = null)
     {
@@ -50,11 +50,13 @@ class UserProfileService
 
     public function processForm($input)
     {
-        $this->checkPermission($input);
+        $this->checkProfileEditPermission($input);
 
         $user_profile = $this->createUserProfile($input);
 
-        $this->updateUserPassword($input);
+//        $this->updateUserPassword($input);
+
+        $this->saveCustomProfileFields($input, $user_profile);
 
         return $user_profile;
     }
@@ -83,12 +85,12 @@ class UserProfileService
      * @param $input
      * @throws \Jacopo\Authentication\Exceptions\PermissionException
      */
-    protected function checkPermission($input)
+    protected function checkProfileEditPermission($input)
     {
         $auth_helper = App::make('authentication_helper');
         if (! $auth_helper->checkProfileEditPermission($input["user_id"]))
         {
-            $this->errors = new MessageBag(["model" => "Non hai i permessi di modificare questo profilo"]);
+            $this->errors = new MessageBag(["model" => "You don't have the permission to edit user profiles."]);
             throw new PermissionException;
         }
     }
@@ -96,6 +98,7 @@ class UserProfileService
     /**
      * @param $input
      * @throws \Jacopo\Authentication\Exceptions\UserNotFoundException
+     * @deprecated
      */
     protected function updateUserPassword($input)
     {
@@ -118,5 +121,60 @@ class UserProfileService
     public function getErrors()
     {
         return $this->errors;
+    }
+
+    /**
+     * @param $input
+     * @param $user_profile
+     */
+    protected function saveCustomProfileFields($input, $user_profile)
+    {
+        $custom_profile_repository = App::make('custom_profile_repository', $user_profile->id);
+        foreach($input as $input_key => $value)
+        {
+            if(($profile_field_type_id_position = $this->isCustomFieldKey($input_key)) !== false)
+            {
+                $profile_field_type_id = $this->extractCustomFieldId($input_key,
+                                                                     $profile_field_type_id_position);
+                $custom_profile_repository->setField($profile_field_type_id, $value);
+            }
+        }
+    }
+
+
+    /**
+     * @param $input
+     * @throws \Jacopo\Authentication\Exceptions\PermissionException
+     */
+    protected function checkCustomProfileEditPermission($input)
+    {
+        $auth_helper = App::make('authentication_helper');
+        if (! $auth_helper->checkCustomProfileEditPermission($input["user_id"]))
+        {
+            $this->errors = new MessageBag(["model" => "You don't have the permission to edit custom user profiles."]);
+            throw new PermissionException;
+        }
+        //@todo go from here add in sentry e test this method and sentry one, then
+        // add the check in the view aswell
+    }
+
+
+    /**
+     * @param $input_key
+     * @return int
+     */
+    protected function isCustomFieldKey($input_key)
+    {
+        return strpos($input_key, $this->custom_profile_field_prefix);
+    }
+
+    /**
+     * @param $input_key
+     * @param $profile_field_type_id_position
+     * @return string
+     */
+    protected function extractCustomFieldId($input_key, $profile_field_type_id_position)
+    {
+        return substr($input_key, $profile_field_type_id_position + strlen($this->custom_profile_field_prefix));
     }
 } 

@@ -214,13 +214,14 @@ class UserControllerTest extends DbTestCase
     public function canAddCustomFieldType()
     {
         $field_description = "field desc";
-        $this->action('POST', 'Jacopo\Authentication\Controllers\UserController@addCustomFieldType', ['description' => $field_description]);
+        $user_id = 1;
+        $this->action('POST', 'Jacopo\Authentication\Controllers\UserController@addCustomFieldType', ['description' => $field_description, 'user_id' => $user_id]);
 
         $profile_fields = $this->custom_type_repository->getAllTypes();
         // check that have created a field type
         $this->assertCount(1, $profile_fields);
 
-        $this->assertRedirectedToAction('Jacopo\Authentication\Controllers\UserController@postEditProfile');
+        $this->assertRedirectedToAction('Jacopo\Authentication\Controllers\UserController@postEditProfile',["user_id" => $user_id]);
         $this->assertSessionHas('message');
     }
 
@@ -231,12 +232,28 @@ class UserControllerTest extends DbTestCase
     {
         $description = "description";
         $field_id = $this->custom_type_repository->addNewType($description)->id;
+        $user_id = 1;
 
-        $this->action('POST', 'Jacopo\Authentication\Controllers\UserController@deleteCustomFieldType', ["id" => $field_id]);
+        $this->action('POST', 'Jacopo\Authentication\Controllers\UserController@deleteCustomFieldType', ["id" => $field_id, "user_id" => $user_id]);
 
         $profile_fields = $this->custom_type_repository->getAllTypes();
         $this->assertCount(0, $profile_fields);
+
+        $this->assertRedirectedToAction('Jacopo\Authentication\Controllers\UserController@postEditProfile',["user_id" => $user_id]);
         $this->assertSessionHas('message');
+    }
+    
+    /**
+     * @test
+     **/
+    public function itHandleDeleteErrors()
+    {
+        $user_id = 1;
+        $field_id = 1;
+        $this->action('POST', 'Jacopo\Authentication\Controllers\UserController@deleteCustomFieldType', ["id" => $field_id, "user_id" => $user_id]);
+
+        $this->assertRedirectedToAction('Jacopo\Authentication\Controllers\UserController@postEditProfile',["user_id" => $user_id]);
+        $this->assertSessionHas('errors');
     }
 
 }

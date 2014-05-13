@@ -84,6 +84,7 @@ class CustomProfileRepositoryTest extends DbTestCase {
 
         $this->custom_profile->deleteType($profile_type_field_id);
 
+        $this->assertTrue($this->custom_profile->getAllTypes()->isEmpty());
         $fields_found = $this->custom_profile->getAllTypesWithValues();
         $this->assertCount(0,$fields_found);
     }

@@ -29,8 +29,9 @@ class UserProfileServiceTest extends TestCase {
      **/
     public function it_create_a_profile()
     {
-        $mock_form_profile_success = $this->mockProfileProcessAndReturn(true);
-
+        $user_profile_stub = new \StdClass;
+        $user_profile_stub->id = 1;
+        $mock_form_profile_success = $this->mockProfileProcessAndReturn($user_profile_stub);
         $service = new UserProfileServiceNoPermStub(new VoidValidator(), $mock_form_profile_success);
 
         $service->processForm([]);
@@ -53,7 +54,7 @@ class UserProfileServiceTest extends TestCase {
     }
 
     /**
-     * @test
+     * @deprecated
      **/
     public function it_update_user_password_if_given()
     {
@@ -69,10 +70,46 @@ class UserProfileServiceTest extends TestCase {
     /**
      * @test
      **/
+    public function itSaveCustomProfileFieldsIfGiven()
+    {
+        $first_type_id            = 1;
+        $first_type_value         = "value1";
+        $second_type_id            = 2;
+        $second_type_value         = "value2";
+        $this->mockCustomProfileRepositorySetFields($first_type_id, $first_type_value,
+                                                    $second_type_id, $second_type_value);
+
+        $user_profile_stub = new \StdClass;
+        $user_profile_stub->id = 1;
+        $mock_form_profile_success = $this->mockProfileProcessAndReturn($user_profile_stub);
+
+        $service = new UserProfileServiceNoPermStub(new VoidValidator(), $mock_form_profile_success);
+
+        $service->processForm(["custom_profile_{$first_type_id}" => $first_type_value, "custom_profile_{$second_type_id}" => $second_type_value]);
+    }
+
+    /**
+     * @param $first_type_id
+     * @param $first_type_value
+     * @param $second_type_id
+     * @param $second_type_value
+     */
+    protected function mockCustomProfileRepositorySetFields($first_type_id, $first_type_value, $second_type_id, $second_type_value)
+    {
+        $mock_custom_profile_repo = m::mock('StdClass')->shouldReceive('setField')->once()->with($first_type_id,
+                                                                                                 $first_type_value)->shouldReceive('setField')->once()->with($second_type_id,
+                                                                                                                                                             $second_type_value)->getMock();
+        App::instance('custom_profile_repository', $mock_custom_profile_repo);
+    }
+
+    /**
+     * @test
+     **/
     public function it_not_update_user_if_password_not_given()
     {
-        $mock_form_profile_success = $this->mockProfileProcessAndReturn(true);
-        // mock user repository
+        $user_profile_stub = new \StdClass;
+        $user_profile_stub->id = 1;
+        $mock_form_profile_success = $this->mockProfileProcessAndReturn($user_profile_stub);        // mock user repository
         App::instance('user_repository','');
         $service = new UserProfileServiceNoPermStub(new VoidValidator(), $mock_form_profile_success);
         $service->processForm(["new_password" => '', "user_id" => '']);
@@ -138,7 +175,7 @@ class VoidValidator extends AbstractValidator
 
 class UserProfileServiceNoPermStub extends UserProfileService
 {
-    public function checkPermission($input = null)
+    public function checkProfileEditPermission($input = null)
     {
         //silence is golden
     }
