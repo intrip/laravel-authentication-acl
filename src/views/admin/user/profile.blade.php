@@ -69,7 +69,9 @@ Admin area: Edit user profile
                         {{Form::close()}}
                     </div>
                     <div class="col-md-6 col-xs-12">
-                        @include('authentication::admin.user.custom-profile')
+                        @if($can_add_fields)
+                            @include('authentication::admin.user.custom-profile')
+                        @endif
                     </div>
                 </div>
             </div>

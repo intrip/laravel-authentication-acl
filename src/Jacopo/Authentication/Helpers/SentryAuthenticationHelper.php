@@ -49,6 +49,18 @@ class SentryAuthenticationHelper implements AuthenticationHelperInterface, Permi
     }
 
     /**
+     * Check if the current user has permission to edit the custom profile types
+     *
+     * @return boolean
+     */
+    public function checkCustomProfileEditPermission()
+    {
+        // has permission to edit other user profiles
+        $edit_perm = Config::get('authentication::permissions.edit_custom_profile');
+        return $this->hasPermission($edit_perm) ? true : false;
+    }
+
+    /**
      * Obtain the user that needs to be notificated on registration
      *
      * @return array

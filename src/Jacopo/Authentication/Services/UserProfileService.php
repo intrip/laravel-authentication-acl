@@ -90,7 +90,7 @@ class UserProfileService
         $auth_helper = App::make('authentication_helper');
         if (! $auth_helper->checkProfileEditPermission($input["user_id"]))
         {
-            $this->errors = new MessageBag(["model" => "You don't have the permission to edit user profiles."]);
+            $this->errors = new MessageBag(["model" => "You don't have the permission to edit other user profiles."]);
             throw new PermissionException;
         }
     }
@@ -140,24 +140,6 @@ class UserProfileService
             }
         }
     }
-
-
-    /**
-     * @param $input
-     * @throws \Jacopo\Authentication\Exceptions\PermissionException
-     */
-    protected function checkCustomProfileEditPermission($input)
-    {
-        $auth_helper = App::make('authentication_helper');
-        if (! $auth_helper->checkCustomProfileEditPermission($input["user_id"]))
-        {
-            $this->errors = new MessageBag(["model" => "You don't have the permission to edit custom user profiles."]);
-            throw new PermissionException;
-        }
-        //@todo go from here add in sentry e test this method and sentry one, then
-        // add the check in the view aswell
-    }
-
 
     /**
      * @param $input_key

@@ -11,6 +11,14 @@ return [
     | edit other user's profile.
     |
     */
-
     "edit_profile" => ["_superadmin", "_user-editor"],
+    /*
+    |--------------------------------------------------------------------------
+    | Edit custom profile type permission
+    |--------------------------------------------------------------------------
+    |
+    | List of 'permission name' needed to edit the custom profile types.
+    |
+    */
+    "edit_custom_profile" => ["_superadmin", "_profile-editor"]
 ];

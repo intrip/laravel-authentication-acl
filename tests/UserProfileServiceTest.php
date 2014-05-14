@@ -1,5 +1,6 @@
 <?php  namespace Jacopo\Authentication\Tests;
 
+use Jacopo\Authentication\Exceptions\PermissionException;
 use Jacopo\Authentication\Models\UserProfile;
 use Jacopo\Authentication\Services\UserProfileService;
 use Jacopo\Library\Exceptions\ValidationException;
@@ -11,7 +12,7 @@ use App;
  *
  * @author jacopo beschi j.beschi@palmabit.com
  */
-class UserProfileServiceTest extends TestCase {
+class UserProfileServiceTest extends DbTestCase {
 
     public function setUp()
     {
@@ -173,9 +174,17 @@ class UserProfileServiceTest extends TestCase {
 class VoidValidator extends AbstractValidator
 {}
 
-class UserProfileServiceNoPermStub extends UserProfileService
+class UserProfileServiceNoProfilePermStub extends UserProfileService
 {
-    public function checkProfileEditPermission($input = null)
+    protected function checkProfileEditPermission($input = null)
+    {
+        //silence is golden
+    }
+}
+
+class UserProfileServiceNoPermStub extends UserProfileServiceNoProfilePermStub
+{
+    protected function checkCustomProfileEditPermission()
     {
         //silence is golden
     }

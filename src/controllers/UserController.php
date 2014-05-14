@@ -5,6 +5,7 @@
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
 use Illuminate\Support\MessageBag;
+use Jacopo\Authentication\Exceptions\PermissionException;
 use Jacopo\Authentication\Exceptions\ProfileNotFoundException;
 use Jacopo\Authentication\Models\UserProfile;
 use Jacopo\Authentication\Presenters\UserPresenter;
@@ -250,7 +251,14 @@ class UserController extends Controller
         $description = Input::get('description');
         $user_id = Input::get('user_id');
 
-        $this->custom_profile_repository->addNewType($description);
+        try
+        {
+            $this->custom_profile_repository->addNewType($description);
+        }
+        catch(PermissionException $e)
+        {
+            return Redirect::action('Jacopo\Authentication\Controllers\UserController@postEditProfile', ["user_id" => $user_id])->withErrors(new MessageBag(["model" => $e->getMessage()]));
+        }
 
         return Redirect::action('Jacopo\Authentication\Controllers\UserController@postEditProfile',["user_id" => $user_id])->with('message', "Field {$description} added succesfully.");
     }
@@ -267,6 +275,10 @@ class UserController extends Controller
         catch(ModelNotFoundException $e)
         {
             return Redirect::action('Jacopo\Authentication\Controllers\UserController@postEditProfile', ["user_id" => $user_id])->withErrors(new MessageBag(["model" => "Cannot find the custom field."]));
+        }
+        catch(PermissionException $e)
+        {
+            return Redirect::action('Jacopo\Authentication\Controllers\UserController@postEditProfile', ["user_id" => $user_id])->withErrors(new MessageBag(["model" => $e->getMessage()]));
         }
 
         return Redirect::action('Jacopo\Authentication\Controllers\UserController@postEditProfile', ["user_id" => $user_id])->with('message', "Field removed succesfully.");

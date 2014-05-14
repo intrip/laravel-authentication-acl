@@ -2,6 +2,7 @@
 
 use App;
 use Config;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Facade;
 use Jacopo\Authentication\Models\User;
 use Jacopo\Library\Exceptions\NotFoundException;
@@ -213,6 +214,7 @@ class UserControllerTest extends DbTestCase
      **/
     public function canAddCustomFieldType()
     {
+        $this->stopPermissionCheckEvent();
         $field_description = "field desc";
         $user_id = 1;
         $this->action('POST', 'Jacopo\Authentication\Controllers\UserController@addCustomFieldType', ['description' => $field_description, 'user_id' => $user_id]);
@@ -228,10 +230,23 @@ class UserControllerTest extends DbTestCase
     /**
      * @test
      **/
+    public function itHandleCreatePermissions()
+    {
+        $field_description = "field desc";
+        $user_id = 1;
+        $this->action('POST', 'Jacopo\Authentication\Controllers\UserController@addCustomFieldType', ['description' => $field_description, 'user_id' => $user_id]);
+
+        $this->assertRedirectedToAction('Jacopo\Authentication\Controllers\UserController@postEditProfile',["user_id" => $user_id]);
+        $this->assertSessionHas('errors');
+    }
+
+    /**
+     * @test
+     **/
     public function canDeleteCustomFieldType()
     {
-        $description = "description";
-        $field_id = $this->custom_type_repository->addNewType($description)->id;
+        $this->stopPermissionCheckEvent();
+        $field_id = $this->createFieldType();
         $user_id = 1;
 
         $this->action('POST', 'Jacopo\Authentication\Controllers\UserController@deleteCustomFieldType', ["id" => $field_id, "user_id" => $user_id]);
@@ -248,12 +263,60 @@ class UserControllerTest extends DbTestCase
      **/
     public function itHandleDeleteErrors()
     {
+        $this->stopPermissionCheckEvent();
         $user_id = 1;
         $field_id = 1;
         $this->action('POST', 'Jacopo\Authentication\Controllers\UserController@deleteCustomFieldType', ["id" => $field_id, "user_id" => $user_id]);
 
         $this->assertRedirectedToAction('Jacopo\Authentication\Controllers\UserController@postEditProfile',["user_id" => $user_id]);
         $this->assertSessionHas('errors');
+    }
+    
+    /**
+     * @test
+     **/
+    public function itHandleDeletePemissionError()
+    {
+        $this->stopPermissionCheckCreate();
+        $field_id = $this->createFieldType();
+        $user_id = 1;
+
+        $this->action('POST', 'Jacopo\Authentication\Controllers\UserController@deleteCustomFieldType', ["id" => $field_id, "user_id" => $user_id]);
+
+        $this->assertRedirectedToAction('Jacopo\Authentication\Controllers\UserController@postEditProfile',["user_id" => $user_id]);
+        $this->assertSessionHas('errors');
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function stopPermissionCheckEvent()
+    {
+        $this->stopPermissionCheckDelete();
+        $this->stopPermissionCheckCreate();
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function stopPermissionCheckDelete()
+    {
+        return Event::listen(['customprofile.deleting'], function () { return false; }, 100);
+    }
+
+    protected function stopPermissionCheckCreate()
+    {
+        Event::listen(['customprofile.creating',], function () { return false; }, 100);
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function createFieldType()
+    {
+        $description = "description";
+        $field_id    = $this->custom_type_repository->addNewType($description)->id;
+        return $field_id;
     }
 
 }

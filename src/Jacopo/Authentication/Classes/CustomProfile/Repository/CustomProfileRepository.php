@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Event;
 use Jacopo\Authentication\Models\ProfileField;
 use Jacopo\Authentication\Models\ProfileFieldType;
 
@@ -26,12 +27,18 @@ class CustomProfileRepository
 
     public static function addNewType($description)
     {
-        return ProfileFieldType::create(["description" => $description]);
+        Event::fire('customprofile.creating');
+        $profile_field_type = ProfileFieldType::create(["description" => $description]);
+
+        return $profile_field_type;
     }
 
     public static function deleteType($id)
     {
-        return ProfileFieldType::findOrFail($id)->delete();
+        Event::fire('customprofile.deleting');
+        $success = ProfileFieldType::findOrFail($id)->delete();
+
+        return $success;
     }
 
     public function setField($profile_type_field_id, $field_value)

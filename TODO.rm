@@ -1,9 +1,11 @@
 Authenticator:
-- infinite custom profile fields (gestione permessi per edit custom field, crea dei field generici base e fix migrations cn permessi anche e vedi se sn bloccati giusti)
+- infinite custom profile fields (adda nella doc uso e il permesso che serve)
 Per RELEASE:
 - Captcha integration attivabile from PlayThru.com or reCAPTCHA
-- metti modifica password in un'altro form per evitare problemi
+- check in codecanion vendite degli altri script e vedi se opensource o no, se open
+rivedi la doc con md readme e setta travis dopo upload e vedi x donations
 - foto profilo utente cn preview in panel admin
+- metti modifica password in un'altro form per evitare problemi
 - test coverage e check installation
 - add alla doc le cose nuove e l'hashing algorithm(profile edit con photo e custom profile fields e come ottenere l'utente profilo corrente x view lato client)
 - esempio usabile su aruba cloud

@@ -91,7 +91,9 @@ View::composer(['authentication::admin.user.edit','authentication::admin.group.e
     $values_group = $fh->getSelectValuesGroups();
     $view->with('group_values', $values_group);
 });
-
+/**
+ * Dashboard information
+ */
 View::composer(['authentication::admin.user.dashboard'], function($view){
     $user_statistics = new UserStatistics();
     $registered = $user_statistics->getRegisteredUserNumber();
@@ -100,4 +102,13 @@ View::composer(['authentication::admin.user.dashboard'], function($view){
     $banned = $user_statistics->getBannedUserNumber();
 
     $view->with(['registered' => $registered,"active" => $active,"pending" => $pending,"banned" => $banned]);
+});
+/**
+ * Permission to add custom profile field
+ */
+View::composer(['authentication::admin.user.profile'], function($view){
+    $auth_helper = App::make('authentication_helper');
+    $can_add_fields = $auth_helper->checkCustomProfileEditPermission() ? true : false;
+
+    $view->with(['can_add_fields' => $can_add_fields]);
 });

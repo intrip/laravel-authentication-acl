@@ -48,23 +48,33 @@ class DbSeederTest extends DbTestCase
 
   private function getDefaultPermissions ()
   {
-    $permission1 = new Permission([
-                                   "description" => "superadmin",
-                                   "permission" => "_superadmin"
-                                  ]);
-    $permission2 = new Permission([
-                                  "description" => "user editor",
-                                  "permission" => "_user-editor"
-                                  ]);
-    $permission3 = new Permission([
-                                  "description" => "group editor",
-                                  "permission" => "_group-editor"
-                                  ]);
-    $permission4 = new Permission([
-                                  "description" => "permission editor",
-                                  "permission" => "_permission-editor"
-                                  ]);
-    return [$permission1, $permission2, $permission3, $permission4];
+      $permission1 = new Permission([
+                                    "description" => "superadmin",
+                                    "permission"  => "_superadmin"
+                                    ]);
+      $permission2 = new Permission([
+                                    "description" => "user editor",
+                                    "permission"  => "_user-editor"
+                                    ]);
+      $permission3 = new Permission([
+                                    "description" => "group editor",
+                                    "permission"  => "_group-editor"
+                                    ]);
+      $permission4 = new Permission([
+                                    "description" => "permission editor",
+                                    "permission"  => "_permission-editor"
+                                    ]);
+      $permission5 = new Permission([
+                                    "description" => "profile type editor",
+                                    "permission"  => "_profile-editor"
+                                    ]);
+      return [
+          $permission1,
+          $permission2,
+          $permission3,
+          $permission4,
+          $permission5
+      ];
   }
 
   /**

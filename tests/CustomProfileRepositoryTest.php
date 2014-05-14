@@ -1,5 +1,6 @@
 <?php  namespace Jacopo\Authentication\Tests;
 
+use Event;
 use Jacopo\Authentication\Classes\CustomProfile\Repository\CustomProfileRepository;
 use Jacopo\Authentication\Models\ProfileField;
 use Jacopo\Authentication\Models\ProfileFieldType;
@@ -26,6 +27,7 @@ class CustomProfileRepositoryTest extends DbTestCase {
      **/
     public function canShowAllCustomFieldsType()
     {
+        $this->stopPermissionCheckEvent();
         $profile_type = ProfileFieldType::create(["description" => "invoice number"]);
 
         $profile_types = $this->custom_profile->getAllTypes();
@@ -38,6 +40,7 @@ class CustomProfileRepositoryTest extends DbTestCase {
      **/
     public function canAddCustomFieldType()
     {
+        $this->stopPermissionCheckEvent();
         $description   = "custom field type";
 
         $this->custom_profile->addNewType($description);
@@ -51,6 +54,7 @@ class CustomProfileRepositoryTest extends DbTestCase {
      **/
     public function canAddCustomField()
     {
+        $this->stopPermissionCheckEvent();
         $field_value = "value";
         $profile_type_field_id = 1;
 
@@ -59,12 +63,27 @@ class CustomProfileRepositoryTest extends DbTestCase {
         $created_profile = ProfileField::first();
         $this->assertEquals($field_value, $created_profile->value);
     }
-    
+
+    /**
+     * @test
+     **/
+    public function itThrowEventOnAddFieldType()
+    {
+        $found = false;
+        Event::listen('customprofile.creating', function() use(&$found){ $found = true; return false;},100);
+
+        $description   = "custom field type";
+        $this->custom_profile->addNewType($description);
+
+        $this->assertTrue($found);
+    }
+
     /**
      * @test
      **/
     public function canDeleteCustomFieldTypeAndValues()
     {
+        $this->stopPermissionCheckEvent();
         $description  = "description";
         $profile_type = $this->custom_profile->addNewType($description);
         $profile_type_field_id = $profile_type->id;
@@ -88,13 +107,32 @@ class CustomProfileRepositoryTest extends DbTestCase {
         $fields_found = $this->custom_profile->getAllTypesWithValues();
         $this->assertCount(0,$fields_found);
     }
-    
+
+    /**
+     * @test
+     **/
+    public function itThrowEventOnDeleteFieldType()
+    {
+        $found = false;
+        $this->stopPermissionCheckCreate();
+        Event::listen('customprofile.deleting', function() use(&$found){ $found = true; return false;},100);
+
+        $description  = "description";
+        $profile_type = $this->custom_profile->addNewType($description);
+        $profile_type_field_id = $profile_type->id;
+        $this->custom_profile->deleteType($profile_type_field_id);
+
+
+        $this->assertTrue($found);
+    }
+
     /**
      * @test
      * @expectedException \Illuminate\Database\Eloquent\ModelNotFoundException
      **/
     public function throwsExceptionOnDeleteTypeIfNotExists()
     {
+        $this->stopPermissionCheckEvent();
         $invalid_id = 11;
         $this->custom_profile->deleteType($invalid_id);
     }
@@ -104,6 +142,7 @@ class CustomProfileRepositoryTest extends DbTestCase {
      **/
     public function canUpdateCustomField()
     {
+        $this->stopPermissionCheckEvent();
         $field_value = "value";
         $profile_type_field_id = 1;
         $this->createCustomField($profile_type_field_id, $field_value);
@@ -121,6 +160,7 @@ class CustomProfileRepositoryTest extends DbTestCase {
      **/
     public function canGetAllTypesWithTheirAssociatedValueIfExists()
     {
+        $this->stopPermissionCheckEvent();
         $type_description1   = "custom field type with value";
         $profile_type = $this->custom_profile->addNewType($type_description1);
         $value = "value";
@@ -144,6 +184,7 @@ class CustomProfileRepositoryTest extends DbTestCase {
      **/
     public function canGetAllFieldsOfAProfile()
     {
+        $this->stopPermissionCheckEvent();
         $profile_type_field_id_1 = 1;
         $value_1 = "value1";
         $this->createCustomField($profile_type_field_id_1, $value_1);
@@ -171,6 +212,29 @@ class CustomProfileRepositoryTest extends DbTestCase {
                              "profile_field_type_id" => $profile_type_field_id,
                              "value"                 => $field_value
                              ]);
+    }
+
+
+    /**
+     * @return mixed
+     */
+    protected function stopPermissionCheckEvent()
+    {
+        $this->stopPermissionCheckDelete();
+        $this->stopPermissionCheckCreate();
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function stopPermissionCheckDelete()
+    {
+        return Event::listen(['customprofile.deleting'], function () { return false; }, 100);
+    }
+
+    protected function stopPermissionCheckCreate()
+    {
+        Event::listen(['customprofile.creating',], function () { return false; }, 100);
     }
 }
  
