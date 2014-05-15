@@ -1,17 +1,16 @@
 Authenticator:
-- infinite custom profile fields (adda nella doc uso e il permesso che serve)
 Per RELEASE:
-- Captcha integration attivabile from PlayThru.com or reCAPTCHA
-- check in codecanion vendite degli altri script e vedi se opensource o no, se open
-rivedi la doc con md readme e setta travis dopo upload e vedi x donations
+- Captcha integration attivabile from PlayThru.com or reCAPTCHA (vedu gregwar capcha e diagramma)
+- metti modifica password in un'altro form per evitare problemi o trova un'altra sol per quando fai add
 - foto profilo utente cn preview in panel admin
-- metti modifica password in un'altro form per evitare problemi
 - test coverage e check installation
-- add alla doc le cose nuove e l'hashing algorithm(profile edit con photo e custom profile fields e come ottenere l'utente profilo corrente x view lato client)
-- esempio usabile su aruba cloud
+- rivedi la doc con md readme e setta travis dopo upload e vedi x donations
+- add alla doc le cose nuove e l'hashing algorithm(profile edit con photo e custom profile fields e permessi x edit profile type e come ottenere l'utente profilo corrente x view lato client)
+- esempio usabile su aruba cloud o
 
 POI (0.2.0):
     - acceptance test alcuni cn behat
+    - riogranizza directory e classi
     - modifica il banning per farlo ad ore
     - multilingua
     - usa form validation exception con suo msg e catch globale
