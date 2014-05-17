@@ -32,7 +32,23 @@ class GregWarCaptchaValidatorTest extends \PHPUnit_Framework_TestCase {
         $this->assertNotEmpty($captcha_creator);
         $this->assertInstanceOf('Gregwar\Captcha\CaptchaBuilder', $captcha_creator);
     }
-    
+
+    /**
+     * @test
+     **/
+    public function itCanBuildWithCustomParameters()
+    {
+        $this->resetCaptchaBuilder();
+        $captcha_validator = new GregWarCaptchaValidatorBuildStub();
+        $captcha_validator->getInstance();
+        $this->resetCaptchaBuilder();
+    }
+
+    protected function resetCaptchaBuilder()
+    {
+        GregWarCaptchaValidatorBuildStub::setCaptchaBuilder(null);
+    }
+
     /**
      * @test
      **/
@@ -62,5 +78,22 @@ class GregWarCaptchaValidatorTest extends \PHPUnit_Framework_TestCase {
     {
         $img_src = $this->gregWarCaptchaValidator->getImageSrcTag();
         $this->assertNotEmpty($img_src);
+    }
+}
+
+class GregWarCaptchaValidatorBuildStub extends GregWarCaptchaValidator
+{
+    /*
+     * @override
+     */
+    protected static function newInstance()
+    {
+        static::$captcha_builder = m::mock('StdClass')
+                                       ->shouldReceive('build')
+                                       ->once()
+                                       ->with(static::$captcha_width,
+                                              static::$captcha_height)
+                                       ->getMock();
+        static::buildCaptcha();
     }
 }

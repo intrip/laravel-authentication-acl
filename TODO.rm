@@ -1,6 +1,6 @@
 Authenticator:
 Per RELEASE:
-- Captcha integration attivabile from PlayThru.com or reCAPTCHA (vedu gregwar capcha e diagramma)
+- Captcha integration attivabile from PlayThru.com or reCAPTCHA (fix messaggi di errore)
 - metti modifica password in un'altro form per evitare problemi o trova un'altra sol per quando fai add
 - foto profilo utente cn preview in panel admin
 - test coverage e check installation

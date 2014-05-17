@@ -8,7 +8,7 @@ namespace Jacopo\Authentication\Classes\Captcha;
  */
 interface CaptchaValidatorInterface
 {
-    public function validateCaptcha($value);
+    public function validateCaptcha($attribute, $value);
 
     public function getValue();
 

@@ -73,7 +73,7 @@ class UserRegisterService {
    * @throws \Jacopo\Library\Exceptions\ValidationException
    */
   protected function validateInput (array $input) {
-    if (!$this->user_signup_validator->validate($input)) {
+    if ( ! $this->user_signup_validator->validate($input) ) {
       $this->errors = $this->user_signup_validator->getErrors();
       throw new ValidationException;
     }

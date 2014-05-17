@@ -10,13 +10,14 @@ use Gregwar\Captcha\CaptchaBuilder;
 class GregWarCaptchaValidator extends CaptchaValidator
 {
     protected static $captcha_builder;
-    protected $error_message = "The captcha is not valid, please try again.";
+    protected static $captcha_width = 150;
+    protected static $captcha_height = 40;
 
     public static function getInstance()
     {
         if(static::$captcha_builder) return static::$captcha_builder;
 
-        return self::newInstance();
+        return static::newInstance();
     }
 
     public static function getCaptchaBuilder()
@@ -24,19 +25,34 @@ class GregWarCaptchaValidator extends CaptchaValidator
         return static::$captcha_builder;
     }
 
+    /**
+     * @param mixed $captcha_builder
+     */
+    public static function setCaptchaBuilder($captcha_builder)
+    {
+        self::$captcha_builder = $captcha_builder;
+    }
+
     protected static function newInstance()
     {
         static::$captcha_builder = new CaptchaBuilder();
-        static::$captcha_builder->build();
+        static::buildCaptcha();
+
+        return static::$captcha_builder;
+    }
+
+    protected static function buildCaptcha()
+    {
+        static::getInstance()->build(static::$captcha_width, static::$captcha_height);
     }
 
     public function getValue()
     {
-        return static::$captcha_builder->getPhrase();
+        return static::getInstance()->getPhrase();
     }
 
     public function getImageSrcTag()
     {
-        return static::$captcha_builder->inline();
+        return static::getInstance()->inline();
     }
 } 
