@@ -8,16 +8,23 @@ use Validator;
  */
 class CaptchaValidatorTest extends TestCase {
 
+    protected $captcha_validator;
+
+    public function setUp()
+    {
+        parent::setUp();
+        $this->captcha_validator = new CaptchaImplementationStub();
+    }
+
     /**
      * @test
      **/
     public function canValidateCaptchaSuccessfully()
     {
         $captcha_value = "captcha value";
-        $captcha_validator = new CaptchaImplementationStub();
-        $captcha_validator->value = $captcha_value;
+        $this->captcha_validator->value = $captcha_value;
 
-        $success = $captcha_validator->validateCaptcha('useless info', $captcha_value);
+        $success = $this->captcha_validator->validateCaptcha('useless info', $captcha_value);
 
         $this->assertTrue($success);
     }
@@ -45,15 +52,12 @@ class CaptchaValidatorTest extends TestCase {
         $captcha_value = "captcha value wrong";
         $input = ["captcha_input" => $captcha_value];
         $rules = ["captcha_input" => "captcha"];
-        Validator::extend('captcha', 'Jacopo\Authentication\Tests\CaptchaImplementationStub@validateCaptcha');
-        $validator_stub = new CaptchaImplementationStub();
+        Validator::extend('captcha', 'Jacopo\Authentication\Tests\CaptchaImplementationStub@validateCaptcha', $this->captcha_validator->getErrorMessage());
 
         $laravel_validator = Validator::make($input, $rules);
 
         $this->assertTrue($laravel_validator->fails() );
-
-        $this->assertEquals($validator_stub->getErrorMessage(), $laravel_validator->messages()->first('captcha') );
-        //@todo fix error message and add impl in validator signup
+        $this->assertEquals($this->captcha_validator->getErrorMessage(), $laravel_validator->messages()->first('captcha_input') );
     }
 }
 

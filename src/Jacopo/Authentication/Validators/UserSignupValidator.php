@@ -1,5 +1,6 @@
 <?php namespace Jacopo\Authentication\Validators;
 
+use Config;
 use Jacopo\Library\Validators\OverrideConnectionValidator;
 
 class UserSignupValidator extends OverrideConnectionValidator
@@ -8,11 +9,21 @@ class UserSignupValidator extends OverrideConnectionValidator
       "mail_signup" => "an user with that email already exists."
   ];
 
-  protected static $rules = array(
+  protected static $rules = [
         "email" => ["required", "email", "mail_signup"],
         "password" => ["required", "min:6", "confirmed"],
         "first_name" => "max:255",
         "last_name" => "max:255",
-        "captcha_text" => "captcha"
-    );
+    ];
+
+    public function __construct()
+    {
+        $enable_captcha = Config::get('authentication::captcha_signup');
+        if($enable_captcha) $this->addCaptchaRule();
+    }
+
+    protected function addCaptchaRule()
+    {
+        static::$rules["captcha_text"] = "captcha";
+    }
 } 

@@ -71,6 +71,38 @@ class UserControllerTest extends DbTestCase
     /**
      * @test
      **/
+    public function itShowCaptchaOnSignupIfEnabled()
+    {
+        $this->enableCaptchaCheck();
+        $this->action('GET', 'Jacopo\Authentication\Controllers\UserController@signup');
+
+        $this->assertViewHas("captcha");
+    }
+
+    /**
+     * @test
+     **/
+    public function itDoesntShowCaptchaOnSignupIfDisabled()
+    {
+        $this->disableCaptchaCheck();
+        $this->action('GET', 'Jacopo\Authentication\Controllers\UserController@signup');
+
+        $this->assertViewMissing("captcha");
+    }
+
+    protected function disableCaptchaCheck()
+    {
+        Config::set('authentication::captcha_signup', false);
+    }
+
+    protected function enableCaptchaCheck()
+    {
+        Config::set('authentication::captcha_signup', true);
+    }
+
+    /**
+     * @test
+     **/
     public function it_showConfirmationEmailSuccessOnSignup_ifEmailConfirmationIsEnabled()
     {
         $active = true;

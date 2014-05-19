@@ -1,12 +1,12 @@
 Authenticator:
 Per RELEASE:
-- Captcha integration attivabile from PlayThru.com or reCAPTCHA (fix messaggi di errore)
 - metti modifica password in un'altro form per evitare problemi o trova un'altra sol per quando fai add
 - foto profilo utente cn preview in panel admin
 - test coverage e check installation
 - rivedi la doc con md readme e setta travis dopo upload e vedi x donations
 - add alla doc le cose nuove e l'hashing algorithm(profile edit con photo e custom profile fields e permessi x edit profile type e come ottenere l'utente profilo corrente x view lato client)
-- esempio usabile su aruba cloud o
+- esempio usabile su aruba cloud o il servizio per sviluppatori trovato
+- gestisci branch e tutto e test generici di tutto
 
 POI (0.2.0):
     - acceptance test alcuni cn behat

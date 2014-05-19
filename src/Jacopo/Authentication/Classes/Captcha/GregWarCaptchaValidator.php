@@ -1,7 +1,7 @@
 <?php  namespace Jacopo\Authentication\Classes\Captcha;
 
 use Gregwar\Captcha\CaptchaBuilder;
-
+use Session;
 /**
  * Class GregWarCaptchaValidator
  *
@@ -10,8 +10,12 @@ use Gregwar\Captcha\CaptchaBuilder;
 class GregWarCaptchaValidator extends CaptchaValidator
 {
     protected static $captcha_builder;
-    protected static $captcha_width = 150;
-    protected static $captcha_height = 40;
+    protected static $captcha_width = 280;
+    protected static $captcha_height = 60;
+
+    protected $captcha_field;
+
+    public function __construct() { $this->captcha_field = 'authentication_captcha_value'; }
 
     public static function getInstance()
     {
@@ -48,11 +52,22 @@ class GregWarCaptchaValidator extends CaptchaValidator
 
     public function getValue()
     {
-        return static::getInstance()->getPhrase();
+        return Session::get('authentication_captcha_value');
     }
 
     public function getImageSrcTag()
     {
-        return static::getInstance()->inline();
+        $captcha_builder = static::getInstance();
+        $this->flashCaptchaValue($captcha_builder);
+
+        return $captcha_builder->inline();
+    }
+
+    /**
+     * @param $captcha_builder
+     */
+    protected function flashCaptchaValue($captcha_builder)
+    {
+        Session::flash($this->captcha_field, $captcha_builder->getPhrase());
     }
 } 

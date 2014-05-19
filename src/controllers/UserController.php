@@ -205,6 +205,13 @@ class UserController extends Controller
 
     public function signup()
     {
+        $enable_captcha = Config::get('authentication::captcha_signup');
+        if($enable_captcha)
+        {
+            $captcha = App::make('captcha_validator');
+            return View::make('authentication::client.auth.signup')->with('captcha', $captcha);
+        }
+
         return View::make('authentication::client.auth.signup');
     }
 

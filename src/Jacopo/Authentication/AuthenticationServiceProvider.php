@@ -2,6 +2,7 @@
 
 use App;
 use InstallCommand;
+use Jacopo\Authentication\Classes\Captcha\GregWarCaptchaValidator;
 use Jacopo\Authentication\Classes\CustomProfile\Repository\CustomProfileRepository;
 use PrepareCommand;
 use Config;
@@ -123,6 +124,11 @@ class AuthenticationServiceProvider extends ServiceProvider
       $this->app->bind('custom_profile_repository', function ($app, $profile_id = null)
       {
           return new CustomProfileRepository($profile_id);
+      });
+
+      $this->app->bind('captcha_validator', function ($app)
+      {
+          return new GregWarCaptchaValidator();
       });
   }
 

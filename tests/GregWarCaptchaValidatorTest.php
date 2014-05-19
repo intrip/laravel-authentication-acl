@@ -7,12 +7,13 @@ use Jacopo\Authentication\Classes\Captcha\GregWarCaptchaValidator;
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
-class GregWarCaptchaValidatorTest extends \PHPUnit_Framework_TestCase {
+class GregWarCaptchaValidatorTest extends TestCase {
 
     protected $gregWarCaptchaValidator;
 
     public function setUp()
     {
+        parent::setUp();
         $this->gregWarCaptchaValidator = new GregWarCaptchaValidator;
     }
 
@@ -66,8 +67,10 @@ class GregWarCaptchaValidatorTest extends \PHPUnit_Framework_TestCase {
     /**
      * @test
      **/
-    public function canGetValue()
-    {   $value1 = $this->gregWarCaptchaValidator->getValue();
+    public function canGetValueAfterGettingImageTag()
+    {
+        $this->gregWarCaptchaValidator->getImageSrcTag();
+        $value1 = $this->gregWarCaptchaValidator->getValue();
         $this->assertNotEmpty($value1);
     }
     

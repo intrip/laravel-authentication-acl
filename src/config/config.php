@@ -57,5 +57,16 @@ return [
   |
   */
 
-  "groups_per_page" => 15
+  "groups_per_page" => 15,
+
+    /*
+   |--------------------------------------------------------------------------
+   | Captcha validation on signup
+   |--------------------------------------------------------------------------
+   |
+   | Flag to enable/disable captcha validation on user signup
+   |
+   */
+
+  "captcha_signup" => true
 ];

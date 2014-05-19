@@ -86,6 +86,27 @@
                                 <div id="pass-info"></div>
                               </div>
                             </div>
+
+                            {{-- Captcha validation --}}
+                            @if(isset($captcha) )
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <img src="{{$captcha->getImageSrcTag()}}">
+                                        <a href="{{URL::current()}}" class="btn btn-small btn-info margin-left-5"><i class="fa fa-refresh"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-picture-o"></i></span>
+                                        {{Form::text('captcha_text','', ['class'=> 'form-control', 'placeholder' => 'Fill in with the text of the image', 'required', 'autocomplete' => 'off'])}}
+                                    </div>
+                                </div>
+                                <span class="text-danger">{{$errors->first('captcha_text')}}</span>
+                            </div>
+                            @endif
                         </div>
                         <input type="submit" value="Register" class="btn btn-info btn-block">
                     </form>
