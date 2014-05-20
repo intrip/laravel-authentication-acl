@@ -137,11 +137,14 @@ class AuthenticationServiceProvider extends ServiceProvider
     $this->app->register('Jacopo\Library\LibraryServiceProvider');
     $this->app->register('Cartalyst\Sentry\SentryServiceProvider');
     $this->app->register('Way\Form\FormServiceProvider');
+    $this->app->register('Intervention\Image\ImageServiceProvider');
   }
 
   protected function registerAliases ()
   {
     AliasLoader::getInstance()->alias("Sentry", 'Cartalyst\Sentry\Facades\Laravel\Sentry');
+      AliasLoader::getInstance()->alias("Image", 'Intervention\Image\Facades\Image');
+
   }
 
   protected function setupConnection ()

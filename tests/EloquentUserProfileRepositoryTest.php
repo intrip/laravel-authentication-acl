@@ -120,5 +120,18 @@ class EloquentUserProfileRepositoryTest extends DbTestCase
     return array($profile_data, $profile);
   }
 
+  /**
+   * @test
+   **/
+  public function itUpdateNewAvatar()
+  {
+      $user = $this->prepareFakeUser();
+      list($profile_data, $profile) = $this->createFakeProfile($user);
+
+//      $this->repo_profile->updateAvatar();
+      //@todo stub test e usa il imageTraitHelper e poi fai integ test:
+      // http://stackoverflow.com/questions/15813508/symfony-functionnal-tests-receive-uploaded-file
+  }
+
 }
  

@@ -1,12 +1,11 @@
 Authenticator:
 Per RELEASE:
-- metti modifica password in un'altro form per evitare problemi o trova un'altra sol per quando fai add
-- foto profilo utente cn preview in panel admin
 - test coverage e check installation
+- foto profilo utente cn preview in panel admin
 - rivedi la doc con md readme e setta travis dopo upload e vedi x donations
 - add alla doc le cose nuove e l'hashing algorithm(profile edit con photo e custom profile fields e permessi x edit profile type e come ottenere l'utente profilo corrente x view lato client)
 - esempio usabile su aruba cloud o il servizio per sviluppatori trovato
-- gestisci branch e tutto e test generici di tutto
+- gestisci branch e tutto e test generici di tutto (release 0.1.1)
 
 POI (0.2.0):
     - acceptance test alcuni cn behat

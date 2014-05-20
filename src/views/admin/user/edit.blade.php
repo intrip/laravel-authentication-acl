@@ -33,6 +33,8 @@ Admin area: edit user
                 <div class="col-md-6 col-xs-12">
                     <h4>Login data</h4>
                     {{Form::model($user, [ 'url' => URL::action('Jacopo\Authentication\Controllers\UserController@postEditUser')] ) }}
+                    {{-- Field hidden to fix chrome and safari autocomplete bug --}}
+                    {{Form::password('__to_hide_password_autocomplete', ['class' => 'hidden'])}}
                     {{FormField::email(["autocomplete" => "off", "label" => "Email: *"])}}
                     <span class="text-danger">{{$errors->first('email')}}</span>
                     {{FormField::password(["autocomplete" => "off", "label" => isset($user->id) ? "Change password: " : "Password: "])}}

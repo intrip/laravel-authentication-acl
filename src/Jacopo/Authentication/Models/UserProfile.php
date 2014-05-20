@@ -20,7 +20,8 @@ class UserProfile extends BaseModel
         'country',
         'zip',
         'code',
-        'address'
+        'address',
+        'avatar'
     ];
 
     protected $guarded = ["id"];
@@ -33,5 +34,10 @@ class UserProfile extends BaseModel
     public function profile_field()
     {
         return $this->hasMany('Jacopo\Authentication\Models\ProfileField');
+    }
+
+    public function getAvatarAttribute()
+    {
+        return isset($this->attributes['avatar']) ? base64_encode($this->attributes['avatar']) : null;
     }
 } 

@@ -34,6 +34,8 @@
                 @endif
                 <div class="panel-body">
                     {{Form::open(["action" => 'Jacopo\Authentication\Controllers\UserController@postSignup', "method" => "POST"])}}
+                    {{-- Field hidden to fix chrome and safari autocomplete bug --}}
+                    {{Form::password('__to_hide_password_autocomplete', ['class' => 'hidden'])}}
                         <div class="row">
                             <div class="col-xs-6 col-sm-6 col-md-6">
                                 <div class="form-group">

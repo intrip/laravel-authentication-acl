@@ -23,6 +23,7 @@
     "require": {
         "php": ">=5.4.0",
         "illuminate/support": "4.1.*",
+        "intervention/image": "2.*",
         "cartalyst/sentry": "2.1.*",
         "way/form": "dev-master",
         "jacopo/library": "dev-develop",

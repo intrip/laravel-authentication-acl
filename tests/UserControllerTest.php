@@ -350,6 +350,5 @@ class UserControllerTest extends DbTestCase
         $field_id    = $this->custom_type_repository->addNewType($description)->id;
         return $field_id;
     }
-
 }
  

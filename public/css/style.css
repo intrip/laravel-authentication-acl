@@ -79,6 +79,10 @@ div.paginator
 {
     margin-top: 25%;
 }
+.hidden
+{
+  display: none;
+}
 /*///////////////// forms ////////////////*/
 .form-button
 {

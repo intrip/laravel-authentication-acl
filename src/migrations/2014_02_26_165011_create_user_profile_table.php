@@ -33,7 +33,9 @@ class CreateUserProfileTable extends Migration {
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
         });
-	}
+
+        DB::statement("ALTER TABLE  'user_profile' ADD  'avatar' LONGBLOB DEFAULT NULL");
+    }
 
 	/**
 	 * Reverse the migrations.
