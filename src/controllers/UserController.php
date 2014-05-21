@@ -290,4 +290,11 @@ class UserController extends Controller
 
         return Redirect::action('Jacopo\Authentication\Controllers\UserController@postEditProfile', ["user_id" => $user_id])->with('message', "Field removed succesfully.");
     }
+
+    public function changeAvatar()
+    {
+        // validate data
+
+        // change picture
+    }
 } 

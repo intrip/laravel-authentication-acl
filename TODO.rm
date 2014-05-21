@@ -1,7 +1,7 @@
 Authenticator:
 Per RELEASE:
+- foto profilo utente cn preview in panel admin(fai post update avatar(in tdd con il check validazione) e poi con il crawler: fai upload e poi check che esista e che la size sia quella che vuoi tu: http://stackoverflow.com/questions/15813508/symfony-functionnal-tests-receive-uploaded-file)
 - test coverage e check installation
-- foto profilo utente cn preview in panel admin
 - rivedi la doc con md readme e setta travis dopo upload e vedi x donations
 - add alla doc le cose nuove e l'hashing algorithm(profile edit con photo e custom profile fields e permessi x edit profile type e come ottenere l'utente profilo corrente x view lato client)
 - esempio usabile su aruba cloud o il servizio per sviluppatori trovato
@@ -11,6 +11,7 @@ POI (0.2.0):
     - acceptance test alcuni cn behat
     - riogranizza directory e classi
     - modifica il banning per farlo ad ore
+    - refactorin in interface driven code di più
     - multilingua
     - usa form validation exception con suo msg e catch globale
     - view lato client base disponibile da esempio

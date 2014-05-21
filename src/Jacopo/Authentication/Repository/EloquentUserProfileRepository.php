@@ -1,6 +1,7 @@
 <?php  namespace Jacopo\Authentication\Repository;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Jacopo\Authentication\Classes\Images\ImageHelperTrait;
 use Jacopo\Authentication\Exceptions\UserNotFoundException;
 use Jacopo\Authentication\Exceptions\ProfileNotFoundException;
 use Jacopo\Authentication\Models\User;
@@ -15,6 +16,7 @@ use Jacopo\Library\Repository\Interfaces\BaseRepositoryInterface;
  */
 class EloquentUserProfileRepository extends EloquentBaseRepository implements UserProfileRepositoryInterface
 {
+    use ImageHelperTrait;
     /**
      * We use the user profile as a model
      */
@@ -42,5 +44,12 @@ class EloquentUserProfileRepository extends EloquentBaseRepository implements Us
         if($profile->isEmpty()) throw new ProfileNotFoundException;
 
         return $profile->first();
+    }
+
+    public function updateAvatar($input_name = "avatar")
+    {
+        $this->model->update([
+                             "avatar" => static::getBinaryData('170', $input_name)
+                             ]);
     }
 }

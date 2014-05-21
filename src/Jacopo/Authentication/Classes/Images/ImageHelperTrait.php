@@ -2,6 +2,7 @@
 
 use Image;
 use Illuminate\Support\Facades\Input;
+use Jacopo\Library\Exceptions\NotFoundException;
 
 /**
  * Trait ImageHelperTrait

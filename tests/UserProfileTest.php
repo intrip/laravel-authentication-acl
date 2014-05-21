@@ -1,17 +1,20 @@
-<?php  namespace Jacopo\Authentication\Models;
+<?php  namespace Jacopo\Authentication\Tests;
+
+use Jacopo\Authentication\Models\UserProfile;
 
 /**
  * Test UserProfileTest
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
-class UserProfileTest extends \PHPUnit_Framework_TestCase
+class UserProfileTest extends DbTestCase
 {
 
     protected $profile_model;
 
     public function setUp()
     {
+        parent::setUp();
         $this->profile_model = new UserProfile();
     }
 
@@ -36,6 +39,16 @@ class UserProfileTest extends \PHPUnit_Framework_TestCase
     {
         $data = rand(10000, 100000);
         return $data;
+    }
+
+    /**
+     * @test
+     **/
+    public function canGetPresenter()
+    {
+        $profile_presenter = $this->profile_model->presenter();
+
+        $this->assertInstanceOf('Jacopo\Authentication\Presenters\UserProfilePresenter', $profile_presenter);
     }
 
 }

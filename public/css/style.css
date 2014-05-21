@@ -141,3 +141,13 @@ div.paginator
 {
   font-size: 50px;
 }
+
+/*///////////////// user profile ////////////////*/
+.profile-avatar
+{
+  width: 179px;
+  height: 179px;
+  border: 4px dashed #bbb;
+  margin-left: auto;
+  margin-right: auto;
+}

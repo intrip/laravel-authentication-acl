@@ -1,4 +1,7 @@
 <?php  namespace Jacopo\Authentication\Models;
+
+use Jacopo\Authentication\Presenters\UserProfilePresenter;
+
 /**
  * Class UserProfile
  *
@@ -39,5 +42,10 @@ class UserProfile extends BaseModel
     public function getAvatarAttribute()
     {
         return isset($this->attributes['avatar']) ? base64_encode($this->attributes['avatar']) : null;
+    }
+
+    public function presenter()
+    {
+        return new UserProfilePresenter($this);
     }
 } 

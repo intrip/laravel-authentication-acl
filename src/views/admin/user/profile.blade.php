@@ -32,6 +32,26 @@ Admin area: Edit user profile
                 </div>
                 <div class="row">
                     <div class="col-md-6 col-xs-12">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4><i class="fa fa-picture-o"></i> Avatar</h4>
+                            <div class="profile-avatar">
+                                <img src="{{$user_profile->presenter()->avatar_src}}">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            {{Form::open(['action' => 'Jacopo\Authentication\Controllers\UserController@changeAvatar', 'method' => 'POST'])}}
+                            {{Form::label('avatar',$user_profile->avatar ? 'Change avatar: ' : 'Upload avatar: ')}}
+                            <div class="form-group">
+                                {{Form::file('avatar', ['class' => 'form-control'])}}
+                            </div>
+                            <div class="form-group">
+                                {{Form::submit('Update avatar', ['class' => 'btn btn-info'])}}
+                            </div>
+                            {{Form::close()}}
+                        </div>
+                    </div>
+                    <h4><i class="fa fa-cubes"></i> User data</h4>
                         {{Form::model($user_profile,['route'=>'users.profile.edit', 'method' => 'post'])}}
                             {{FormField::code(["label" => "User code:"])}}
                             <span class="text-danger">{{$errors->first('code')}}</span>
