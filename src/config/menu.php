@@ -22,7 +22,7 @@ return [
                     /*
                      * the acual link associated to the menu item
                      */
-                    "link" => URL::route('users.dashboard'),
+                    "link" => URL::route('users.list'),
                     /*
                      * the list of 'permission name' associated to the menu
                      * item: if the logged use has one or more of the permission
