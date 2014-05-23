@@ -108,7 +108,15 @@ div.paginator
     padding: 15px;
     min-height: 50px;
 }
-
+#dropdown-profile
+{
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+#nav-email
+{
+  margin-left:3px;
+}
 /*///////////////// dashboard ////////////////*/
 .stats-item
 {

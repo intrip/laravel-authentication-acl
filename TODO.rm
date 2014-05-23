@@ -1,6 +1,5 @@
 Authenticator:
 Per RELEASE:
-- foto profilo utente cn preview in panel admin(fai post update avatar(FIX BUG UPLOAD MP4 FILE e poi test cn behat mink e mettiti avatar)
 - usa db factory way e absract class nel dbtestcase
 - test coverage e check installation
 - rivedi la doc con md readme e setta travis dopo upload e vedi x donations
@@ -11,6 +10,7 @@ Per RELEASE:
 POI (0.2.0):
     - acceptance test (upload avatar ecc)
     - non usare way form
+    - flag on signup per custom profile field e se obbligatori o no
     - usa form validation exception con suo msg e catch globale
     - riogranizza directory e classi
     - modifica il banning per farlo ad ore

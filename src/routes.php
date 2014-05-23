@@ -1,5 +1,7 @@
 <?php
 //////////////////// Client side //////////////////////////
+use Illuminate\Session\TokenMismatchException;
+
 /**
  * User login and logout
  */
@@ -74,6 +76,13 @@ if (Config::get('authentication::handle_errors'))
             case '401':
                 return View::make('authentication::client.exceptions.401');
                 break;
+            case '500':
+                return View::make('authentication::client.exceptions.500');
+                break;
         }
+    });
+
+    App::error(function (TokenMismatchException $exception){
+        return View::make('authentication::client.exceptions.500');
     });
 }

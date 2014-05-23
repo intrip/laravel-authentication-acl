@@ -19,8 +19,9 @@
             </ul>
             <div class="navbar-nav nav navbar-right">
                 <li class="dropdown dropdown-user">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-user fa-fw"></i> {{isset($logged_user) ? $logged_user->email : 'User'}} <i class="fa fa-caret-down"></i>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="dropdown-profile">
+                        <img src="{{$logged_user->user_profile()->first()->presenter()->avatar_src}}" width="30px">
+                        <span id="nav-email">{{isset($logged_user) ? $logged_user->email : 'User'}}</span> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu">
                         <li>
