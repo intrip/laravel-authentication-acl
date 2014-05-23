@@ -46,9 +46,10 @@ class EloquentUserProfileRepository extends EloquentBaseRepository implements Us
         return $profile->first();
     }
 
-    public function updateAvatar($input_name = "avatar")
+    public function updateAvatar($id, $input_name = "avatar")
     {
-        $this->model->update([
+        $model = $this->find($id);
+        $model->update([
                              "avatar" => static::getBinaryData('170', $input_name)
                              ]);
     }

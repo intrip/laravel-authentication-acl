@@ -2,6 +2,7 @@
 
 use App;
 use Config;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Facade;
 use Jacopo\Authentication\Models\User;
@@ -18,10 +19,12 @@ class UserControllerTest extends DbTestCase
 {
 
     protected $custom_type_repository;
+    protected $faker;
 
     public function setUp()
     {
         parent::setUp();
+        $this->faker = \Faker\Factory::create();
         $this->custom_type_repository = App::make('custom_profile_repository');
     }
 

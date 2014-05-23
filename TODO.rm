@@ -1,6 +1,7 @@
 Authenticator:
 Per RELEASE:
-- foto profilo utente cn preview in panel admin(fai post update avatar(in tdd con il check validazione) e poi con il crawler: fai upload e poi check che esista e che la size sia quella che vuoi tu: http://stackoverflow.com/questions/15813508/symfony-functionnal-tests-receive-uploaded-file)
+- foto profilo utente cn preview in panel admin(fai post update avatar(FIX BUG UPLOAD MP4 FILE e poi test cn behat mink e mettiti avatar)
+- usa db factory way e absract class nel dbtestcase
 - test coverage e check installation
 - rivedi la doc con md readme e setta travis dopo upload e vedi x donations
 - add alla doc le cose nuove e l'hashing algorithm(profile edit con photo e custom profile fields e permessi x edit profile type e come ottenere l'utente profilo corrente x view lato client)
@@ -8,21 +9,17 @@ Per RELEASE:
 - gestisci branch e tutto e test generici di tutto (release 0.1.1)
 
 POI (0.2.0):
-    - acceptance test alcuni cn behat
+    - acceptance test (upload avatar ecc)
+    - non usare way form
+    - usa form validation exception con suo msg e catch globale
     - riogranizza directory e classi
     - modifica il banning per farlo ad ore
     - refactorin in interface driven code di più
     - multilingua
-    - usa form validation exception con suo msg e catch globale
     - view lato client base disponibile da esempio
-    - fix autocomplete bug on add user
     - add facebook e twitter login
     - template
     - widget vari utilizzabili
     - supporto multipli ordering con ricerca in contemporanea
     - messaggi personalizzati in file di config e traduzione di tutto con translate laravel
-    - usa validation exception class con message ad esso associato
-    - non usare way form
-    - reset button non pulisce la select search
-    - testa anche i controllers completamente e check code coverage in modo da testare il possibile(assolutamente testa sentry user repo)
     - quando fai reinviare la mail vedi di nascondere il msg di errore

@@ -10,6 +10,8 @@ use Jacopo\Authentication\Exceptions\ProfileNotFoundException;
 use Jacopo\Authentication\Models\UserProfile;
 use Jacopo\Authentication\Presenters\UserPresenter;
 use Jacopo\Authentication\Services\UserProfileService;
+use Jacopo\Authentication\Validators\UserProfileAvatarValidator;
+use Jacopo\Library\Exceptions\NotFoundException;
 use Jacopo\Library\Form\FormModel;
 use Jacopo\Authentication\Models\User;
 use Jacopo\Authentication\Helpers\FormHelper;
@@ -293,8 +295,25 @@ class UserController extends Controller
 
     public function changeAvatar()
     {
-        // validate data
+        $user_id = Input::get('user_id');
+        $profile_id = Input::get('user_profile_id');
+
+        // validate input
+        $validator = new UserProfileAvatarValidator();
+        if(! $validator->validate(Input::all())) return Redirect::action('Jacopo\Authentication\Controllers\UserController@editProfile', ['user_id' => $user_id])->withInput()->withErrors($validator->getErrors() );
 
         // change picture
+        try
+        {
+            $this->profile_repository->updateAvatar($profile_id);
+        }
+        catch( NotFoundException $e)
+        {
+            return Redirect::action('Jacopo\Authentication\Controllers\UserController@editProfile', ['user_id' => $user_id])->withInput()->withErrors(new MessageBag(['avatar' => 'Cannot upload the file.']) );
+        }
+
+        return Redirect::action('Jacopo\Authentication\Controllers\UserController@editProfile', ['user_id' => $user_id])->withMessage('Avatar changed succesfully');
+
+        //@todo fix bug upload mp4 e test cn behat
     }
 } 

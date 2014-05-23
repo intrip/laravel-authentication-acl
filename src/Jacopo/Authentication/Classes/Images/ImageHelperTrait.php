@@ -28,7 +28,7 @@ trait ImageHelperTrait {
      */
     public static function getBinaryData($size = 170, $input_name)
     {
-        return Image::make(static::getPathFromInput($input_name))->resize($size, null, true);
+        return Image::make(static::getPathFromInput($input_name))->resize($size, $size)->encode();
     }
 
 } 

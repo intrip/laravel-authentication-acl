@@ -40,11 +40,14 @@ Admin area: Edit user profile
                             </div>
                         </div>
                         <div class="col-md-6">
-                            {{Form::open(['action' => 'Jacopo\Authentication\Controllers\UserController@changeAvatar', 'method' => 'POST'])}}
+                            {{Form::open(['action' => 'Jacopo\Authentication\Controllers\UserController@changeAvatar', 'method' => 'POST', 'files' => true])}}
                             {{Form::label('avatar',$user_profile->avatar ? 'Change avatar: ' : 'Upload avatar: ')}}
                             <div class="form-group">
                                 {{Form::file('avatar', ['class' => 'form-control'])}}
+                                <span class="text-danger">{{$errors->first('avatar')}}</span>
                             </div>
+                            {{Form::hidden('user_id', $user_profile->user_id)}}
+                            {{Form::hidden('user_profile_id', $user_profile->id)}}
                             <div class="form-group">
                                 {{Form::submit('Update avatar', ['class' => 'btn btn-info'])}}
                             </div>
