@@ -27,7 +27,6 @@
         "cartalyst/sentry": "2.1.*",
         "way/form": "dev-master",
         "jacopo/library": "dev-develop",
-        "way/laravel-test-helpers": "dev-master",
         "gregwar/captcha": "v1.0.11"
     },
     "require-dev": {

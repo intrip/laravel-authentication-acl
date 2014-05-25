@@ -1,0 +1,189 @@
+# Laravel Authentication ACL documentation #
+
+Descrizione del pacchetto pannello con acl basato su sentry2
+Link all'esempio
+fai sezione features
+fixa toc links
+adda nuove cose
+rileggi tutto
+
+### Table of Contents ###
+ 1. Requirements
+ 2. Setup
+ 3. Configuration
+ 4. Usage
+ 5. Advanced Configuration and API
+
+## Requirements  ##
+
+To install this software you need:
+
+  * Laravel framework version 4 or higher
+  * Php 5.4+
+
+## Setup ##
+
+To install authentication follow this steps:
+
+  1. Create an empty <a href="http://laravel.com/docs/quick" target="_blank">Laravel 4</a> installation if you don't have any.
+
+  2. Add to your _composer.json_ require field the following lines:
+      "require": {
+        ...
+        "jacopo/library": "0.1.0"
+        "jacopo/authentication": "0.1.0"
+      },
+
+  3. Change the "minimum-stability" option of your _composer.json_ file to "dev" and add this line: `"prefer-stable" : true`
+  This is needed because the package requires a "development" version of another package (this requirement will be changed in the next release)
+  .
+  4. Now run `composer update` command.
+
+  5. Now open the file _app/config/app.php_ and add to the 'providers' option the following line:
+  'Jacopo\Authentication\AuthenticationServiceProvider',
+
+  6. Then run this command:
+  `php artisan authentication:prepare`
+  Now you can find configuration files in _app/config/packages/jacopo/authentication_ folder.
+  If you want to use a custom db(database) access configuration only for this package (while keeping other db connections for the rest of the application) edit the _app/config/packages/jacopo/authentication/database.php_ file.
+
+  7. Now you need to install the application, to do that run `php artisan authentication:install` command.
+
+  Congratulations! You have succesfully installed Laravel Authentication ACL package!
+
+  Here is the main application links:
+
+  * http://url_of_your_application/login the client login page (after login it will redirect you to the home page)
+  [ username:<b>admin@admin.com</b> password:<b>password</b> ]
+  * http://url_of_your_application/admin/login the admin login page (after login it will redirect you to the admin panel) [ username:<b>admin@admin.com</b> password:<b>password</b> ]
+  * http://url_of_your_application/user/signup the new user signup form (to register a new user)
+* http://url_of_your_application/user/logout logout page
+
+### Note on sending emails ###
+Keep in mind this software will send various notification emails, dont't forget to edit you laravel app/config/mail.php file.
+
+## Configuration ##
+
+After installing the package you can find all his configuration files under the folder: _app/config/packages/jacopo/authentication_. All the files are self documented, here is a brief overview of each configuration file:
+
+  * _sentry/config.php_: the low level authentication configuration part, it helps you handle session cookie's name,login throttling and custom password hashing
+  * _way-form/config.php_: system configuration files for form handling (do not edit)
+  * _config.php_: basic configuration
+  * _menu.php_: to create dynamic admin menu with arbitrary permissions
+  * _database.php_: custom database configuration file
+  * _permission.php_: general permissions configuration
+
+## Usage ##
+You have four main link to access the application.
+
+The first is the user login page available at: "http://url_of_your_application/login".
+With the user login page (after login) you will be redirected to the root application folder: "/"
+The second main link is the admin login page, available at http://url_of_your_application/admin/login.
+Here is the sceenshoot of the admin login page:
+
+<img src="/images/login.png">
+
+After the login you will be redirected to the admin panel:
+
+<a href="/images/admin_main.png" target="_blank" ><img src="/images/admin_main.png" class="max-100"></a>
+
+The main panel contains three main menu links(on top): users, groups and permissions. Following this link you will be redirected to the corresponding area.
+On every page you may see a panel to filter the results in the list (on the right) and a sidebar on the left with the link to add a new resource or to list all the resources.
+If you want to create a new user you need to click on the _add user/add new_ button:
+
+<a href="/images/add_user.png" target="_blank" ><img src="/images/add_user.png" class="max-100"></a>
+
+After filling the form you can also create/edit a user profile with the _edit profile_ link:
+
+<a href="/images/edit_profile.png" target="_blank" ><img src="/images/edit_profile.png" class="max-100"></a>
+
+The listing/filtering and editing of groups and permission respect the same structure as for the users (just use the links on the main menu).
+
+The third link is the user signup form available at: "http://url_of_your_application/user/signup":
+
+<a href="/images/signup.png" target="_blank" ><img src="/images/signup.png" class="max-100"></a>
+
+The last link is the logout link available at: "http://url_of_your_application/user/logout"
+
+### Permissions handling ###
+
+  Every user belongs to a certain number of groups(you can edit them in the user page). You can also define custom permission for user and groups. When the software search for permissions it will join the permission that are associated to the user, with the one of all the groups that belongs to the user; if the permissions to check for are in that list the check will pass otherwise it won't pass.
+
+## Advanced configuration and API ##
+
+By installing the package you have two helper classes available anywhere in your application:
+
+* authentication : you can obtain this class with the following code: <code><?php $authentication = \App::make('authentication'); ?></code>
+                    The class have the following methods:
+                    <code>
+                    /**
+                    * Force authentication on a user
+                    *
+                    * @param array $credentials: an array with the following structure: ["email" => "user_email", "password" => "user_password"]
+                    * @param boolean $remember
+                    * @return mixed
+                    */
+                    public function authenticate($credentials, $remember);
+
+                    /**
+                    * @param $user
+                    * @param $remember
+                    * @return mixed
+                    */
+                    public function loginById($id, $remember);
+
+                    /**
+                    * Logout
+                    *
+                    * @return mixed
+                    */
+                    public function logout();
+
+                    /**
+                    * @return mixed
+                    */
+                    public function getErrors();
+
+                    /**
+                    * Obtain the user with his email
+                    *
+                    * @param $email
+                    * @return mixed
+                    * @throws \Jacopo\Authentication\Exceptions\UserNotFoundException
+                    * @return mixed
+                    */
+                    public function getUser($email);
+
+                    /**
+                    * Obtains a user given his user id
+                    *
+                    * @param $id
+                    * @return mixed
+                    */
+                    public function getUserById($id);
+
+                    /**
+                    * Obtain the current logged user
+                    *
+                    * @return mixed
+                    */
+                    public function getLoggedUser();
+                    </code>
+
+You can find the user class in the file: _vendor/jacopo/authentication/src/Jacopo/Authentication/Models/User.php_
+* authentication_helper : you can obtain this class with the following code: <code><?php $authentication = \App::make('authentication_helper'); ?></code>
+                    The class have the following methods:
+                    /**
+                    * Check if the current user is logged in and has any of the
+                    * permissions given in $permissions
+                    * @param array $permissions contain strings with the permissions name
+                    * @return boolean
+                    */
+                    public function hasPermission(array $permissions);
+
+### Blocking editing of a user/group or permission for the admin ui ###
+In case you want to block the editing of a _user/group/permission_ from the admin ui you need to open any dbms editor (like phpmyadmin) and go to the relative row in the corrisponding table associated _(users,groups,permission)_ and then set the flag of the column protected to "1".
+
+### How to run all tests ###
+To run all the tests you need <a href="http://phpunit.de/getting-started.html" target="_blank">phpunit</a> and <a href="https://sqlite.org/" target="_blank">sqlite3</a> installed on your system.
+Then go in _vendor/jacopo/authentication_ folder and run the command: `phpunit`

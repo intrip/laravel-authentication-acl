@@ -1,14 +1,14 @@
 Authenticator:
 Per RELEASE:
-- usa db factory way e absract class nel dbtestcase
-- test coverage e check installation
-- rivedi la doc con md readme e setta travis dopo upload e vedi x donations
-- add alla doc le cose nuove e l'hashing algorithm(profile edit con photo e custom profile fields e permessi x edit profile type e come ottenere l'utente profilo corrente x view lato client)
+- check funzionamento di tutto e poi check installation(con comandi ecc) e pubblica su packagist ecc x prova install
+- gestisci branch e tutto e test generici di tutto (release 0.1.0)
 - esempio usabile su aruba cloud o il servizio per sviluppatori trovato
-- gestisci branch e tutto e test generici di tutto (release 0.1.1)
+- add alla doc e alle features le cose nuove e l'hashing algorithm(profile edit con photo e custom profile fields e permessi x edit profile type e come ottenere l'utente profilo corrente x view lato client, che è basato su sentry 2.0) e completa la doc
+- travis ci e add donations e pubblicizzalo bene
 
 POI (0.2.0):
     - acceptance test (upload avatar ecc)
+    - usa db factory way e absract class nel dbtestcase
     - non usare way form
     - flag on signup per custom profile field e se obbligatori o no
     - usa form validation exception con suo msg e catch globale

@@ -1,4 +1,6 @@
 /vendor
 composer.phar
 composer.lock
+.gitignore
 .DS_Store
+TODO.rm

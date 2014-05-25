@@ -20,7 +20,9 @@
             <div class="navbar-nav nav navbar-right">
                 <li class="dropdown dropdown-user">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="dropdown-profile">
-                        <img src="{{$logged_user->user_profile()->first()->presenter()->avatar_src}}" width="30px">
+                        @if(isset($logged_user) && $logged_user->user_profile()->count())
+                            <img src="{{$logged_user->user_profile()->first()->presenter()->avatar_src}}" width="30px">
+                        @endif
                         <span id="nav-email">{{isset($logged_user) ? $logged_user->email : 'User'}}</span> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu">
