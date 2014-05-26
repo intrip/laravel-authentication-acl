@@ -93,6 +93,10 @@ class EloquentPermissionRepositoryTest extends TestCase {
 
         return $mock_repo_user;
     }
+
+    //@todo usa effettivamente i group repo e user repo e tocca il db, in modo che il test
+    // fallisca perchè nn usi + il model, a questo punto vedi di creare un metodo per trasformare il tutto oppure
+    // preleva il model
 }
 
 class FalseGetter

@@ -41,7 +41,6 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
    *
    * @return mixed
    * @override
-   * @todo db test
    */
   public function create(array $input)
   {
@@ -72,7 +71,6 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
    * @throws \Jacopo\Authentication\Exceptions\UserNotFoundException
    * @return mixed
    * @override
-   * @todo db test
    */
   public function update($id, array $data)
   {
@@ -109,7 +107,6 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
    *
    * @param $id group id
    * @throws \Jacopo\Authentication\Exceptions\UserNotFoundException
-   * @todo test
    */
   public function addGroup($user_id, $group_id)
   {
@@ -130,7 +127,6 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
    *
    * @param $id group id
    * @throws \Jacopo\Authentication\Exceptions\UserNotFoundException
-   * @todo test
    */
   public function removeGroup($user_id, $group_id)
   {

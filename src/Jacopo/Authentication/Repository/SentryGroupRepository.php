@@ -16,7 +16,6 @@ class SentryGroupRepository implements BaseRepositoryInterface
     /**
      * Sentry instance
      * @var
-     * @todo db test
      */
     protected $sentry;
 
