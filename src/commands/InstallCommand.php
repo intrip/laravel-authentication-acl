@@ -19,7 +19,7 @@ class InstallCommand extends Command {
 	 *
 	 * @var string
 	 */
-	protected $description = 'Install Laravel ACL Authentication package.';
+	protected $description = 'Install Laravel Authentication ACL package.';
 
   protected $call_wrapper;
 
@@ -42,7 +42,7 @@ class InstallCommand extends Command {
 	 */
 	public function fire()
 	{
-    $this->call_wrapper->call('migrate', ['--package' => 'jacopo/authentication', '--database' => "authentication" ] );
+    $this->call_wrapper->call('migrate', ['--package' => 'jacopo/laravel-authentication-acl', '--database' => "authentication" ] );
 
     $this->db_seeder->run();
 

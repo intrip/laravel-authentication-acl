@@ -24,14 +24,14 @@ class PrepareCommandTest extends TestCase {
     $mock_call = m::mock('StdClass')
             ->shouldReceive('call')
             ->once()
-            ->with('config:publish', ['package' => 'jacopo/authentication' ])
+            ->with('config:publish', ['package' => 'jacopo/laravel-authentication-acl' ])
             ->andReturn(true)
             ->getMock();
 
     $command = new CommandTester(new PrepareCommand($mock_call));
     $command->execute([]);
 
-    $this->assertEquals("## Authentication prepared successfully ##\n", $command->getDisplay());
+    $this->assertEquals("## Laravel Authentication ACL prepared successfully ##\n", $command->getDisplay());
 
   }
 }

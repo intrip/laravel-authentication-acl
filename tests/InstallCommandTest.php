@@ -24,7 +24,7 @@ class InstallCommandTest extends TestCase {
       $mock_call = m::mock('StdClass')
               ->shouldReceive('call')
               ->once()
-              ->with('migrate', ['--package' => 'jacopo/authentication', '--database' => "authentication" ])
+              ->with('migrate', ['--package' => 'jacopo/laravel-authentication-acl', '--database' => "authentication" ])
               ->andReturn(true)
               ->shouldReceive('call')
               ->once()

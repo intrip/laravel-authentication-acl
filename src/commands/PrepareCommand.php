@@ -18,7 +18,7 @@ class PrepareCommand extends Command {
    *
    * @var string
    */
-  protected $description = 'Prepare authentication package for install.';
+  protected $description = 'Prepare Laravel Authentication ACL package for install.';
 
   protected $call_wrapper;
 
@@ -40,9 +40,9 @@ class PrepareCommand extends Command {
    */
   public function fire()
   {
-    $this->call_wrapper->call('config:publish', ['package' => 'jacopo/authentication' ] );
+    $this->call_wrapper->call('config:publish', ['package' => 'jacopo/laravel-authentication-acl' ] );
 
-    $this->info('## Authentication prepared successfully ##');
+    $this->info('## Laravel Authentication ACL prepared successfully ##');
 
   }
 
