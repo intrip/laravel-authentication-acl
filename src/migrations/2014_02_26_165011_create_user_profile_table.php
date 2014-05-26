@@ -34,7 +34,7 @@ class CreateUserProfileTable extends Migration {
                 ->onDelete('cascade');
         });
 
-        DB::statement("ALTER TABLE  'user_profile' ADD  'avatar' LONGBLOB DEFAULT NULL");
+        DB::statement('ALTER TABLE  `user_profile` ADD  `avatar` LONGBLOB DEFAULT NULL');
     }
 
 	/**
