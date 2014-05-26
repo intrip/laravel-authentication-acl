@@ -103,7 +103,7 @@
                                 <div class="form-group">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-picture-o"></i></span>
-                                        {{Form::text('captcha_text','', ['class'=> 'form-control', 'placeholder' => 'Fill in with the text of the image', 'required', 'autocomplete' => 'off'])}}
+                                        {{Form::text('captcha_text',null, ['class'=> 'form-control', 'placeholder' => 'Fill in with the text of the image', 'required', 'autocomplete' => 'off'])}}
                                     </div>
                                 </div>
                                 <span class="text-danger">{{$errors->first('captcha_text')}}</span>

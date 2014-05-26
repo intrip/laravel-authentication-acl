@@ -313,7 +313,5 @@ class UserController extends Controller
         }
 
         return Redirect::action('Jacopo\Authentication\Controllers\UserController@editProfile', ['user_id' => $user_id])->withMessage('Avatar changed succesfully');
-
-        //@todo fix bug upload mp4 e test cn behat
     }
 } 
