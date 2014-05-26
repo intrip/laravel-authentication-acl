@@ -21,7 +21,7 @@
         "intervention/image": "2.*",
         "cartalyst/sentry": "2.1.*",
         "way/form": "dev-master",
-        "jacopo/library": "1.0.0",
+        "jacopo/laravel-library": "1.0.0",
         "gregwar/captcha": "1.0.11"
     },
     "require-dev": {
