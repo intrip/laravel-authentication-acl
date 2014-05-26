@@ -10,7 +10,7 @@ use App;
 /**
  * Test UserProfileServiceTest
  *
- * @author jacopo beschi j.beschi@palmabit.com
+ * @author jacopo beschi jacopo@jacopobeschi.com
  */
 class UserProfileServiceTest extends DbTestCase {
 

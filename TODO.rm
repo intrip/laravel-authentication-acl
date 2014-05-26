@@ -1,9 +1,12 @@
 Authenticator:
 Per RELEASE:
-- check funzionamento installation(con comandi ecc e versione 0.1.0 su packagist) e pubblica tutto
-- esempio usabile su aruba cloud o il servizio per sviluppatori trovato
+- check funzionamento installation(prima fatti tutti i branch e versioni su github come per laravel/framework, con comandi ecc e versione 1.0.0 su packagist) e pubblica tutto
 - add alla doc e alle features le cose nuove e l'hashing algorithm(profile edit con photo e custom profile fields e permessi x edit profile type e come ottenere l'utente profilo corrente x view lato client, che è basato su sentry 2.0) e completa la doc verificando tutti i link che siano corretti ecc
-- travis ci e add donations e pubblicizzalo bene
+- esempio usabile su aruba cloud o il servizio per sviluppatori trovato
+- travis ci
+- aggiorna la doc con esempio usabile e travis
+- add donations
+- pubblicizzalo bene
 
 POI (0.2.0):
     - non usare way form

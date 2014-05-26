@@ -2,7 +2,7 @@
 /**
  * Class SentryAuthenticationHelper
  *
- * @author jacopo beschi j.beschi@palmabit.com
+ * @author jacopo beschi jacopo@jacopobeschi.com
  */
 use Illuminate\Support\Facades\Config;
 use Jacopo\Authentication\Interfaces\AuthenticationHelperInterface;

@@ -158,7 +158,7 @@ class SentryAuthenticator implements AuthenticateInterface
 
   /**
    * {@inheritdoc}
-   * @throws \Palmabit\Authentication\Exceptions\UserNotFoundException
+   * @throws \Jacopo\Authentication\Exceptions\UserNotFoundException
    */
   public function getToken($email)
   {
