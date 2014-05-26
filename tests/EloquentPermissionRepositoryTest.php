@@ -5,12 +5,26 @@
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
+use Jacopo\Authentication\Models\User;
 use Mockery as m;
-use App, Event;
+use App, Event, DB;
 use Jacopo\Authentication\Models\Permission;
 use Jacopo\Authentication\Repository\EloquentPermissionRepository as PermissionRepository;
 
-class EloquentPermissionRepositoryTest extends TestCase {
+class EloquentPermissionRepositoryTest extends DbTestCase {
+
+    protected $faker;
+
+    public function setUp()
+    {
+        parent::setUp();
+        $this->faker = \Faker\Factory::create();
+    }
+
+    public function tearDown()
+    {
+        m::close();
+    }
 
     /**
      * @test
@@ -18,7 +32,7 @@ class EloquentPermissionRepositoryTest extends TestCase {
      **/
     public function it_check_if_is_associated_to_a_group_and_throws_exception()
     {
-        $this->mockGroupRepositoryWithPerm1();
+        $this->createGroupWithPerm1();
         $perm_repo = new PermissionRepository();
         $permission_obj = new Permission(["description" => "desc", "permission" => "_perm"]);
         $perm_repo->checkIsNotAssociatedToAnyGroup($permission_obj);
@@ -29,7 +43,7 @@ class EloquentPermissionRepositoryTest extends TestCase {
      **/
     public function it_check_if_is_associated_to_a_group()
     {
-        $this->mockGroupRepositoryWithPerm1();
+        $this->createGroupWithPerm1();
         $perm_repo = new PermissionRepository();
         $permission_obj = new Permission(["description" => "desc", "permission" => []]);
         $perm_repo->checkIsNotAssociatedToAnyGroup($permission_obj);
@@ -40,7 +54,7 @@ class EloquentPermissionRepositoryTest extends TestCase {
      **/
     public function it_check_if_is_associated_to_a_user()
     {
-        $this->mockUserRepositoryWithPerm1();
+        $this->createUserWithPerm1();
         $perm_repo = new PermissionRepository();
         $permission_obj = new Permission(["description" => "desc", "permission" => []]);
         $perm_repo->checkIsNotAssociatedToAnyUser($permission_obj);
@@ -52,7 +66,7 @@ class EloquentPermissionRepositoryTest extends TestCase {
      **/
     public function it_check_if_is_associated_to_a_user_and_throws_exception()
     {
-        $this->mockUserRepositoryWithPerm1();
+        $this->createUserWithPerm1();
         $perm_repo = new PermissionRepository();
         $permission_obj = new Permission(["description" => "desc", "permission" => "_perm" ]);
         $perm_repo->checkIsNotAssociatedToAnyUser($permission_obj);
@@ -65,38 +79,34 @@ class EloquentPermissionRepositoryTest extends TestCase {
     {
         $true_stub = new FalseGetter;
         Event::fire('repository.updating', [$true_stub]);
-        $this->mockGroupRepositoryWithPerm1();
-        $this->mockUserRepositoryWithPerm1();
+        $this->createGroupWithPerm1();
+        $this->createUserWithPerm1();
     }
 
     /**
      * @return m\MockInterface
      */
-    private function mockGroupRepositoryWithPerm1()
+    private function createGroupWithPerm1()
     {
-        $data_obj              = new \StdClass;
-        $data_obj->permissions = ["_perm" => "1"];
-        $data_stub             = [$data_obj];
-        $mock_repo_grp         = m::mock('Jacopo\Authentication\Repository\SentryGroupRepository')->shouldReceive('all')->andReturn($data_stub)->getMock();
-        App::instance('group_repository', $mock_repo_grp);
+        $group_repo = App::make('group_repository');
 
-        return $mock_repo_grp;
+        $data = [
+            "name" => $this->faker->name(),
+            "permissions" => ["_perm" => "1"]
+        ];
+        return $group_repo->create($data);
     }
 
-    private function mockUserRepositoryWithPerm1()
+    private function createUserWithPerm1()
     {
-        $data_obj              = new \StdClass;
-        $data_obj->permissions = ["_perm" => "1"];
-        $data_stub             = [$data_obj];
-        $mock_repo_user         = m::mock('Jacopo\Authentication\Repository\SentryUserRepository')->shouldReceive('all')->andReturn($data_stub)->getMock();
-        App::instance('user_repository', $mock_repo_user);
-
-        return $mock_repo_user;
+        DB::table('users')->insert([
+                                   "email"      => $this->faker->email(),
+                                   "password"   => $this->faker->text(10), "activated" => 1,
+                                   "permissions" => json_encode(["_perm" => "1"]),
+                                   "created_at" => 0, "updated_at" => 0
+                                   ]);
+        return User::first();
     }
-
-    //@todo usa effettivamente i group repo e user repo e tocca il db, in modo che il test
-    // fallisca perchè nn usi + il model, a questo punto vedi di creare un metodo per trasformare il tutto oppure
-    // preleva il model
 }
 
 class FalseGetter

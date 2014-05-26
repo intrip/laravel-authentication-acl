@@ -1,6 +1,5 @@
 Authenticator:
 Per RELEASE:
-- bugfix: vedi eloquentpermissionrepositorytest
 - check funzionamento installation(con comandi ecc e versione 0.1.0 su packagist) e pubblica tutto
 - esempio usabile su aruba cloud o il servizio per sviluppatori trovato
 - add alla doc e alle features le cose nuove e l'hashing algorithm(profile edit con photo e custom profile fields e permessi x edit profile type e come ottenere l'utente profilo corrente x view lato client, che è basato su sentry 2.0) e completa la doc verificando tutti i link che siano corretti ecc
@@ -37,7 +36,7 @@ TEST APPLICAZIONE (da creare poi in acceptance tests):
 6) associazione gruppi ( (( OK )) )
 7) associazione permessi ( (( OK )) )
 8) filtro utenti e gruppi per la ricerca ( (( OK )) )
-9) cancellazione permessi e gruppi già associati ( (( FALLITO )) )
+9) cancellazione permessi e gruppi già associati ( (( OK )) )
 10) dashboard dati (OK)
 11) profilo utente cn avatar e custom field (OK)
 12) setup script e check crea utenti vari (( TODO ))

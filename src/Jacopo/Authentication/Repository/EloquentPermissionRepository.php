@@ -44,9 +44,29 @@ class EloquentPermissionRepository extends EloquentBaseRepository
     {
         foreach ($collection as $item)
         {
-            $perm = $item->permissions;
+            $perm = $this->permissionsToArray($item->permissions);
             if (! empty($perm) && is_array($perm) && array_key_exists($obj->permission, $perm)) throw new PermissionException;
         }
+    }
+
+    private function permissionsToArray($permissions)
+    {
+        if ( ! $permissions)
+        {
+            return array();
+        }
+
+        if (is_array($permissions))
+        {
+            return $permissions;
+        }
+
+        if ( ! $_permissions = json_decode($permissions, true))
+        {
+            throw new \InvalidArgumentException("Cannot JSON decode permissions [$permissions].");
+        }
+
+        return $_permissions;
     }
 
     /**
