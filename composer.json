@@ -1,8 +1,7 @@
 {
-    "name": "jacopo/authentication",
-    "description": "",
-    "version" : "0.1.0",
-    "license" : "proprietary",
+    "name": "jacopo/laravel-authentication-acl",
+    "description": "Laravel authentication and ACL",
+    "license" : "MIT",
     "authors": [
         {
             "name": "jacopo",
@@ -11,10 +10,6 @@
         }
     ],
     "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://intrip@bitbucket.org/intrip/library.git"
-        },
         {
             "type": "vcs",
             "url": "git://github.com/orchestral/phpseclib.git"
@@ -26,8 +21,8 @@
         "intervention/image": "2.*",
         "cartalyst/sentry": "2.1.*",
         "way/form": "dev-master",
-        "jacopo/library": "dev-develop",
-        "gregwar/captcha": "v1.0.11"
+        "jacopo/library": "1.0.0",
+        "gregwar/captcha": "1.0.11"
     },
     "require-dev": {
         "mockery/mockery": "0.9.0",
