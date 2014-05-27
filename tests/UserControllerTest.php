@@ -95,12 +95,12 @@ class UserControllerTest extends DbTestCase
 
     protected function disableCaptchaCheck()
     {
-        Config::set('authentication::captcha_signup', false);
+        Config::set('laravel-authentication-acl::captcha_signup', false);
     }
 
     protected function enableCaptchaCheck()
     {
-        Config::set('authentication::captcha_signup', true);
+        Config::set('laravel-authentication-acl::captcha_signup', true);
     }
 
     /**
@@ -111,14 +111,14 @@ class UserControllerTest extends DbTestCase
         $active = true;
         $this->mockConfigGetEmailConfirmation($active);
 
-        \View::shouldReceive('make')->once()->with('authentication::client.auth.signup-email-confirmation');
+        \View::shouldReceive('make')->once()->with('laravel-authentication-acl::client.auth.signup-email-confirmation');
 
         $this->action('GET', 'Jacopo\Authentication\Controllers\UserController@signupSuccess');
     }
 
     private function mockConfigGetEmailConfirmation($active)
     {
-        Config::set('authentication::email_confirmation', $active);
+        Config::set('laravel-authentication-acl::email_confirmation', $active);
     }
 
     /**
@@ -129,7 +129,7 @@ class UserControllerTest extends DbTestCase
         $active = false;
         $this->mockConfigGetEmailConfirmation($active);
 
-        \View::shouldReceive('make')->once()->with('authentication::client.auth.signup-success');
+        \View::shouldReceive('make')->once()->with('laravel-authentication-acl::client.auth.signup-success');
 
         $this->action('GET', 'Jacopo\Authentication\Controllers\UserController@signupSuccess');
     }

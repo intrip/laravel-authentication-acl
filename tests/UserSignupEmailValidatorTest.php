@@ -71,7 +71,7 @@ class UserSignupEmailValidatorTest extends DbTestCase {
 
     private function enableEmailConfirmation()
     {
-        Config::set('authentication::email_confirmation', true);
+        Config::set('laravel-authentication-acl::email_confirmation', true);
     }
 
 }

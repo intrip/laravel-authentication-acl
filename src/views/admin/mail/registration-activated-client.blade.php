@@ -7,7 +7,7 @@
     {{ HTML::style('//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css') }}
 </head>
 <body>
-<h2>Welcome to {{Config::get('authentication::app_name')}}</h2>
+<h2>Welcome to {{Config::get('laravel-authentication-acl::app_name')}}</h2>
 <div>
     <h3>Dear: {{$body['email']}}</h3>
     <strong>Your email has been confirmed succesfully.</strong>

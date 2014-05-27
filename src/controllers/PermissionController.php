@@ -33,7 +33,7 @@ class PermissionController extends \Controller
     {
         $objs = $this->r->all();
 
-        return View::make('authentication::admin.permission.list')->with(["permissions" => $objs]);
+        return View::make('laravel-authentication-acl::admin.permission.list')->with(["permissions" => $objs]);
     }
 
     public function editPermission()
@@ -47,7 +47,7 @@ class PermissionController extends \Controller
             $obj = new Permission;
         }
 
-        return View::make('authentication::admin.permission.edit')->with(["permission" => $obj]);
+        return View::make('laravel-authentication-acl::admin.permission.edit')->with(["permission" => $obj]);
     }
 
     public function postEditPermission()

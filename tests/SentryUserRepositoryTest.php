@@ -182,6 +182,6 @@ class SentryUserRepositoryTest extends DbTestCase {
      */
     protected function setConfigPerPage($per_page = 5)
     {
-        Config::set('authentication::users_per_page', $per_page);
+        Config::set('laravel-authentication-acl::users_per_page', $per_page);
     }
 }

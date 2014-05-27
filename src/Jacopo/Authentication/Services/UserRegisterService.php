@@ -47,7 +47,7 @@ class UserRegisterService {
     $this->user_repository       = App::make('user_repository');
     $this->profile_repository    = App::make('profile_repository');
     $this->user_signup_validator = $v ? $v : new UserSignupValidator;
-    $this->activation_enabled    = Config::get('authentication::email_confirmation');
+    $this->activation_enabled    = Config::get('laravel-authentication-acl::email_confirmation');
     Event::listen('service.activated',
                   'Jacopo\Authentication\Services\UserRegisterService@sendActivationEmailToClient');
   }
@@ -104,7 +104,7 @@ class UserRegisterService {
   }
 
   protected function getActiveInputState () {
-    return Config::get('authentication::email_confirmation') ? false : true;
+    return Config::get('laravel-authentication-acl::email_confirmation') ? false : true;
   }
 
   /**
@@ -112,7 +112,7 @@ class UserRegisterService {
    * @param $user
    */
   public function sendRegistrationMailToClient ($input) {
-    $view_file = $this->activation_enabled ? "authentication::admin.mail.registration-waiting-client" : "authentication::admin.mail.registration-confirmed-client";
+    $view_file = $this->activation_enabled ? "laravel-authentication-acl::admin.mail.registration-waiting-client" : "laravel-authentication-acl::admin.mail.registration-confirmed-client";
 
     $mailer = App::make('jmailer');
 
@@ -123,7 +123,7 @@ class UserRegisterService {
                                      "first_name" => $input["first_name"],
                                      "token"      => $this->activation_enabled ? App::make('authenticator')->getActivationToken($input["email"]) : ''
                                      ],
-                    "Registration request to: " . \Config::get('authentication::app_name'),
+                    "Registration request to: " . \Config::get('laravel-authentication-acl::app_name'),
                     $view_file);
   }
 
@@ -137,8 +137,8 @@ class UserRegisterService {
     $mailer = App::make('jmailer');
     // if i activate a deactivated user
     $mailer->sendTo($user->email, ["email" => $user->email],
-                    "Your user is activated on: " . Config::get('authentication::app_name'),
-                    "authentication::admin.mail.registration-activated-client");
+                    "Your user is activated on: " . Config::get('laravel-authentication-acl::app_name'),
+                    "laravel-authentication-acl::admin.mail.registration-activated-client");
   }
 
   /**

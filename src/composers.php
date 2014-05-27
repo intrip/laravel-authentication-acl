@@ -3,14 +3,14 @@
 /**
  * the site name
  */
-View::composer('authentication::*', function ($view){
-    $view->with('app_name', Config::get('authentication::app_name') );
+View::composer('laravel-authentication-acl::*', function ($view){
+    $view->with('app_name', Config::get('laravel-authentication-acl::app_name') );
 });
 
 /**
  * the logged user
  */
-View::composer('authentication::*', function ($view){
+View::composer('laravel-authentication-acl::*', function ($view){
     $view->with('logged_user', App::make('authenticator')->getLoggedUser() );
 });
 
@@ -18,7 +18,7 @@ use Jacopo\Authentication\Classes\Menu\SentryMenuFactory;
 /**
  * menu items available depending on permissions
  */
-View::composer('authentication::admin.layouts.*', function ($view){
+View::composer('laravel-authentication-acl::admin.layouts.*', function ($view){
     $menu_items = SentryMenuFactory::create()->getItemListAvailable();
     $view->with('menu_items', $menu_items);
 });
@@ -26,7 +26,7 @@ View::composer('authentication::admin.layouts.*', function ($view){
 /**
  * User sidebar
  */
-View::composer(['authentication::admin.user.*'], function ($view){
+View::composer(['laravel-authentication-acl::admin.user.*'], function ($view){
     $view->with('sidebar_items', [
                                      "Dashboard" => [
                                          "url" => URL::route('users.dashboard'),
@@ -45,7 +45,7 @@ View::composer(['authentication::admin.user.*'], function ($view){
 /**
  *  Group sidebar
  */
-View::composer(['authentication::admin.group.*'], function ($view){
+View::composer(['laravel-authentication-acl::admin.group.*'], function ($view){
         $view->with('sidebar_items', [
             "Groups list" => [
             'url' => URL::route('groups.list'),
@@ -60,7 +60,7 @@ View::composer(['authentication::admin.group.*'], function ($view){
 /**
  *  Permission sidebar
  */
-View::composer(['authentication::admin.permission.*'], function ($view){
+View::composer(['laravel-authentication-acl::admin.permission.*'], function ($view){
     $view->with('sidebar_items', [
                                  "Permissions list" => [
                                      'url' => URL::route('permission.list'),
@@ -78,7 +78,7 @@ use Jacopo\Authentication\Helpers\FormHelper;
 /**
  * permission select
  */
-View::composer(['authentication::admin.user.edit','authentication::admin.group.edit'], function ($view){
+View::composer(['laravel-authentication-acl::admin.user.edit','laravel-authentication-acl::admin.group.edit'], function ($view){
     $fh = new FormHelper();
     $values_permission = $fh->getSelectValuesPermission();
     $view->with('permission_values', $values_permission);
@@ -86,7 +86,7 @@ View::composer(['authentication::admin.user.edit','authentication::admin.group.e
 /**
  * group select
  */
-View::composer(['authentication::admin.user.edit','authentication::admin.group.edit', 'authentication::admin.user.search'], function ($view){
+View::composer(['laravel-authentication-acl::admin.user.edit','laravel-authentication-acl::admin.group.edit', 'laravel-authentication-acl::admin.user.search'], function ($view){
     $fh = new FormHelper();
     $values_group = $fh->getSelectValuesGroups();
     $view->with('group_values', $values_group);
@@ -94,7 +94,7 @@ View::composer(['authentication::admin.user.edit','authentication::admin.group.e
 /**
  * Dashboard information
  */
-View::composer(['authentication::admin.user.dashboard'], function($view){
+View::composer(['laravel-authentication-acl::admin.user.dashboard'], function($view){
     $user_statistics = new UserStatistics();
     $registered = $user_statistics->getRegisteredUserNumber();
     $active = $user_statistics->getActiveUserNumber();
@@ -106,7 +106,7 @@ View::composer(['authentication::admin.user.dashboard'], function($view){
 /**
  * Permission to add custom profile field
  */
-View::composer(['authentication::admin.user.profile'], function($view){
+View::composer(['laravel-authentication-acl::admin.user.profile'], function($view){
     $auth_helper = App::make('authentication_helper');
     $can_add_fields = $auth_helper->checkCustomProfileEditPermission() ? true : false;
 

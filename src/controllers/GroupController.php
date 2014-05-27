@@ -41,7 +41,7 @@ class GroupController extends \Controller
     {
         $groups = $this->group_repository->all(Input::all());
 
-        return View::make('authentication::admin.group.list')->with(["groups" => $groups]);
+        return View::make('laravel-authentication-acl::admin.group.list')->with(["groups" => $groups]);
     }
 
     public function editGroup()
@@ -56,7 +56,7 @@ class GroupController extends \Controller
         }
         $presenter = new GroupPresenter($obj);
 
-        return View::make('authentication::admin.group.edit')->with(["group" => $obj, "presenter" => $presenter]);
+        return View::make('laravel-authentication-acl::admin.group.edit')->with(["group" => $obj, "presenter" => $presenter]);
     }
 
     public function postEditGroup()

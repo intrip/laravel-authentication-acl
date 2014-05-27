@@ -58,14 +58,14 @@ class UserController extends Controller
 
   public function dashboard()
   {
-    return View::make('authentication::admin.user.dashboard');
+    return View::make('laravel-authentication-acl::admin.user.dashboard');
   }
 
   public function getList()
     {
         $users = $this->user_repository->all(Input::except(['page']));
 
-        return View::make('authentication::admin.user.list')->with(["users" => $users]);
+        return View::make('laravel-authentication-acl::admin.user.list')->with(["users" => $users]);
     }
 
     public function editUser()
@@ -80,7 +80,7 @@ class UserController extends Controller
         }
         $presenter = new UserPresenter($user);
 
-        return View::make('authentication::admin.user.edit')->with(["user" => $user, "presenter" => $presenter]);
+        return View::make('laravel-authentication-acl::admin.user.edit')->with(["user" => $user, "presenter" => $presenter]);
     }
 
     public function postEditUser()
@@ -184,7 +184,7 @@ class UserController extends Controller
         }
         $custom_profile_repo = App::make('custom_profile_repository', $user_profile->id);
 
-        return View::make('authentication::admin.user.profile')->with(['user_profile' => $user_profile, "custom_profile" => $custom_profile_repo]);
+        return View::make('laravel-authentication-acl::admin.user.profile')->with(['user_profile' => $user_profile, "custom_profile" => $custom_profile_repo]);
     }
 
     public function postEditProfile()
@@ -207,14 +207,14 @@ class UserController extends Controller
 
     public function signup()
     {
-        $enable_captcha = Config::get('authentication::captcha_signup');
+        $enable_captcha = Config::get('laravel-authentication-acl::captcha_signup');
         if($enable_captcha)
         {
             $captcha = App::make('captcha_validator');
-            return View::make('authentication::client.auth.signup')->with('captcha', $captcha);
+            return View::make('laravel-authentication-acl::client.auth.signup')->with('captcha', $captcha);
         }
 
-        return View::make('authentication::client.auth.signup');
+        return View::make('laravel-authentication-acl::client.auth.signup');
     }
 
     public function postSignup()
@@ -235,8 +235,8 @@ class UserController extends Controller
 
     public function signupSuccess()
     {
-        $email_confirmation_enabled = Config::get('authentication::email_confirmation');
-        return $email_confirmation_enabled ? View::make('authentication::client.auth.signup-email-confirmation') : View::make('authentication::client.auth.signup-success');
+        $email_confirmation_enabled = Config::get('laravel-authentication-acl::email_confirmation');
+        return $email_confirmation_enabled ? View::make('laravel-authentication-acl::client.auth.signup-email-confirmation') : View::make('laravel-authentication-acl::client.auth.signup-success');
     }
 
     public function emailConfirmation()
@@ -250,9 +250,9 @@ class UserController extends Controller
         }
         catch(JacopoExceptionsInterface $e)
         {
-            return View::make('authentication::client.auth.email-confirmation')->withErrors($this->register_service->getErrors());
+            return View::make('laravel-authentication-acl::client.auth.email-confirmation')->withErrors($this->register_service->getErrors());
         }
-        return View::make('authentication::client.auth.email-confirmation');
+        return View::make('laravel-authentication-acl::client.auth.email-confirmation');
     }
 
     public function addCustomFieldType()

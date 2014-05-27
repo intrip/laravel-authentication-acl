@@ -16,9 +16,9 @@ Route::post('/login', ["before" => "csrf", "uses" => "Jacopo\\Authentication\\Co
 Route::get('/user/change-password', 'Jacopo\Authentication\Controllers\AuthController@getChangePassword');
 Route::get('/user/recover-password', "Jacopo\\Authentication\\Controllers\\AuthController@getReminder");
 Route::post('/user/change-password/', ["before" => "csrf", 'uses' => "Jacopo\\Authentication\\Controllers\\AuthController@postChangePassword"]);
-Route::get('/user/change-password-success', function(){return View::make('authentication::client.auth.change-password-success');});
+Route::get('/user/change-password-success', function(){return View::make('laravel-authentication-acl::client.auth.change-password-success');});
 Route::post('/user/reminder', ["before" => "csrf", 'uses' => "Jacopo\\Authentication\\Controllers\\AuthController@postReminder"]);
-Route::get('/user/reminder-success', function(){return View::make('authentication::client.auth.reminder-success');});
+Route::get('/user/reminder-success', function(){return View::make('laravel-authentication-acl::client.auth.reminder-success');});
 /**
  * User signup
  */
@@ -65,24 +65,24 @@ Route::group( ['before' => ['logged', 'can_see']], function()
 
 //////////////////// Other routes //////////////////////////
 
-if (Config::get('authentication::handle_errors'))
+if (Config::get('laravel-authentication-acl::handle_errors'))
 {
     App::error(function(RuntimeException $exception, $code){
         switch($code)
         {
             case '404':
-                return View::make('authentication::client.exceptions.404');
+                return View::make('laravel-authentication-acl::client.exceptions.404');
                 break;
             case '401':
-                return View::make('authentication::client.exceptions.401');
+                return View::make('laravel-authentication-acl::client.exceptions.401');
                 break;
             case '500':
-                return View::make('authentication::client.exceptions.500');
+                return View::make('laravel-authentication-acl::client.exceptions.500');
                 break;
         }
     });
 
     App::error(function (TokenMismatchException $exception){
-        return View::make('authentication::client.exceptions.500');
+        return View::make('laravel-authentication-acl::client.exceptions.500');
     });
 }

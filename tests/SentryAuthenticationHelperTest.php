@@ -80,7 +80,7 @@ class SentryAuthenticationHelperTest extends TestCase {
     public function itCheckCustomProfileEditPermission()
     {
         $custom_profile_edit_permission = ["_profile-editor"];
-        Config::set('authentication::permissions.edit_custom_profile',
+        Config::set('laravel-authentication-acl::permissions.edit_custom_profile',
                     $custom_profile_edit_permission);
 
         $mock_sentry = m::mock('StdClass')->shouldReceive('hasAnyAccess')->with($custom_profile_edit_permission)->andReturn(true)->getMock();

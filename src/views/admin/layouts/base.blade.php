@@ -28,7 +28,7 @@
 
     <body>
         {{-- navbar --}}
-        @include('authentication::admin.layouts.navbar')
+        @include('laravel-authentication-acl::admin.layouts.navbar')
 
         {{-- content --}}
         <div class="container-fluid">

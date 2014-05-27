@@ -1,4 +1,4 @@
-@extends('authentication::admin.layouts.base-2cols')
+@extends('laravel-authentication-acl::admin.layouts.base-2cols')
 
 @section('title')
 Admin area: Edit user profile
@@ -93,7 +93,7 @@ Admin area: Edit user profile
                     </div>
                     <div class="col-md-6 col-xs-12">
                         @if($can_add_fields)
-                            @include('authentication::admin.user.custom-profile')
+                            @include('laravel-authentication-acl::admin.user.custom-profile')
                         @endif
                     </div>
                 </div>

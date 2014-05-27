@@ -1,4 +1,4 @@
-@extends('authentication::admin.layouts.base-2cols')
+@extends('laravel-authentication-acl::admin.layouts.base-2cols')
 
 @section('title')
     Admin area: users list
@@ -20,10 +20,10 @@
                     @endforeach
                 @endif
                 {{-- user lists --}}
-                @include('authentication::admin.user.user-table')
+                @include('laravel-authentication-acl::admin.user.user-table')
             </div>
             <div class="col-md-3">
-                @include('authentication::admin.user.search')
+                @include('laravel-authentication-acl::admin.user.search')
             </div>
         </div>
 </div>

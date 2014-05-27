@@ -45,7 +45,7 @@ class AuthenticationServiceProvider extends ServiceProvider
    */
   public function boot ()
   {
-    $this->package('jacopo/authentication');
+    $this->package('jacopo/laravel-authentication-acl');
 
     $this->bindClasses();
 
@@ -149,11 +149,11 @@ class AuthenticationServiceProvider extends ServiceProvider
 
   protected function setupConnection ()
   {
-    $connection = Config::get('authentication::database.default');
+    $connection = Config::get('laravel-authentication-acl::database.default');
 
     if ($connection !== 'default')
     {
-      $authenticator_conn = Config::get('authentication::database.connections.' . $connection);
+      $authenticator_conn = Config::get('laravel-authentication-acl::database.connections.' . $connection);
     } else
     {
       $connection         = Config::get('database.default');

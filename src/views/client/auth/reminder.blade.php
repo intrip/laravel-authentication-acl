@@ -1,4 +1,4 @@
-@extends('authentication::client.layouts.base')
+@extends('laravel-authentication-acl::client.layouts.base')
 @section ('title')
     Password recovery
 @stop

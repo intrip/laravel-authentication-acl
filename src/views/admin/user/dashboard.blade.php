@@ -1,4 +1,4 @@
-@extends('authentication::admin.layouts.base-2cols')
+@extends('laravel-authentication-acl::admin.layouts.base-2cols')
 
 @section('title')
 Admin area: dashboard

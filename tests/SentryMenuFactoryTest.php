@@ -57,7 +57,7 @@ class SentryMenuFactoryTest extends TestCase {
             [
                 "name" => $name, "link" => "link1", "permissions" => ["permission1"], "route" => $routes[0]], [
                 "name" => $name, "link" => "link1", "permissions" => ["permission1"], "route" => $routes[1]]];
-        Config::set('authentication::menu.list', $config_arr);
+        Config::set('laravel-authentication-acl::menu.list', $config_arr);
     }
 
     private function mockSentryHasAccessFirstYesSecondNo()

@@ -18,7 +18,7 @@ class UserSignupValidator extends OverrideConnectionValidator
 
     public function __construct()
     {
-        $enable_captcha = Config::get('authentication::captcha_signup');
+        $enable_captcha = Config::get('laravel-authentication-acl::captcha_signup');
         if($enable_captcha) $this->addCaptchaRule();
     }
 

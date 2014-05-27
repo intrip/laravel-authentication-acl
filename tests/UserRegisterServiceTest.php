@@ -105,7 +105,7 @@ class UserRegisterServiceTest extends DbTestCase
 
     $mock_mailer = m::mock('StdClass')->shouldReceive('sendTo')
             ->once()
-            ->with($user->email,m::any(), m::any(),"authentication::admin.mail.registration-activated-client")
+            ->with($user->email,m::any(), m::any(),"laravel-authentication-acl::admin.mail.registration-activated-client")
             ->andReturn(true)
             ->getMock();
     App::instance('jmailer', $mock_mailer);
@@ -213,7 +213,7 @@ class UserRegisterServiceTest extends DbTestCase
     $this->enableEmailConfirmation();
     $mock_mailer = m::mock('StdClass')->shouldReceive('sendTo')
             ->once()
-            ->with('email@email.com',m::any(), m::any(),"authentication::admin.mail.registration-waiting-client")
+            ->with('email@email.com',m::any(), m::any(),"laravel-authentication-acl::admin.mail.registration-waiting-client")
             ->andReturn(true)
             ->getMock();
     App::instance('jmailer', $mock_mailer);
@@ -255,7 +255,7 @@ class UserRegisterServiceTest extends DbTestCase
 
   private function enableEmailConfirmation()
   {
-    Config::set('authentication::email_confirmation', true);
+    Config::set('laravel-authentication-acl::email_confirmation', true);
   }
 
   /**
@@ -266,7 +266,7 @@ class UserRegisterServiceTest extends DbTestCase
     $this->disableEmailConfirmation();
     $mock_mailer = m::mock('StdClass')->shouldReceive('sendTo')->once()->with('email@email.com',
                                                                               m::any(), m::any(),
-                                                                              "authentication::admin.mail.registration-confirmed-client")->andReturn(true)->getMock();
+                                                                              "laravel-authentication-acl::admin.mail.registration-confirmed-client")->andReturn(true)->getMock();
     App::instance('jmailer', $mock_mailer);
     $mock_validator   = $this->getValidatorSuccess();
     $mock_user_repository         = $this->mockUserRepositoryToCreateARandomUser();
@@ -294,7 +294,7 @@ class UserRegisterServiceTest extends DbTestCase
 
   private function disableEmailConfirmation()
   {
-    Config::set('authentication::email_confirmation', false);
+    Config::set('laravel-authentication-acl::email_confirmation', false);
   }
 
   /**
