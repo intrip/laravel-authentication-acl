@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    {{ HTML::style('packages/jacopo/authentication/css/mail-base.css') }}
+    {{ HTML::style('packages/jacopo/laravel-authentication-acl/css/mail-base.css') }}
     {{ HTML::style('//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css') }}
 </head>
 <body>

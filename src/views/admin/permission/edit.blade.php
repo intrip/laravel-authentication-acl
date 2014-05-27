@@ -39,7 +39,7 @@ Admin area: edit permission
 @stop
 
 @section('footer_scripts')
-{{HTML::script('packages/jacopo/authentication/js/slugit.js')}}
+{{HTML::script('packages/jacopo/laravel-authentication-acl/js/slugit.js')}}
 <script>
     $(".delete").click(function(){
         return confirm("Are you sure to delete this item?");

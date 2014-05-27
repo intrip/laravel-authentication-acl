@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     {{ HTML::style('//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css') }}
-    {{ HTML::style('packages/jacopo/authentication/css/mail-base.css') }}
+    {{ HTML::style('packages/jacopo/laravel-authentication-acl/css/mail-base.css') }}
 </head>
 <body>
 <h2>Welcome to: {{Config::get('authentication::app_name')}}</h2>

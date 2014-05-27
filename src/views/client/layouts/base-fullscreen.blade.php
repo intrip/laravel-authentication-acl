@@ -8,8 +8,8 @@
     <meta name="author" content="">
 
 
-    {{ HTML::style('packages/jacopo/authentication/css/bootstrap.min.css') }}
-    {{ HTML::style('packages/jacopo/authentication/css/landing-page.css') }}
+    {{ HTML::style('packages/jacopo/laravel-authentication-acl/css/bootstrap.min.css') }}
+    {{ HTML::style('packages/jacopo/laravel-authentication-acl/css/landing-page.css') }}
     {{ HTML::style('//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css') }}
 
     @yield('head_css')

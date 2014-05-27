@@ -9,10 +9,10 @@
     <meta name="author" content="">
 
 
-    {{ HTML::style('packages/jacopo/authentication/css/bootstrap.min.css') }}
-    {{ HTML::style('packages/jacopo/authentication/css/style.css') }}
+    {{ HTML::style('packages/jacopo/laravel-authentication-acl/css/bootstrap.min.css') }}
+    {{ HTML::style('packages/jacopo/laravel-authentication-acl/css/style.css') }}
     {{ HTML::style('//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css') }}
-    {{ HTML::style('packages/jacopo/authentication/css/fonts.css') }}
+    {{ HTML::style('packages/jacopo/laravel-authentication-acl/css/fonts.css') }}
 
     @yield('head_css')
     {{-- End head css --}}
@@ -31,7 +31,7 @@
         </div>
 
         {{-- Start footer scripts --}}
-        {{ HTML::script('packages/jacopo/authentication/js/jquery-1.10.2.min.js') }}
-        {{ HTML::script('packages/jacopo/authentication/js/bootstrap.min.js') }}
+        {{ HTML::script('packages/jacopo/laravel-authentication-acl/js/jquery-1.10.2.min.js') }}
+        {{ HTML::script('packages/jacopo/laravel-authentication-acl/js/bootstrap.min.js') }}
     </body>
 </html>
