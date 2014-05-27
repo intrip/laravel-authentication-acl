@@ -19,7 +19,7 @@ class UserProfilePresenterTest extends TesTCase {
 
         $avatar_src = $presenter->avatar_src;
 
-        $expected_src = '/packages/jacopo/authentication/images/avatar.png';
+        $expected_src = '/packages/jacopo/laravel-authentication-acl/images/avatar.png';
         $this->assertEquals($expected_src, $avatar_src);
     }
 

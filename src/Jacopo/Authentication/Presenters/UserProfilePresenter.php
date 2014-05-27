@@ -13,7 +13,7 @@ class UserProfilePresenter extends AbstractPresenter
 
     function __construct($resource)
     {
-        $this->default_avatar = '/packages/jacopo/authentication/images/avatar.png';
+        $this->default_avatar = '/packages/jacopo/laravel-authentication-acl/images/avatar.png';
         return parent::__construct($resource);
     }
 

@@ -52,7 +52,7 @@ class CustomProfileRepository
             return $this->createNewField($profile_type_field_id, $field_value);
         }
 
-        return $profile->update(["value" => $field_value]);
+        return $profile->fill(["value" => $field_value])->save();
     }
 
     /**
@@ -71,12 +71,19 @@ class CustomProfileRepository
 
     public function getAllTypesWithValues()
     {
-        return DB::table('profile_field_type')
-                ->leftJoin('profile_field','profile_field_type.id','=','profile_field.profile_field_type_id')
-                ->where('profile_field.profile_id','=',$this->profile_id)
-                ->orWhere('profile_field.profile_id','=',null)
-                ->select(['profile_field_type.*','profile_field.value'])
-                ->get();
+        $profile_fields_with_values = [];
+
+        $all_profile_types = $this->getAllTypes();
+        foreach($all_profile_types as $profile_type)
+        {
+            $profile_field_with_values = new \StdClass;
+            $this->setValuesFromFieldType($profile_type, $profile_field_with_values);
+            $this->setValuesFromFieldValue($profile_type, $profile_field_with_values);
+
+            $profile_fields_with_values[] = $profile_field_with_values;
+        }
+
+        return $profile_fields_with_values;
     }
 
     public function getAllFields()
@@ -95,6 +102,44 @@ class CustomProfileRepository
         return ProfileField::where('profile_id', '=', $this->profile_id)
                 ->where('profile_field_type_id', '=', $profile_type_field_id)
                 ->firstOrFail();
+    }
+
+    /**
+     * @param $profile_type
+     * @param $profile_field_with_values
+     */
+    protected function setValuesFromFieldType($profile_type, $profile_field_with_values)
+    {
+        $profile_field_with_values->id          = $profile_type->id;
+        $profile_field_with_values->description = $profile_type->description;
+    }
+
+    /**
+     * @param $profile_type
+     * @param $profile_field_with_values
+     */
+    protected function setValuesFromFieldValue($profile_type, $profile_field_with_values)
+    {
+        $profile_field_value = $this->hasProfileFieldValueAssociated($profile_type) ? $this->fetchProfileValueAssociated($profile_type) : null;
+        $profile_field_with_values->value = $profile_field_value;
+    }
+
+    /**
+     * @param $profile_type
+     * @return mixed
+     */
+    protected function hasProfileFieldValueAssociated($profile_type)
+    {
+        return $profile_type->profile_field()->whereProfileId($this->profile_id)->count();
+    }
+
+    /**
+     * @param $profile_type
+     * @return mixed
+     */
+    protected function fetchProfileValueAssociated($profile_type)
+    {
+        return $profile_type->profile_field()->whereProfileId($this->profile_id)->first()->value;
     }
 
 }
