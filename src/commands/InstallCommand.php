@@ -46,7 +46,7 @@ class InstallCommand extends Command {
 
     $this->db_seeder->run();
 
-    $this->call_wrapper->call('asset:publish jacopo/authentication');
+    $this->call_wrapper->call('asset:publish');
 
     $this->info('## Laravel Authentication ACL Installed successfully ##');
 

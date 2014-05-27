@@ -28,7 +28,7 @@ class InstallCommandTest extends TestCase {
               ->andReturn(true)
               ->shouldReceive('call')
               ->once()
-              ->with('asset:publish jacopo/authentication')
+              ->with('asset:publish')
               ->andReturn(true)
               ->getMock();
 
