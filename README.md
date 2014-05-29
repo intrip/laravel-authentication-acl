@@ -7,4 +7,4 @@ Laravel Authentication ACL is a Laravel 4 package, based on <a href="https://git
 This package is made with the purpose to help developer setting up
 a simple admin panel with an ACL using Laravel framework.
 
-you can see the full documentation [here](docs/index.md)
+You can see the full documentation [here](docs/index.md)
