@@ -25,10 +25,12 @@ To install authentication follow this steps:
   1. Create an empty <a href="http://laravel.com/docs/quick" target="_blank">Laravel 4</a> installation if you don't have any.
 
   2. Add to your _composer.json_ require field the following lines:
-      ```"require": {
+      ```
+      "require": {
         ...
         "jacopo/authentication": "1.0.0"
-      },``
+      },
+      ```
 
   3. Change the "minimum-stability" option of your _composer.json_ file to "dev" and add this line: `"prefer-stable" : true`
   This is needed because the package requires a "development" version of another package (this requirement will be changed in the next release)
