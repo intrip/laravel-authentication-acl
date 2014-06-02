@@ -32,20 +32,17 @@ To install authentication follow this steps:
       },
       ```
 
-  3. Change the "minimum-stability" option of your _composer.json_ file to "dev" and add this line: `"prefer-stable" : true`
-  This is needed because the package requires a "development" version of another package (this requirement will be changed in the next release)
-  .
-  4. Now run `composer update` command.
+  3. Now run `composer update` command.
 
-  5. Now open the file _app/config/app.php_ and add to the 'providers' option the following line:
+  4. Now open the file _app/config/app.php_ and add to the 'providers' option the following line:
   'Jacopo\Authentication\AuthenticationServiceProvider',
 
-  6. Then run this command to publish the configuration files:
+  5. Then run this command to publish the configuration files:
   `php artisan authentication:prepare`
   Now you can find configuration files in _app/config/packages/jacopo/authentication_ folder.
   If you want to use a custom db(database) access configuration only for this package (while keeping other db connections for the rest of the application) edit the _app/config/packages/jacopo/authentication/database.php_ file.
 
-  7. Now you need to install the application, to do that run the command: `php artisan authentication:install`.
+  6. Now you need to install the application, to do that run the command: `php artisan authentication:install`.
 
   Congratulations! You have succesfully installed Laravel Authentication ACL package!
 
