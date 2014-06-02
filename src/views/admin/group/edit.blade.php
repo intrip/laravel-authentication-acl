@@ -27,7 +27,6 @@ Admin area: edit group
                         {{-- group base form --}}
                         <h4>General data</h4>
                         {{Form::model($group, [ 'url' => [URL::action('Jacopo\Authentication\Controllers\GroupController@postEditGroup'), $group->id], 'method' => 'post'] ) }}
-<!--                        {{FormField::name(["label" => "Name: *"])}}-->
                         <!-- name text field -->
                         <div class="form-group">
                             {{Form::label('name','Name: *')}}

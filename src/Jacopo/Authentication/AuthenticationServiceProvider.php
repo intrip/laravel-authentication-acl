@@ -61,7 +61,6 @@ class AuthenticationServiceProvider extends ServiceProvider
     require __DIR__ . "/../../validators.php";
 
     $this->overwriteSentryConfig();
-    $this->overwriteWayFormConfig();
 
     $this->setupConnection();
 
@@ -72,11 +71,6 @@ class AuthenticationServiceProvider extends ServiceProvider
   {
     $this->app['config']->getLoader()->addNamespace('cartalyst/sentry',
                                                     __DIR__ . '/../../config/sentry');
-  }
-
-  protected function overwriteWayFormConfig ()
-  {
-    $this->app['config']->getLoader()->addNamespace('form', __DIR__ . '/../../config/way-form');
   }
 
   protected function bindClasses ()
@@ -136,7 +130,6 @@ class AuthenticationServiceProvider extends ServiceProvider
   {
     $this->app->register('Jacopo\Library\LibraryServiceProvider');
     $this->app->register('Cartalyst\Sentry\SentryServiceProvider');
-    $this->app->register('Way\Form\FormServiceProvider');
     $this->app->register('Intervention\Image\ImageServiceProvider');
   }
 

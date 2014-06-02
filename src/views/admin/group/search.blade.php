@@ -4,7 +4,6 @@
     </div>
     <div class="panel-body">
         {{Form::open(['action' => 'Jacopo\Authentication\Controllers\GroupController@getList','method' => 'get'])}}
-<!--        {{FormField::name(['label' => 'Name:'])}}-->
         <!-- name text field -->
         <div class="form-group">
             {{Form::label('name','Name:')}}

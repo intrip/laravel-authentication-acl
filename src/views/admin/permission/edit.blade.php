@@ -24,14 +24,12 @@ Admin area: edit permission
             </div>
             <div class="panel-body">
                 {{Form::model($permission, [ 'url' => [URL::action('Jacopo\Authentication\Controllers\PermissionController@editPermission'), $permission->id], 'method' => 'post'] ) }}
-<!--                {{FormField::description(["label" => "Description: *", 'id' => 'slugme', "type" => "text"])}}-->
                 <!-- description text field -->
                 <div class="form-group">
                     {{Form::label('description','Description: *')}}
                     {{Form::text('description', null, ['class' => 'form-control', 'placeholder' => 'permission description', 'id' => 'slugme'])}}
                 </div>
                 <span class="text-danger">{{$errors->first('description')}}</span>
-<!--                {{FormField::permission(["label" => "Permission: *", 'id' => 'slug'])}}-->
                 <!-- permission text field -->
                 <div class="form-group">
                     {{Form::label('permission','Permission: *')}}

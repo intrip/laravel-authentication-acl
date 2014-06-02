@@ -56,70 +56,60 @@ Admin area: Edit user profile
                     </div>
                     <h4><i class="fa fa-cubes"></i> User data</h4>
                         {{Form::model($user_profile,['route'=>'users.profile.edit', 'method' => 'post'])}}
-<!--                            {{FormField::code(["label" => "User code:"])}}-->
                             <!-- code text field -->
                             <div class="form-group">
                                 {{Form::label('code','User code:')}}
                                 {{Form::text('code', null, ['class' => 'form-control', 'placeholder' => ''])}}
                             </div>
                             <span class="text-danger">{{$errors->first('code')}}</span>
-<!--                            {{FormField::first_name(["label" => "First name:"])}}-->
                             <!-- first_name text field -->
                             <div class="form-group">
                                 {{Form::label('first_name','First name:')}}
                                 {{Form::text('first_name', null, ['class' => 'form-control', 'placeholder' => ''])}}
                             </div>
                             <span class="text-danger">{{$errors->first('first_name')}}</span>
-<!--                            {{FormField::last_name(["label" => "Last name:"])}}-->
                             <!-- last_name text field -->
                             <div class="form-group">
                                 {{Form::label('last_name','Last name: ')}}
                                 {{Form::text('last_name', null, ['class' => 'form-control', 'placeholder' => ''])}}
                             </div>
                             <span class="text-danger">{{$errors->first('last_name')}}</span>
-<!--                            {{FormField::phone(["label" => "Phone:"])}}-->
                             <!-- phone text field -->
                             <div class="form-group">
                                 {{Form::label('phone','Phone: ')}}
                                 {{Form::text('phone', null, ['class' => 'form-control', 'placeholder' => ''])}}
                             </div>
                             <span class="text-danger">{{$errors->first('phone')}}</span>
-<!--                            {{FormField::state(["label" => "State: "])}}-->
                             <!-- state text field -->
                             <div class="form-group">
                                 {{Form::label('state','State: ')}}
                                 {{Form::text('state', null, ['class' => 'form-control', 'placeholder' => ''])}}
                             </div>
                             <span class="text-danger">{{$errors->first('state')}}</span>
-<!--                            {{FormField::vat(["label" => "Vat: "])}}-->
                             <!-- var text field -->
                             <div class="form-group">
                                 {{Form::label('var','Vat: ')}}
                                 {{Form::text('var', null, ['class' => 'form-control', 'placeholder' => ''])}}
                             </div>
                             <span class="text-danger">{{$errors->first('vat')}}</span>
-<!--                            {{FormField::city(["label" => "City: "])}}-->
                             <!-- city text field -->
                             <div class="form-group">
                                 {{Form::label('city','City: ')}}
                                 {{Form::text('city', null, ['class' => 'form-control', 'placeholder' => ''])}}
                             </div>
                             <span class="text-danger">{{$errors->first('city')}}</span>
-<!--                            {{FormField::country(["label" => "Country: "])}}-->
                             <!-- country text field -->
                             <div class="form-group">
                                 {{Form::label('country','Country: ')}}
                                 {{Form::text('country', null, ['class' => 'form-control', 'placeholder' => ''])}}
                             </div>
                             <span class="text-danger">{{$errors->first('country')}}</span>
-<!--                            {{FormField::zip(["label" => "Zip: "])}}-->
                             <!-- zip text field -->
                             <div class="form-group">
                                 {{Form::label('zip','Zip: ')}}
                                 {{Form::text('zip', null, ['class' => 'form-control', 'placeholder' => ''])}}
                             </div>
                             <span class="text-danger">{{$errors->first('zip')}}</span>
-<!--                            {{FormField::address(["label" => "Address: "])}}-->
                             <!-- address text field -->
                             <div class="form-group">
                                 {{Form::label('address','Address: ')}}
