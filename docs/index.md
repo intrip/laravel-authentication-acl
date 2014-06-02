@@ -28,7 +28,7 @@ To install authentication follow this steps:
       ```
       "require": {
         ...
-        "jacopo/authentication": "1.0.0"
+        "jacopo/authentication": "1.1.0"
       },
       ```
 
