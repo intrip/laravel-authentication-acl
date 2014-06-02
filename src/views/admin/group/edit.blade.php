@@ -27,7 +27,12 @@ Admin area: edit group
                         {{-- group base form --}}
                         <h4>General data</h4>
                         {{Form::model($group, [ 'url' => [URL::action('Jacopo\Authentication\Controllers\GroupController@postEditGroup'), $group->id], 'method' => 'post'] ) }}
-                        {{FormField::name(["label" => "Name: *"])}}
+<!--                        {{FormField::name(["label" => "Name: *"])}}-->
+                        <!-- name text field -->
+                        <div class="form-group">
+                            {{Form::label('name','Name: *')}}
+                            {{Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'group name'])}}
+                        </div>
                         <span class="text-danger">{{$errors->first('name')}}</span>
                         {{Form::hidden('id')}}
                         <a href="{{URL::action('Jacopo\Authentication\Controllers\GroupController@deleteGroup',['id' => $group->id, '_token' => csrf_token()])}}" class="btn btn-danger pull-right margin-left-5 delete">Delete</a>

@@ -35,11 +35,26 @@ Admin area: edit user
                     {{Form::model($user, [ 'url' => URL::action('Jacopo\Authentication\Controllers\UserController@postEditUser')] ) }}
                     {{-- Field hidden to fix chrome and safari autocomplete bug --}}
                     {{Form::password('__to_hide_password_autocomplete', ['class' => 'hidden'])}}
-                    {{FormField::email(["autocomplete" => "off", "label" => "Email: *"])}}
+<!--                    {{FormField::email(["autocomplete" => "off", "label" => "Email: *"])}}-->
+                    <!-- email text field -->
+                    <div class="form-group">
+                        {{Form::label('email','Email: *')}}
+                        {{Form::text('email', null, ['class' => 'form-control', 'placeholder' => 'user email', 'autocomplete' => 'off'])}}
+                    </div>
                     <span class="text-danger">{{$errors->first('email')}}</span>
-                    {{FormField::password(["autocomplete" => "off", "label" => isset($user->id) ? "Change password: " : "Password: "])}}
+<!--                    {{FormField::password(["autocomplete" => "off", "label" => isset($user->id) ? "Change password: " : "Password: "])}}-->
+                    <!-- password text field -->
+                    <div class="form-group">
+                        {{Form::label('password',isset($user->id) ? "Change password: " : "Password: ")}}
+                        {{Form::password('password', null, ['class' => 'form-control', 'autocomplete' => 'off'])}}
+                    </div>
                     <span class="text-danger">{{$errors->first('password')}}</span>
-                    {{FormField::password_confirmation(["autocomplete" => "off", "label" => isset($user->id) ? "Confirm change password: " : "Confirm password: "])}}
+<!--                    {{FormField::password_confirmation(["autocomplete" => "off", "label" => isset($user->id) ? "Confirm change password: " : "Confirm password: "])}}-->
+                    <!-- password_confirmation text field -->
+                    <div class="form-group">
+                        {{Form::label('password_confirmation',"label" => isset($user->id) ? "Confirm change password: " : "Confirm password: ")}}
+                        {{Form::password('password_confirmation', null, ['class' => 'form-control', 'placeholder' => 'write again your password','autocomplete' => 'off'])}}
+                    </div>
                     <span class="text-danger">{{$errors->first('password_confirmation')}}</span>
                     <div class="form-group">
                         {{Form::label("activated","User active: ")}}
