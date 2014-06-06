@@ -20,11 +20,11 @@ You can see the full documentation and usage [here](docs/index.md)
  - User banning
  - Dashboard
  - Infinite custom profile fields!
+ - Allow connection to a custom database other then laravel default
  - Create custom menu items with configurable permissions
  - Have two login forms: admin area and user area
  - Many usable hasing algorithms sha256, md5 etc...
  - Laravel4 based and easy to integrate in any Laravel application
- - Works with all major DBMS (Mysql, Sqlite, PostgreSQL) and allow access to custom dbms via configuration file
  - Have an Api that integrates with your application
  - Bootstrap 3 and responsive design (mobile first)
  - Easy install script from command line
