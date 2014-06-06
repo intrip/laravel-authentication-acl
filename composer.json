@@ -2,6 +2,7 @@
     "name": "jacopo/laravel-authentication-acl",
     "description": "Laravel authentication and ACL package",
     "license" : "MIT",
+    "keywords": ["acl", "authentication", "signup", "panel", "profile", "laravel"],
     "authors": [
         {
             "name": "jacopo",

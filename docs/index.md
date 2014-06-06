@@ -15,7 +15,7 @@ a simple admin panel with an ACL using Laravel framework.
 
 To install this software you need:
 
-  * Laravel framework version 4 or higher
+  * Laravel framework 4.*
   * Php 5.4+
 
 ## <a name="setup">Setup</a> ##
