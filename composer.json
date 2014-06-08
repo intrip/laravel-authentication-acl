@@ -1,6 +1,6 @@
 {
     "name": "jacopo/laravel-authentication-acl",
-    "description": "Laravel authentication and ACL package with a cool radmin panel",
+    "description": "Laravel authentication and ACL package with a cool admin panel",
     "license" : "MIT",
     "keywords": ["acl", "authentication", "signup", "panel", "profile", "laravel"],
     "authors": [
