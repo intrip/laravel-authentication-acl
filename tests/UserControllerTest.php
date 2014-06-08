@@ -87,9 +87,9 @@ class UserControllerTest extends DbTestCase
     public function itDoesntShowCaptchaOnSignupIfDisabled()
     {
         $this->disableCaptchaCheck();
-        $this->action('GET', 'Jacopo\Authentication\Controllers\UserController@signup');
+        $response = $this->action('GET', 'Jacopo\Authentication\Controllers\UserController@signup');
 
-        $this->assertViewMissing("captcha");
+        $this->assertArrayNotHasKey("captcha", $response->original->getData());
     }
 
     protected function disableCaptchaCheck()
