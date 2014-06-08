@@ -1,4 +1,5 @@
 <?php  namespace Jacopo\Authentication\Tests;
+use Illuminate\Support\Facades\Session;
 use Mockery as m;
 use Jacopo\Authentication\Classes\Captcha\GregWarCaptchaValidator;
 
@@ -72,6 +73,7 @@ class GregWarCaptchaValidatorTest extends TestCase {
         $this->gregWarCaptchaValidator->getImageSrcTag();
         $value1 = $this->gregWarCaptchaValidator->getValue();
         $this->assertNotEmpty($value1);
+        $this->assertSessionHasNoFlashData();
     }
     
     /**
@@ -81,6 +83,12 @@ class GregWarCaptchaValidatorTest extends TestCase {
     {
         $img_src = $this->gregWarCaptchaValidator->getImageSrcTag();
         $this->assertNotEmpty($img_src);
+    }
+
+    protected function assertSessionHasNoFlashData()
+    {
+        $all_session = Session::all();
+        $this->assertFalse(isset($all_session['flash']));
     }
 }
 

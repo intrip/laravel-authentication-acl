@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Facade;
 use Jacopo\Authentication\Models\User;
-use Jacopo\Library\Exceptions\NotFoundException;
 use Jacopo\Library\Exceptions\ValidationException;
 use Mockery as m;
 

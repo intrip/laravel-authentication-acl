@@ -52,13 +52,13 @@ class GregWarCaptchaValidator extends CaptchaValidator
 
     public function getValue()
     {
-        return Session::get('authentication_captcha_value');
+        return Session::get($this->captcha_field);
     }
 
     public function getImageSrcTag()
     {
         $captcha_builder = static::getInstance();
-        $this->flashCaptchaValue($captcha_builder);
+        $this->saveCaptchaValue($captcha_builder);
 
         return $captcha_builder->inline();
     }
@@ -66,8 +66,8 @@ class GregWarCaptchaValidator extends CaptchaValidator
     /**
      * @param $captcha_builder
      */
-    protected function flashCaptchaValue($captcha_builder)
+    protected function saveCaptchaValue($captcha_builder)
     {
-        Session::flash($this->captcha_field, $captcha_builder->getPhrase());
+        Session::put($this->captcha_field, $captcha_builder->getPhrase());
     }
 } 
