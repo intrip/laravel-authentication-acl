@@ -1,37 +1,51 @@
 <?php  namespace Jacopo\Authentication\Tests;
+
 /**
  * Class DbTestCase
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
 use Artisan;
+use BadMethodCallException;
 use DB;
 
 class DbTestCase extends TestCase
 {
     protected $artisan;
+    protected $times = 1;
 
     public function setUp()
     {
         parent::setUp();
 
-        $this->artisan = $this->app->make( 'artisan' );
+        $this->artisan = $this->app->make('artisan');
         $this->createDbSchema();
     }
 
-    /**
-     * @test
-     **/
-    public function it_mock_test()
+    protected function make($class_name, $fields = [])
     {
-        $this->assertTrue(true);
+        while ($this->times--) {
+            $stub_data = array_merge($this->getStub(), $fields);
+            $class_name::create($stub_data);
+        }
     }
 
+    protected function getStub()
+    {
+        throw new BadMethodCallException("You need to implement this method in your class.");
+    }
+
+    protected function times($count)
+    {
+        $this->times = $count;
+
+        return $this;
+    }
 
     /**
      * Define environment setup.
      *
-     * @param  \Illuminate\Foundation\Application    $app
+     * @param  \Illuminate\Foundation\Application $app
      * @return void
      */
     protected function getEnvironmentSetUp($app)
@@ -40,9 +54,9 @@ class DbTestCase extends TestCase
         $app['path.base'] = __DIR__ . '/../src';
 
         $test_connection = array(
-            'driver'   => 'sqlite',
+            'driver' => 'sqlite',
             'database' => ':memory:',
-            'prefix'   => '',
+            'prefix' => '',
         );
 
         $app['config']->set('database.default', 'testbench');
@@ -57,10 +71,9 @@ class DbTestCase extends TestCase
 
     protected function objectHasAllArrayAttributes(array $attributes, $object, array $except = [])
     {
-      foreach($attributes as $key => $value)
-      {
-        if(! in_array($key, $except)) $this->assertEquals($value, $object->$key);
-      }
+        foreach ($attributes as $key => $value) {
+            if (!in_array($key, $except)) $this->assertEquals($value, $object->$key);
+        }
 
     }
 } 
