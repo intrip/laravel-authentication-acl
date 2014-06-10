@@ -80,17 +80,17 @@ Here is the sceenshoot of the admin login page:
 
 After the login you will be redirected to the admin panel:
 
-<a href="/images/admin_main.png" target="_blank" ><img src="images/admin_main.png" class="max-100"></a>
+<a href="images/admin_main.png" target="_blank" ><img src="images/admin_main.png" class="max-100"></a>
 
 The main panel contains three main menu links(on top): users, groups and permissions. Following this link you will be redirected to the corresponding area.
 On every page you may see a panel to filter the results in the list (on the right) and a sidebar on the left with the link to add a new resource or to list all the resources.
 If you want to create a new user you need to click on the _add user/add new_ button:
 
-<a href="/images/add_user.png" target="_blank" ><img src="images/add_user.png" class="max-100"></a>
+<a href="images/add_user.png" target="_blank" ><img src="images/add_user.png" class="max-100"></a>
 
 After filling the form you can also create/edit a user profile with the _edit profile_ link:
 
-<a href="/images/edit_profile.png" target="_blank" ><img src="images/edit_profile.png" class="max-100"></a>
+<a href="images/edit_profile.png" target="_blank" ><img src="images/edit_profile.png" class="max-100"></a>
 
 In the profile form you can setup an avatar for the user and also add custom profile fields.
 When you add a new custom field it will be added in all the user's profile form.
@@ -100,7 +100,7 @@ The listing/filtering and editing of groups and permission respect the same stru
 
 The third link is the user signup form available at: http://url_of_your_application/user/signup:
 
-<a href="/images/signup.png" target="_blank" ><img src="images/signup.png" class="max-100"></a>
+<a href="images/signup.png" target="_blank" ><img src="images/signup.png" class="max-100"></a>
 
 The last link is the logout link available at: http://url_of_your_application/user/logout
 
