@@ -13,6 +13,7 @@ class DbTestCase extends TestCase
 {
     protected $artisan;
     protected $times = 1;
+    protected $faker;
 
     public function setUp()
     {
@@ -20,6 +21,8 @@ class DbTestCase extends TestCase
 
         $this->artisan = $this->app->make('artisan');
         $this->createDbSchema();
+
+        $this->faker = \Faker\Factory::create();
     }
 
     protected function make($class_name, $fields = [])
@@ -32,7 +35,7 @@ class DbTestCase extends TestCase
 
     protected function getStub()
     {
-        throw new BadMethodCallException("You need to implement this method in your class.");
+        throw new BadMethodCallException("You need to implement this method in your own class.");
     }
 
     protected function times($count)

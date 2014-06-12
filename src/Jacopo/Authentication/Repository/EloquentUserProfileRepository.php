@@ -9,6 +9,7 @@ use Jacopo\Authentication\Models\UserProfile;
 use Jacopo\Authentication\Repository\Interfaces\UserProfileRepositoryInterface;
 use Jacopo\Library\Repository\EloquentBaseRepository;
 use Jacopo\Library\Repository\Interfaces\BaseRepositoryInterface;
+
 /**
  * Class EloquentUserProfileRepository
  *
@@ -17,6 +18,7 @@ use Jacopo\Library\Repository\Interfaces\BaseRepositoryInterface;
 class EloquentUserProfileRepository extends EloquentBaseRepository implements UserProfileRepositoryInterface
 {
     use ImageHelperTrait;
+
     /**
      * We use the user profile as a model
      */
@@ -28,20 +30,17 @@ class EloquentUserProfileRepository extends EloquentBaseRepository implements Us
     public function getFromUserId($user_id)
     {
         // checks if the user exists
-        try
-        {
+        try {
             User::findOrFail($user_id);
-        }
-        catch(ModelNotFoundException $e)
-        {
+        } catch (ModelNotFoundException $e) {
             throw new UserNotFoundException;
         }
         // gets the profile
-        $profile = $this->model->where('user_id','=',$user_id)
+        $profile = $this->model->where('user_id', '=', $user_id)
             ->get();
 
         // check if the profile exists
-        if($profile->isEmpty()) throw new ProfileNotFoundException;
+        if ($profile->isEmpty()) throw new ProfileNotFoundException;
 
         return $profile->first();
     }
@@ -50,7 +49,12 @@ class EloquentUserProfileRepository extends EloquentBaseRepository implements Us
     {
         $model = $this->find($id);
         $model->update([
-                             "avatar" => static::getBinaryData('170', $input_name)
-                             ]);
+            "avatar" => static::getBinaryData('170', $input_name)
+        ]);
+    }
+
+    public function attachEmptyProfile($user)
+    {
+        return $this->create(["user_id" => $user->id]);
     }
 }

@@ -138,17 +138,17 @@ class UserControllerTest extends DbTestCase
      **/
     public function it_show_view_with_success_if_token_is_valid()
     {
-        $email        = "mail";
-        $token        = "_token";
+        $email = "mail";
+        $token = "_token";
         $mock_service = m::mock('StdClass')->shouldReceive('checkUserActivationCode')->once()->with($email,
-                                                                                                    $token)->getMock();
+            $token)->getMock();
         App::instance('register_service', $mock_service);
 
         $this->action('GET', 'Jacopo\Authentication\Controllers\UserController@emailConfirmation',
-                      '', [
-                          "email" => $email,
-                          "token" => $token
-                          ]);
+            '', [
+                "email" => $email,
+                "token" => $token
+            ]);
 
         $this->assertResponseOk();
     }
@@ -158,17 +158,17 @@ class UserControllerTest extends DbTestCase
      **/
     public function it_show_view_with_error_if_token_is_invalid()
     {
-        $email        = "mail";
-        $token        = "_token";
+        $email = "mail";
+        $token = "_token";
         $mock_service = m::mock('StdClass')->shouldReceive('checkUserActivationCode')->once()->with($email,
-                                                                                                    $token)->andThrow(new \Jacopo\Authentication\Exceptions\TokenMismatchException)->shouldReceive('getErrors')->once()->andReturn("")->getMock();
+            $token)->andThrow(new \Jacopo\Authentication\Exceptions\TokenMismatchException)->shouldReceive('getErrors')->once()->andReturn("")->getMock();
         App::instance('register_service', $mock_service);
 
         $this->action('GET', 'Jacopo\Authentication\Controllers\UserController@emailConfirmation',
-                      '', [
-                          "email" => $email,
-                          "token" => $token
-                          ]);
+            '', [
+                "email" => $email,
+                "token" => $token
+            ]);
 
         $this->assertResponseOk();
         $this->assertViewHas('errors');
@@ -179,17 +179,17 @@ class UserControllerTest extends DbTestCase
      **/
     public function it_show_view_errors_if_user_is_not_found()
     {
-        $email        = "mail";
-        $token        = "_token";
+        $email = "mail";
+        $token = "_token";
         $mock_service = m::mock('StdClass')->shouldReceive('checkUserActivationCode')->once()->with($email,
-                                                                                                    $token)->andThrow(new \Jacopo\Authentication\Exceptions\UserNotFoundException())->shouldReceive('getErrors')->once()->andReturn("")->getMock();
+            $token)->andThrow(new \Jacopo\Authentication\Exceptions\UserNotFoundException())->shouldReceive('getErrors')->once()->andReturn("")->getMock();
         App::instance('register_service', $mock_service);
 
         $this->action('GET', 'Jacopo\Authentication\Controllers\UserController@emailConfirmation',
-                      '', [
-                          "email" => $email,
-                          "token" => $token
-                          ]);
+            '', [
+                "email" => $email,
+                "token" => $token
+            ]);
 
         $this->assertResponseOk();
         $this->assertViewHas('errors');
@@ -201,14 +201,14 @@ class UserControllerTest extends DbTestCase
     public function it_show_user_lists_on_lists()
     {
         \Session::put('_old_input', [
-                                    "intersect" => "old intersect",
-                                    "old"       => "old input"
-                                    ]);
+            "intersect" => "old intersect",
+            "old" => "old input"
+        ]);
 
         $this->action('GET', 'Jacopo\Authentication\Controllers\UserController@getList', [
-                                                                                         "new"       => "new input",
-                                                                                         "intersect" => "new intersect"
-                                                                                         ]);
+            "new" => "new input",
+            "intersect" => "new intersect"
+        ]);
 
         $this->assertResponseOk();
     }
@@ -218,15 +218,15 @@ class UserControllerTest extends DbTestCase
      **/
     public function it_edit_user_with_success_and_redirect_to_edit_page()
     {
-        $user_stub       = new User();
-        $user_stub->id   = 1;
+        $user_stub = new User();
+        $user_stub->id = 1;
         $form_model_mock = m::mock('StdClass')->shouldReceive('process')->once()->andReturn($user_stub)->getMock();
         App::instance('form_model', $form_model_mock);
 
         $this->action('POST', 'Jacopo\Authentication\Controllers\UserController@postEditUser');
 
         $this->assertRedirectedToAction('Jacopo\Authentication\Controllers\UserController@editUser',
-                                        ['id' => $user_stub->id]);
+            ['id' => $user_stub->id]);
     }
 
     /**
@@ -257,7 +257,7 @@ class UserControllerTest extends DbTestCase
         // check that have created a field type
         $this->assertCount(1, $profile_fields);
 
-        $this->assertRedirectedToAction('Jacopo\Authentication\Controllers\UserController@postEditProfile',["user_id" => $user_id]);
+        $this->assertRedirectedToAction('Jacopo\Authentication\Controllers\UserController@postEditProfile', ["user_id" => $user_id]);
         $this->assertSessionHas('message');
     }
 
@@ -270,7 +270,7 @@ class UserControllerTest extends DbTestCase
         $user_id = 1;
         $this->action('POST', 'Jacopo\Authentication\Controllers\UserController@addCustomFieldType', ['description' => $field_description, 'user_id' => $user_id]);
 
-        $this->assertRedirectedToAction('Jacopo\Authentication\Controllers\UserController@postEditProfile',["user_id" => $user_id]);
+        $this->assertRedirectedToAction('Jacopo\Authentication\Controllers\UserController@postEditProfile', ["user_id" => $user_id]);
         $this->assertSessionHas('errors');
     }
 
@@ -288,10 +288,10 @@ class UserControllerTest extends DbTestCase
         $profile_fields = $this->custom_type_repository->getAllTypes();
         $this->assertCount(0, $profile_fields);
 
-        $this->assertRedirectedToAction('Jacopo\Authentication\Controllers\UserController@postEditProfile',["user_id" => $user_id]);
+        $this->assertRedirectedToAction('Jacopo\Authentication\Controllers\UserController@postEditProfile', ["user_id" => $user_id]);
         $this->assertSessionHas('message');
     }
-    
+
     /**
      * @test
      **/
@@ -302,10 +302,10 @@ class UserControllerTest extends DbTestCase
         $field_id = 1;
         $this->action('POST', 'Jacopo\Authentication\Controllers\UserController@deleteCustomFieldType', ["id" => $field_id, "user_id" => $user_id]);
 
-        $this->assertRedirectedToAction('Jacopo\Authentication\Controllers\UserController@postEditProfile',["user_id" => $user_id]);
+        $this->assertRedirectedToAction('Jacopo\Authentication\Controllers\UserController@postEditProfile', ["user_id" => $user_id]);
         $this->assertSessionHas('errors');
     }
-    
+
     /**
      * @test
      **/
@@ -317,7 +317,7 @@ class UserControllerTest extends DbTestCase
 
         $this->action('POST', 'Jacopo\Authentication\Controllers\UserController@deleteCustomFieldType', ["id" => $field_id, "user_id" => $user_id]);
 
-        $this->assertRedirectedToAction('Jacopo\Authentication\Controllers\UserController@postEditProfile',["user_id" => $user_id]);
+        $this->assertRedirectedToAction('Jacopo\Authentication\Controllers\UserController@postEditProfile', ["user_id" => $user_id]);
         $this->assertSessionHas('errors');
     }
 
@@ -335,12 +335,16 @@ class UserControllerTest extends DbTestCase
      */
     protected function stopPermissionCheckDelete()
     {
-        return Event::listen(['customprofile.deleting'], function () { return false; }, 100);
+        return Event::listen(['customprofile.deleting'], function () {
+            return false;
+        }, 100);
     }
 
     protected function stopPermissionCheckCreate()
     {
-        Event::listen(['customprofile.creating',], function () { return false; }, 100);
+        Event::listen(['customprofile.creating',], function () {
+            return false;
+        }, 100);
     }
 
     /**
@@ -349,7 +353,7 @@ class UserControllerTest extends DbTestCase
     protected function createFieldType()
     {
         $description = "description";
-        $field_id    = $this->custom_type_repository->addNewType($description)->id;
+        $field_id = $this->custom_type_repository->addNewType($description)->id;
         return $field_id;
     }
 }

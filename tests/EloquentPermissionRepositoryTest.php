@@ -32,7 +32,7 @@ class EloquentPermissionRepositoryTest extends DbTestCase {
      **/
     public function it_check_if_is_associated_to_a_group_and_throws_exception()
     {
-        $this->createGroupWithPerm1();
+        $this->make('Jacopo\Authentication\Models\Group');
         $perm_repo = new PermissionRepository();
         $permission_obj = new Permission(["description" => "desc", "permission" => "_perm"]);
         $perm_repo->checkIsNotAssociatedToAnyGroup($permission_obj);
@@ -43,7 +43,7 @@ class EloquentPermissionRepositoryTest extends DbTestCase {
      **/
     public function it_check_if_is_associated_to_a_group()
     {
-        $this->createGroupWithPerm1();
+        $this->make('Jacopo\Authentication\Models\Group');
         $perm_repo = new PermissionRepository();
         $permission_obj = new Permission(["description" => "desc", "permission" => []]);
         $perm_repo->checkIsNotAssociatedToAnyGroup($permission_obj);
@@ -54,7 +54,7 @@ class EloquentPermissionRepositoryTest extends DbTestCase {
      **/
     public function it_check_if_is_associated_to_a_user()
     {
-        $this->createUserWithPerm1();
+        $this->make('Jacopo\Authentication\Models\Group');
         $perm_repo = new PermissionRepository();
         $permission_obj = new Permission(["description" => "desc", "permission" => []]);
         $perm_repo->checkIsNotAssociatedToAnyUser($permission_obj);
@@ -79,22 +79,16 @@ class EloquentPermissionRepositoryTest extends DbTestCase {
     {
         $true_stub = new FalseGetter;
         Event::fire('repository.updating', [$true_stub]);
-        $this->createGroupWithPerm1();
+        $this->make('Jacopo\Authentication\Models\Group');
         $this->createUserWithPerm1();
     }
 
-    /**
-     * @return m\MockInterface
-     */
-    private function createGroupWithPerm1()
+    protected function getStub()
     {
-        $group_repo = App::make('group_repository');
-
-        $data = [
+        return [
             "name" => $this->faker->name(),
             "permissions" => ["_perm" => "1"]
         ];
-        return $group_repo->create($data);
     }
 
     private function createUserWithPerm1()

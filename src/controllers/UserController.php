@@ -90,6 +90,8 @@ class UserController extends Controller
         try
         {
             $obj = $this->f->process(Input::all());
+            //@todo 1) in user register service the new helper and test
+            // 2)use attachEmptyProfile and use new transaction here, if error rollback.
         }
         catch(JacopoExceptionsInterface $e)
         {

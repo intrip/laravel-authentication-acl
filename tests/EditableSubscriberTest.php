@@ -18,6 +18,7 @@ class EditableSubscriberTest extends TestCase {
         $model->protected = false;
 
         $sub = new EditableSubscriber();
+        $sub->isEditable($model);
     }
 
     /**
