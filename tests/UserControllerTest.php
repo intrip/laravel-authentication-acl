@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Facade;
 use Jacopo\Authentication\Models\User;
+use Jacopo\Authentication\Models\UserProfile;
 use Jacopo\Library\Exceptions\ValidationException;
 use Mockery as m;
 
@@ -218,15 +219,22 @@ class UserControllerTest extends DbTestCase
      **/
     public function it_edit_user_with_success_and_redirect_to_edit_page()
     {
-        $user_stub = new User();
-        $user_stub->id = 1;
-        $form_model_mock = m::mock('StdClass')->shouldReceive('process')->once()->andReturn($user_stub)->getMock();
-        App::instance('form_model', $form_model_mock);
+        $input_data = [
+            "email" => $this->faker->email(),
+            "password" => "password",
+            "password_confirmation" => "password",
+            "activated" => true
+        ];
 
-        $this->action('POST', 'Jacopo\Authentication\Controllers\UserController@postEditUser');
+        $this->action('POST', 'Jacopo\Authentication\Controllers\UserController@postEditUser', $input_data);
+
+        $user_created = User::firstOrFail();
+        $this->assertNotNull($user_created);
+        $profile_created = UserProfile::firstOrFail();
+        $this->assertNotNull($profile_created);
 
         $this->assertRedirectedToAction('Jacopo\Authentication\Controllers\UserController@editUser',
-            ['id' => $user_stub->id]);
+            ['id' => $user_created->id]);
     }
 
     /**

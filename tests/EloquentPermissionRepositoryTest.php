@@ -83,7 +83,7 @@ class EloquentPermissionRepositoryTest extends DbTestCase {
         $this->createUserWithPerm1();
     }
 
-    protected function getStub()
+    protected function getModelStub()
     {
         return [
             "name" => $this->faker->name(),

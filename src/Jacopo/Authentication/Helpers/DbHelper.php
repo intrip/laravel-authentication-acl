@@ -1,27 +1,48 @@
 <?php  namespace Jacopo\Authentication\Helpers;
 
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use PDO;
 
 class DbHelper
 {
-
-    protected static $connection_name = 'authentication';
+    /**
+     * Drivers that doesn't support foreign keys check
+     * @var array
+     */
+    public static $no_foreign_keys_drivers = ['sqlite'];
 
     public static function startTransaction()
     {
-        DB::connection(static::$connection_name)->getPdo()->beginTransaction();
+        static::getConnection()->getPdo()->beginTransaction();
         static::stopForeignKeysCheck();
     }
 
-    protected function stopForeignKeysCheck()
+    public static function stopForeignKeysCheck()
     {
-        $current_driver = DB::connection(static::$connection_name)->getPdo()->getAttribute(PDO::ATTR_DRIVER_NAME);
-        if ($current_driver != 'sqlite') {
-            //@todo here stop foreign keys and also
-            DB::connection(static::$connection_name)->getPdo()->exec('SET FOREIGN_KEY_CHECKS=0;');
-
+        $current_driver = static::getCurrentDriverName();
+        if (self::supportForeignKeysCheck($current_driver)) {
+            static::getConnection()->getPdo()->exec('SET FOREIGN_KEY_CHECKS=0;');
         }
+    }
+
+    public static function startForeignKeysCheck()
+    {
+        $current_driver = static::getCurrentDriverName();
+        if (self::supportForeignKeysCheck($current_driver)) {
+            static::getConnection()->getPdo()->exec('SET FOREIGN_KEY_CHECKS=1;');
+        }
+    }
+    
+    public static function commit()
+    {
+        static::getConnection()->getPdo()->commit();
+    }
+
+    public static function rollback()
+    {
+
+        static::getConnection()->getPdo()->rollback();
     }
 
     /**
@@ -29,7 +50,30 @@ class DbHelper
      */
     public static function getConnectionName()
     {
-        return self::$connection_name;
+        return (App::environment() != 'testing') ? 'authentication' : '';
+    }
+
+    public static function getConnection()
+    {
+        return DB::connection(static::getConnectionName());
+    }
+
+    /**
+     * @return mixed
+     */
+    protected static function getCurrentDriverName()
+    {
+        $current_driver = static::getConnection()->getPdo()->getAttribute(PDO::ATTR_DRIVER_NAME);
+        return $current_driver;
+    }
+
+    /**
+     * @param $current_driver
+     * @return bool
+     */
+    protected static function supportForeignKeysCheck($current_driver)
+    {
+        return ! in_array($current_driver, static::$no_foreign_keys_drivers);
     }
 
 }

@@ -7,6 +7,7 @@
 use Illuminate\Support\MessageBag;
 use Jacopo\Authentication\Exceptions\PermissionException;
 use Jacopo\Authentication\Exceptions\ProfileNotFoundException;
+use Jacopo\Authentication\Helpers\DbHelper;
 use Jacopo\Authentication\Models\UserProfile;
 use Jacopo\Authentication\Presenters\UserPresenter;
 use Jacopo\Authentication\Services\UserProfileService;
@@ -87,20 +88,25 @@ class UserController extends Controller
     {
         $id = Input::get('id');
 
+        DbHelper::startTransaction();
         try
         {
-            $obj = $this->f->process(Input::all());
-            //@todo 1) in user register service the new helper and test
-            // 2)use attachEmptyProfile and use new transaction here, if error rollback.
+            $user = $this->f->process(Input::all());
+            $this->profile_repository->attachEmptyProfile($user);
+            // 1) use attachEmptyProfile and use new transaction here, if error rollback. with tests
+            // 2) fix this also in the userregister service
         }
         catch(JacopoExceptionsInterface $e)
         {
+            DbHelper::rollback();
             $errors = $this->f->getErrors();
             // passing the id incase fails editing an already existing item
             return Redirect::route("users.edit", $id ? ["id" => $id]: [])->withInput()->withErrors($errors);
         }
 
-        return Redirect::action('Jacopo\Authentication\Controllers\UserController@editUser',["id" => $obj->id])->withMessage("User edited with success.");
+        DbHelper::commit();
+
+        return Redirect::action('Jacopo\Authentication\Controllers\UserController@editUser',["id" => $user->id])->withMessage("User edited with success.");
     }
 
     public function deleteUser()

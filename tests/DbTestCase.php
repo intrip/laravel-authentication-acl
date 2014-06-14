@@ -28,12 +28,12 @@ class DbTestCase extends TestCase
     protected function make($class_name, $fields = [])
     {
         while ($this->times--) {
-            $stub_data = array_merge($this->getStub(), $fields);
+            $stub_data = array_merge($this->getModelStub(), $fields);
             $class_name::create($stub_data);
         }
     }
 
-    protected function getStub()
+    protected function getModelStub()
     {
         throw new BadMethodCallException("You need to implement this method in your own class.");
     }
