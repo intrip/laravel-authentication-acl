@@ -8,9 +8,8 @@ use Illuminate\Support\MessageBag;
 use Jacopo\Authentication\Exceptions\TokenMismatchException;
 use Jacopo\Authentication\Exceptions\UserExistsException;
 use Jacopo\Authentication\Exceptions\UserNotFoundException;
+use Jacopo\Authentication\Helpers\DbHelper;
 use Jacopo\Authentication\Validators\UserSignupValidator;
-use Jacopo\Library\Exceptions\JacopoExceptionsInterface;
-use Jacopo\Library\Exceptions\NotFoundException;
 use Jacopo\Library\Exceptions\ValidationException;
 use Redirect;
 
@@ -89,20 +88,18 @@ class UserRegisterService
      */
     protected function saveDbData(array $input)
     {
-        $this->startTransactionWithoutForeignKeysCheck();
-
+        DbHelper::startTransaction();
         try {
             $user = $this->user_repository->create($input);
             $this->profile_repository->create($this->createProfileInput($input, $user));
         } catch (UserExistsException $e) {
             if (App::environment() != 'testing') {
-                DB::connection('authentication')->getPdo()->rollback();
+                DbHelper::rollback();
             }
             $this->errors = new MessageBag(["model" => "User already exists."]);
             throw new UserExistsException;
         }
-
-        $this->stopTransactionWithoutForeignKeysCheck();
+        DbHelper::commit();
 
         return $user;
     }
@@ -181,24 +178,6 @@ class UserRegisterService
     protected function getToken()
     {
         return csrf_token();
-    }
-
-    protected function startTransactionWithoutForeignKeysCheck()
-    {
-        if (App::environment() != 'testing') {
-            // temporary disable reference integrity check
-            DB::connection('authentication')->getPdo()->exec('SET FOREIGN_KEY_CHECKS=0;');
-            DB::connection('authentication')->getPdo()->beginTransaction();
-        }
-    }
-
-    protected function stopTransactionWithoutForeignKeysCheck()
-    {
-        if (App::environment() != 'testing') {
-            DB::connection('authentication')->getPdo()->commit();
-            // reactivate integrity check
-            DB::connection('authentication')->getPdo()->exec('SET FOREIGN_KEY_CHECKS=1;');
-        }
     }
 
     /**

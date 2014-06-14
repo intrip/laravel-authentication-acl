@@ -14,8 +14,11 @@ class DbHelperTest extends DbTestCase
     public function setUp()
     {
         parent::setUp();
+
         $this->model_stub = new TransactionStub;
         $this->model_stub->createSchema();
+
+        $this->resetStaticDataToDefault();
     }
 
     public function tearDown()
@@ -26,23 +29,29 @@ class DbHelperTest extends DbTestCase
     /**
      * @test
      **/
-    public function canStartTransactionAndCommit()
+    public function canStartTransactionAndCommitAndStopForeignKeysCheck()
     {
-        DbHelper::startTransaction();
+        DbHelperForeignKeysStub::startTransaction();
         $this->model_stub->create([]);
-        DbHelper::commit();
+        DbHelperForeignKeysStub::commit();
+
         $this->assertEquals(1, $this->model_stub->get()->count());
+        $this->assertTrue(DbHelperForeignKeysStub::$foreign_keys_started);
+        $this->assertTrue(DbHelperForeignKeysStub::$foreign_keys_stopped);
     }
 
     /**
      * @test
      **/
-    public function canStartAndRollbackTransaction()
+    public function canStartAndRollbackTransactionAndStopForeignKeysCheck()
     {
-        DbHelper::startTransaction();
+        DbHelperForeignKeysStub::startTransaction();
         $this->model_stub->create([]);
-        DbHelper::rollback();
+        DbHelperForeignKeysStub::rollback();
+
         $this->assertEquals(0, $this->model_stub->get()->count());
+        $this->assertTrue(DbHelperForeignKeysStub::$foreign_keys_started);
+        $this->assertTrue(DbHelperForeignKeysStub::$foreign_keys_stopped);
     }
 
     /**
@@ -50,7 +59,6 @@ class DbHelperTest extends DbTestCase
      **/
     public function canStopForeignKeysCheckIfSupported()
     {
-        DbHelperStub::$current_driver_name = '';
         $mock_exec = m::mock('StdClass')
             ->shouldReceive('exec')
             ->once()
@@ -81,7 +89,6 @@ class DbHelperTest extends DbTestCase
      **/
     public function canStartForeignKeysCheckIfSupported()
     {
-        DbHelperStub::$current_driver_name = '';
         $mock_exec = m::mock('StdClass')
             ->shouldReceive('exec')
             ->once()
@@ -98,6 +105,12 @@ class DbHelperTest extends DbTestCase
         DbHelperStub::startForeignKeysCheck();
     }
 
+    protected function resetStaticDataToDefault()
+    {
+        DbHelperForeignKeysStub::$foreign_keys_started = false;
+        DbHelperForeignKeysStub::$foreign_keys_stopped = false;
+        DbHelperStub::$current_driver_name = 'mysql';
+    }
 }
 
 class TransactionStub extends BaseModel
@@ -120,5 +133,22 @@ class DbHelperStub extends DbHelper
     protected static function getCurrentDriverName()
     {
         return static::$current_driver_name;
+    }
+}
+
+class DbHelperForeignKeysStub extends DbHelperStub
+{
+    public static $foreign_keys_started;
+    public static $foreign_keys_stopped;
+
+    public static function startForeignKeysCheck()
+    {
+        static::$foreign_keys_started = true;
+    }
+
+    public static function stopForeignKeysCheck()
+    {
+        static::$foreign_keys_stopped = true;
+
     }
 }

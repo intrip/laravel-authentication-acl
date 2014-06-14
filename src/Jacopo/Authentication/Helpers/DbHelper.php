@@ -37,12 +37,13 @@ class DbHelper
     public static function commit()
     {
         static::getConnection()->getPdo()->commit();
+        static::startForeignKeysCheck();
     }
 
     public static function rollback()
     {
-
         static::getConnection()->getPdo()->rollback();
+        static::startForeignKeysCheck();
     }
 
     /**
