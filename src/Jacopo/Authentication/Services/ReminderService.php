@@ -1,7 +1,7 @@
 <?php namespace Jacopo\Authentication\Services;
 
 use Illuminate\Support\MessageBag;
-use Jacopo\Authentication\Validators\ReminderValidator;
+use App;
 use Jacopo\Library\Exceptions\MailException;
 use Jacopo\Authentication\Exceptions\UserNotFoundException;
 use Jacopo\Library\Exceptions\InvalidException;
@@ -55,8 +55,8 @@ class ReminderService {
 
     public function __construct()
     {
-        $this->auth = \App::make('authenticator');
-        $this->mailer = \App::make('jmailer');
+        $this->auth = App::make('authenticator');
+        $this->mailer = App::make('jmailer');
         $this->errors = new MessageBag();
     }
 

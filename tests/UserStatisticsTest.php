@@ -69,15 +69,15 @@ class UserStatisticTest extends DbTestCase {
     private function createMixedUsers()
     {
         $active_banned_data     = [
-            "email"  => "user1@mail.com", "password" => "testpassword", "activated" => 1,
+            "email"  => $this->faker->email(), "password" => $this->faker->text(20), "activated" => 1,
             "banned" => 1
         ];
         $inactive_unbanned_data = [
-            "email"  => "user2@mail.com", "password" => "testpassword", "activated" => 0,
+            "email"  => $this->faker->email(), "password" => $this->faker->text(20), "activated" => 0,
             "banned" => 0
         ];
         $active_unbanned_data = [
-            "email"  => "user3@mail.com", "password" => "testpassword", "activated" => 1,
+            "email"  => $this->faker->email(), "password" => $this->faker->text(20), "activated" => 1,
             "banned" => 0
         ];
         $this->user_repository->create($active_banned_data);

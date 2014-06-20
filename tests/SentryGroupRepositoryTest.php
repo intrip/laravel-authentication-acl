@@ -8,13 +8,17 @@
 use Jacopo\Authentication\Repository\SentryGroupRepository;
 use Mockery as m;
 
-class SentryGroupRepositoryTest extends DbTestCase {
+class SentryGroupRepositoryTest extends DbTestCase
+{
+
+    protected $group_class;
+    protected $group_repository;
 
     public function setUp()
     {
         parent::setUp();
-
         $this->group_repository = new SentryGroupRepository;
+        $this->group_class = 'Jacopo\Authentication\Models\Group';
     }
 
     public function tearDown()
@@ -25,15 +29,11 @@ class SentryGroupRepositoryTest extends DbTestCase {
     /**
      * @test
      **/
-    public function it_creates_a_group()
+    public function canCreateGroup()
     {
-        $group = $this->group_repository->create(array(
-                                          'name'        => 'Users',
-                                          'permissions' => array(
-                                              'admin' => 1,
-                                              'users' => 1,
-                                          ),
-                                     ));
+        $group = $this->group_repository->create(['name'        => 'Users',
+                                                  'permissions' => ['admin' => 1, 'users' => 1,],
+                                                 ]);
 
         $this->assertEquals("Users", $group->name);
     }
@@ -41,23 +41,25 @@ class SentryGroupRepositoryTest extends DbTestCase {
     /**
      * @test
      **/
-    public function it_find_all_groups_filtered_by_description()
+    public function canFindGroupsFilteredByDescription()
     {
-        $repo = $this->createRepoMock();
-        $this->createTwoGroups($repo);
+        $repo = $this->getRepoConfigMocked();
+        $group_name = "Users1";
+        $this->make($this->group_class, ["name" => $group_name]);
+
         $groups = $repo->all(["name" => "1"]);
 
         $this->assertEquals(1, $groups->count());
-        $this->assertEquals("Users1", $groups->first()->name);
+        $this->assertEquals($group_name, $groups->first()->name);
     }
 
     /**
      * @test
      **/
-    public function it_find_all_groups()
+    public function canFindAllGroups()
     {
-        $repo = $this->createRepoMock();
-        $this->createTwoGroups($repo);
+        $repo = $this->getRepoConfigMocked();
+        $this->times(2)->make($this->group_class);
 
         $groups = $repo->all(["name" => ""]);
         $this->assertEquals(2, $groups->count());
@@ -69,31 +71,30 @@ class SentryGroupRepositoryTest extends DbTestCase {
     /**
      * @test
      **/
-    public function it_find_group()
+    public function canFindAGroup()
     {
+        $group = $this->make($this->group_class);
 
-        $group = $this->createAGroup();
-        $group_find = $this->group_repository->find($group->id);
+        $group_found = $this->group_repository->find($group[0]->id);
 
-        $this->assertEquals($group_find->toArray(), $group->toArray());
+        $this->assertObjectHasAllAttributes($group_found->toArray(), $group[0],['permissions','protected']);
     }
 
     /**
      * @test
      * @expectedException \Jacopo\Authentication\Exceptions\UserNotFoundException
      **/
-    public function it_find_throws_exception()
+    public function itHandleErrorsWithFind()
     {
-        $group_find = $this->group_repository->find(20);
-
+        $this->group_repository->find(20);
     }
 
     /**
      * @test
      **/
-    public function it_return_all_models()
+    public function itCanGetAllGroupsUnfiltered()
     {
-        $group = $this->createAGroup();
+        $this->make($this->group_class);
 
         $all = $this->group_repository->all();
         $this->assertEquals(1, count($all));
@@ -104,9 +105,9 @@ class SentryGroupRepositoryTest extends DbTestCase {
      **/
     public function it_delete_a_group()
     {
-        $group = $this->createAGroup();
+        $groups = $this->make($this->group_class);
 
-        $success = $this->group_repository->delete($group->id);
+        $success = $this->group_repository->delete($groups[0]->id);
         $this->assertTrue($success);
     }
 
@@ -116,49 +117,32 @@ class SentryGroupRepositoryTest extends DbTestCase {
      **/
     public function it_update_a_group()
     {
-        $group = $this->createAGroup();
+        $groups = $this->make($this->group_class);
         $newname = ["name" => "new name"];
-        $this->group_repository->update($group->id, $newname);
+        $this->group_repository->update($groups[0]->id, $newname);
 
-        $group_find = $this->group_repository->find($group->id);
+        $group_find = $this->group_repository->find($groups[0]->id);
         $this->assertEquals($newname["name"], $group_find->name);
     }
 
     /**
      * @return SentryGroupRepository
      */
-    public function createRepoMock()
+    public function getRepoConfigMocked()
     {
         $per_page = 5;
-        $config   = m::mock('StdClass');
+        $config = m::mock('StdClass');
         $config->shouldReceive('get')->with('laravel-authentication-acl::groups_per_page')->andReturn($per_page)->getMock();
         $repo = new SentryGroupRepository($config);
 
         return $repo;
     }
 
-    /**
-     * @param $repo
-     */
-    private function createTwoGroups($repo)
+    protected function getModelStub()
     {
-        $repo->create(array(
-                           'name' => 'Users1',));
-        $repo->create(array(
-                           'name' => 'Users2',));
-    }
-
-
-    private function createAGroup()
-    {
-        return $this->group_repository->create(array(
-                                                    'name'        => 'Users',
-                                                    'permissions' => array(
-                                                        'admin' => 1,
-                                                        'users' => 1,
-                                                    ),
-                                                    "protected" => 0,
-                                               ));
+        return [
+                "name" => $this->faker->text(10)
+        ];
     }
 }
  

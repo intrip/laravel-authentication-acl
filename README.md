@@ -31,3 +31,6 @@ You can see the full documentation and usage [here](docs/index.md)
  - Fully customizable and easy to extend
  - 100% object oriented
  - The code is fully tested with Phpunit
+
+####Interested in some new feature?
+Contact me and i'll do my best to implement that in next releases.

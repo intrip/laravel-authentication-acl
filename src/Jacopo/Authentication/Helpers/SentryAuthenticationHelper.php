@@ -13,7 +13,7 @@ class SentryAuthenticationHelper implements AuthenticationHelperInterface, Permi
 {
     /**
      * Check if the current user is logged and has access
-     * to all the permissions $permissions
+     * to all the permissions
      *
      * @param $permissions
      * @return boolean
@@ -22,10 +22,8 @@ class SentryAuthenticationHelper implements AuthenticationHelperInterface, Permi
     {
         $sentry = App::make('sentry');
         $current_user = $sentry->getUser();
-        if(! $current_user)
-            return false;
-        if($permissions && (! $current_user->hasAnyAccess($permissions)) )
-            return false;
+        if(! $current_user) return false;
+        if($permissions && (! $current_user->hasAnyAccess($permissions)) ) return false;
 
         return true;
     }
@@ -55,7 +53,6 @@ class SentryAuthenticationHelper implements AuthenticationHelperInterface, Permi
      */
     public function checkCustomProfileEditPermission()
     {
-        // has permission to edit other user profiles
         $edit_perm = Config::get('laravel-authentication-acl::permissions.edit_custom_profile');
         return $this->hasPermission($edit_perm) ? true : false;
     }

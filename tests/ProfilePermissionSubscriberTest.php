@@ -19,11 +19,11 @@ class ProfilePermissionSubscriberTest extends TestCase {
      **/
     public function checkIfHasProfileTypePermission()
     {
-        $mock_auth_helper = m::mock('StdClass')
+        $has_edit_profile_permssion = m::mock('StdClass')
                 ->shouldReceive('checkCustomProfileEditPermission')
                 ->andReturn(true)
                 ->getMock();
-        App::instance('authentication_helper', $mock_auth_helper);
+        App::instance('authentication_helper', $has_edit_profile_permssion);
 
         $subscriber = new ProfilePermissionSubscriber();
         $subscriber->checkProfileTypePermission();
@@ -36,6 +36,7 @@ class ProfilePermissionSubscriberTest extends TestCase {
     public function throwsExceptionIfTypePermissionFails()
     {
         $subscriber = new ProfilePermissionSubscriber();
+
         $subscriber->checkProfileTypePermission();
     }
 

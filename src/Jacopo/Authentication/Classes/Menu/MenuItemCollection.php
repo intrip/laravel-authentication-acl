@@ -6,7 +6,6 @@
  */
 
 use Jacopo\Authentication\Interfaces\MenuCollectionInterface;
-use ArrayIterator;
 
 class MenuItemCollection implements MenuCollectionInterface
 {
@@ -31,10 +30,9 @@ class MenuItemCollection implements MenuCollectionInterface
     {
         $valid_items = [];
         foreach ($this->items as $item)
-        {
             if($item->havePermission())
                 $valid_items[] = $item;
-        }
+
         return $valid_items;
     }
 

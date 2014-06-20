@@ -23,10 +23,9 @@ class FormHelperTest extends TestCase {
     public function it_create_permissions_array_values_and_add_underscore_prefix_if_not_present()
     {
         $objs = $this->createArrayOfPermissions();
-        $mock_permission = m::mock('Jacopo\Authentication\Repository\EloquentPermissionRepository');
-        $mock_permission->shouldReceive('all')->andReturn(new Collection($objs));
-
+        $mock_permission = $this->mockPermissionFetch($objs);
         $helper = new FormHelper($mock_permission);
+
         $values = $helper->getSelectValuesPermission();
 
         $this->assertEquals("desc1", $values["_perm1"]);
@@ -42,6 +41,7 @@ class FormHelperTest extends TestCase {
 
         $helper = new FormHelper();
         $helper->prepareSentryPermissionInput($data, $operation);
+
         $this->assertEquals(["permission1" => 1], $data["permissions"]);
     }
 
@@ -50,15 +50,21 @@ class FormHelperTest extends TestCase {
      */
     protected function createArrayOfPermissions()
     {
-        $value1 = "desc1";
-        $value2 = "desc2";
-        $value3 = "desc3";
-        $obj1   = new Permission(["description" => $value1, "permission" => "perm1"]);
-        $obj2   = new Permission(["description" => $value2, "permission" => "perm2"]);
-        $obj3   = new Permission(["description" => $value3, "permission" => "perm3"]);
-        $objs   = [$obj1, $obj2, $obj3];
+        $obj1   = new Permission(["description" => "desc1", "permission" => "perm1"]);
+        $obj2   = new Permission(["description" => "desc2", "permission" => "perm2"]);
+        $obj3   = new Permission(["description" => "desc3", "permission" => "perm3"]);
+        return [$obj1, $obj2, $obj3];
+    }
 
-        return $objs;
+    /**
+     * @param $objs
+     * @return m\MockInterface|\Yay_MockObject
+     */
+    protected function mockPermissionFetch($objs)
+    {
+        $mock_permission = m::mock('Jacopo\Authentication\Repository\EloquentPermissionRepository');
+        $mock_permission->shouldReceive('all')->andReturn(new Collection($objs));
+        return $mock_permission;
     }
 
 }

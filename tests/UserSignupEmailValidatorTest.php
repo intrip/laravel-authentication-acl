@@ -30,7 +30,6 @@ class UserSignupEmailValidatorTest extends DbTestCase {
         $validator = new UserSignupEmailValidator();
         $this->assertFalse($validator->validateEmailUnique("email", $fake_mail, $input));
 
-        $user_repo = App::make('user_repository');
         $fake_mail = "email2@email.com";
         $input = [
             "email" => $fake_mail,

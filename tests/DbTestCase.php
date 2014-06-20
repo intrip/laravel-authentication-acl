@@ -27,10 +27,13 @@ class DbTestCase extends TestCase
 
     protected function make($class_name, $fields = [])
     {
+        $created_objs = [];
         while ($this->times--) {
             $stub_data = array_merge($this->getModelStub(), $fields);
-            $class_name::create($stub_data);
+            $created_objs[] = $class_name::create($stub_data);
         }
+
+        return $created_objs;
     }
 
     protected function getModelStub()
@@ -78,5 +81,10 @@ class DbTestCase extends TestCase
             if (!in_array($key, $except)) $this->assertEquals($value, $object->$key);
         }
 
+    }
+
+    protected function assertObjectHasAllAttributes(array $attributes, $object, array $except = [])
+    {
+        $this->objectHasAllArrayAttributes($attributes, $object, $except);
     }
 } 

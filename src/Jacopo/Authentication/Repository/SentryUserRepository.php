@@ -19,7 +19,6 @@ use Jacopo\Authentication\Models\Group;
 use Jacopo\Authentication\Models\User;
 use Jacopo\Authentication\Repository\Interfaces\UserRepositoryInterface;
 use Jacopo\Library\Repository\EloquentBaseRepository;
-use Jacopo\Library\Repository\Interfaces\BaseRepositoryInterface;
 
 class SentryUserRepository extends EloquentBaseRepository implements UserRepositoryInterface
 {

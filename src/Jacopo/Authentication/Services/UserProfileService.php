@@ -8,7 +8,6 @@ use App;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\MessageBag;
 use Jacopo\Authentication\Exceptions\PermissionException;
-use Jacopo\Authentication\Exceptions\UserNotFoundException;
 use Jacopo\Authentication\Validators\UserProfileValidator;
 use Jacopo\Library\Exceptions\InvalidException;
 use Jacopo\Library\Exceptions\JacopoExceptionsInterface;
@@ -54,8 +53,6 @@ class UserProfileService
 
         $user_profile = $this->createUserProfile($input);
 
-//        $this->updateUserPassword($input);
-
         $this->saveCustomProfileFields($input, $user_profile);
 
         return $user_profile;
@@ -92,26 +89,6 @@ class UserProfileService
         {
             $this->errors = new MessageBag(["model" => "You don't have the permission to edit other user profiles."]);
             throw new PermissionException;
-        }
-    }
-
-    /**
-     * @param $input
-     * @throws \Jacopo\Authentication\Exceptions\UserNotFoundException
-     * @deprecated
-     */
-    protected function updateUserPassword($input)
-    {
-        if (isset($input["new_password"]) && !empty($input["new_password"]))
-        try {
-            $this->r_u->update(
-                               $input["user_id"],
-                               ["password" => $input["new_password"]]
-                               );
-        }
-        catch (ModelNotFoundException $e)
-        {
-            throw new UserNotFoundException;
         }
     }
 

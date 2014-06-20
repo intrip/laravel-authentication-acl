@@ -6,7 +6,6 @@
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
 use Jacopo\Authentication\Classes\Menu\MenuItemCollection;
-use Jacopo\Authentication\Tests\TestCase;
 use Mockery as m;
 
 class MenuItemCollectionTest extends TestCase {
@@ -21,13 +20,13 @@ class MenuItemCollectionTest extends TestCase {
      **/
     public function it_gets_items_available()
     {
-        $mock_item1 = m::mock('StdClass')->shouldReceive('havePermission')->andReturn(true)->getMock();
-        $mock_item2 = m::mock('StdClass')->shouldReceive('havePermission')->andReturn(false)->getMock();
-        $items = [$mock_item1, $mock_item2];
+        $item_with_permission = m::mock('StdClass')->shouldReceive('havePermission')->andReturn(true)->getMock();
+        $item_without_permission = m::mock('StdClass')->shouldReceive('havePermission')->andReturn(false)->getMock();
 
-        $collection = new MenuItemCollection($items);
+        $collection = new MenuItemCollection([$item_with_permission, $item_without_permission]);
         $item_valid = $collection->getItemListAvailable();
-        $this->assertEquals(1, count($item_valid));
+
+        $this->assertCount(1, $item_valid);
     }
 }
  
