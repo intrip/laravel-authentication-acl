@@ -20,7 +20,7 @@ class SentryMenuFactory
         $items = [];
         foreach ($menu_items as $menu_item)
         {
-            $items[] = new SentryMenuItem($menu_item["link"], $menu_item["name"], $menu_item["permissions"], $menu_item["route"]);
+            if(! empty($menu_item["name"])) $items[] = new SentryMenuItem($menu_item["link"], $menu_item["name"], $menu_item["permissions"], $menu_item["route"]);
         }
 
         return new MenuItemCollection($items);
