@@ -1,0 +1,8 @@
+default:
+  paths:
+      features: 'tests/acceptance/features'
+      bootstrap: 'tests/acceptance/bootstrap'
+  extensions:
+      Behat\MinkExtension\Extension:
+        goutte: ~
+        base_url: 'http://testing-acceptance.authentication'

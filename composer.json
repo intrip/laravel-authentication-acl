@@ -1,47 +1,50 @@
 {
-    "name": "jacopo/laravel-authentication-acl",
-    "description": "Laravel authentication and ACL package with a cool admin panel",
-    "license" : "MIT",
-    "keywords": ["acl", "authentication", "signup", "admin panel", "profile", "laravel"],
-    "authors": [
-        {
-            "name": "jacopo",
-            "email": "jacopo@jacopobeschi.com",
-            "homepage": "http://www.jacopobeschi.com"
-        }
-    ],
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "git://github.com/orchestral/phpseclib.git"
-        }
-    ],
-    "require": {
-        "php": ">=5.4.0",
-        "illuminate/support": "~4",
-        "intervention/image": "2.*",
-        "cartalyst/sentry": "2.1.*",
-        "jacopo/laravel-library": "1.0.0",
-        "gregwar/captcha": "1.0.11"
+  "name": "jacopo/laravel-authentication-acl",
+  "description": "Laravel authentication and ACL package with a cool admin panel",
+  "license": "MIT",
+  "keywords": ["acl", "authentication", "signup", "admin panel", "profile", "laravel"],
+  "authors": [
+    {
+      "name": "jacopo",
+      "email": "jacopo@jacopobeschi.com",
+      "homepage": "http://www.jacopobeschi.com"
+    }
+  ],
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "git://github.com/orchestral/phpseclib.git"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.0",
+    "illuminate/support": "~4",
+    "intervention/image": "2.*",
+    "cartalyst/sentry": "2.1.*",
+    "jacopo/laravel-library": "1.0.0",
+    "gregwar/captcha": "1.0.11"
+  },
+  "require-dev": {
+    "mockery/mockery": "0.9.0",
+    "orchestra/testbench": "2.1.1",
+    "doctrine/dbal": "v2.4.2",
+    "fzaninotto/faker": "v1.3.0",
+    "behat/behat": "2.5.*@stable",
+    "behat/mink-extension": "*",
+    "behat/mink-goutte-driver": "*"
+  },
+  "autoload": {
+    "psr-0": {
+      "Jacopo\\Authentication": "src/"
     },
-    "require-dev": {
-        "mockery/mockery": "0.9.0",
-        "orchestra/testbench": "2.1.1",
-        "doctrine/dbal": "v2.4.2",
-        "fzaninotto/faker": "v1.3.0"
+    "psr-4": {
+      "Jacopo\\Authentication\\Tests\\": "tests/"
     },
-    "autoload": {
-        "psr-0": {
-            "Jacopo\\Authentication": "src/"
-        },
-        "psr-4": {
-            "Jacopo\\Authentication\\Tests\\" : "tests/"
-        },
-        "classmap": [
-            "src/controllers",
-            "src/commands",
-            "src/seeds"
-        ]
-    },
-    "minimum-stability": "stable"
+    "classmap": [
+      "src/controllers",
+      "src/commands",
+      "src/seeds"
+    ]
+  },
+  "minimum-stability": "stable"
 }

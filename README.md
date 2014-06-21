@@ -33,4 +33,5 @@ You can see the full documentation and usage [here](docs/index.md)
  - The code is fully tested with Phpunit
 
 ####Interested in some new feature?
+There's something you like to see in this package?
 Contact me and i'll do my best to implement that in next releases.

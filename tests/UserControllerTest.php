@@ -285,6 +285,17 @@ class UserControllerTest extends DbTestCase
     /**
      * @test
      **/
+    public function canRemoveAPermission()
+    {
+
+
+    }
+
+    //@todo can add a permission
+
+    /**
+     * @test
+     **/
     public function canDeleteCustomFieldType()
     {
         $this->stopPermissionCheckEvent();

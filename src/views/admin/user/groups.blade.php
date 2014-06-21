@@ -19,10 +19,10 @@
 {{-- delete group --}}
 @if( ! $user->groups->isEmpty() )
 @foreach($user->groups as $group)
-    {{Form::open(["action" => "Jacopo\Authentication\Controllers\UserController@deleteGroup", "role"=>"form", 'class' => 'form-del-group'])}}
+    {{Form::open(["action" => "Jacopo\Authentication\Controllers\UserController@deleteGroup", "role"=>"form", 'name' => $group->id])}}
     <div class="form-group">
         <div class="input-group">
-            <span class="input-group-addon form-button button-del-group"><span class="glyphicon glyphicon-minus-sign add-input"></span></span>
+            <span class="input-group-addon form-button button-del-group" name="{{$group->id}}"><span class="glyphicon glyphicon-minus-sign add-input"></span></span>
             {{Form::text('group_name', $group->name, ['class' => 'form-control', 'readonly' => 'readonly'])}}
             {{Form::hidden('id', $user->id)}}
             {{Form::hidden('group_id', $group->id)}}
@@ -43,7 +43,8 @@
         <?php endif; ?>
     });
     $(".button-del-group").click( function(){
-        $('.form-del-group').submit();
+        name = $(this).attr('name');
+        $('form[name='+name+']').submit();
     });
 </script>
 @stop

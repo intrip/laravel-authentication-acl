@@ -18,10 +18,10 @@
 
 @if( $presenter->permissions )
 @foreach($presenter->permissions_obj as $permission)
-    {{Form::open(["route" => "groups.edit.permission", "role"=>"form", 'class' => 'form-del-perm'])}}
+    {{Form::open(["route" => "groups.edit.permission", "role"=>"form", 'name' => $permission->permission])}}
     <div class="form-group">
         <div class="input-group">
-            <span class="input-group-addon form-button button-del-perm"><span class="glyphicon glyphicon-minus-sign add-input"></span></span>
+            <span class="input-group-addon form-button button-del-perm" name="{{$permission->permission}}"><span class="glyphicon glyphicon-minus-sign add-input"></span></span>
                        {{Form::text('permission_desc', $permission->description, ['class' => 'form-control', 'readonly' => 'readonly'])}}
          {{Form::hidden('permissions', $permission->permission)}}
             {{Form::hidden('id', $group->id)}}
@@ -44,7 +44,8 @@
         <?php endif; ?>
     });
     $(".button-del-perm").click( function(){
-        $('.form-del-perm').submit();
+        name = $(this).attr('name');
+        $('form[name='+name+']').submit();
     });
 </script>
 @stop
