@@ -12,7 +12,10 @@ return [
     "list" => [
                 [
                     /*
-                     * the name of the link: you will see it in the menu
+                     * the name of the link: you will see it in the admin menu panel.
+                     * Note: If you don't want to show this item in the menu
+                     * but still want to handle permission with the 'can_see' filter
+                     * just leave this field empty.
                      */
                     "name" => "Users",
                     /* the route name associated to the link: used to set

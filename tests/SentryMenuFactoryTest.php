@@ -40,12 +40,19 @@ class SentryMenuFactoryTest extends TestCase
      **/
     public function itSkipItemsWithoutName()
     {
-        $extra_data = [[
-                               "name"        => "",
-                               "link"        => "link3",
-                               "permissions" => ["permission1"],
-                               "route"       => "route3"
-                       ]];
+        $extra_data = [
+                [
+                        "name"        => "",
+                        "link"        => "link3",
+                        "permissions" => ["permission1"],
+                        "route"       => "route3"
+                ],
+                [
+                        "link"        => "link4",
+                        "permissions" => ["permission1"],
+                        "route"       => "route4"
+                ]
+        ];
         $this->initializeConfig($extra_data);
 
         $collection = SentryMenuFactory::create();
