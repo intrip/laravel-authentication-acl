@@ -174,6 +174,7 @@ class UserRepositorySearchFilter
         );
 
         $q = $q->groupBy($this->user_table_name.'.email');
+        $q = $q->groupBy($this->user_table_name.'.id');
 
         return $q;
     }

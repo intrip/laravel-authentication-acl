@@ -26,6 +26,7 @@ class CreateUserProfileTable extends Migration {
             $table->string('country',50)->nullable();
             $table->string('zip',20)->nullable();
             $table->string('address',100)->nullable();
+            $table->binary('avatar')->nullable();
             $table->timestamps();
             // foreign keys
             $table->foreign('user_id')
@@ -33,8 +34,6 @@ class CreateUserProfileTable extends Migration {
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
         });
-
-        DB::statement('ALTER TABLE  `user_profile` ADD  `avatar` LONGBLOB DEFAULT NULL');
     }
 
 	/**
