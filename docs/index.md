@@ -28,7 +28,7 @@ To install authentication follow this steps:
       ```
       "require": {
         ...
-        "jacopo/laravel-authentication-acl": "1.1.1"
+        "jacopo/laravel-authentication-acl": "1.1.2"
       },
       ```
 
