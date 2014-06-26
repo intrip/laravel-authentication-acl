@@ -71,14 +71,14 @@ After installing the package you can find all his configuration files under the 
   
 ## <a name="howto">How To</a> ##
 
-    * How to add a new menu item?
+  1. How to add a new menu item?
 
     First go to menu.php and add the new menu item entry along with the permissions.
     And secondly go to your routes.php and add for the specified route the following
     'before' => array('logged', 'can_see'), that way a user must be login first and
     have the appropriate permissions in order to access the specified route.
 
-    * How to add permissions to a route that is not in the menu?
+  2. How to add permissions to a route that is not in the menu?
 
     Go to the menu.php and add it as a new menu item but leave the name empty.
 
@@ -89,7 +89,7 @@ After installing the package you can find all his configuration files under the 
         "permissions" => ["_superadmin"]
     ]
 
-    * How to add items in sidebar?
+  3. How to add items in sidebar?
 
     To make use of the sidebar shown in admin area, your view must extend the following template:
 
