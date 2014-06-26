@@ -8,8 +8,9 @@ a simple admin panel with an ACL using Laravel framework.
  1. [Requirements](#requirements)
  2. [Setup](#setup)
  3. [Configuration](#configuration)
- 4. [Usage](#usage)
- 5. [Advanced Configuration and API](#advanced)
+ 4. [How To](#howto)
+ 5. [Usage](#usage)
+ 6. [Advanced Configuration and API](#advanced)
 
 ## <a name="requirements">Requirements</a> ##
 
@@ -70,40 +71,43 @@ After installing the package you can find all his configuration files under the 
   
 ## <a name="howto">How To</a> ##
 
-1. How to add a new menu item?
+    <b>* How to add a new menu item?</b>
 
-First go to menu.php and add the new menu item entry along with the permissions.
-And secondly go to your routes.php and add for the specified route the following
-'before' => array('logged', 'can_see'), that way a user must be login first and
-have the appropriate permissions in order to access the specified route.
+    <p>First go to menu.php and add the new menu item entry along with the permissions.
+    And secondly go to your routes.php and add for the specified route the following
+    'before' => array('logged', 'can_see'), that way a user must be login first and
+    have the appropriate permissions in order to access the specified route.</p>
 
-2. How to add permissions to a route that is not in the menu?
+    <b>* How to add permissions to a route that is not in the menu?</b>
 
-Go to the menu.php and add it as a new menu item but leave the name empty.
+    <p>Go to the menu.php and add it as a new menu item but leave the name empty.</p>
+    <code>
+    [
+        "name" => "",
+        "route" => "myrouteprefix",
+        "link" => URL::route('myrouteprefix.index'),
+        "permissions" => ["_superadmin"]
+    ]
+    </code>
 
-[
-	"name" => "",
-	"route" => "myrouteprefix",
-	"link" => URL::route('myrouteprefix.index'),
-	"permissions" => ["_superadmin"]
-]
+    <b>* How to add items in sidebar?</b>
 
-3. How to add items in sidebar?
+    <p>To make use of the sidebar shown in admin area, your view must extend the following template:</p>
 
-To make use of the sidebar shown in admin area, your view must extend the following template:
+    <code>@extends('laravel-authentication-acl::admin.layouts.base-2cols')</code>
 
-@extends('laravel-authentication-acl::admin.layouts.base-2cols')
+    <p>Next inside your controller action add the items to the sidebar as follows:</p>
 
-Next inside your controller action add the items to the sidebar as follows:
+    <code>
+    $sidebar = array(
+                "Users List" => array('url' => URL::route('myrouteprefix.list'), 'icon' => '<i class="fa fa-users"></i>'),
+                'Add New' => array('url' => URL::route('myrouteprefix.new'), 'icon' => '<i class="fa fa-plus-circle"></i>'),
+            );
+    </code>
 
-$sidebar = array(
-            "Users List" => array('url' => URL::route('myrouteprefix.list'), 'icon' => '<i class="fa fa-users"></i>'),
-            'Add New' => array('url' => URL::route('myrouteprefix.new'), 'icon' => '<i class="fa fa-plus-circle"></i>'),
-        );
-		
-Next you need to attach the sidebar menu items to your view as follows:
+    <p>Next you need to attach the sidebar menu items to your view as follows:</p>
 
-return View::make('myrouteprefix.index')->with('sidebar_items', $sidebar);		  
+    <code>return View::make('myrouteprefix.index')->with('sidebar_items', $sidebar);</code>
 
 ## <a name="usage">Usage</a> ##
 You have four main link to access the application.
