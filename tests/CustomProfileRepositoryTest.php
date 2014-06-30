@@ -61,9 +61,10 @@ class CustomProfileRepositoryTest extends DbTestCase {
     {
         $this->stopPermissionCheckEvent();
         $field_value = "value";
-        $profile_type_field_id = 1;
 
-        $this->custom_profile_1->setField($profile_type_field_id, $field_value);
+        $field_description = "junk data";
+        $profile_type_field = $this->custom_profile_1->addNewType($field_description);
+        $this->custom_profile_1->setField($profile_type_field->id, $field_value);
 
         $created_profile = ProfileField::first();
         $this->assertEquals($field_value, $created_profile->value);
@@ -166,12 +167,12 @@ class CustomProfileRepositoryTest extends DbTestCase {
     public function updateOnlyTheUserProfileCustomField()
     {
         $this->stopPermissionCheckEvent();
-        $profile_type_field_id = 1;
+        $profile_field_type = $this->custom_profile_1->addNewType("junk data");
         $field_value_1 = "value1";
         $field_value_2 = "value2";
 
-        $this->custom_profile_1->setField($profile_type_field_id, $field_value_1);
-        $this->custom_profile_2->setField($profile_type_field_id, $field_value_2);
+        $this->custom_profile_1->setField($profile_field_type->id, $field_value_1);
+        $this->custom_profile_2->setField($profile_field_type->id, $field_value_2);
 
         $profile_fields = ProfileField::get();
         $this->assertEquals($field_value_1, $profile_fields[0]->value);

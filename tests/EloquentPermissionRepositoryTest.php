@@ -97,7 +97,7 @@ class EloquentPermissionRepositoryTest extends DbTestCase {
                                    "email"      => $this->faker->email(),
                                    "password"   => $this->faker->text(10), "activated" => 1,
                                    "permissions" => json_encode(["_perm" => "1"]),
-                                   "created_at" => 0, "updated_at" => 0
+                                   "created_at" => $this->getNowDateTime(), "updated_at" => $this->getNowDateTime()
                                    ]);
         return User::first();
     }

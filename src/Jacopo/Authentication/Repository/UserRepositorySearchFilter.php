@@ -165,7 +165,16 @@ class UserRepositorySearchFilter
      */
     private function createAllSelect($q)
     {
-        $q = $q->select($this->user_table_name . '.*',
+        $q = $q->select(
+            // for postgres i need to use distinct on here
+            DB::RAW( "DISTINCT ON (".$this->user_table_name . ".email) {$this->user_table_name}.email"),
+            $this->user_table_name . ".id",
+            $this->user_table_name . ".activated",
+            $this->user_table_name . ".activation_code",
+            $this->user_table_name . ".activated_at",
+            $this->user_table_name . ".last_login",
+            $this->user_table_name . ".protected",
+            $this->user_table_name . ".banned",
             $this->profile_table_name. '.first_name',
             $this->profile_table_name. '.last_name',
             $this->profile_table_name. '.zip',
@@ -173,8 +182,7 @@ class UserRepositorySearchFilter
             $this->groups_table_name . '.name'
         );
 
-        $q = $q->groupBy($this->user_table_name.'.email');
-        $q = $q->groupBy($this->user_table_name.'.id');
+//        $q = $q->groupBy($this->user_table_name.'.email');
 
         return $q;
     }

@@ -1,5 +1,6 @@
 <?php  namespace Jacopo\Authentication\Tests;
 
+use Carbon\Carbon;
 use DB;
 use Jacopo\Authentication\Models\User;
 use Jacopo\Authentication\Models\UserProfile;
@@ -77,7 +78,7 @@ class EloquentUserProfileRepositoryTest extends DbTestCase
         DB::table('users')->insert([
             "email" => $this->faker->email(),
             "password" => $this->faker->text(10), "activated" => 1,
-            "created_at" => 0, "updated_at" => 0
+            "created_at" => $this->getNowDateTime(), "updated_at" => $this->getNowDateTime()
         ]);
         return User::first();
     }

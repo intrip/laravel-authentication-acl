@@ -43,7 +43,7 @@ class SentryAuthenticator implements AuthenticateInterface
     }
     catch(\Cartalyst\Sentry\Users\UserNotActivatedException $e)
     {
-      $this->errors->add('login', 'Your user it not activated.');
+      $this->errors->add('login', 'Your user is not activated.');
     }
     catch(\Cartalyst\Sentry\Users\PasswordRequiredException $e)
     {

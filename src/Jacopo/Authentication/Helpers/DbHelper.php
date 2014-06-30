@@ -10,7 +10,7 @@ class DbHelper
      * Drivers that doesn't support foreign keys check
      * @var array
      */
-    public static $no_foreign_keys_drivers = ['sqlite'];
+    public static $no_foreign_keys_drivers = ['sqlite', 'pgsql'];
 
     public static function startTransaction()
     {
