@@ -17,13 +17,12 @@ class DbHelperTest extends DbTestCase
 
         $this->model_stub = new TransactionStub;
         $this->model_stub->createSchema();
-
-        $this->resetStaticDataToDefault();
     }
 
     public function tearDown()
     {
         m::close();
+        $this->resetStaticDataToDefault();
     }
 
     /**

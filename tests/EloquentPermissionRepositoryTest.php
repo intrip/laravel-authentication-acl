@@ -18,7 +18,10 @@ class EloquentPermissionRepositoryTest extends DbTestCase {
     public function setUp()
     {
         parent::setUp();
-        $this->faker = \Faker\Factory::create();
+        $active = 1;
+        $this->createUserWithPerm(["_perm" => $active]);
+        $group_class = 'Jacopo\Authentication\Models\Group';
+        $this->make($group_class, $this->getModelGroupStub());
     }
 
     public function tearDown()
@@ -28,11 +31,20 @@ class EloquentPermissionRepositoryTest extends DbTestCase {
 
     /**
      * @test
+     **/
+    public function checkIfPermissionIsNotAssociatedToGroup()
+    {
+        $perm_repo = new PermissionRepository();
+        $permission_obj = new Permission(["description" => "desc", "permission" => []]);
+        $perm_repo->checkIsNotAssociatedToAnyGroup($permission_obj);
+    }
+
+    /**
+     * @test
      * @expectedException \Jacopo\Authentication\Exceptions\PermissionException
      **/
-    public function it_check_if_is_associated_to_a_group_and_throws_exception()
+    public function IfAssociatedToGroupThrowsException()
     {
-        $this->make('Jacopo\Authentication\Models\Group');
         $perm_repo = new PermissionRepository();
         $permission_obj = new Permission(["description" => "desc", "permission" => "_perm"]);
         $perm_repo->checkIsNotAssociatedToAnyGroup($permission_obj);
@@ -41,20 +53,8 @@ class EloquentPermissionRepositoryTest extends DbTestCase {
     /**
      * @test
      **/
-    public function it_check_if_is_associated_to_a_group()
+    public function checkIfUserIsNotAssociatedToUser()
     {
-        $this->make('Jacopo\Authentication\Models\Group');
-        $perm_repo = new PermissionRepository();
-        $permission_obj = new Permission(["description" => "desc", "permission" => []]);
-        $perm_repo->checkIsNotAssociatedToAnyGroup($permission_obj);
-    }
-
-    /**
-     * @test
-     **/
-    public function it_check_if_is_associated_to_a_user()
-    {
-        $this->make('Jacopo\Authentication\Models\Group');
         $perm_repo = new PermissionRepository();
         $permission_obj = new Permission(["description" => "desc", "permission" => []]);
         $perm_repo->checkIsNotAssociatedToAnyUser($permission_obj);
@@ -64,9 +64,8 @@ class EloquentPermissionRepositoryTest extends DbTestCase {
      * @test
      * @expectedException \Jacopo\Authentication\Exceptions\PermissionException
      **/
-    public function it_check_if_is_associated_to_a_user_and_throws_exception()
+    public function ifAssociatedToUserThrowsException()
     {
-        $this->createUserWithPerm1();
         $perm_repo = new PermissionRepository();
         $permission_obj = new Permission(["description" => "desc", "permission" => "_perm" ]);
         $perm_repo->checkIsNotAssociatedToAnyUser($permission_obj);
@@ -75,15 +74,22 @@ class EloquentPermissionRepositoryTest extends DbTestCase {
     /**
      * @test
      **/
-    public function it_calls_is_not_associated_to_any_group_and_is_not_associated_to_any_user_on_repositoryupdate()
+    public function validateThatPermissionIsNotAssociatedToAnyGroupAndAnyUser_OnRepositoryUpdate()
     {
-        $true_stub = new FalseGetter;
-        Event::fire('repository.updating', [$true_stub]);
-        $this->make('Jacopo\Authentication\Models\Group');
-        $this->createUserWithPerm1();
+        $false_stub = new FalseGetterStub;
+        Event::fire('repository.updating', [$false_stub]);
     }
 
-    protected function getModelStub()
+    /**
+     * @test
+     **/
+    public function validateThatPermissionIsNotAssociatedToAnyGroupAndAnyUser_OnRepositoryDelete()
+    {
+        $false_stub = new FalseGetterStub;
+        Event::fire('repository.deleting', [$false_stub]);
+    }
+
+    protected function getModelGroupStub()
     {
         return [
             "name" => $this->faker->name(),
@@ -91,19 +97,25 @@ class EloquentPermissionRepositoryTest extends DbTestCase {
         ];
     }
 
-    private function createUserWithPerm1()
+    protected function getModelStub()
+    {
+        // we merge this with the other methods
+        return [];
+    }
+
+    private function createUserWithPerm(array $perm)
     {
         DB::table('users')->insert([
                                    "email"      => $this->faker->email(),
                                    "password"   => $this->faker->text(10), "activated" => 1,
-                                   "permissions" => json_encode(["_perm" => "1"]),
+                                   "permissions" => json_encode($perm),
                                    "created_at" => $this->getNowDateTime(), "updated_at" => $this->getNowDateTime()
                                    ]);
         return User::first();
     }
 }
 
-class FalseGetter
+class FalseGetterStub
 {
     public function __get($key)
     {

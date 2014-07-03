@@ -36,16 +36,26 @@ class EloquentPermissionRepository extends EloquentBaseRepository
     }
 
     /**
-     * @param $obj
+     * @param $permission_obj
+     * @throws \Jacopo\Authentication\Exceptions\PermissionException
+     */
+    public function checkIsNotAssociatedToAnyUser($permission_obj)
+    {
+        $all_users = $this->user_repo->all();
+        $this->validateIfPermissionIsInCollection($permission_obj, $all_users);
+    }
+
+    /**
+     * @param $permission
      * @param $collection
      * @throws \Jacopo\Authentication\Exceptions\PermissionException
      */
-    private function validateIfPermissionIsInCollection($obj, $collection)
+    private function validateIfPermissionIsInCollection($permission, $collection)
     {
-        foreach ($collection as $item)
+        foreach ($collection as $collection_item)
         {
-            $perm = $this->permissionsToArray($item->permissions);
-            if (! empty($perm) && is_array($perm) && array_key_exists($obj->permission, $perm)) throw new PermissionException;
+            $perm = $this->permissionsToArray($collection_item->permissions);
+            if (! empty($perm) && is_array($perm) && array_key_exists($permission->permission, $perm)) throw new PermissionException;
         }
     }
 
@@ -67,15 +77,5 @@ class EloquentPermissionRepository extends EloquentBaseRepository
         }
 
         return $_permissions;
-    }
-
-    /**
-     * @param $permission_obj
-     * @throws \Jacopo\Authentication\Exceptions\PermissionException
-     */
-    public function checkIsNotAssociatedToAnyUser($permission_obj)
-    {
-        $all_users = $this->user_repo->all();
-        $this->validateIfPermissionIsInCollection($permission_obj, $all_users);
     }
 }
