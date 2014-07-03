@@ -4,6 +4,7 @@ use Carbon\Carbon;
 use DB;
 use Jacopo\Authentication\Models\User;
 use Jacopo\Authentication\Repository\EloquentUserProfileRepository;
+use Jacopo\Authentication\Tests\Traits\UserFactory;
 
 /**
  * Test EloquentUserProfileRepositoryTest
@@ -12,11 +13,14 @@ use Jacopo\Authentication\Repository\EloquentUserProfileRepository;
  */
 class EloquentUserProfileRepositoryTest extends DbTestCase
 {
+    use UserFactory;
+
     protected $repo_profile;
 
     public function setUp()
     {
         parent::setUp();
+        $this->initializeUserHasher();
         $this->repo_profile = new EloquentUserProfileRepository();
     }
 
@@ -25,8 +29,8 @@ class EloquentUserProfileRepositoryTest extends DbTestCase
      **/
     public function canCreateNewProfile()
     {
-        $data = $this->prepareFakeProfileData();
-
+        $users = $this->make('Jacopo\Authentication\Models\User', $this->getUserStub());
+        $data = $this->prepareFakeProfileData($users[0]->id);
         $profile = $this->repo_profile->create($data);
 
         $this->assertInstanceOf('\Jacopo\Authentication\Models\UserProfile', $profile);

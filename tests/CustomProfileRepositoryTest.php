@@ -288,10 +288,5 @@ class CustomProfileRepositoryTest extends DbTestCase {
     {
         Event::listen(['customprofile.creating',], function () { return false; }, 100);
     }
-
-    protected function getModelStub()
-    {
-        return [];
-    }
 }
  
