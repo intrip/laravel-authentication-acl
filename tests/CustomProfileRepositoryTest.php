@@ -1,9 +1,10 @@
 <?php  namespace Jacopo\Authentication\Tests;
 
-use Event;
+use Event, App;
 use Jacopo\Authentication\Classes\CustomProfile\Repository\CustomProfileRepository;
 use Jacopo\Authentication\Models\ProfileField;
 use Jacopo\Authentication\Models\ProfileFieldType;
+use Jacopo\Authentication\Tests\Traits\UserFactory;
 
 /**
  * Test CustomProfileTest
@@ -11,20 +12,30 @@ use Jacopo\Authentication\Models\ProfileFieldType;
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
 class CustomProfileRepositoryTest extends DbTestCase {
+    use UserFactory;
 
+    protected $user_1;
+    protected $profile_1;
     protected $custom_profile_1;
-    protected $profile_id_1;
+    protected $user_2;
+    protected $profile_2;
     protected $custom_profile_2;
-    protected $profile_id_2;
+    protected $profile_repository;
 
     public function setUp()
     {
         parent::setUp();
 
-        $this->profile_id_1 = 1;
-        $this->custom_profile_1 = new CustomProfileRepository($this->profile_id_1);
-        $this->profile_id_2 = 2;
-        $this->custom_profile_2 = new CustomProfileRepository($this->profile_id_2);
+        $this->profile_repository = App::make('profile_repository');
+        $this->initializeUserHasher();
+
+        $users = $this->times(2)->make('Jacopo\Authentication\Models\User',(function (){return $this->getUserStub();}));
+        $this->user_1=  $users[0];
+        $this->user_2=  $users[1];
+        $this->profile_1 = $this->profile_repository->attachEmptyProfile($this->user_1);
+        $this->profile_2 = $this->profile_repository->attachEmptyProfile($this->user_2);
+        $this->custom_profile_1 = new CustomProfileRepository($this->profile_1->id);
+        $this->custom_profile_2 = new CustomProfileRepository($this->profile_2->id);
     }
 
     /**
@@ -61,9 +72,9 @@ class CustomProfileRepositoryTest extends DbTestCase {
     {
         $this->stopPermissionCheckEvent();
         $field_value = "value";
-
         $field_description = "junk data";
         $profile_type_field = $this->custom_profile_1->addNewType($field_description);
+
         $this->custom_profile_1->setField($profile_type_field->id, $field_value);
 
         $created_profile = ProfileField::first();
@@ -93,16 +104,14 @@ class CustomProfileRepositoryTest extends DbTestCase {
         $description  = "description";
         $profile_type = $this->custom_profile_1->addNewType($description);
         $profile_type_field_id = $profile_type->id;
-        $profile_1 = 2;
         ProfileField::create([
-                             "profile_id"            => $profile_1,
+                             "profile_id"            => $this->profile_1->id,
                              "profile_field_type_id" => $profile_type_field_id,
                              "value"                 => "value1"
                              ]);
 
-        $profile_2 = 1;
         ProfileField::create([
-                             "profile_id"            => $profile_2,
+                             "profile_id"            => $this->profile_2->id,
                              "profile_field_type_id" => $profile_type_field_id,
                              "value"                 => "value2"
                              ]);
@@ -139,7 +148,7 @@ class CustomProfileRepositoryTest extends DbTestCase {
     public function throwsExceptionOnDeleteTypeIfNotExists()
     {
         $this->stopPermissionCheckEvent();
-        $invalid_id = 11;
+        $invalid_id = 99999;
         $this->custom_profile_1->deleteType($invalid_id);
     }
 
@@ -149,12 +158,12 @@ class CustomProfileRepositoryTest extends DbTestCase {
     public function canUpdateCustomField()
     {
         $this->stopPermissionCheckEvent();
-        $field_value = "value";
-        $profile_type_field_id = 1;
-        $this->createCustomField($profile_type_field_id, $field_value);
+        $field_value = "value1";
+        $profile_type = $this->custom_profile_1->addNewType("desc1");
+        $this->createCustomField($profile_type->id, $field_value);
 
         $new_value = "value2";
-        $this->custom_profile_1->setField($profile_type_field_id, $new_value);
+        $this->custom_profile_1->setField($profile_type->id, $new_value);
 
         $total_fields = 1;
         $this->assertEquals($total_fields, ProfileField::all()->count());
@@ -185,7 +194,7 @@ class CustomProfileRepositoryTest extends DbTestCase {
     public function canGetAllTypesWithTheirAssociatedValueIfExists()
     {
         $this->stopPermissionCheckEvent();
-        $profile_type = $this->createTwoProfileTypes();
+        $profile_type = $this->createProfilesWithAndWithoutValuesAssociated();
         $value1 = "value";
         $this->custom_profile_1->setField($profile_type->id, $value1);
         $value2 = "value2";
@@ -211,7 +220,7 @@ class CustomProfileRepositoryTest extends DbTestCase {
     /**
      * @return mixed
      */
-    protected function createTwoProfileTypes()
+    protected function createProfilesWithAndWithoutValuesAssociated()
     {
         $type_description1 = "custom field type with value";
         $profile_type      = $this->custom_profile_1->addNewType($type_description1);
@@ -226,12 +235,14 @@ class CustomProfileRepositoryTest extends DbTestCase {
     public function canGetAllFieldsOfAProfile()
     {
         $this->stopPermissionCheckEvent();
-        $profile_type_field_id_1 = 1;
+
+        $profile_type_field_1 = $this->custom_profile_1->addNewType("junk data1");
+        $profile_type_field_2 = $this->custom_profile_1->addNewType("junk data2");
+
         $value_1 = "value1";
-        $this->createCustomField($profile_type_field_id_1, $value_1);
-        $profile_type_field_id_2 = 2;
+        $this->createCustomField($profile_type_field_1->id, $value_1);
         $value_2 = "value2";
-        $this->createCustomField($profile_type_field_id_2, $value_2);
+        $this->createCustomField($profile_type_field_2->id, $value_2);
 
         $fields = $this->custom_profile_1->getAllFields();
         $total_fields = 2;
@@ -249,7 +260,7 @@ class CustomProfileRepositoryTest extends DbTestCase {
     protected function createCustomField($profile_type_field_id, $field_value)
     {
         ProfileField::create([
-                             "profile_id"            => $this->profile_id_1,
+                             "profile_id"            => $this->profile_1->id,
                              "profile_field_type_id" => $profile_type_field_id,
                              "value"                 => $field_value
                              ]);
@@ -276,6 +287,11 @@ class CustomProfileRepositoryTest extends DbTestCase {
     protected function stopPermissionCheckCreate()
     {
         Event::listen(['customprofile.creating',], function () { return false; }, 100);
+    }
+
+    protected function getModelStub()
+    {
+        return [];
     }
 }
  

@@ -43,7 +43,7 @@ class SentryGroupRepositoryTest extends DbTestCase
      **/
     public function canFindGroupsFilteredByDescription()
     {
-        $repo = $this->getRepoConfigMocked();
+        $repo = $this->mockConfigPerPage();
         $group_name = "Users1";
         $this->make($this->group_class, ["name" => $group_name]);
 
@@ -58,7 +58,7 @@ class SentryGroupRepositoryTest extends DbTestCase
      **/
     public function canFindAllGroups()
     {
-        $repo = $this->getRepoConfigMocked();
+        $repo = $this->mockConfigPerPage();
         $this->times(2)->make($this->group_class);
 
         $groups = $repo->all(["name" => ""]);
@@ -128,7 +128,7 @@ class SentryGroupRepositoryTest extends DbTestCase
     /**
      * @return SentryGroupRepository
      */
-    public function getRepoConfigMocked()
+    public function mockConfigPerPage()
     {
         $per_page = 5;
         $config = m::mock('StdClass');

@@ -3,7 +3,6 @@
 use Carbon\Carbon;
 use DB;
 use Jacopo\Authentication\Models\User;
-use Jacopo\Authentication\Models\UserProfile;
 use Jacopo\Authentication\Repository\EloquentUserProfileRepository;
 
 /**
@@ -37,9 +36,9 @@ class EloquentUserProfileRepositoryTest extends DbTestCase
     protected function prepareFakeProfileData($user_id = null)
     {
         return [
-            'user_id' => $user_id ? $user_id : $this->faker->numberBetween(1, 100),
-            'first_name' => $this->faker->firstName(), 'last_name' => $this->faker->lastName(),
-            'phone' => $this->faker->phoneNumber(),
+                'user_id'    => $user_id ? $user_id : $this->faker->numberBetween(1, 100),
+                'first_name' => $this->faker->firstName(), 'last_name' => $this->faker->lastName(),
+                'phone'      => $this->faker->phoneNumber(),
         ];
     }
 
@@ -76,10 +75,12 @@ class EloquentUserProfileRepositoryTest extends DbTestCase
     protected function createFakeUser()
     {
         DB::table('users')->insert([
-            "email" => $this->faker->email(),
-            "password" => $this->faker->text(10), "activated" => 1,
-            "created_at" => $this->getNowDateTime(), "updated_at" => $this->getNowDateTime()
-        ]);
+                                           "email"      => $this->faker->email(),
+                                           "password"   => $this->faker->text(10),
+                                           "activated"  => 1,
+                                           "created_at" => $this->getNowDateTime(),
+                                           "updated_at" => $this->getNowDateTime()
+                                   ]);
         return User::first();
     }
 
@@ -101,12 +102,12 @@ class EloquentUserProfileRepositoryTest extends DbTestCase
     private function createFakeProfile($user)
     {
         $profile_data = [
-            'user_id' => $user->id, 'code' => $this->faker->text('20'),
-            'vat' => $this->faker->text('20'), 'first_name' => $this->faker->firstName(),
-            'last_name' => $this->faker->lastName(), 'phone' => $this->faker->phoneNumber(),
-            'state' => $this->faker->text(20), 'city' => $this->faker->citySuffix(),
-            'country' => $this->faker->country(), 'zip' => $this->faker->numberBetween(10000, 99999),
-            'address' => $this->faker->streetAddress()
+                'user_id'   => $user->id, 'code' => $this->faker->text('20'),
+                'vat'       => $this->faker->text('20'), 'first_name' => $this->faker->firstName(),
+                'last_name' => $this->faker->lastName(), 'phone' => $this->faker->phoneNumber(),
+                'state'     => $this->faker->text(20), 'city' => $this->faker->citySuffix(),
+                'country'   => $this->faker->country(), 'zip' => $this->faker->numberBetween(10000, 99999),
+                'address'   => $this->faker->streetAddress()
         ];
         $profile = $this->repo_profile->create($profile_data);
         return array($profile_data, $profile);
@@ -124,6 +125,5 @@ class EloquentUserProfileRepositoryTest extends DbTestCase
         $attached_profile = $this->repo_profile->getFromUserId($user->id);
         $this->assertNotEmpty($attached_profile);
     }
-
 }
  

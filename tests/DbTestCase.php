@@ -8,6 +8,7 @@
 use Artisan;
 use BadMethodCallException;
 use Carbon\Carbon;
+use Closure;
 use DB;
 
 class DbTestCase extends TestCase
@@ -139,13 +140,19 @@ class DbTestCase extends TestCase
         $this->artisan->call('migrate', ["--database" => "testbench", '--path' => '../src/migrations']);
     }
 
-    protected function make($class_name, $fields = [])
+    /**
+     * @param       $class_name
+     * @param mixed $extra
+     * @return array
+     */
+    protected function make($class_name, $extra = [])
     {
         $created_objs = [];
 
         while($this->times--)
         {
-            $stub_data = array_merge($this->getModelStub(), $fields);
+            $extra_data = ($extra instanceof Closure) ? $extra() : $extra;
+            $stub_data = array_merge($this->getModelStub(), $extra_data);
             $created_objs[] = $class_name::create($stub_data);
         }
 
