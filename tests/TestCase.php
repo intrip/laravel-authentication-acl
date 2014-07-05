@@ -1,4 +1,7 @@
 <?php namespace Jacopo\Authentication\Tests;
+
+use Carbon\Carbon;
+
 /**
  * Test TestCase
  *
@@ -29,5 +32,9 @@ class TestCase extends \Orchestra\Testbench\TestCase  {
         ];
     }
 
+    protected function getNowDateTime()
+    {
+        return Carbon::now()->toDateTimeString();
+    }
 }
  

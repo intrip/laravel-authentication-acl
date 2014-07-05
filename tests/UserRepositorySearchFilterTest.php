@@ -4,6 +4,8 @@ use App;
 use Carbon\Carbon;
 use Jacopo\Authentication\Repository\SentryUserRepository;
 use Jacopo\Authentication\Repository\UserRepositorySearchFilter;
+use Jacopo\Authentication\Tests\Traits\HourHelper;
+use Jacopo\Authentication\Tests\Traits\UserFactory;
 use Mockery as m;
 
 /**
@@ -13,6 +15,7 @@ use Mockery as m;
  */
 class UserRepositorySearchFilterTest extends DbTestCase
 {
+    use HourHelper, UserFactory;
 
     protected $repository_search;
     protected $user_repository;
@@ -27,10 +30,10 @@ class UserRepositorySearchFilterTest extends DbTestCase
     public function setUp()
     {
         parent::setUp();
-
         $this->repository_search = new UserRepositorySearchFilter;
         $this->user_repository = new SentryUserRepository();
         $this->profile_repository = App::make('profile_repository');
+        $this->initializeUserHasher();
     }
 
     public function tearDown()
@@ -191,7 +194,7 @@ class UserRepositorySearchFilterTest extends DbTestCase
         $users = $this->repository_search->all(["order_by" => "email", "ordering" => "asc"]);
         $this->assertEquals($users->first()->email, "0@email.com");
         $users = $this->repository_search->all(["ordering" => "asc", "order_by" => "last_login"]);
-        $this->assertEquals($users->first()->last_login, Carbon::now()->subHours(1)->toDateTimeString());
+        $this->assertEqualsHourFromTimestamp($users->first()->last_login, Carbon::now()->subHours(1));
         $users = $this->repository_search->all(["ordering" => "asc", "order_by" => "activated"]);
         $this->assertEquals($users->first()->activated, 0);
     }
@@ -269,14 +272,16 @@ class UserRepositorySearchFilterTest extends DbTestCase
      **/
     public function it_order_groups_with_all()
     {
-        $this->create4Active1InactiveUsers();
-        $group = $this->createGroup();
-        $this->user_repository->addGroup(2, $group->id);
-        $this->user_repository->addGroup(3, $group->id);
+        $this->times(2)->make('Jacopo\Authentication\Models\User', function(){return $this->getUserStub();});
+
+        $group1 = $this->createGroup("1 a first group");
+        $group2 = $this->createGroup("2 a second group");
+        $this->user_repository->addGroup(1, $group2->id);
+        $this->user_repository->addGroup(2, $group1->id);
 
         $users = $this->repository_search->all([
                                                        "order_by" => "name",
-                                                       'ordering' => 'desc'
+                                                       'ordering' => "asc"
                                                ]);
 
         $this->assertEquals(2, $users->first()->id);
@@ -341,5 +346,7 @@ class UserRepositorySearchFilterTest extends DbTestCase
 
         return $group;
     }
+
+
 }
  

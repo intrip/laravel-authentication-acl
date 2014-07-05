@@ -7,9 +7,9 @@
  */
 use Artisan;
 use BadMethodCallException;
-use Carbon\Carbon;
 use Closure;
 use DB;
+use Illuminate\Support\Collection;
 
 class DbTestCase extends TestCase
 {
@@ -25,9 +25,9 @@ class DbTestCase extends TestCase
     const MYSQL = "Mysql";
     const PGSQL = "Pgsql";
 
-    const CURRENT_DBMS = self::PGSQL;
-    //    const CURRENT_DBMS = self::MYSQL;
-    //    const CURRENT_DBMS = self::SQLITE;
+//    const CURRENT_DBMS = self::PGSQL;
+//        const CURRENT_DBMS = self::MYSQL;
+        const CURRENT_DBMS = self::SQLITE;
 
     /* Connections configurations */
     protected $sqlite_connection = [
@@ -147,13 +147,13 @@ class DbTestCase extends TestCase
      */
     protected function make($class_name, $extra = [])
     {
-        $created_objs = [];
+        $created_objs = new Collection();
 
         while($this->times--)
         {
             $extra_data = ($extra instanceof Closure) ? $extra() : $extra;
             $stub_data = array_merge($this->getModelStub(), $extra_data);
-            $created_objs[] = $class_name::create($stub_data);
+            $created_objs->push($class_name::create($stub_data));
         }
 
         $this->resetTimes();
@@ -189,10 +189,5 @@ class DbTestCase extends TestCase
         {
             if(!in_array($key, $except)) $this->assertEquals($value, $object->$key);
         }
-    }
-
-    protected function getNowDateTime()
-    {
-        return Carbon::now()->toDateTimeString();
     }
 }

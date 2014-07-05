@@ -51,9 +51,9 @@ class EloquentUserProfileRepositoryTest extends DbTestCase
      **/
     public function canRetriveProfileFromUserId()
     {
-        $user = $this->createFakeUser();
-        list($profile_data, $profile) = $this->createFakeProfile($user);
-        $profile_db = $this->repo_profile->getFromUserId($user->id);
+        $users = $this->make('Jacopo\Authentication\Models\User', $this->getUserStub());
+        list($profile_data, $profile) = $this->createFakeProfile($users[0]);
+        $profile_db = $this->repo_profile->getFromUserId($users[0]->id);
         $this->assertEquals($profile->code, $profile_db->code);
     }
 
@@ -72,20 +72,8 @@ class EloquentUserProfileRepositoryTest extends DbTestCase
      **/
     public function it_throws_exception_if_doesnt_find_the_profile()
     {
-        $user = $this->createFakeUser();
-        $this->repo_profile->getFromUserId($user->id);
-    }
-
-    protected function createFakeUser()
-    {
-        DB::table('users')->insert([
-                                           "email"      => $this->faker->email(),
-                                           "password"   => $this->faker->text(10),
-                                           "activated"  => 1,
-                                           "created_at" => $this->getNowDateTime(),
-                                           "updated_at" => $this->getNowDateTime()
-                                   ]);
-        return User::first();
+        $users = $this->make('Jacopo\Authentication\Models\User', $this->getUserStub());
+        $this->repo_profile->getFromUserId($users[0]->id);
     }
 
     /**
@@ -93,8 +81,8 @@ class EloquentUserProfileRepositoryTest extends DbTestCase
      **/
     public function canCreateAndUserProfile()
     {
-        $user = $this->createFakeUser();
-        list($profile_data, $profile) = $this->createFakeProfile($user);
+        $users = $this->make('Jacopo\Authentication\Models\User', $this->getUserStub());
+        list($profile_data, $profile) = $this->createFakeProfile($users[0]);
 
         $this->objectHasAllArrayAttributes($profile_data, $profile);
     }
@@ -122,11 +110,11 @@ class EloquentUserProfileRepositoryTest extends DbTestCase
      **/
     public function canCreateNewEmptyProfileIfDoesntExists()
     {
-        $user = $this->createFakeUser();
+        $users = $this->make('Jacopo\Authentication\Models\User', $this->getUserStub());
 
-        $this->repo_profile->attachEmptyProfile($user);
+        $this->repo_profile->attachEmptyProfile($users[0]);
 
-        $attached_profile = $this->repo_profile->getFromUserId($user->id);
+        $attached_profile = $this->repo_profile->getFromUserId($users[0]->id);
         $this->assertNotEmpty($attached_profile);
     }
 }

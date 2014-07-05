@@ -52,7 +52,7 @@
                 {{Form::label('Sorting: ')}}
             </div>
             <div class="col-md-12">
-                {{Form::select('order_by', ["" => "select column", "first_name" => "First name", "last_name" => "Last name", "email" => "Email", "last_login" => "Last login", "active" => "Active"], Input::get('order_by',''), ['class' => 'form-control'])}}
+                {{Form::select('order_by', ["" => "select column", "first_name" => "First name", "last_name" => "Last name", "email" => "Email", "last_login" => "Last login", "activated" => "Active"], Input::get('order_by',''), ['class' => 'form-control'])}}
             </div>
             <div class="col-md-12 margin-top-10">
                 {{Form::select('ordering', ["asc" => "Ascending", "desc" => "descending"], Input::get('ordering','asc'), ['class' =>'form-control'])}}
