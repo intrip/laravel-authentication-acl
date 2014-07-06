@@ -36,5 +36,13 @@ class TestCase extends \Orchestra\Testbench\TestCase  {
     {
         return Carbon::now()->toDateTimeString();
     }
+
+    /**
+     * @param $class
+     */
+    protected function assertHasErrors($class)
+    {
+        $this->assertFalse($class->getErrors()->isEmpty());
+    }
 }
  

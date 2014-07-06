@@ -50,7 +50,7 @@ class UserRegisterService
         $this->user_signup_validator = $v ? $v : new UserSignupValidator;
         $this->activation_enabled = Config::get('laravel-authentication-acl::email_confirmation');
         Event::listen('service.activated',
-            'Jacopo\Authentication\Services\UserRegisterService@sendActivationEmailToClient');
+                      'Jacopo\Authentication\Services\UserRegisterService@sendActivationEmailToClient');
     }
 
 
@@ -76,7 +76,8 @@ class UserRegisterService
      */
     protected function validateInput(array $input)
     {
-        if (!$this->user_signup_validator->validate($input)) {
+        if(!$this->user_signup_validator->validate($input))
+        {
             $this->errors = $this->user_signup_validator->getErrors();
             throw new ValidationException;
         }
@@ -89,13 +90,13 @@ class UserRegisterService
     protected function saveDbData(array $input)
     {
         DbHelper::startTransaction();
-        try {
+        try
+        {
             $user = $this->user_repository->create($input);
             $this->profile_repository->create($this->createProfileInput($input, $user));
-        } catch (UserExistsException $e) {
-            if (App::environment() != 'testing') {
-                DbHelper::rollback();
-            }
+        } catch(UserExistsException $e)
+        {
+            DbHelper::rollback();
             $this->errors = new MessageBag(["model" => "User already exists."]);
             throw new UserExistsException;
         }
@@ -115,19 +116,21 @@ class UserRegisterService
      */
     public function sendRegistrationMailToClient($input)
     {
-        $view_file = $this->activation_enabled ? "laravel-authentication-acl::admin.mail.registration-waiting-client" : "laravel-authentication-acl::admin.mail.registration-confirmed-client";
+        $view_file =
+                $this->activation_enabled ? "laravel-authentication-acl::admin.mail.registration-waiting-client" : "laravel-authentication-acl::admin.mail.registration-confirmed-client";
 
         $mailer = App::make('jmailer');
 
         // send email to client
         $mailer->sendTo($input['email'], [
-                "email" => $input["email"],
-                "password" => $input["password"],
-                "first_name" => $input["first_name"],
-                "token" => $this->activation_enabled ? App::make('authenticator')->getActivationToken($input["email"]) : ''
-            ],
-            "Registration request to: " . \Config::get('laravel-authentication-acl::app_name'),
-            $view_file);
+                                               "email"      => $input["email"],
+                                               "password"   => $input["password"],
+                                               "first_name" => $input["first_name"],
+                                               "token"      => $this->activation_enabled ? App::make('authenticator')
+                                                                                              ->getActivationToken($input["email"]) : ''
+                                       ],
+                        "Registration request to: " . \Config::get('laravel-authentication-acl::app_name'),
+                        $view_file);
     }
 
 
@@ -141,8 +144,8 @@ class UserRegisterService
         $mailer = App::make('jmailer');
         // if i activate a deactivated user
         $mailer->sendTo($user->email, ["email" => $user->email],
-            "Your user is activated on: " . Config::get('laravel-authentication-acl::app_name'),
-            "laravel-authentication-acl::admin.mail.registration-activated-client");
+                        "Your user is activated on: " . Config::get('laravel-authentication-acl::app_name'),
+                        "laravel-authentication-acl::admin.mail.registration-activated-client");
     }
 
     /**
@@ -155,13 +158,16 @@ class UserRegisterService
     {
         $token_msg = "The given token/email are invalid.";
 
-        try {
+        try
+        {
             $user = $this->user_repository->findByLogin($email);
-        } catch (UserNotFoundException $e) {
+        } catch(UserNotFoundException $e)
+        {
             $this->errors = new MessageBag(["token" => $token_msg]);
             throw new UserNotFoundException;
         }
-        if ($user->activation_code != $token) {
+        if($user->activation_code != $token)
+        {
             $this->errors = new MessageBag(["token" => $token_msg]);
             throw new TokenMismatchException;
         }
@@ -188,6 +194,6 @@ class UserRegisterService
     private function createProfileInput(array $input, $user)
     {
         return array_merge(["user_id" => $user->id],
-            array_except($input, ["email", "password", "activated"]));
+                           array_except($input, ["email", "password", "activated"]));
     }
 } 

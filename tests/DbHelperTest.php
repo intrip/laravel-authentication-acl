@@ -28,7 +28,7 @@ class DbHelperTest extends DbTestCase
     /**
      * @test
      **/
-    public function canStartTransactionAndCommitAndStopForeignKeysCheck()
+    public function canStartTransactionCommitAndStopForeignKeysCheck()
     {
         DbHelperForeignKeysStub::startTransaction();
         $this->model_stub->create([]);
@@ -42,7 +42,7 @@ class DbHelperTest extends DbTestCase
     /**
      * @test
      **/
-    public function canStartAndRollbackTransactionAndStopForeignKeysCheck()
+    public function canStartTransactionRollbackAndStopForeignKeysCheck()
     {
         DbHelperForeignKeysStub::startTransaction();
         $this->model_stub->create([]);
