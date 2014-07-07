@@ -61,7 +61,7 @@ class UserRegisterService
     public function register(array $input)
     {
         $this->validateInput($input);
-        $input['activated'] = $this->getActiveInputState();
+        $input['activated'] = $this->getDefaultActivatedState();
 
         $user = $this->saveDbData($input);
 
@@ -105,7 +105,7 @@ class UserRegisterService
         return $user;
     }
 
-    protected function getActiveInputState()
+    protected function getDefaultActivatedState()
     {
         return Config::get('laravel-authentication-acl::email_confirmation') ? false : true;
     }
@@ -151,8 +151,8 @@ class UserRegisterService
     /**
      * @param $email
      * @param $token
-     * @throws Jacopo\Authentication\Exceptions\UserNotFoundException
-     * @throws Jacopo\Authentication\Exceptions\TokenMismatchException
+     * @throws \Jacopo\Authentication\Exceptions\UserNotFoundException
+     * @throws \Jacopo\Authentication\Exceptions\TokenMismatchException
      */
     public function checkUserActivationCode($email, $token)
     {

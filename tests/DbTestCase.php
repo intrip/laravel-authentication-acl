@@ -5,10 +5,8 @@
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
-use Artisan;
+use Artisan, DB, Closure;
 use BadMethodCallException;
-use Closure;
-use DB;
 use Illuminate\Support\Collection;
 
 class DbTestCase extends TestCase
@@ -25,9 +23,12 @@ class DbTestCase extends TestCase
     const MYSQL = "Mysql";
     const PGSQL = "Pgsql";
 
-//    const CURRENT_DBMS = self::PGSQL;
-//        const CURRENT_DBMS = self::MYSQL;
-        const CURRENT_DBMS = self::SQLITE;
+    /**
+     * Uncomment the dbms that you want to use for persistence testing
+     */
+    //    const CURRENT_DBMS = self::PGSQL;
+    //    const CURRENT_DBMS = self::MYSQL;
+    const CURRENT_DBMS = self::SQLITE;
 
     /* Connections configurations */
     protected $sqlite_connection = [
@@ -113,18 +114,15 @@ class DbTestCase extends TestCase
 
     protected function cleanMysqlTables()
     {
-        $manager = DB::getDoctrineSchemaManager();
-        $tables = $manager->listTableNames();
-
-        DB::Statement("SET  FOREIGN_KEY_CHECKS=0");
-        foreach($tables as $table)
-        {
-            DB::Statement("DROP TABLE " . $table . " CASCADE");
-        }
-        DB::Statement("SET FOREIGN_KEY_CHECKS=1");
+        $this->dropCascadeTables();
     }
 
     protected function cleanPgsqlTables()
+    {
+        $this->dropCascadeTables();
+    }
+
+    protected function dropCascadeTables()
     {
         $manager = DB::getDoctrineSchemaManager();
         $tables = $manager->listTableNames();

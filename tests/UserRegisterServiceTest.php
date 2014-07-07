@@ -1,8 +1,6 @@
 <?php  namespace Jacopo\Authentication\Tests;
 
-use App;
-use Config;
-use Event;
+use App, Config, Event;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\MessageBag;
 use Jacopo\Authentication\Exceptions\UserExistsException;
@@ -34,7 +32,7 @@ class UserRegisterServiceTest extends DbTestCase
     /**
      * @test
      **/
-    public function it_register_a_user()
+    public function createAUserAndHisProfile()
     {
         $input = $this->createFakeRegisterInput();
         $mock_validator = $this->getValidatorSuccess();
@@ -43,6 +41,7 @@ class UserRegisterServiceTest extends DbTestCase
         $user = $service->register($input);
 
         $this->assertTrue($user->exists);
+        $this->assertNotEmpty($this->getFirstUserProfile());
     }
 
     /**
@@ -68,20 +67,6 @@ class UserRegisterServiceTest extends DbTestCase
         return $mock_validator;
     }
 
-    /**
-     * @test
-     **/
-    public function it_create_a_profile()
-    {
-        $input = $this->createFakeRegisterInput();
-        $mock_validator = $this->getValidatorSuccess();
-        $service = new UserRegisterServiceNoMails($mock_validator);
-
-        $service->register($input);
-
-        $profile = $this->getFirstUserProfile();
-        $this->assertNotEmpty($profile);
-    }
 
     /**
      * @return mixed
@@ -110,19 +95,6 @@ class UserRegisterServiceTest extends DbTestCase
         App::instance('jmailer', $mock_mailer);
 
         $service->sendActivationEmailToClient($user);
-    }
-
-    /**
-     * @test
-     **/
-    public function it_validate_user_input()
-    {
-        $mock_validator = $this->getValidatorSuccess();
-        $input = $this->createFakeRegisterInput();
-
-        $service = new UserRegisterServiceNoMails($mock_validator);
-
-        $service->register($input);
     }
 
     /**
@@ -171,7 +143,7 @@ class UserRegisterServiceTest extends DbTestCase
      * @test
      * @expectedException \Jacopo\Authentication\Exceptions\UserExistsException
      **/
-    public function it_throws_user_exists_exception_if_user_exists()
+    public function throwsException_IfUserExists()
     {
         $mock_validator = $this->getValidatorSuccess();
         $mock_repo = m::mock('StdClass')->shouldReceive('create')->andThrow(new UserExistsException)->getMock();
@@ -183,27 +155,9 @@ class UserRegisterServiceTest extends DbTestCase
     }
 
     /**
-     * @deprecated test
-     * @expectedException \Jacopo\Library\Exceptions\NotFoundException
-     **/
-    public function it_throws_not_found_exception_if_cannot_find_the_user()
-    {
-        $mock_validator = $this->getValidatorSuccess();
-        $user_stub = new \StdClass;
-        $user_stub->id = 1;
-        $mock_repo = m::mock('StdClass')->shouldReceive('create')->andReturn($user_stub)->shouldReceive('addGroup')->andThrow(new NotFoundException)
-                      ->getMock();
-        App::instance('user_repository', $mock_repo);
-
-        $service = new UserRegisterService($mock_validator);
-
-        $service->register(["group_id" => 1]);
-    }
-
-    /**
      * @test
      **/
-    public function sendsConfirmationEmail_if_is_enabled()
+    public function sendsConfirmationEmail_WhenEnabled()
     {
         $this->enableEmailConfirmation();
         $mock_mailer = m::mock('StdClass')->shouldReceive('sendTo')
@@ -222,7 +176,9 @@ class UserRegisterServiceTest extends DbTestCase
         $service = new UserRegisterService($mock_validator);
 
         $service->register([
-                                   "email"      => "email@email.com", "password" => "p", "activated" => 1,
+                                   "email"      => "email@email.com",
+                                   "password"   => "p",
+                                   "activated"  => 1,
                                    "first_name" => "first_name"
                            ]);
     }
@@ -256,13 +212,15 @@ class UserRegisterServiceTest extends DbTestCase
     /**
      * @test
      **/
-    public function it_send_activation_mail_to_client()
+    public function sendsActivationEmail()
     {
         $this->disableEmailConfirmation();
-        $mock_mailer = m::mock('StdClass')->shouldReceive('sendTo')->once()->with('email@email.com',
-                                                                                  m::any(), m::any(),
-                                                                                  "laravel-authentication-acl::admin.mail.registration-confirmed-client")
-                        ->andReturn(true)->getMock();
+        $mock_mailer = m::mock('StdClass')
+                        ->shouldReceive('sendTo')
+                        ->once()
+                        ->with('email@email.com', m::any(), m::any(), "laravel-authentication-acl::admin.mail.registration-confirmed-client")
+                        ->andReturn(true)
+                        ->getMock();
         App::instance('jmailer', $mock_mailer);
         $mock_validator = $this->getValidatorSuccess();
         $mock_user_repository = $this->mockUserRepositoryToCreateARandomUser();
@@ -274,7 +232,9 @@ class UserRegisterServiceTest extends DbTestCase
         $service = new UserRegisterService($mock_validator);
 
         $service->register([
-                                   "email"      => "email@email.com", "password" => "p", "activated" => 1,
+                                   "email"      => "email@email.com",
+                                   "password"   => "p",
+                                   "activated"  => 1,
                                    "first_name" => "first_name"
                            ]);
     }
@@ -295,29 +255,22 @@ class UserRegisterServiceTest extends DbTestCase
     /**
      * @test
      **/
-    public function it_setup_active_state_of_user()
+    public function setupActiveStateOfUser()
     {
         $this->disableEmailConfirmation();
+        Config::set('laravel-authentication-acl::email_confirmation',false);
         $service = m::mock('Jacopo\Authentication\Services\UserRegisterService');
-        $input = [];
 
-        $state = $service->getActiveInputState($input);
+        $this->assertTrue($service->getDefaultActivatedState([]));
 
-        $this->assertTrue($state);
-
-        Config::shouldReceive('get')->andReturn(true)->once();
-        $service = m::mock('Jacopo\Authentication\Services\UserRegisterService');
-        $input = [];
-
-        $state = $service->getActiveInputState($input);
-
-        $this->assertFalse($state);
+        Config::set('laravel-authentication-acl::email_confirmation',true);
+        $this->assertFalse($service->getDefaultActivatedState([]));
     }
 
     /**
      * @test
      **/
-    public function it_check_user_activation_code()
+    public function checksUserActivationCode()
     {
         $user_stub = new \StdClass;
         $user_stub->activation_code = "12345_";
@@ -349,7 +302,7 @@ class UserRegisterServiceTest extends DbTestCase
     /**
      * @test
      **/
-    public function it_check_for_activation_and_throw_not_found_exception()
+    public function checksForActivationAndThrowsUserNotFoundException()
     {
         $service = new UserRegisterService;
         $email = "mail@mail.com";
@@ -371,7 +324,7 @@ class UserRegisterServiceTest extends DbTestCase
     /**
      * @test
      **/
-    public function it_check_for_activation_code_and_throw_token_mismatch_exception_and_set_errors()
+    public function checksForActivationCodeAndThrowTokenMismatchExceptionWithErrors()
     {
         $user_stub =
                 m::mock('Jacopo\Authentication\Modles\User')->makePartial()->shouldReceive('checkResetPasswordCode')->andReturn(false)->getMock();
@@ -398,7 +351,7 @@ class UserRegisterServiceTest extends DbTestCase
     /**
      * @test
      **/
-    public function it_fire_an_event_when_checking_for_user_mail_confirmation()
+    public function fireEvent_OnCheckUserActivationCode()
     {
         $user_stub = m::mock('Jacopo\Authentication\Modles\User');
         $user_stub->activation_code = "12345_";
