@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Facade;
 use Jacopo\Authentication\Models\User;
 use Jacopo\Authentication\Models\UserProfile;
+use Jacopo\Authentication\Tests\Traits\UserFactory;
+use Jacopo\Authentication\Validators\UserValidator;
 use Jacopo\Library\Exceptions\ValidationException;
 use Mockery as m;
 
@@ -17,6 +19,7 @@ use Mockery as m;
  */
 class UserControllerTest extends DbTestCase
 {
+    use UserFactory;
 
     protected $custom_type_repository;
     protected $faker;
@@ -26,6 +29,8 @@ class UserControllerTest extends DbTestCase
         parent::setUp();
         $this->faker = \Faker\Factory::create();
         $this->custom_type_repository = App::make('custom_profile_repository');
+        $this->initializeUserHasher();
+        UserValidator::resetStatic();
     }
 
     public function tearDown()
@@ -217,11 +222,13 @@ class UserControllerTest extends DbTestCase
     /**
      * @test
      **/
-    public function it_edit_user_with_success_and_redirect_to_edit_page()
+    public function createNewUserWithSuccess()
     {
         $input_data = [
+            "id" => "",
             "email" => $this->faker->email(),
             "password" => "password",
+            "form_name" => "user",
             "password_confirmation" => "password",
             "activated" => true
         ];
@@ -235,8 +242,34 @@ class UserControllerTest extends DbTestCase
 
         $this->assertRedirectedToAction('Jacopo\Authentication\Controllers\UserController@editUser',
             ['id' => $user_created->id]);
+        $this->assertSessionHas('message');
     }
 
+    /**
+     * @test
+     * @group valid
+     **/
+    public function editAnUserWithSuccess()
+    {
+        $user_created = $this->make('Jacopo\Authentication\Models\User', $this->getUserStub());
+
+        $new_email = "new@mail.com";
+        $input_data = [
+                "id" => $user_created[0]->id,
+                "form_name" => "user",
+                "email" => $new_email,
+                "password" => ''
+        ];
+
+        $this->action('POST', 'Jacopo\Authentication\Controllers\UserController@postEditUser', $input_data);
+
+        $user_updated = User::find($user_created[0]->id);
+        $this->assertEquals($new_email, $user_updated->email);
+
+        $this->assertRedirectedToAction('Jacopo\Authentication\Controllers\UserController@editUser',
+                                        ['id' => $user_updated->id]);
+        $this->assertSessionHas('message');
+    }
     /**
      * @test
      **/

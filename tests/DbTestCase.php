@@ -26,9 +26,9 @@ class DbTestCase extends TestCase
     /**
      * Uncomment the dbms that you want to use for persistence testing
      */
-    //    const CURRENT_DBMS = self::PGSQL;
+        const CURRENT_DBMS = self::PGSQL;
     //    const CURRENT_DBMS = self::MYSQL;
-    const CURRENT_DBMS = self::SQLITE;
+//    const CURRENT_DBMS = self::SQLITE;
 
     /* Connections configurations */
     protected $sqlite_connection = [
@@ -40,7 +40,7 @@ class DbTestCase extends TestCase
     protected $pgsql_connection = [
             'driver'   => 'pgsql',
             'host'     => 'localhost',
-            'database' => 'authentication',
+            'database' => 'authentication_test',
             'username' => 'root',
             'password' => 'root',
             'charset'  => 'utf8',
@@ -50,7 +50,7 @@ class DbTestCase extends TestCase
     protected $mysql_connection = [
             'driver'    => 'mysql',
             'host'      => 'localhost',
-            'database'  => 'authentication',
+            'database'  => 'authentication_test',
             'username'  => 'root',
             'password'  => 'root',
             'charset'   => 'utf8',

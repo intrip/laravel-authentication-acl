@@ -93,8 +93,6 @@ class UserController extends Controller
         {
             $user = $this->f->process(Input::all());
             $this->profile_repository->attachEmptyProfile($user);
-            // 1) use attachEmptyProfile and use new transaction here, if error rollback. with tests
-            // 2) fix this also in the userregister service
         }
         catch(JacopoExceptionsInterface $e)
         {
