@@ -24,6 +24,9 @@ class UserControllerTest extends DbTestCase
     protected $custom_type_repository;
     protected $faker;
 
+    protected $add_operation = 1;
+    protected $remove_operation = 0;
+
     public function setUp()
     {
         parent::setUp();
@@ -257,9 +260,10 @@ class UserControllerTest extends DbTestCase
         $new_email = "new@mail.com";
         $input_data = [
                 "id" => $user_created[0]->id,
-                "form_name" => "user",
+//                "form_name" => "user",
                 "email" => $new_email,
-                "password" => ''
+//                "password" => '',
+//                "password_confirmation" => ''
         ];
 
         $this->action('POST', 'Jacopo\Authentication\Controllers\UserController@postEditUser', $input_data);
@@ -293,7 +297,7 @@ class UserControllerTest extends DbTestCase
     /**
      * @test
      **/
-    public function itHandleCreatePermissions()
+    public function itHandleCreationPermissions_OnCustomFieldType()
     {
         $field_description = "field desc";
         $user_id = 1;
@@ -308,11 +312,40 @@ class UserControllerTest extends DbTestCase
      **/
     public function canRemoveAPermission()
     {
+        $user_created = $this->make('Jacopo\Authentication\Models\User', array_merge($this->getUserStub(),["permissions" => ["_perm" => 1]]));
 
+        $permission_name = "_perm";
+        $input = [
+                "permissions" => $permission_name,
+                "id" => $user_created[0]->id,
+                "operation" => $this->remove_operation,
+        ];
 
+        $this->route('POST', 'users.edit.permission', $input);
+
+        $user_found = User::find($user_created[0]->id);
+        $this->assertEmpty($user_found->permissions);
     }
 
-    //@todo can add a permission
+    /**
+     * @test
+     **/
+    public function canAddAPermission()
+    {
+        $user_created = $this->make('Jacopo\Authentication\Models\User', $this->getUserStub());
+
+        $permission_name = "_perm";
+        $input = [
+            "permissions" => $permission_name,
+            "id" => $user_created[0]->id,
+            "operation" => $this->add_operation,
+        ];
+
+        $this->route('POST', 'users.edit.permission', $input);
+
+        $user_found = User::find($user_created[0]->id);
+        $this->assertUserHasPermission($user_found, $permission_name);
+    }
 
     /**
      * @test
@@ -395,6 +428,15 @@ class UserControllerTest extends DbTestCase
         $description = "description";
         $field_id = $this->custom_type_repository->addNewType($description)->id;
         return $field_id;
+    }
+
+    /**
+     * @param $user_found
+     * @param $permission_name
+     */
+    protected function assertUserHasPermission($user_found, $permission_name)
+    {
+        $this->assertEquals($user_found->permissions[$permission_name], 1);
     }
 }
  

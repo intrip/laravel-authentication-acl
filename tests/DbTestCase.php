@@ -195,7 +195,7 @@ class DbTestCase extends TestCase
     protected function overwriteDatabasePresenceVerifierForTesting()
     {
         App::bindShared('validation.presence', function($app){
-            $verifier = new DatabasePresenceVerifierStub($this->app['db']);
+            $verifier = new DatabasePresenceVerifier($this->app['db']);
             $verifier->setConnection('testbench');
 
             return $verifier;
@@ -203,13 +203,5 @@ class DbTestCase extends TestCase
 
         $validator = App::make('validator');
         $validator->setPresenceVerifier(App::make('validation.presence'));
-    }
-}
-
-class DatabasePresenceVerifierStub extends DatabasePresenceVerifier
-{
-    public function getConnection()
-    {
-        return $this->connection;
     }
 }
