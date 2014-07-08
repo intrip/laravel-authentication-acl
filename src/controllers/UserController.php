@@ -57,11 +57,6 @@ class UserController extends Controller
         $this->custom_profile_repository = App::make('custom_profile_repository');
     }
 
-  public function dashboard()
-  {
-    return View::make('laravel-authentication-acl::admin.user.dashboard');
-  }
-
   public function getList()
     {
         $users = $this->user_repository->all(Input::except(['page']));

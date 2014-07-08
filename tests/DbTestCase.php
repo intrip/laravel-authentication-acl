@@ -5,9 +5,11 @@
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
-use Artisan, DB, Closure;
+use Artisan, DB, Closure, App;
 use BadMethodCallException;
 use Illuminate\Support\Collection;
+use Illuminate\Validation\DatabasePresenceVerifier;
+use Illuminate\Validation\Factory;
 
 class DbTestCase extends TestCase
 {
@@ -26,9 +28,9 @@ class DbTestCase extends TestCase
     /**
      * Uncomment the dbms that you want to use for persistence testing
      */
-        const CURRENT_DBMS = self::PGSQL;
+//        const CURRENT_DBMS = self::PGSQL;
     //    const CURRENT_DBMS = self::MYSQL;
-//    const CURRENT_DBMS = self::SQLITE;
+    const CURRENT_DBMS = self::SQLITE;
 
     /* Connections configurations */
     protected $sqlite_connection = [
@@ -79,6 +81,7 @@ class DbTestCase extends TestCase
 
         $this->cleanTables();
         $this->createTestDbSchema();
+        $this->overwriteDatabasePresenceVerifierForTesting();
     }
 
     protected function cleanTables()
@@ -187,5 +190,26 @@ class DbTestCase extends TestCase
         {
             if(!in_array($key, $except)) $this->assertEquals($value, $object->$key);
         }
+    }
+
+    protected function overwriteDatabasePresenceVerifierForTesting()
+    {
+        App::bindShared('validation.presence', function($app){
+            $verifier = new DatabasePresenceVerifierStub($this->app['db']);
+            $verifier->setConnection('testbench');
+
+            return $verifier;
+        });
+
+        $validator = App::make('validator');
+        $validator->setPresenceVerifier(App::make('validation.presence'));
+    }
+}
+
+class DatabasePresenceVerifierStub extends DatabasePresenceVerifier
+{
+    public function getConnection()
+    {
+        return $this->connection;
     }
 }

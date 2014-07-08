@@ -24,14 +24,22 @@ View::composer('laravel-authentication-acl::admin.layouts.*', function ($view){
 });
 
 /**
+ * Dashboard sidebar
+ */
+View::composer(['laravel-authentication-acl::admin.dashboard.*'], function ($view){
+    $view->with('sidebar_items', [
+            "Dashboard" => [
+                    "url" => URL::route('dashboard.default'),
+                    "icon" => '<i class="fa fa-tachometer"></i>'
+            ]
+    ]);
+});
+
+/**
  * User sidebar
  */
 View::composer(['laravel-authentication-acl::admin.user.*'], function ($view){
     $view->with('sidebar_items', [
-                                     "Dashboard" => [
-                                         "url" => URL::route('users.dashboard'),
-                                         "icon" => '<i class="fa fa-tachometer"></i>'
-                                     ],
                                     "Users list" => [
                                         "url" => URL::route('users.list'),
                                         "icon" => '<i class="fa fa-user"></i>'
@@ -94,7 +102,7 @@ View::composer(['laravel-authentication-acl::admin.user.edit','laravel-authentic
 /**
  * Dashboard information
  */
-View::composer(['laravel-authentication-acl::admin.user.dashboard'], function($view){
+View::composer(['laravel-authentication-acl::admin.dashboard.*'], function($view){
     $user_statistics = new UserStatistics();
     $registered = $user_statistics->getRegisteredUserNumber();
     $active = $user_statistics->getActiveUserNumber();

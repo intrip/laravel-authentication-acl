@@ -221,6 +221,7 @@ class UserControllerTest extends DbTestCase
 
     /**
      * @test
+     * @group valid
      **/
     public function createNewUserWithSuccess()
     {
@@ -232,6 +233,7 @@ class UserControllerTest extends DbTestCase
             "password_confirmation" => "password",
             "activated" => true
         ];
+
 
         $this->action('POST', 'Jacopo\Authentication\Controllers\UserController@postEditUser', $input_data);
 
@@ -247,7 +249,6 @@ class UserControllerTest extends DbTestCase
 
     /**
      * @test
-     * @group valid
      **/
     public function editAnUserWithSuccess()
     {
@@ -269,19 +270,6 @@ class UserControllerTest extends DbTestCase
         $this->assertRedirectedToAction('Jacopo\Authentication\Controllers\UserController@editUser',
                                         ['id' => $user_updated->id]);
         $this->assertSessionHas('message');
-    }
-    /**
-     * @test
-     **/
-    public function canShowDashboardPage()
-    {
-        $mock_authenticator = m::mock('StdClass');
-        $mock_authenticator->shouldReceive('getLoggedUser')->andReturn(new User());
-        App::instance('authenticator', $mock_authenticator);
-
-        $this->action('GET', 'Jacopo\Authentication\Controllers\UserController@dashboard');
-
-        $this->assertResponseOk();
     }
 
     /**
