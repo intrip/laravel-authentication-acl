@@ -29,7 +29,7 @@ To install authentication follow this steps:
       ```
       "require": {
         ...
-        "jacopo/laravel-authentication-acl": "1.1.2"
+        "jacopo/laravel-authentication-acl": "1.1.*"
       },
       ```
 
@@ -227,3 +227,7 @@ In case you want to block the editing of a _user/group/permission_ from the admi
 ### How to run all tests ###
 To run all the tests you need <a href="http://phpunit.de/getting-started.html" target="_blank">phpunit</a> and <a href="https://sqlite.org/" target="_blank">sqlite3</a> installed on your system.
 Then go in _vendor/jacopo/authentication_ folder and run the command: `phpunit`.
+<br/>
+Note: If you want to use a different dbms for testing change the `CURRENT_DBMS` constant to the corrisponding dbms and update `connections_configuration` in the _Jacopo\Authentication\Tests\DbTestCase.php_ file, then run `phpunit`.
+<br/>
+If you're using postgres for testing you need to increase your `max_connections` option to make the tests pass.

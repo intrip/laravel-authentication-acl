@@ -22,6 +22,7 @@ You can see the full documentation and usage [here](docs/index.md)
  - Infinite custom profile fields!
  - Allow connection to a custom database other then laravel default
  - Create custom menu items with configurable permissions
+ - Can handle permission on custom user routes
  - Have two login forms: admin area and user area
  - Many usable hasing algorithms sha256, md5 etc...
  - Laravel4 based and easy to integrate in any Laravel application
@@ -29,6 +30,7 @@ You can see the full documentation and usage [here](docs/index.md)
  - Bootstrap 3 and responsive design (mobile first)
  - Easy install script from command line
  - Fully customizable and easy to extend
+ - Works with major DBMS (mysql, sqlite, postgres)
  - 100% object oriented
  - The code is fully tested with Phpunit
 
