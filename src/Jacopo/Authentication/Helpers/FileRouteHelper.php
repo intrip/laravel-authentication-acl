@@ -4,7 +4,7 @@
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
-use Config, Route;
+use Config, Route, App;
 use Jacopo\Authentication\Interfaces\AuthenticationRoutesInterface;
 use Jacopo\Library\Views\Helper as ViewHelper;
 
@@ -23,9 +23,12 @@ class FileRouteHelper implements AuthenticationRoutesInterface
      */
     protected $pemissions_variable_index = "permissions";
 
+    protected $authentication_helper;
+
     public function __construct($config_path = null)
     {
         $this->config_path = $config_path ? $config_path : $this->config_path;
+        $this->authentication_helper = App::make('authentication_helper');
     }
 
     /**
@@ -56,4 +59,19 @@ class FileRouteHelper implements AuthenticationRoutesInterface
 
         return $this->getPermFromRoute($route_base);
     }
+
+
+    /**
+     * Check if the logged user has permission for the given route
+     *
+     * @param $route_name
+     */
+    public function hasPermForRoute($route_name)
+    {
+        $permissions = $this->getPermFromRoute($route_name);
+        if( empty($permissions)) return true;
+
+        return $this->authentication_helper->hasPermission($permissions);
+    }
+
 }
