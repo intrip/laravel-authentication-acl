@@ -220,6 +220,7 @@ You can find the user class in the file: _vendor/jacopo/authentication/src/Jacop
                     */
                     public function hasPermission(array $permissions);`
 
+Also for route handling and permission you should check the class: `Jacopo\Authentication\Helpers\FileRouteHelper`.
 
 ### Blocking editing of a user/group or permission for the admin ui ###
 In case you want to block the editing of a _user/group/permission_ from the admin ui you need to open any dbms editor (like phpmyadmin) and go to the relative row in the corrisponding table associated _(users,groups,permission)_ and then set the flag of the column "protected" to "1".
