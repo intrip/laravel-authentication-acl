@@ -260,10 +260,10 @@ class UserControllerTest extends DbTestCase
         $new_email = "new@mail.com";
         $input_data = [
                 "id" => $user_created[0]->id,
-//                "form_name" => "user",
+                "form_name" => "user",
                 "email" => $new_email,
-//                "password" => '',
-//                "password_confirmation" => ''
+                "password" => '',
+                "password_confirmation" => ''
         ];
 
         $this->action('POST', 'Jacopo\Authentication\Controllers\UserController@postEditUser', $input_data);
