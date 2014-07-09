@@ -141,7 +141,7 @@ class SentryGroupRepositoryTest extends DbTestCase
     protected function getModelStub()
     {
         return [
-                "name" => $this->faker->text(10)
+                "name" => $this->faker->unique()->text(10)
         ];
     }
 }
