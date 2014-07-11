@@ -33,12 +33,12 @@ class UserControllerTest extends DbTestCase
         $this->faker = \Faker\Factory::create();
         $this->custom_type_repository = App::make('custom_profile_repository');
         $this->initializeUserHasher();
-        UserValidator::resetStatic();
     }
 
     public function tearDown()
     {
         m::close();
+        UserValidator::resetStatic();
     }
 
     /**
