@@ -40,8 +40,8 @@ To install authentication follow this steps:
 
   5. Then run this command to publish the configuration files:
   `php artisan authentication:prepare`
-  Now you can find configuration files in _app/config/packages/jacopo/authentication_ folder.
-  If you want to use a custom db(database) access configuration only for this package (while keeping other db connections for the rest of the application) edit the _app/config/packages/jacopo/authentication/database.php_ file.
+  Now you can find configuration files in _app/config/packages/jacopo/laravel-authentication-acl_ folder.
+  If you want to use a custom db(database) access configuration only for this package (while keeping other db connections for the rest of the application) edit the _app/config/packages/jacopo/laravel-authentication-acl/database.php_ file.
 
   6. Now you need to install the application, to do that run the command: `php artisan authentication:install`.
 
