@@ -29,12 +29,10 @@
                         <span id="nav-email">{{isset($logged_user) ? $logged_user->email : 'User'}}</span> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu">
-                        @if((new Jacopo\Authentication\Helpers\FileRouteHelper())->hasPermForRoute('users'))
                             <li>
-                                <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@editProfile',['user_id' => isset($logged_user->id) ? $logged_user->id : ''])}}"><i class="fa fa-user"></i> Your profile</a>
+                                <a href="{{URL::route('users.selfprofile.edit')}}"><i class="fa fa-user"></i> Your profile</a>
                             </li>
                             <li class="divider"></li>
-                        @endif
                         <li>
                             <a href="{{URL::action('Jacopo\Authentication\Controllers\AuthController@getLogout')}}"><i class="fa fa-sign-out"></i> Logout</a>
                         </li>

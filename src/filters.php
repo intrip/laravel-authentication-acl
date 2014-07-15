@@ -25,9 +25,6 @@ use Jacopo\Authentication\Helpers\FileRouteHelper;
 
 Route::filter('can_see', function()
 {
-    $helper = new FileRouteHelper;
-    $auth_helper = App::make('authentication_helper');
-    $perm = $helper->getPermFromCurrentRoute();
-
-    if( $perm && (! ($auth_helper->hasPermission( $perm ))) ) App::abort('401');
+    $route_helper = new FileRouteHelper;
+    if( ! $route_helper->hasPermForRoute(Route::currentRouteName())) App::abort('401');
 });

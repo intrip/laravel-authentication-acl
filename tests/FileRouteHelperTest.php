@@ -30,7 +30,7 @@ class FileRouteHelperTest extends DbTestCase
     /**
      * @test
      **/
-    public function it_gets_perm_from_route()
+    public function getsPermFromRoute()
     {
         $config_arr = $this->mockConfig();
         $helper = new FileRouteHelper();
@@ -41,7 +41,7 @@ class FileRouteHelperTest extends DbTestCase
     /**
      * @test
      **/
-    public function it_gets_perm_from_current_route()
+    public function GetsPermFromCurrentRoute()
     {
         $config_arr = $this->mockConfig();
         Route::shouldReceive('currentRouteName')->andReturn("route2");
@@ -113,17 +113,33 @@ class FileRouteHelperTest extends DbTestCase
     }
 
     /**
+     * @test
+     * @group error
+     **/
+    public function skipSkipPermissionsRoutesFromCheckingPermissions()
+    {
+        $route_name = "test";
+        $permissions = ["_wrong_perm"];
+        $to_skip = ["test.toskip"];
+        $this->setCustomMenuConfig($route_name, $permissions, $to_skip);
+
+        $this->assertTrue($this->route_helper->hasPermForRoute("test.toskip"));
+    }
+    
+    /**
      * @param $route_name
      * @param $permissions
      */
-    protected function setCustomMenuConfig($route_name, $permissions)
+    protected function setCustomMenuConfig($route_name, $permissions, array $to_skip = [])
     {
         Config::set('laravel-authentication-acl::menu.list',
                     [[
                              "name"        => "Test",
                              "route"       => $route_name,
                              "link"        => '',
-                             "permissions" => $permissions
+                             "permissions" => $permissions,
+                             "skip_permissions" => $to_skip,
+
                      ]]);
     }
 

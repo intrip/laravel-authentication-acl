@@ -22,6 +22,10 @@ class FileRouteHelper implements AuthenticationRoutesInterface
      * @var string
      */
     protected $pemissions_variable_index = "permissions";
+    /**
+     * @var string
+     */
+    protected $skip_permissions_variable_index = "skip_permissions";
 
     protected $authentication_helper;
 
@@ -37,13 +41,16 @@ class FileRouteHelper implements AuthenticationRoutesInterface
      * @param $url
      * @return mixed
      */
-    public function getPermFromRoute($route)
+    public function getPermFromRoute($route_name)
     {
         $menu_info = Config::get($this->config_path);
 
         foreach ($menu_info as $menu)
         {
-            if($menu[$this->route_variable_index] == $route)
+            if(isset($menu[$this->skip_permissions_variable_index]) && in_array($route_name, $menu[$this->skip_permissions_variable_index]))
+                return [];
+
+            if($menu[$this->route_variable_index] == ViewHelper::get_base_route_name($route_name))
                 return $menu[$this->pemissions_variable_index];
         }
     }

@@ -1,5 +1,11 @@
 <?php
-//////////////////// Client side //////////////////////////
+
+/*
+  |--------------------------------------------------------------------------
+  | Public side
+  |--------------------------------------------------------------------------
+  |
+  */
 use Illuminate\Session\TokenMismatchException;
 
 /**
@@ -49,8 +55,13 @@ Route::get('/user/signup', [
 ]);
 Route::get('/user/email-confirmation', ['uses' => "Jacopo\\Authentication\\Controllers\\UserController@emailConfirmation"]);
 Route::get('/user/signup-success', 'Jacopo\Authentication\Controllers\UserController@signupSuccess');
-//////////////////// Admin side //////////////////////////
 
+/*
+  |--------------------------------------------------------------------------
+  | Admin side
+  |--------------------------------------------------------------------------
+  |
+  */
 Route::group(['before' => ['logged', 'can_see']], function ()
 {
     /**
@@ -120,6 +131,10 @@ Route::group(['before' => ['logged', 'can_see']], function ()
             'before' => 'csrf',
             'as'     => 'users.profile.changeavatar',
             'uses'   => 'Jacopo\Authentication\Controllers\UserController@changeAvatar'
+    ]);
+    Route::get('/admin/users/profile/self', [
+        'as' => 'users.selfprofile.edit',
+        'uses' => 'Jacopo\Authentication\Controllers\UserController@editOwnProfile'
     ]);
 
     /**

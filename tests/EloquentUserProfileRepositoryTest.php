@@ -94,12 +94,16 @@ class EloquentUserProfileRepositoryTest extends DbTestCase
     private function createFakeProfile($user)
     {
         $profile_data = [
-                'user_id'   => $user->id, 'code' => $this->faker->text('20'),
-                'vat'       => $this->faker->text('20'), 'first_name' => $this->faker->firstName(),
-                'last_name' => $this->faker->lastName(), 'phone' => $this->faker->phoneNumber(),
-                'state'     => $this->faker->text(20), 'city' => $this->faker->citySuffix(),
-                'country'   => $this->faker->country(), 'zip' => $this->faker->numberBetween(10000, 99999),
-                'address'   => $this->faker->streetAddress()
+                'user_id'    => $user->id, 'code' => $this->faker->text('20'),
+                'vat'        => $this->faker->text('20'),
+                'first_name' => $this->faker->firstName(),
+                'last_name'  => $this->faker->lastName(),
+                'phone'      => $this->faker->phoneNumber(),
+                'state'      => $this->faker->text(20),
+                'city'       => $this->faker->citySuffix(),
+                'country'    => $this->faker->country(),
+                'zip'        => $this->faker->numberBetween(10000, 99999),
+                'address'    => $this->faker->streetAddress()
         ];
         $profile = $this->repo_profile->create($profile_data);
         return array($profile_data, $profile);

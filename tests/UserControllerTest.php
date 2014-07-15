@@ -393,6 +393,22 @@ class UserControllerTest extends DbTestCase
         $this->assertRedirectedToAction('Jacopo\Authentication\Controllers\UserController@postEditProfile', ["user_id" => $user_id]);
         $this->assertSessionHas('errors');
     }
+    
+    /**
+     * @test
+     **/
+    public function canViewEditSelfProfile()
+    {
+        $created_user = $this->make('Jacopo\Authentication\Models\User', $this->getUserStub())->first();
+        $created_user_profile = $this->make('Jacopo\Authentication\Models\UserProfile', $this->getUserProfileStub($created_user))->first();
+        $this->isLoggedUserWithProfile($created_user);
+
+        $this->route('GET','users.selfprofile.edit');
+
+        $this->assertResponseOk();
+        $view_user_profile = $this->client->getResponse()->original->user_profile;
+        $this->assertObjectHasAllAttributes($created_user_profile->toArray(), $view_user_profile);
+    }
 
     /**
      * @return mixed
@@ -437,6 +453,18 @@ class UserControllerTest extends DbTestCase
     protected function assertUserHasPermission($user_found, $permission_name)
     {
         $this->assertEquals($user_found->permissions[$permission_name], 1);
+    }
+
+    /**
+     * @param $created_user
+     */
+    protected function isLoggedUserWithProfile($created_user)
+    {
+        $mock_logged_user = m::mock('Jacopo\Authentication\Interfaces\AuthenticateInterface')->shouldReceive('getLoggedUser')
+                             ->once()
+                             ->andReturn($created_user)
+                             ->getMock();
+        App::instance('Jacopo\Authentication\Interfaces\AuthenticateInterface', $mock_logged_user);
     }
 }
  

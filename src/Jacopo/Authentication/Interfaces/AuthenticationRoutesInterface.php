@@ -8,10 +8,11 @@ interface AuthenticationRoutesInterface
 {
     /**
      * Obtain the permissions from a given url
-     * @param $route
+     *
+*@param $route_name
      * @return mixed
      */
-    public function getPermFromRoute($route);
+    public function getPermFromRoute($route_name);
     /**
      * Obtain the permissions from the current url
      * @return mixed

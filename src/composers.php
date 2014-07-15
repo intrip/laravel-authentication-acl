@@ -38,7 +38,12 @@ View::composer(['laravel-authentication-acl::admin.dashboard.*'], function ($vie
 /**
  * User sidebar
  */
-View::composer(['laravel-authentication-acl::admin.user.*'], function ($view){
+View::composer([
+                       'laravel-authentication-acl::admin.user.edit',
+                       'laravel-authentication-acl::admin.user.groups',
+                       'laravel-authentication-acl::admin.user.list',
+                       'laravel-authentication-acl::admin.user.profile',
+               ], function ($view){
     $view->with('sidebar_items', [
                                     "Users list" => [
                                         "url" => URL::route('users.list'),
@@ -114,7 +119,7 @@ View::composer(['laravel-authentication-acl::admin.dashboard.*'], function($view
 /**
  * Permission to add custom profile field
  */
-View::composer(['laravel-authentication-acl::admin.user.profile'], function($view){
+View::composer(['laravel-authentication-acl::admin.user.profile','laravel-authentication-acl::admin.user.self-profile'], function($view){
     $auth_helper = App::make('authentication_helper');
     $can_add_fields = $auth_helper->checkCustomProfileEditPermission() ? true : false;
 
