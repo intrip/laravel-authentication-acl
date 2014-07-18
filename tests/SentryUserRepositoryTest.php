@@ -1,14 +1,17 @@
 <?php  namespace Jacopo\Authentication\Tests;
+
 use App, Config;
 use Jacopo\Authentication\Repository\SentryUserRepository;
 use Mockery as m;
 use Cartalyst\Sentry\Users\UserExistsException;
+
 /**
  * Test SentryUserRepositoryTest
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
-class SentryUserRepositoryTest extends DbTestCase {
+class SentryUserRepositoryTest extends DbTestCase
+{
 
     protected $user_repository;
 
@@ -30,10 +33,10 @@ class SentryUserRepositoryTest extends DbTestCase {
     public function canCreateAnUser()
     {
         $user_data = [
-            "email" => "user@mail.com",
-            "password" => "testpassword",
-            "activated" => 1,
-            "banned" => 1
+                "email"     => "user@mail.com",
+                "password"  => "testpassword",
+                "activated" => 1,
+                "banned"    => 1
         ];
 
         $this->user_repository->create($user_data);
@@ -51,7 +54,7 @@ class SentryUserRepositoryTest extends DbTestCase {
         $this->createUser([]);
         $group_repo = App::make('group_repository');
         $input = [
-            "name" => "admin"
+                "name" => "admin"
         ];
         $group_repo->create($input);
 
@@ -68,15 +71,15 @@ class SentryUserRepositoryTest extends DbTestCase {
     {
         $mock_sentry = m::mock('StdClass');
         $mock_sentry->shouldReceive('createUser')
-            ->andThrow(new UserExistsException)
-            ->getMock();
+                    ->andThrow(new UserExistsException)
+                    ->getMock();
         App::instance('sentry', $mock_sentry);
         $this->user_repository = new SentryUserRepository();
         $this->user_repository->create([
-                          "email" => "email",
-                          "password" => "password",
-                          "activated" => "activated",
-                      ]);
+                                               "email"     => "email",
+                                               "password"  => "password",
+                                               "activated" => "activated",
+                                       ]);
     }
 
     /**
@@ -85,10 +88,10 @@ class SentryUserRepositoryTest extends DbTestCase {
     public function it_activate_a_user()
     {
         $input = [
-            "email" => "admin@admin.com",
-            "password" => "password",
-            "activated" => 0,
-            "activation_code" => "code"
+                "email"           => "admin@admin.com",
+                "password"        => "password",
+                "activated"       => 0,
+                "activation_code" => "code"
         ];
         $this->user_repository->create($input);
 
@@ -109,10 +112,10 @@ class SentryUserRepositoryTest extends DbTestCase {
         $user_repository = new SentryUserRepository($mock_config);
         $input = [];
         $mock_search_repository = m::mock('StdClass')
-            ->shouldReceive('all')
-            ->once()
-            ->with($input)
-            ->getMock();
+                                   ->shouldReceive('all')
+                                   ->once()
+                                   ->with($input)
+                                   ->getMock();
 
         $user_repository->all($input, $mock_search_repository);
     }
@@ -144,9 +147,9 @@ class SentryUserRepositoryTest extends DbTestCase {
     public function canCallAllOnModel()
     {
         $mock_model_all = m::mock('StdClass')
-                ->shouldReceive('all')
-                ->once()
-                ->getMock();
+                           ->shouldReceive('all')
+                           ->once()
+                           ->getMock();
         $this->user_repository->setModel($mock_model_all);
         $this->user_repository->allModel();
     }
@@ -158,12 +161,12 @@ class SentryUserRepositoryTest extends DbTestCase {
     protected function createUser($config)
     {
         $user_repository = new SentryUserRepository($config);
-        $input_user      = [
-            "email" => "admin@admin.com",
-            "password" => "password",
-            "activated" => 1
+        $input_user = [
+                "email"     => "admin@admin.com",
+                "password"  => "password",
+                "activated" => 1
         ];
-        $user            = $user_repository->create($input_user);
+        $user = $user_repository->create($input_user);
 
         return [$user_repository, $user];
     }
@@ -171,8 +174,8 @@ class SentryUserRepositoryTest extends DbTestCase {
     protected function createGroup($name = "group name")
     {
         $group_repository = App::make('group_repository');
-        $input_group      = [
-            "name" => $name,];
+        $input_group = [
+                "name" => $name,];
         $group = $group_repository->create($input_group);
         return $group;
     }

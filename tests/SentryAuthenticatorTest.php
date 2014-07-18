@@ -5,16 +5,25 @@ use Cartalyst\Sentry\Users\UserNotActivatedException;
 use Cartalyst\Sentry\Users\UserNotFoundException;
 use Jacopo\Authentication\Classes\SentryAuthenticator;
 use Jacopo\Authentication\Models\User;
+use Jacopo\Authentication\Tests\Traits\UserFactory;
 use Mockery as m;
 
 class SentryAuthenticatorTest extends DbTestCase
 {
+    use UserFactory;
+
+    protected $authenticator;
+
+    public function setUp()
+    {
+        parent::setUp();
+        $this->authenticator = new SentryAuthenticator;
+    }
 
     public function tearDown()
     {
         m::close();
     }
-
 
     /**
      * @test
@@ -58,7 +67,10 @@ class SentryAuthenticatorTest extends DbTestCase
      */
     public function canGetUser()
     {
-        $mock_sentry = m::mock('StdClass')->shouldReceive('findUserByLogin')->andReturn(true)->getMock();
+        $mock_sentry = m::mock('Cartalyst\Sentry\Sentry')
+                        ->shouldReceive('findUserByLogin')
+                        ->andReturn(true)
+                        ->getMock();
         App::instance('sentry', $mock_sentry);
 
         $authenticator = new SentryAuthenticator;
@@ -72,11 +84,13 @@ class SentryAuthenticatorTest extends DbTestCase
      **/
     public function canHandleUserNotFoundInGetUser()
     {
-        $mock_sentry = m::mock('StdClass')->shouldReceive('findUserByLogin')->andThrow(new UserNotFoundException)->getMock();
+        $mock_sentry = m::mock('Cartalyst\Sentry\Sentry')
+                        ->shouldReceive('findUserByLogin')
+                        ->andThrow(new UserNotFoundException)->getMock();
         App::instance('sentry', $mock_sentry);
 
         $authenticator = new SentryAuthenticator;
-        $success = $authenticator->getUser("");
+        $authenticator->getUser("");
     }
 
     /**
@@ -99,8 +113,12 @@ class SentryAuthenticatorTest extends DbTestCase
      */
     private function mockSentryAuthenticateError($credentials, $remember)
     {
-        $mock_sentry_authenticate = m::mock('StdClass')->shouldReceive('authenticate')->once()->with($credentials, $remember)
-                                     ->andThrow(new UserNotFoundException())->getMock();
+        $mock_sentry_authenticate = m::mock('Cartalyst\Sentry\Sentry')
+                                     ->shouldReceive('authenticate')
+                                     ->once()
+                                     ->with($credentials, $remember)
+                                     ->andThrow(new UserNotFoundException())
+                                     ->getMock();
         App::instance('sentry', $mock_sentry_authenticate);
     }
 
@@ -141,8 +159,16 @@ class SentryAuthenticatorTest extends DbTestCase
         $user_stub = new User(["banned" => 1]);
 
         $mock_sentry =
-                m::mock('StdClass')->shouldReceive('findUserById')->once()->with($user_id)->andReturn($user_stub)->shouldReceive('login')->once()
-                 ->shouldReceive('logout')->once()->getMock();
+                m::mock('Cartalyst\Sentry\Sentry')
+                 ->shouldReceive('findUserById')
+                 ->once()
+                 ->with($user_id)
+                 ->andReturn($user_stub)
+                 ->shouldReceive('login')
+                 ->once()
+                 ->shouldReceive('logout')
+                 ->once()
+                 ->getMock();
         App::instance('sentry', $mock_sentry);
     }
 
@@ -221,9 +247,15 @@ class SentryAuthenticatorTest extends DbTestCase
      */
     public function itCanGetActivationToken()
     {
-        $mock_user = m::mock('StdClass')->shouldReceive('getActivationCode')->andReturn(true)->getMock();
-        $mock_auth = m::mock('Jacopo\Authentication\Classes\SentryAuthenticator')->makePartial();
-        $mock_auth->shouldReceive('getUser')->andReturn($mock_user);
+        $mock_user = m::mock('StdClass')
+                      ->shouldReceive('getActivationCode')
+                      ->andReturn(true)
+                      ->getMock();
+        $mock_auth = m::mock('Jacopo\Authentication\Classes\SentryAuthenticator')
+                      ->makePartial()
+                      ->shouldReceive('getUser')
+                      ->andReturn($mock_user)
+                      ->getMock();
 
         $token = $mock_auth->getActivationToken("");
         $this->assertEquals(true, $token);
@@ -247,7 +279,11 @@ class SentryAuthenticatorTest extends DbTestCase
      */
     private function mockSentryFindUserById($user_stub)
     {
-        $mock_sentry = m::mock('StdClass')->shouldReceive('findUserById')->once()->andReturn($user_stub)->getMock();
+        $mock_sentry = m::mock('StdClass')
+                        ->shouldReceive('findUserById')
+                        ->once()
+                        ->andReturn($user_stub)
+                        ->getMock();
         App::instance('sentry', $mock_sentry);
     }
 
@@ -256,7 +292,11 @@ class SentryAuthenticatorTest extends DbTestCase
      **/
     public function itGetLoggedUser()
     {
-        $sentry_mock = m::mock('StdClass')->shouldReceive('getUser')->once()->andReturn(true)->getMock();
+        $sentry_mock = m::mock('StdClass')
+                        ->shouldReceive('getUser')
+                        ->once()
+                        ->andReturn(true)
+                        ->getMock();
         App::instance('sentry', $sentry_mock);
 
         $authenticator = new SentryAuthenticator;
@@ -280,7 +320,10 @@ class SentryAuthenticatorTest extends DbTestCase
      */
     private function mockUserResetPasswordCode()
     {
-        $mock_user = m::mock('StdClass')->shouldReceive('getResetPasswordCode')->once()->getMock();
+        $mock_user = m::mock('StdClass')
+                      ->shouldReceive('getResetPasswordCode')
+                      ->once()
+                      ->getMock();
 
         return $mock_user;
     }
@@ -292,8 +335,13 @@ class SentryAuthenticatorTest extends DbTestCase
      */
     private function createMockGetUser($email, $mock_user)
     {
-        $authenticator = m::mock('Jacopo\Authentication\Classes\SentryAuthenticator')->makePartial()->shouldReceive('getUser')->once()->with($email)
-                          ->andReturn($mock_user)->getMock();
+        $authenticator = m::mock('Jacopo\Authentication\Classes\SentryAuthenticator')
+                          ->makePartial()
+                          ->shouldReceive('getUser')
+                          ->once()
+                          ->with($email)
+                          ->andReturn($mock_user)
+                          ->getMock();
 
         return $authenticator;
     }
@@ -305,16 +353,24 @@ class SentryAuthenticatorTest extends DbTestCase
     {
         $user_stub = new User;
 
-        $mock_sentry =
-                m::mock('StdClass')->shouldReceive('findUserById')->once()->with($user_id)->andReturn($user_stub)->shouldReceive('login')->once()
-                 ->getMock();
+        $mock_sentry = m::mock('Cartalyst\Sentry\Sentry')
+                        ->shouldReceive('findUserById')
+                        ->once()
+                        ->with($user_id)
+                        ->andReturn($user_stub)
+                        ->shouldReceive('login')
+                        ->once()
+                        ->getMock();
         App::instance('sentry', $mock_sentry);
     }
 
     private function mockSentryCannotFindUser()
     {
-        $mock_sentry_no_user =
-                m::mock('StdClass')->shouldReceive('findUserById')->once()->andThrow(new \Cartalyst\Sentry\Users\UserNotFoundException())->getMock();
+        $mock_sentry_no_user = m::mock('Cartalyst\Sentry\Sentry')
+                                ->shouldReceive('findUserById')
+                                ->once()
+                                ->andThrow(new \Cartalyst\Sentry\Users\UserNotFoundException())
+                                ->getMock();
         App::instance('sentry', $mock_sentry_no_user);
     }
 
@@ -324,8 +380,52 @@ class SentryAuthenticatorTest extends DbTestCase
      */
     private function mockSentryFindUserNotActive($user_stub, $remember)
     {
-        $mock_sentry_no_user = m::mock('StdClass')->shouldReceive('findUserById')->once()->andReturn($user_stub)->shouldReceive('login')->once()
-                                ->with($user_stub, $remember)->andThrow(new UserNotActivatedException)->getMock();
+        $mock_sentry_no_user = m::mock('Cartalyst\Sentry\Sentry')
+                                ->shouldReceive('findUserById')
+                                ->once()
+                                ->andReturn($user_stub)
+                                ->shouldReceive('login')
+                                ->once()
+                                ->with($user_stub, $remember)
+                                ->andThrow(new UserNotActivatedException)
+                                ->getMock();
         App::instance('sentry', $mock_sentry_no_user);
+    }
+
+    /**
+     * @test
+     **/
+    public function canCheckForLoggedUserUnbanned()
+    {
+        $unbanned_user = $this->make('Jacopo\Authentication\Models\User', array_merge($this->getUserStub(), ["banned" => 0]))->first();
+        $this->authenticator->loginById($unbanned_user->id);
+
+        $this->assertTrue($this->authenticator->check());
+    }
+
+    /**
+     * @test
+     * @group err
+     **/
+    public function failCheckWithBannedUser()
+    {
+        $unbanned_user = $this->make('Jacopo\Authentication\Models\User', array_merge($this->getUserStub(), ["banned" => 1]))->first();
+        $authenticator = new SentryAuthenticatorStubLogout();
+        $authenticator->loginById($unbanned_user->id);
+
+        //@todo fix here
+
+        $this->assertFalse($this->authenticator->check());
+        $this->assertTrue($authenticator->logged_out);
+    }
+}
+
+class SentryAuthenticatorStubLogout extends SentryAuthenticator
+{
+    public $logged_out = false;
+
+    public function logout()
+    {
+        $this->logged_out = true;
     }
 }

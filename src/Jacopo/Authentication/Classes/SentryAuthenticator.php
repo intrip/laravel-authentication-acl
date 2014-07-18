@@ -10,162 +10,168 @@ use Illuminate\Support\MessageBag;
 use Jacopo\Authentication\Exceptions\AuthenticationErrorException;
 use Jacopo\Authentication\Exceptions\UserNotFoundException;
 use Jacopo\Authentication\Interfaces\AuthenticateInterface;
+use App;
 
 class SentryAuthenticator implements AuthenticateInterface
 {
 
-  protected $errors;
-  protected $sentry;
+    protected $errors;
+    protected $sentry;
 
-  public function __construct()
-  {
-    $this->sentry = \App::make('sentry');
-    $this->errors = new MessageBag();
-  }
-
-  /**
-   * {@inheritdoc}
-   * @todo better test
-   */
-  public function authenticate(array $credentials, $remember = false)
-  {
-    try
+    public function __construct()
     {
-      $user = $this->sentry->authenticate($credentials, $remember);
-    }
-    catch(\Cartalyst\Sentry\Users\LoginRequiredException $e)
-    {
-      $this->errors->add('login', 'Login field is required.');
-    }
-    catch(\Cartalyst\Sentry\Users\UserNotFoundException $e)
-    {
-      $this->errors->add('login', 'Login failed.');
-    }
-    catch(\Cartalyst\Sentry\Users\UserNotActivatedException $e)
-    {
-      $this->errors->add('login', 'Your user is not activated.');
-    }
-    catch(\Cartalyst\Sentry\Users\PasswordRequiredException $e)
-    {
-      $this->errors->add('login', 'Password field is required.');
-    }
-    catch(\Cartalyst\Sentry\Throttling\UserSuspendedException $e)
-    {
-      $this->errors->add('login', 'Too many login attempts, please try later.');
-    }
-    if($this->foundAnyErrors())
-    {
-        $this->checkForBannedUser($user);
+        $this->sentry = App::make('sentry');
+        $this->errors = new MessageBag();
     }
 
-    if(!$this->errors->isEmpty()) throw new AuthenticationErrorException;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getErrors()
-  {
-    return $this->errors;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function loginById($id, $remember = false)
-  {
-      try
-      {
-          $user = $this->sentry->findUserById($id);
-      }
-      catch(\Cartalyst\Sentry\Users\UserNotFoundException $e)
-      {
-          $this->errors->add('login', 'Utente non trovato.');
-      }
-
-      if($this->foundAnyErrors())
-      {
-          try
-          {
-              $this->sentry->login($user, $remember);
-          }
-          catch(\Cartalyst\Sentry\Users\UserNotActivatedException $e)
-          {
-              $this->errors->add('login', 'Utente non attivo.');
-          }
-
-          $this->checkForBannedUser($user);
-      }
-
-      return $this->errors->isEmpty() ? true : false;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function logout()
-  {
-    $this->sentry->logout();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getUser($email)
-  {
-    try
+    public function check()
     {
-      $user = $this->sentry->findUserByLogin($email);
+        var_dump($this->sentry->check());
+
+        if( ! $this->sentry->check()) return false;
+
+        if($this->sentry->getUser()->banned)
+        {
+            $this->logout();
+            return false;
+        }
+        return true;
     }
-    catch(\Cartalyst\Sentry\Users\UserNotFoundException $e)
+
+    /**
+     * {@inheritdoc}
+     */
+    public function authenticate(array $credentials, $remember = false)
     {
-      throw new UserNotFoundException($e->getMessage());
+        try
+        {
+            $user = $this->sentry->authenticate($credentials, $remember);
+        } catch(\Cartalyst\Sentry\Users\LoginRequiredException $e)
+        {
+            $this->errors->add('login', 'Login field is required.');
+        } catch(\Cartalyst\Sentry\Users\UserNotFoundException $e)
+        {
+            $this->errors->add('login', 'Login failed.');
+        } catch(\Cartalyst\Sentry\Users\UserNotActivatedException $e)
+        {
+            $this->errors->add('login', 'Your user is not activated.');
+        } catch(\Cartalyst\Sentry\Users\PasswordRequiredException $e)
+        {
+            $this->errors->add('login', 'Password field is required.');
+        } catch(\Cartalyst\Sentry\Throttling\UserSuspendedException $e)
+        {
+            $this->errors->add('login', 'Too many login attempts, please try later.');
+        }
+        if($this->foundAnyErrors())
+        {
+            $this->checkForBannedUser($user);
+        }
+
+        if(!$this->errors->isEmpty()) throw new AuthenticationErrorException;
     }
-    return $user;
-  }
 
-  /**
-   * {@inheritdoc}
-   */
-  public function getActivationToken($email)
-  {
-    $user = $this->getUser($email);
-
-    return $user->getActivationCode();
-  }
-
-  public function getUserById($id)
-  {
-    return $this->sentry->findUserById($id);
-  }
-
-  public function getLoggedUser()
-  {
-    return $this->sentry->getUser();
-  }
-
-  /**
-   * @param $user
-   */
-  private function checkForBannedUser($user)
-  {
-    if($user->banned)
+    /**
+     * {@inheritdoc}
+     */
+    public function getErrors()
     {
-      $this->errors->add('login', 'This user is banned.');
-      $this->sentry->logout();
+        return $this->errors;
     }
-  }
 
-  /**
-   * {@inheritdoc}
-   * @throws \Jacopo\Authentication\Exceptions\UserNotFoundException
-   */
-  public function getToken($email)
-  {
-    $user = $this->getUser($email);
+    /**
+     * {@inheritdoc}
+     */
+    public function loginById($id, $remember = false)
+    {
+        try
+        {
+            $user = $this->sentry->findUserById($id);
+        } catch(\Cartalyst\Sentry\Users\UserNotFoundException $e)
+        {
+            $this->errors->add('login', 'Utente non trovato.');
+        }
 
-    return $user->getResetPasswordCode();
-  }
+        if($this->foundAnyErrors())
+        {
+            try
+            {
+                $this->sentry->login($user, $remember);
+            } catch(\Cartalyst\Sentry\Users\UserNotActivatedException $e)
+            {
+                $this->errors->add('login', 'Utente non attivo.');
+            }
+
+            $this->checkForBannedUser($user);
+        }
+
+        return $this->errors->isEmpty() ? true : false;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function logout()
+    {
+        $this->sentry->logout();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getUser($email)
+    {
+        try
+        {
+            $user = $this->sentry->findUserByLogin($email);
+        } catch(\Cartalyst\Sentry\Users\UserNotFoundException $e)
+        {
+            throw new UserNotFoundException($e->getMessage());
+        }
+        return $user;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getActivationToken($email)
+    {
+        $user = $this->getUser($email);
+
+        return $user->getActivationCode();
+    }
+
+    public function getUserById($id)
+    {
+        return $this->sentry->findUserById($id);
+    }
+
+    public function getLoggedUser()
+    {
+        return $this->sentry->getUser();
+    }
+
+    /**
+     * @param $user
+     */
+    private function checkForBannedUser($user)
+    {
+        if($user->banned)
+        {
+            $this->errors->add('login', 'This user is banned.');
+            $this->sentry->logout();
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     * @throws \Jacopo\Authentication\Exceptions\UserNotFoundException
+     */
+    public function getToken($email)
+    {
+        $user = $this->getUser($email);
+
+        return $user->getResetPasswordCode();
+    }
 
     /**
      * @return bool
