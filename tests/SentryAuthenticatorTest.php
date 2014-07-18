@@ -18,6 +18,7 @@ class SentryAuthenticatorTest extends DbTestCase
     {
         parent::setUp();
         $this->authenticator = new SentryAuthenticator;
+        $this->initializeUserHasher();
     }
 
     public function tearDown()
@@ -409,14 +410,22 @@ class SentryAuthenticatorTest extends DbTestCase
      **/
     public function failCheckWithBannedUser()
     {
-        $unbanned_user = $this->make('Jacopo\Authentication\Models\User', array_merge($this->getUserStub(), ["banned" => 1]))->first();
+        $unbanned_user = $this->make('Jacopo\Authentication\Models\User', array_merge($this->getUserStub(), ["banned" => 0]))->first();
         $authenticator = new SentryAuthenticatorStubLogout();
         $authenticator->loginById($unbanned_user->id);
+        $this->banUser($unbanned_user);
+        App::make('sentry')->setUser($unbanned_user);
 
-        //@todo fix here
-
-        $this->assertFalse($this->authenticator->check());
+        $this->assertFalse($authenticator->check());
         $this->assertTrue($authenticator->logged_out);
+    }
+
+    /**
+     * @param $unbanned_user
+     */
+    protected function banUser($unbanned_user)
+    {
+        $unbanned_user->update(["banned" => 1]);
     }
 }
 

@@ -26,8 +26,6 @@ class SentryAuthenticator implements AuthenticateInterface
 
     public function check()
     {
-        var_dump($this->sentry->check());
-
         if( ! $this->sentry->check()) return false;
 
         if($this->sentry->getUser()->banned)
