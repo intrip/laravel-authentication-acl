@@ -50,7 +50,7 @@ class ReminderServiceTest extends DbTestCase {
 
     /**
      * @test
-     * @expectedException Jacopo\Library\Exceptions\MailException
+     * @expectedException \Jacopo\Library\Exceptions\MailException
      */
     public function itThrowsExceptionOnSendEmailErrors()
     {
@@ -79,7 +79,7 @@ class ReminderServiceTest extends DbTestCase {
 
     private function mockMailerSendTo($return, $template, $to)
     {
-        $mock_mail = m::mock('StdClass')->shouldReceive('sendTo')
+        $mock_mail = m::mock('Jacopo\Library\Email\MailerInterface')->shouldReceive('sendTo')
             ->once($to, m::any(), m::any(), $template)
             ->with()
             ->andReturn($return)

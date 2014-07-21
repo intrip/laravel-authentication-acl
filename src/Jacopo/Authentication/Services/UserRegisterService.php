@@ -116,8 +116,7 @@ class UserRegisterService
      */
     public function sendRegistrationMailToClient($input)
     {
-        $view_file =
-                $this->activation_enabled ? "laravel-authentication-acl::admin.mail.registration-waiting-client" : "laravel-authentication-acl::admin.mail.registration-confirmed-client";
+        $view_file = $this->activation_enabled ? "laravel-authentication-acl::admin.mail.registration-waiting-client" : "laravel-authentication-acl::admin.mail.registration-confirmed-client";
 
         $mailer = App::make('jmailer');
 
@@ -129,7 +128,7 @@ class UserRegisterService
                                                "token"      => $this->activation_enabled ? App::make('authenticator')
                                                                                               ->getActivationToken($input["email"]) : ''
                                        ],
-                        "Registration request to: " . \Config::get('laravel-authentication-acl::app_name'),
+                        "Registration request to: " . Config::get('laravel-authentication-acl::app_name'),
                         $view_file);
     }
 

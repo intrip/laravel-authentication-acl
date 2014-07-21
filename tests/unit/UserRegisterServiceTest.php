@@ -87,12 +87,11 @@ class UserRegisterServiceTest extends DbTestCase
         $user = new \StdClass;
         $user->email = "user@user.com";
 
-        $mock_mailer = m::mock('StdClass')->shouldReceive('sendTo')
-                        ->once()
-                        ->with($user->email, m::any(), m::any(), "laravel-authentication-acl::admin.mail.registration-activated-client")
-                        ->andReturn(true)
-                        ->getMock();
-        App::instance('jmailer', $mock_mailer);
+        StateKeeper::set('expected_to', $user->email);
+        StateKeeper::set('expected_subject', 'Your user is activated on: '. Config::get('laravel-authentication-acl::app_name'));
+        StateKeeper::set('expected_body', 'Your email has been confirmed succesfully.');
+
+        Event::listen('mailer.sending', 'Jacopo\Authentication\Tests\Unit\AuthControllerTest@checkForSingleMailData');
 
         $service->sendActivationEmailToClient($user);
     }
@@ -160,12 +159,14 @@ class UserRegisterServiceTest extends DbTestCase
     public function sendsConfirmationEmail_WhenEnabled()
     {
         $this->enableEmailConfirmation();
-        $mock_mailer = m::mock('StdClass')->shouldReceive('sendTo')
-                        ->once()
-                        ->with('email@email.com', m::any(), m::any(), "laravel-authentication-acl::admin.mail.registration-waiting-client")
-                        ->andReturn(true)
-                        ->getMock();
-        App::instance('jmailer', $mock_mailer);
+
+        $user_email = "email@email.com";
+        StateKeeper::set('expected_to', $user_email);
+        StateKeeper::set('expected_subject', "Registration request to: " . Config::get('laravel-authentication-acl::app_name'));
+        StateKeeper::set('expected_body', 'You account has been created. However, before you can use it you need to confirm your email address first by clicking the');
+
+        Event::listen('mailer.sending', 'Jacopo\Authentication\Tests\Unit\AuthControllerTest@checkForSingleMailData');
+
         $mock_validator = $this->getValidatorSuccess();
         $mock_user_repository = $this->mockUserRepositoryToCreateARandomUser();
         App::instance('user_repository', $mock_user_repository);
@@ -176,8 +177,8 @@ class UserRegisterServiceTest extends DbTestCase
         $service = new UserRegisterService($mock_validator);
 
         $service->register([
-                                   "email"      => "email@email.com",
-                                   "password"   => "p",
+                                   "email"      => $user_email,
+                                   "password"   => "password",
                                    "activated"  => 1,
                                    "first_name" => "first_name"
                            ]);
@@ -215,13 +216,14 @@ class UserRegisterServiceTest extends DbTestCase
     public function sendsActivationEmail()
     {
         $this->disableEmailConfirmation();
-        $mock_mailer = m::mock('StdClass')
-                        ->shouldReceive('sendTo')
-                        ->once()
-                        ->with('email@email.com', m::any(), m::any(), "laravel-authentication-acl::admin.mail.registration-confirmed-client")
-                        ->andReturn(true)
-                        ->getMock();
-        App::instance('jmailer', $mock_mailer);
+
+        $user_email = "email@email.com";
+        StateKeeper::set('expected_to', $user_email);
+        StateKeeper::set('expected_subject', "Registration request to: " . Config::get('laravel-authentication-acl::app_name'));
+        StateKeeper::set('expected_body', 'You can now login to the website using the');
+
+        Event::listen('mailer.sending', 'Jacopo\Authentication\Tests\Unit\AuthControllerTest@checkForSingleMailData');
+
         $mock_validator = $this->getValidatorSuccess();
         $mock_user_repository = $this->mockUserRepositoryToCreateARandomUser();
         App::instance('user_repository', $mock_user_repository);
@@ -232,7 +234,7 @@ class UserRegisterServiceTest extends DbTestCase
         $service = new UserRegisterService($mock_validator);
 
         $service->register([
-                                   "email"      => "email@email.com",
+                                   "email"      => $user_email,
                                    "password"   => "p",
                                    "activated"  => 1,
                                    "first_name" => "first_name"
@@ -244,7 +246,11 @@ class UserRegisterServiceTest extends DbTestCase
      */
     protected function mockAuthActiveToken()
     {
-        return m::mock('StdClass')->shouldReceive('getActivationToken')->andReturn(true)->getMock();
+        return m::mock('Jacopo\Authentication\Interfaces\AuthenticateInterface')
+                ->shouldReceive('getActivationToken')
+                ->andReturn(true)
+                ->shouldReceive('getLoggedUser')
+                ->getMock();
     }
 
     private function disableEmailConfirmation()
@@ -379,5 +385,6 @@ class UserRegisterServiceNoMails extends UserRegisterService
 {
     public function sendRegistrationMailToClient($input)
     {
+        // do nothing...
     }
 }

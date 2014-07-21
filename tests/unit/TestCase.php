@@ -1,6 +1,7 @@
 <?php namespace Jacopo\Authentication\Tests\Unit;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Config;
 use \Orchestra\Testbench\TestCase as OrchestraTestCase;
 /**
  * Test TestCase
@@ -14,6 +15,8 @@ class TestCase extends OrchestraTestCase  {
         parent::setUp();
 
         require_once __DIR__ . "/../../src/routes.php";
+
+        $this->useMailPretend();
     }
 
     protected function getPackageProviders()
@@ -43,6 +46,11 @@ class TestCase extends OrchestraTestCase  {
     protected function assertHasErrors($class)
     {
         $this->assertFalse($class->getErrors()->isEmpty());
+    }
+
+    protected function useMailPretend()
+    {
+        Config::set('mail.pretend', true);
     }
 }
  

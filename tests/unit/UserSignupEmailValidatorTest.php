@@ -47,6 +47,9 @@ class UserSignupEmailValidatorTest extends DbTestCase {
     {
         $user_repo = App::make('user_repository');
         $this->enableEmailConfirmation();
+
+        //@todo finish here then disable mail logging message
+
         $fake_mail = "email@email.com";
         $input = [
             "email" => $fake_mail,
