@@ -2,6 +2,7 @@
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Config;
+use Jacopo\Authentication\Tests\Unit\Stubs\NullLogger;
 use \Orchestra\Testbench\TestCase as OrchestraTestCase;
 /**
  * Test TestCase
@@ -17,6 +18,12 @@ class TestCase extends OrchestraTestCase  {
         require_once __DIR__ . "/../../src/routes.php";
 
         $this->useMailPretend();
+        $this->useNullLogger();
+    }
+
+    public function useNullLogger()
+    {
+        \Mail::setLogger(new NullLogger());
     }
 
     protected function getPackageProviders()

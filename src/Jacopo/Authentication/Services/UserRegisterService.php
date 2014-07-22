@@ -125,8 +125,7 @@ class UserRegisterService
                                                "email"      => $input["email"],
                                                "password"   => $input["password"],
                                                "first_name" => $input["first_name"],
-                                               "token"      => $this->activation_enabled ? App::make('authenticator')
-                                                                                              ->getActivationToken($input["email"]) : ''
+                                               "token"      => $this->activation_enabled ? App::make('authenticator')->getActivationToken($input["email"]) : ''
                                        ],
                         "Registration request to: " . Config::get('laravel-authentication-acl::app_name'),
                         $view_file);
