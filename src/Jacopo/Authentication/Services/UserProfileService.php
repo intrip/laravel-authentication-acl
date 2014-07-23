@@ -18,40 +18,44 @@ class UserProfileService
     /**
      * User repository
      */
-    protected $r_u;
+    protected $user_repository;
     /**
      * Profile repository
      */
-    protected $r_p;
+    protected $profile_repository;
     /**
      * @var UserProfileValidator
      */
-    protected $v_p;
+    protected $validator_profile;
     /**
      * @var FormModel
      */
-    protected $f_p;
+    protected $form_model_profile;
     /**
      * @var \Illuminate\Support\MessageBag
      */
     protected $errors;
     protected $custom_profile_field_prefix = "custom_profile_";
 
-    function __construct($v_p, $f_p = null)
+    function __construct($validator_profile, $form_profile = null)
     {
         // user repo
-        $this->r_u = App::make('user_repository');
+        $this->user_repository = App::make('user_repository');
         // profile formModel
-        $this->r_p = App::make('profile_repository');
-        $this->v_p = $v_p ? $v_p : new UserProfileValidator;
-        $this->f_p = $f_p ? $f_p : new FormModel($this->v_p, $this->r_p);
+        $this->profile_repository = App::make('profile_repository');
+        $this->validator_profile = $validator_profile ? $validator_profile : new UserProfileValidator;
+        $this->form_model_profile = $form_profile ? $form_profile : new FormModel($this->validator_profile, $this->profile_repository);
     }
 
     public function processForm($input)
     {
+        //@todo validate the user input
+
         $this->checkProfileEditPermission($input);
 
-        $user_profile = $this->createUserProfile($input);
+        $this->user_repository->update($input['user_id'], array_only($input, ['password']));
+
+        $user_profile = $this->updateUserProfile($input);
 
         $this->saveCustomProfileFields($input, $user_profile);
 
@@ -63,15 +67,15 @@ class UserProfileService
      * @return mixed
      * @throws \Jacopo\Library\Exceptions\InvalidException
      */
-    protected function createUserProfile($input)
+    protected function updateUserProfile($input)
     {
         try {
-            $user_profile = $this->f_p->process($input);
+            $user_profile = $this->form_model_profile->process($input);
 
             return $user_profile;
         }
         catch (JacopoExceptionsInterface $e) {
-            $this->errors = $this->f_p->getErrors();
+            $this->errors = $this->form_model_profile->getErrors();
             throw new InvalidException;
         }
 

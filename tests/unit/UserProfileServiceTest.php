@@ -1,23 +1,28 @@
 <?php  namespace Jacopo\Authentication\Tests\Unit;
 
-use Jacopo\Authentication\Exceptions\PermissionException;
 use Jacopo\Authentication\Models\UserProfile;
 use Jacopo\Authentication\Services\UserProfileService;
+use Jacopo\Authentication\Tests\Unit\Stubs\VoidRepository;
+use Jacopo\Authentication\Tests\Unit\Stubs\VoidValidator;
 use Jacopo\Library\Exceptions\ValidationException;
-use Jacopo\Library\Validators\AbstractValidator;
 use Mockery as m;
 use App;
+
 /**
  * Test UserProfileServiceTest
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
-class UserProfileServiceTest extends DbTestCase {
+class UserProfileServiceTest extends DbTestCase
+{
+
+    protected $voidRepository;
 
     public function setUp()
     {
         parent::setUp();
-
+        $this->voidRepository = new VoidRepository();
+        App::instance('user_repository', $this->voidRepository);
     }
 
     public function tearDown()
@@ -35,7 +40,7 @@ class UserProfileServiceTest extends DbTestCase {
         $mock_form_profile_success = $this->mockProfileProcessAndReturn($user_profile_stub);
         $service = new UserProfileServiceNoPermStub(new VoidValidator(), $mock_form_profile_success);
 
-        $service->processForm([]);
+        $service->processForm(["user_id" => 1]);
     }
 
     /**
@@ -50,22 +55,35 @@ class UserProfileServiceTest extends DbTestCase {
 
         $service = new UserProfileServiceNoPermStub(new VoidValidator(), $mock_form_profile);
 
-        $service->processForm([]);
+        $service->processForm(["user_id" => 1]);
         $this->assertEquals("error", $service->getErrors());
     }
 
     /**
-     * @deprecated
+     * @test
+     * @group err
      **/
     public function it_update_user_password_if_given()
     {
-        $mock_form_profile_success = $this->mockProfileProcessAndReturn(true);
+        App::instance('custom_profile_repository', $this->voidRepository);
+
+        $input = [
+                "password" => $this->faker->text(20),
+                "user_id"  => 1
+        ];
+        $mock_form_profile_success = $this->mockProfileProcessAndReturn(new UserProfile(["user_id" => 1]));
+
         // mock user repository
-        $mock_user_repo = m::mock('StdClass')->shouldReceive('update')->once()->andReturn(true)->getMock();
-        App::instance('user_repository',$mock_user_repo);
+        $user_repository_update = m::mock('StdClass')
+                                   ->shouldReceive('update')
+                                   ->once()
+                                   ->with($input["user_id"],["password" => $input["password"]])
+                                   ->andReturn(true)
+                                   ->getMock();
+        App::instance('user_repository', $user_repository_update);
         $service = new UserProfileServiceNoPermStub(new VoidValidator(), $mock_form_profile_success);
 
-        $service->processForm(["new_password" => 'pass', "user_id" => '']);
+        $service->processForm($input);
     }
 
     /**
@@ -73,10 +91,10 @@ class UserProfileServiceTest extends DbTestCase {
      **/
     public function itSaveCustomProfileFieldsIfGiven()
     {
-        $first_type_id            = 1;
-        $first_type_value         = "value1";
-        $second_type_id            = 2;
-        $second_type_value         = "value2";
+        $first_type_id = 1;
+        $first_type_value = "value1";
+        $second_type_id = 2;
+        $second_type_value = "value2";
         $this->mockCustomProfileRepositorySetFields($first_type_id, $first_type_value,
                                                     $second_type_id, $second_type_value);
 
@@ -86,7 +104,8 @@ class UserProfileServiceTest extends DbTestCase {
 
         $service = new UserProfileServiceNoPermStub(new VoidValidator(), $mock_form_profile_success);
 
-        $service->processForm(["custom_profile_{$first_type_id}" => $first_type_value, "custom_profile_{$second_type_id}" => $second_type_value]);
+        $service->processForm(["custom_profile_{$first_type_id}" => $first_type_value, "custom_profile_{$second_type_id}" => $second_type_value,
+                               "user_id"                         => 1]);
     }
 
     /**
@@ -97,9 +116,14 @@ class UserProfileServiceTest extends DbTestCase {
      */
     protected function mockCustomProfileRepositorySetFields($first_type_id, $first_type_value, $second_type_id, $second_type_value)
     {
-        $mock_custom_profile_repo = m::mock('StdClass')->shouldReceive('setField')->once()->with($first_type_id,
-                                                                                                 $first_type_value)->shouldReceive('setField')->once()->with($second_type_id,
-                                                                                                                                                             $second_type_value)->getMock();
+        $mock_custom_profile_repo = m::mock('StdClass')
+                                     ->shouldReceive('setField')
+                                     ->once()
+                                     ->with($first_type_id, $first_type_value)
+                                     ->shouldReceive('setField')
+                                     ->once()
+                                     ->with($second_type_id, $second_type_value)
+                                     ->getMock();
         App::instance('custom_profile_repository', $mock_custom_profile_repo);
     }
 
@@ -110,10 +134,9 @@ class UserProfileServiceTest extends DbTestCase {
     {
         $user_profile_stub = new \StdClass;
         $user_profile_stub->id = 1;
-        $mock_form_profile_success = $this->mockProfileProcessAndReturn($user_profile_stub);        // mock user repository
-        App::instance('user_repository','');
+        $mock_form_profile_success = $this->mockProfileProcessAndReturn($user_profile_stub);
         $service = new UserProfileServiceNoPermStub(new VoidValidator(), $mock_form_profile_success);
-        $service->processForm(["new_password" => '', "user_id" => '']);
+        $service->processForm(["password" => '', "user_id" => '']);
     }
 
     /**
@@ -123,7 +146,7 @@ class UserProfileServiceTest extends DbTestCase {
     {
         $mock_form_profile_success = $this->mockProfileProcessAndReturn(new UserProfile());
         $service = new UserProfileServiceNoPermStub(new VoidValidator(), $mock_form_profile_success);
-        $profile = $service->processForm([]);
+        $profile = $service->processForm(["user_id" => 1]);
         $this->assertInstanceOf('Jacopo\Authentication\Models\UserProfile', $profile);
     }
 
@@ -151,9 +174,9 @@ class UserProfileServiceTest extends DbTestCase {
         try
         {
             $service->processForm(["user_id" => 1]);
+        } catch(\Jacopo\Authentication\Exceptions\PermissionException $e)
+        {
         }
-        catch(\Jacopo\Authentication\Exceptions\PermissionException $e)
-        {}
 
         $errors = $service->getErrors();
         $this->assertTrue($errors->has('model'));
@@ -168,11 +191,7 @@ class UserProfileServiceTest extends DbTestCase {
 
         return $mock_form_profile_success;
     }
-
 }
-
-class VoidValidator extends AbstractValidator
-{}
 
 class UserProfileServiceNoProfilePermStub extends UserProfileService
 {

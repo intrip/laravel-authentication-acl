@@ -194,16 +194,18 @@ class UserController extends Controller
     public function postEditProfile()
     {
         $input = Input::all();
-
         $service = new UserProfileService($this->profile_validator);
 
         try
         {
-            $user_profile = $service->processForm($input);
+            $service->processForm($input);
         } catch(JacopoExceptionsInterface $e)
         {
             $errors = $service->getErrors();
-            return Redirect::route("users.profile.edit", ["user_id" => $input['user_id']])->withInput()->withErrors($errors);
+            return Redirect::route("users.profile.edit", [
+                    "user_id" => $input['user_id']])
+                           ->withInput()
+                           ->withErrors($errors);
         }
         return Redirect::back()
                        ->withInput()
@@ -217,7 +219,8 @@ class UserController extends Controller
         $custom_profile_repo = App::make('custom_profile_repository', $logged_user->user_profile()->first()->id);
 
         return View::make('laravel-authentication-acl::admin.user.self-profile')->with([
-                                                                                               "user_profile" => $logged_user->user_profile()->first(),
+                                                                                               "user_profile"   => $logged_user->user_profile()
+                                                                                                                               ->first(),
                                                                                                "custom_profile" => $custom_profile_repo
                                                                                        ]);
     }
