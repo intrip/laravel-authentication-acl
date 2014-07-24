@@ -77,11 +77,11 @@ class UserProfileServiceTest extends DbTestCase
         $user_repository_update = m::mock('StdClass')
                                    ->shouldReceive('update')
                                    ->once()
-                                   ->with($input["user_id"],["password" => $input["password"]])
+                                   ->with($input["user_id"],["password" => $input["password"],"user_id" => $input["user_id"]])
                                    ->andReturn(true)
                                    ->getMock();
         App::instance('user_repository', $user_repository_update);
-        $service = new UserProfileServiceNoPermStub(new VoidValidator(), $mock_form_profile_success);
+        $service = new UserProfileServiceNoPermStub(new VoidValidator(), $mock_form_profile_success, new VoidValidator());
 
         $service->processForm($input);
     }

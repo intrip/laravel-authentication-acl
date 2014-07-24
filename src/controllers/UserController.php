@@ -202,8 +202,7 @@ class UserController extends Controller
         } catch(JacopoExceptionsInterface $e)
         {
             $errors = $service->getErrors();
-            return Redirect::route("users.profile.edit", [
-                    "user_id" => $input['user_id']])
+            return Redirect::back()
                            ->withInput()
                            ->withErrors($errors);
         }

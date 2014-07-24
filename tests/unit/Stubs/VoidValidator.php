@@ -2,4 +2,5 @@
 use Jacopo\Library\Validators\AbstractValidator;
 
 class VoidValidator extends AbstractValidator{
+    protected static $rules = [];
 }
