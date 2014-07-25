@@ -38,6 +38,7 @@ trait UserFactory {
     protected function initializeUserHasher()
     {
         User::setHasher(App::make('sentry.hasher'));
+        return $this;
     }
 
 } 

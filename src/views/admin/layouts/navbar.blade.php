@@ -20,12 +20,7 @@
             <div class="navbar-nav nav navbar-right">
                 <li class="dropdown dropdown-user">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="dropdown-profile">
-                        {{-- get the user avatar --}}
-                        @if(isset($logged_user) && $logged_user->user_profile()->count())
-                            <img src="{{$logged_user->user_profile()->first()->presenter()->avatar_src}}" width="30px">
-                        @else
-                            <img src="{{URL::asset('/packages/jacopo/laravel-authentication-acl/images/avatar.png')}}" width="30px">
-                        @endif
+                        @include('laravel-authentication-acl::admin.layouts.partials.avatar', ['size' => 30])
                         <span id="nav-email">{{isset($logged_user) ? $logged_user->email : 'User'}}</span> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu">

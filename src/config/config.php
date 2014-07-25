@@ -68,5 +68,16 @@ return [
    |
    */
 
-  "captcha_signup" => true
+  "captcha_signup" => true,
+
+  /*
+   |--------------------------------------------------------------------------
+   | Avatar
+   |--------------------------------------------------------------------------
+   */
+  "default_avatar_path" => '/packages/jacopo/laravel-authentication-acl/images/avatar.png',
+  /*
+   * Set to true if you want to use the user gravatar instead
+   */
+  "use_gravatar" => false,
 ];

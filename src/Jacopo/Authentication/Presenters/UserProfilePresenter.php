@@ -1,6 +1,7 @@
 <?php  namespace Jacopo\Authentication\Presenters;
 
 use Jacopo\Library\Presenters\AbstractPresenter;
+use Config;
 
 /**
  * Class UserProfilePresenter
@@ -10,14 +11,15 @@ use Jacopo\Library\Presenters\AbstractPresenter;
 class UserProfilePresenter extends AbstractPresenter
 {
     protected $default_avatar;
+    protected $default_gravatar;
 
     function __construct($resource)
     {
-        $this->default_avatar = '/packages/jacopo/laravel-authentication-acl/images/avatar.png';
+        $this->default_avatar = Config::get('laravel-authentication-acl::config.default_avatar_path');
         return parent::__construct($resource);
     }
 
-    public function avatar_src()
+    public function custom_avatar()
     {
         if(! $this->resource->avatar) return $this->default_avatar;
 
@@ -31,5 +33,20 @@ class UserProfilePresenter extends AbstractPresenter
     {
         return "data:image;base64,";
     }
+
+    public function gravatar($size = 30)
+    {
+        return "http://www.gravatar.com/avatar/" . md5( strtolower( trim( $this->resource->user()->first()->email ) ) ) . "?d=" . urlencode( $this->default_avatar ) . "&s=" . $size;
+
+    }
+
+    public function avatar($size = 30)
+    {
+        $use_gravatar = Config::get('laravel-authentication-acl::config.use_gravatar');
+
+        return $use_gravatar ? $this->gravatar($size) : $this->custom_avatar();
+    }
+
+
 
 } 
