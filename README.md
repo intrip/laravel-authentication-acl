@@ -20,6 +20,7 @@ You can see the full documentation and usage [here](docs/index.md)
  - User banning
  - Dashboard
  - Infinite custom profile fields!
+ - User custom avatar and gravatar support
  - Allow connection to a custom database other then laravel default
  - Create custom menu items with configurable permissions
  - Can handle permission on custom user routes

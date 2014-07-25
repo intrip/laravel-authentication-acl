@@ -4,3 +4,14 @@
 - Enhanced postgres support
 - Better menu permission handling
 - Minor bugfixes
+
+###version 1.1.4
+- Minor bugfixes
+
+###version 1.1.5
+- Minor bugfixes
+
+###version 1.1.6
+- Auto logout of a banned user if is already logged in
+- Self password edit for every user
+- Gravatar support

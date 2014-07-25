@@ -106,6 +106,13 @@ After installing the package you can find all his configuration files under the 
 
     return View::make('myrouteprefix.index')->with('sidebar_items', $sidebar);
 
+   4. How to use gravatar for profile?
+
+      If you want to use gravatar `for profile image instead of the custom image you need to enable the option 'use_gravatar' in the
+      main configuration file.<br/>
+      If you need to get the path of the current user avatar you can use the following code: `$logged_user->user_profile()->first()->presenter()->avatar($size)`
+
+
 ## <a name="usage">Usage</a> ##
 You have four main link to access the application.
 
