@@ -79,16 +79,26 @@ After installing the package you can find all his configuration files under the 
     have the appropriate permissions in order to access the specified route.
 
   2. How to add permissions to a route that is not in the menu?
-
-    Go to the menu.php and add it as a new menu item but leave the name empty.
-
+    <br/>
+    __Option1__(deprecated): Go to the menu.php and add it as a new menu item but leave the name empty.
+    ```
     [
         "name" => "",
         "route" => "myrouteprefix",
         "link" => URL::route('myrouteprefix.index'),
         "permissions" => ["_superadmin"]
     ]
+    ```
+    <br/>
+    __Option2__ : use the 'has_permission' filter. In order to do that add the 'has_permission' filter to
+    your before option in the routes file as following:
 
+        Route::get('/example', [
+                'before' => 'has_perm:_permissionA,_permissionB'
+                'uses' => 'Jacopo\Authentication\Controllers\UserController@getList'
+        ]);
+    In this case if the user has '_permissionA' or '_permissionB' permission he can see the page, otherwise gets a 401 error.
+    <br/>
   3. How to add items in sidebar?
 
     To make use of the sidebar shown in admin area, your view must extend the following template:

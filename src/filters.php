@@ -28,3 +28,13 @@ Route::filter('can_see', function()
     $route_helper = new FileRouteHelper;
     if( ! $route_helper->hasPermForRoute(Route::currentRouteName())) App::abort('401');
 });
+
+/*
+ * Check that the user has one of the permission given
+ */
+Route::filter('has_perm', function(){
+    $permissions = array_slice(func_get_args(),2);
+
+    $authentication_helper = App::make('authentication_helper');
+    if(! $authentication_helper->hasPermission($permissions)) App::abort('401');
+});
