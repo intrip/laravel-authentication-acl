@@ -112,7 +112,7 @@ After installing the package you can find all his configuration files under the 
                 "Users List" => array('url' => URL::route('myrouteprefix.list'), 'icon' => '<i class="fa fa-users"></i>'),
                 'Add New' => array('url' => URL::route('myrouteprefix.new'), 'icon' => '<i class="fa fa-plus-circle"></i>'),
             );
-    ``
+    ```
     Next you need to attach the sidebar menu items to your view as follows:
     ```
     return View::make('myrouteprefix.index')->with('sidebar_items', $sidebar);
