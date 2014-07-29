@@ -99,6 +99,7 @@ After installing the package you can find all his configuration files under the 
         ]);
     In this case if the user has '_permissionA' or '_permissionB' permission he can see the page, otherwise gets a 401 error.
     <br/>
+
   3. How to add items in sidebar?
 
     To make use of the sidebar shown in admin area, your view must extend the following template:
@@ -106,15 +107,16 @@ After installing the package you can find all his configuration files under the 
     @extends('laravel-authentication-acl::admin.layouts.base-2cols')
 
     Next inside your controller action add the items to the sidebar as follows:
-
+    ```
     $sidebar = array(
                 "Users List" => array('url' => URL::route('myrouteprefix.list'), 'icon' => '<i class="fa fa-users"></i>'),
                 'Add New' => array('url' => URL::route('myrouteprefix.new'), 'icon' => '<i class="fa fa-plus-circle"></i>'),
             );
-
+    ``
     Next you need to attach the sidebar menu items to your view as follows:
-
+    ```
     return View::make('myrouteprefix.index')->with('sidebar_items', $sidebar);
+    ```
     <br/>
 
    4. How to hide access to given url to anonymous user?
@@ -132,7 +134,7 @@ After installing the package you can find all his configuration files under the 
    ```
    In this case anonymous user will be redirected to _custum_url_ page.
     <br/>
-    
+
    5. How to use gravatar for profile?
 
       If you want to use gravatar `for profile image instead of the custom image you need to enable the option 'use_gravatar' in the
