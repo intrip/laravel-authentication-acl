@@ -117,9 +117,9 @@ After installing the package you can find all his configuration files under the 
     ```
     return View::make('myrouteprefix.index')->with('sidebar_items', $sidebar);
     ```
-    <br/>
+   <br/>
 
-   4. How to hide access to given url to anonymous user?
+  4. How to hide access to given url to anonymous user?
 
    In order to do that you need to apply the 'logged' filter to your route, if the user is not logged it will be
    redirected to /login. If you want to redirect to a given url you could do that by passing a custom parameter to
@@ -135,7 +135,7 @@ After installing the package you can find all his configuration files under the 
    In this case anonymous user will be redirected to _custum_url_ page.
     <br/>
 
-   5. How to use gravatar for profile?
+  5. How to use gravatar for profile?
 
       If you want to use gravatar `for profile image instead of the custom image you need to enable the option 'use_gravatar' in the
       main configuration file.<br/>
