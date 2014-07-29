@@ -129,8 +129,7 @@ After installing the package you can find all his configuration files under the 
          // put your code here
     }]);
    ```
-
-   In this case anonymous user will be redirected to _custum_url page.
+   In this case anonymous user will be redirected to _custum_url_g page.
     <br/>
    5. How to use gravatar for profile?
 
