@@ -116,7 +116,7 @@ After installing the package you can find all his configuration files under the 
     Next you need to attach the sidebar menu items to your view as follows:
     ```
     return View::make('myrouteprefix.index')->with('sidebar_items', $sidebar);
-    ``
+    ```
    <br/>
 
   4. How to hide access on a given url to anonymous user?
