@@ -11,6 +11,7 @@ use Jacopo\Library\Traits\ConnectionTrait;
 
 class UserRepositorySearchFilter
 {
+    public static $multiple_ordering_separator = "|";
     use ConnectionTrait;
 
     private $per_page;
@@ -41,13 +42,14 @@ class UserRepositorySearchFilter
 
         $users = $q->get();
 
-        $user_emails = array_flip(array_map((function($element){return $element->email;}),$users));
+        $user_emails = array_flip(array_map((function ($element)
+        {
+            return $element->email;
+        }), $users));
         $users_emails_unique = array_unique($user_emails);
         $results = array_only($users, array_values($users_emails_unique));
 
-        //@todo reset keys and check if all works
         return App::make('paginator')->make($results, count($results), $this->per_page);
-
     }
 
     /**
@@ -138,43 +140,56 @@ class UserRepositorySearchFilter
      */
     private function applyOrderingFilter(array $input_filter, $q)
     {
-        if($this->isValidOrderingFilter($input_filter))
-        {
-            $ordering = $this->guessOrderingType($input_filter);
-            return $this->orderByField($input_filter, $ordering, $q);
-        }
+        if($this->isNotGivenAnOrderingFilter($input_filter)) return $q;
+
+        foreach($this->makeOrderingFilterArray($input_filter) as $field => $ordering)
+           if($this->isValidOrderingField($field)) $q = $this->orderByField($field, $this->guessOrderingType($ordering), $q);
 
         return $q;
     }
 
-    private function orderByField($input_filter, $ordering, $q)
+    private function orderByField($field, $ordering, $q)
     {
-        //@todo go from here bug need to order by email
-        $q = $q->orderBy($input_filter['order_by'], $ordering);
-        return $q;
+        return $q->orderBy($field, $ordering);
+    }
+
+    /**
+     * @param array $input_filter
+     * @return bool
+     */
+    private function isNotGivenAnOrderingFilter(array $input_filter)
+    {
+        return empty($input_filter['order_by'])||empty($input_filter['ordering']);
+    }
+
+    /**
+     * @param array $input_filter
+     * @return array
+     */
+    private function makeOrderingFilterArray(array $input_filter)
+    {
+        $order_by = explode(static::$multiple_ordering_separator, $input_filter["order_by"]);
+        $ordering = explode(static::$multiple_ordering_separator, $input_filter["ordering"]);
+
+        return array_combine($order_by, $ordering);
     }
 
     /**
      * @param $filter
      * @return bool
      */
-    public function isValidOrderingFilter($input_filter)
+    public function isValidOrderingField($ordering_field)
     {
-        if(!isset($input_filter['order_by'])) return false;
-        $order_by_filter = $input_filter['order_by'];
-
-        if(empty($order_by_filter)) return false;
-
-        return in_array($order_by_filter, $this->valid_ordering_fields);
+        return in_array($ordering_field, $this->valid_ordering_fields);
     }
 
     /**
      * @param array $input_filter
      * @return string
      */
-    private function guessOrderingType(array $input_filter)
+    private function guessOrderingType($ordering)
     {
-        return $ordering = (isset($input_filter['ordering'])&&$input_filter['ordering'] == 'desc') ? 'DESC' : 'ASC';
+        return ($ordering == 'desc') ? 'DESC' : 'ASC';
     }
 
     /**

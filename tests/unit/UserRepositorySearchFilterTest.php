@@ -26,6 +26,11 @@ class UserRepositorySearchFilterTest extends DbTestCase
      * @var int
      */
     protected $per_page = 5;
+    /**
+     * Separator used to handle multiple ordering
+     * @var String
+     */
+    protected $multiple_ordering_separator;
 
     public function setUp()
     {
@@ -34,6 +39,7 @@ class UserRepositorySearchFilterTest extends DbTestCase
         $this->user_repository = new SentryUserRepository();
         $this->profile_repository = App::make('profile_repository');
         $this->initializeUserHasher();
+        $this->multiple_ordering_separator = UserRepositorySearchFilter::$multiple_ordering_separator;
     }
 
     public function tearDown()
@@ -44,7 +50,7 @@ class UserRepositorySearchFilterTest extends DbTestCase
     /**
      * @test
      **/
-    public function it_gets_all_users_with_profile_paginated_and_read_from_config()
+    public function getsAllUsersWithProfilePaginated()
     {
         foreach(range(1, 5) as $key)
         {
@@ -70,7 +76,7 @@ class UserRepositorySearchFilterTest extends DbTestCase
     /**
      * @test
      **/
-    public function it_gets_all_user_filtered_by_active_state()
+    public function getAllUsersFilteredByActiveState()
     {
         $this->create4Active1InactiveUsers();
 
@@ -127,7 +133,7 @@ class UserRepositorySearchFilterTest extends DbTestCase
     /**
      * @test
      **/
-    public function it_gets_all_user_filtered_by_first_name_last_name_zip_email_code()
+    public function getAllUserFilteredByFirstNameLastNameZipEmailCode()
     {
         $this->createUserWithProfileForSearch();
 
@@ -164,7 +170,7 @@ class UserRepositorySearchFilterTest extends DbTestCase
     /**
      * @test
      **/
-    public function it_ignore_empty_options_with_all()
+    public function ignoreEmptyOptions_WithAll()
     {
         foreach(range(1, 5) as $key)
         {
@@ -182,7 +188,7 @@ class UserRepositorySearchFilterTest extends DbTestCase
     /**
      * @test
      **/
-    public function it_allow_ordering_asc_and_desc_by_first_name_last_name_email_last_login_activated_with_all()
+    public function allowOrderingAscDescByFirstNameLastNameEmailLastLoginActivated ()
     {
         $this->createUserProfileWithSameValueOnFields(0);
         $this->createUserProfileWithSameValueOnFields(1);
@@ -202,7 +208,23 @@ class UserRepositorySearchFilterTest extends DbTestCase
     /**
      * @test
      **/
-    public function it_ignore_ordering_by_empty_field_with_all()
+    public function allowOrderingByMultipleFields()
+    {
+        $user_1 = $this->make('Jacopo\Authentication\Models\User', $this->getUserStub())->first();
+        $user_profile_1 = $this->make('Jacopo\Authentication\Models\UserProfile', array_merge($this->getUserProfileStub($user_1),["first_name" => "1", "last_name" => "2"]) )->first();
+        $user_2 = $this->make('Jacopo\Authentication\Models\User', $this->getUserStub())->first();
+        $user_profile_2 = $this->make('Jacopo\Authentication\Models\UserProfile', array_merge($this->getUserProfileStub($user_2),["first_name" => "1", "last_name" => "1"]) )->first();
+
+        $users_ordered = $this->repository_search->all(["order_by" => "first_name|last_name", "ordering" => "asc|asc"]);
+
+        $this->assertEquals($user_profile_2->last_name, $users_ordered->first()->last_name);
+        $this->assertEquals($user_profile_1->last_name, $users_ordered->last()->last_name);
+    }
+
+    /**
+     * @test
+     **/
+    public function ignoreOrderingByEmptyField()
     {
         $this->createUserProfileWithSameValueOnFields(0);
         $this->createUserProfileWithSameValueOnFields(1);
@@ -229,8 +251,7 @@ class UserRepositorySearchFilterTest extends DbTestCase
      **/
     public function it_validate_ordering_filter()
     {
-        $invalid_filter = ["order_by" => "invalid "];
-        $this->assertFalse($this->repository_search->isValidOrderingFilter($invalid_filter));
+        $this->assertFalse($this->repository_search->isValidOrderingField("invalid"));
     }
 
     /**
