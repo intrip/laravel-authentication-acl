@@ -79,15 +79,26 @@ After installing the package you can find all his configuration files under the 
     have the appropriate permissions in order to access the specified route.
 
   2. How to add permissions to a route that is not in the menu?
-
-    Go to the menu.php and add it as a new menu item but leave the name empty.
-
+    <br/>
+    __Option1__(deprecated): Go to the menu.php and add it as a new menu item but leave the name empty.
+    ```
     [
         "name" => "",
         "route" => "myrouteprefix",
         "link" => URL::route('myrouteprefix.index'),
         "permissions" => ["_superadmin"]
     ]
+    ```
+    <br/>
+    __Option2__ : use the 'has_permission' filter. In order to do that add the 'has_permission' filter to
+    your before option in the routes file as following:
+
+        Route::get('/example', [
+                'before' => 'has_perm:_permissionA,_permissionB'
+                'uses' => 'Jacopo\Authentication\Controllers\UserController@getList'
+        ]);
+    In this case if the user has '_permissionA' or '_permissionB' permission he can see the page, otherwise gets a 401 error.
+    <br/>
 
   3. How to add items in sidebar?
 
@@ -96,17 +107,35 @@ After installing the package you can find all his configuration files under the 
     @extends('laravel-authentication-acl::admin.layouts.base-2cols')
 
     Next inside your controller action add the items to the sidebar as follows:
-
+    ```
     $sidebar = array(
                 "Users List" => array('url' => URL::route('myrouteprefix.list'), 'icon' => '<i class="fa fa-users"></i>'),
                 'Add New' => array('url' => URL::route('myrouteprefix.new'), 'icon' => '<i class="fa fa-plus-circle"></i>'),
             );
-
+    ```
     Next you need to attach the sidebar menu items to your view as follows:
-
+    ```
     return View::make('myrouteprefix.index')->with('sidebar_items', $sidebar);
+    ```
+   <br/>
 
-   4. How to use gravatar for profile?
+  4. How to hide access on a given url to anonymous user?
+
+   In order to do that you need to apply the 'logged' filter to your route, if the user is not logged it will be
+   redirected to /login. If you want to redirect to a given url you could do that by passing a custom parameter to
+   the filter as following:
+
+   ```
+   Route::get('check_custom', [
+   'before' => "logged:/custom_url",
+    'uses' => function(){
+         // put your code here
+    }]);
+   ```
+   In this case anonymous users will be redirected to _custum_url_ page.
+    <br/>
+
+  5. How to use gravatar for profile?
 
       If you want to use gravatar `for profile image instead of the custom image you need to enable the option 'use_gravatar' in the
       main configuration file.<br/>

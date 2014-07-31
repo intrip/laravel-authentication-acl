@@ -62,7 +62,7 @@ Route::get('/user/signup-success', 'Jacopo\Authentication\Controllers\UserContro
   |--------------------------------------------------------------------------
   |
   */
-Route::group(['before' => ['logged', 'can_see']], function ()
+Route::group(['before' => ['admin_logged', 'can_see']], function ()
 {
     /**
      * dashboard

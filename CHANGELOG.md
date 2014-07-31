@@ -15,3 +15,6 @@
 - Auto logout of a banned user if is already logged in
 - Self password edit for every user
 - Gravatar support
+
+###version 1.1.7
+- has_perm filter to handle custom permission to a given route
