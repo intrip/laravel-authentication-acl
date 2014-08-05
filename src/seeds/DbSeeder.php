@@ -98,6 +98,7 @@ class UserSeeder
     {
         $user_repository = App::make('user_repository');
         $group_repository = App::make('group_repository');
+        $profile_repository = App::make('profile_repository');
 
         $user_data = [
                 "email" => $this->admin_email,
@@ -106,6 +107,8 @@ class UserSeeder
         ];
 
         $user = $user_repository->create($user_data);
+
+        $profile_repository->attachEmptyProfile($user);
 
         $superadmin_group = $this->getSuperadminGroup($group_repository);
         $user_repository->addGroup($user->id, $superadmin_group->id);
