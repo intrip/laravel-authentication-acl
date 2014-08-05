@@ -47,17 +47,7 @@
             <?php $group_values[""] = "Any"; ?>
             {{Form::select('group_id', $group_values, Input::get('group_id',''), ["class" => "form-control"])}}
         </div>
-        <div class="row form-group">
-            <div class="col-md-12">
-                {{Form::label('Sorting: ')}}
-            </div>
-            <div class="col-md-12">
-                {{Form::select('order_by', ["" => "select column", "first_name" => "First name", "last_name" => "Last name", "email" => "Email", "last_login" => "Last login", "activated" => "Active"], Input::get('order_by',''), ['class' => 'form-control'])}}
-            </div>
-            <div class="col-md-12 margin-top-10">
-                {{Form::select('ordering', ["asc" => "Ascending", "desc" => "descending"], Input::get('ordering','asc'), ['class' =>'form-control'])}}
-            </div>
-        </div>
+        @include('laravel-authentication-acl::admin.user.partials.sorting')
         <div class="form-group">
             <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@getList')}}" class="btn btn-default">Reset</a>
             {{Form::submit('Search', ["class" => "btn btn-info"])}}
