@@ -123,8 +123,8 @@
     </div>
 </div>
   {{-- Js files --}}
-  {{ HTML::script('packages/jacopo/laravel-authentication-acl/js/jquery-1.10.2.min.js') }}
-  {{ HTML::script('packages/jacopo/laravel-authentication-acl/password_strength/strength.js') }}
+  {{ HTML::script('packages/jacopo/laravel-authentication-acl/js/vendor/jquery-1.10.2.min.js') }}
+  {{ HTML::script('packages/jacopo/laravel-authentication-acl/vendor/password_strength/strength.js') }}
   <script>
     $(document).ready(function() {
       //------------------------------------

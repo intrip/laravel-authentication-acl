@@ -38,8 +38,8 @@
         {{-- Start footer scripts --}}
         @yield('before_footer_scripts')
 
-        {{ HTML::script('packages/jacopo/laravel-authentication-acl/js/jquery-1.10.2.min.js') }}
-        {{ HTML::script('packages/jacopo/laravel-authentication-acl/js/bootstrap.min.js') }}
+        {{ HTML::script('packages/jacopo/laravel-authentication-acl/js/vendor/jquery-1.10.2.min.js') }}
+        {{ HTML::script('packages/jacopo/laravel-authentication-acl/js/vendor/bootstrap.min.js') }}
 
         @yield('footer_scripts')
         {{-- End footer scripts --}}

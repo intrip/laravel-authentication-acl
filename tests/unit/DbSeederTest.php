@@ -166,4 +166,3 @@ class DbSeederTest extends DbTestCase
         return $this->user_repository->findFromGroupName("superadmin")->first();
     }
 }
- 

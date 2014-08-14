@@ -49,8 +49,8 @@
         </div>
         @include('laravel-authentication-acl::admin.user.partials.sorting')
         <div class="form-group">
-            <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@getList')}}" class="btn btn-default">Reset</a>
-            {{Form::submit('Search', ["class" => "btn btn-info"])}}
+            <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@getList')}}" class="btn btn-default search-reset">Reset</a>
+            {{Form::submit('Search', ["class" => "btn btn-info", "id" => "search-submit"])}}
         </div>
         {{Form::close()}}
     </div>

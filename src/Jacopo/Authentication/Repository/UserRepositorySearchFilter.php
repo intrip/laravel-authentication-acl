@@ -11,7 +11,7 @@ use Jacopo\Library\Traits\ConnectionTrait;
 
 class UserRepositorySearchFilter
 {
-    public static $multiple_ordering_separator = "|";
+    public static $multiple_ordering_separator = ",";
     use ConnectionTrait;
 
     private $per_page;

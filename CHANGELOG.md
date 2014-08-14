@@ -18,3 +18,9 @@
 
 ###version 1.1.7
 - has_perm filter to handle custom permission to a given route
+
+###version 1.1.8
+- fixed bug in the profile page of the default admin user
+
+###version 1.1.9
+- Multiple ordering search filter

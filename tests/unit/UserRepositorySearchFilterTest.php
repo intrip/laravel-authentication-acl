@@ -215,7 +215,7 @@ class UserRepositorySearchFilterTest extends DbTestCase
         $user_2 = $this->make('Jacopo\Authentication\Models\User', $this->getUserStub())->first();
         $user_profile_2 = $this->make('Jacopo\Authentication\Models\UserProfile', array_merge($this->getUserProfileStub($user_2),["first_name" => "1", "last_name" => "1"]) )->first();
 
-        $users_ordered = $this->repository_search->all(["order_by" => "first_name|last_name", "ordering" => "asc|asc"]);
+        $users_ordered = $this->repository_search->all(["order_by" => "first_name,last_name", "ordering" => "asc,asc"]);
 
         $this->assertEquals($user_profile_2->last_name, $users_ordered->first()->last_name);
         $this->assertEquals($user_profile_1->last_name, $users_ordered->last()->last_name);

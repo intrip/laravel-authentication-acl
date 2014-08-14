@@ -158,3 +158,11 @@ div.paginator
   margin-left: auto;
   margin-right: auto;
 }
+/*///////////////// user search ////////////////*/
+.ordering-container {
+  height: 125px;
+}
+
+.form-error{
+  border: 1px solid red;
+}
