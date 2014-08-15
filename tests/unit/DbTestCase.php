@@ -5,7 +5,7 @@
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
-use Artisan, DB, Closure, App;
+use Artisan, DB, Closure, App, Config;
 use BadMethodCallException;
 use Illuminate\Support\Collection;
 use Illuminate\Validation\DatabasePresenceVerifier;
@@ -16,49 +16,18 @@ class DbTestCase extends TestCase
 
     /*
 	|--------------------------------------------------------------------------
-	| DBMS for tests
+	| Database connection
 	|--------------------------------------------------------------------------
-	| Here you can configure the dbms for the test environment
+	| Edit the file in "packages/jacopo/laravel-authentication-acl/config/testing/database"
+    | to change the current database connection for the tests.
     |
     */
     const SQLITE = "Sqlite";
     const MYSQL = "Mysql";
     const PGSQL = "Pgsql";
 
-    /**
-     * Uncomment the dbms that you want to use for persistence testing
-     */
-//        const CURRENT_DBMS = self::PGSQL;
-    //    const CURRENT_DBMS = self::MYSQL;
-    const CURRENT_DBMS = self::SQLITE;
-
-    /* Connections configurations */
-    protected $sqlite_connection = [
-            'driver'   => 'sqlite',
-            'database' => ':memory:',
-            'prefix'   => '',
-    ];
-
-    protected $pgsql_connection = [
-            'driver'   => 'pgsql',
-            'host'     => 'localhost',
-            'database' => 'authentication_test',
-            'username' => 'root',
-            'password' => 'root',
-            'charset'  => 'utf8',
-            'prefix'   => '',
-            'schema'   => 'public',];
-
-    protected $mysql_connection = [
-            'driver'    => 'mysql',
-            'host'      => 'localhost',
-            'database'  => 'authentication_test',
-            'username'  => 'root',
-            'password'  => 'root',
-            'charset'   => 'utf8',
-            'prefix'    => '',
-            'collation' => 'utf8_unicode_ci',
-            'schema'    => 'public',];
+    protected $connection_info;
+    protected $current_connection;
 
     /*
 	|--------------------------------------------------------------------------
@@ -66,10 +35,8 @@ class DbTestCase extends TestCase
 	|--------------------------------------------------------------------------
     |
     */
-
     // used for iterative make
     protected $times = 1;
-
     protected $artisan;
     protected $faker;
 
@@ -78,15 +45,32 @@ class DbTestCase extends TestCase
         parent::setUp();
         $this->artisan = $this->app->make('artisan');
         $this->faker = \Faker\Factory::create();
+        $this->setupDbConnection();
+        $this->overwriteDatabasePresenceVerifierForTesting();
+    }
 
+    protected function setupDbConnection()
+    {
+        $this->getConnectionInfo();
+        $this->overrideCurrentConnection();
         $this->cleanTables();
         $this->createTestDbSchema();
-        $this->overwriteDatabasePresenceVerifierForTesting();
+    }
+
+    protected function getConnectionInfo()
+    {
+        $this->current_connection = Config::get('laravel-authentication-acl::database.default');
+        $this->connection_info = Config::get("laravel-authentication-acl::database.connections.{$this->current_connection}");
+    }
+
+    protected function overrideCurrentConnection()
+    {
+        $this->app['config']->set('database.default', 'testbench');
+        $this->app['config']->set('database.connections.testbench', $this->connection_info);
     }
 
     protected function cleanTables()
     {
-        if(self::CURRENT_DBMS == static::SQLITE) return;
         $this->callCleanMethod();
     }
 
@@ -100,11 +84,6 @@ class DbTestCase extends TestCase
     {
         // reset base path to point to our package's src directory
         $app['path.base'] = __DIR__ . '/../../src';
-
-        $app['config']->set('database.default', 'testbench');
-
-        $connection_config = $this->{strtolower(self::CURRENT_DBMS) . "_connection"};
-        $app['config']->set('database.connections.testbench', $connection_config);
     }
 
     /**
@@ -112,17 +91,22 @@ class DbTestCase extends TestCase
      */
     protected function callCleanMethod()
     {
-        return $this->{"clean" . self::CURRENT_DBMS . "Tables"}();
+        return $this->{"clean" . $this->current_connection . "Tables"}();
     }
 
-    protected function cleanMysqlTables()
+    protected function cleanmysqlTables()
     {
         $this->dropCascadeTables();
     }
 
-    protected function cleanPgsqlTables()
+    protected function cleanpgsqlTables()
     {
         $this->dropCascadeTables();
+    }
+
+    protected function cleansqliteTables()
+    {
+        // do nothing
     }
 
     protected function dropCascadeTables()
@@ -194,7 +178,8 @@ class DbTestCase extends TestCase
 
     protected function overwriteDatabasePresenceVerifierForTesting()
     {
-        App::bindShared('validation.presence', function($app){
+        App::bindShared('validation.presence', function ($app)
+        {
             $verifier = new DatabasePresenceVerifier($this->app['db']);
             $verifier->setConnection('testbench');
 
