@@ -60,12 +60,15 @@ class UserRegisterService
      */
     public function register(array $input)
     {
+        Event::fire('service.registering', [$input]);
         $this->validateInput($input);
-        $input['activated'] = $this->getDefaultActivatedState();
 
+        $input['activated'] = $this->getDefaultActivatedState();
         $user = $this->saveDbData($input);
 
         $this->sendRegistrationMailToClient($input);
+
+        Event::fire('service.registered', [$input]);
 
         return $user;
     }

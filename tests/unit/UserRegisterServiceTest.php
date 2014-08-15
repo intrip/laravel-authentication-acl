@@ -45,6 +45,30 @@ class UserRegisterServiceTest extends DbTestCase
     }
 
     /**
+     * @test
+     **/
+    public function firesRegisteringAndRegisteredEvent()
+    {
+        $input = $this->createFakeRegisterInput();
+        $mock_validator = $this->getValidatorSuccess();
+        $service = new UserRegisterServiceNoMails($mock_validator);
+
+        $has_registering = false;
+        Event::listen('service.registering', function() use(&$has_registering){
+            $has_registering = true;
+        });
+        $has_registered = false;
+        Event::listen('service.registered', function() use(&$has_registered){
+            $has_registered = true;
+        });
+
+        $service->register($input);
+
+        $this->assertTrue($has_registering, 'service.registering event has not been fired.');
+        $this->assertTrue($has_registered, 'service.registered event has not been fired.');
+    }
+
+    /**
      * @return array
      */
     private function createFakeRegisterInput()

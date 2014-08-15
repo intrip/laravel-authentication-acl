@@ -11,6 +11,7 @@ a simple admin panel with an ACL using Laravel framework.
  4. [How To](#howto)
  5. [Usage](#usage)
  6. [Advanced Configuration and API](#advanced)
+ 7. [Event hooks](#events)
 
 ## <a name="requirements">Requirements</a> ##
 
@@ -268,3 +269,15 @@ Then go in _vendor/jacopo/authentication_ folder and run the command: `phpunit`.
 Note: If you want to use a different dbms for testing change the `CURRENT_DBMS` constant to the corrisponding dbms and update `connections_configuration` in the _Jacopo\Authentication\Tests\DbTestCase.php_ file, then run `phpunit`.
 <br/>
 If you're using postgres for testing you need to increase your `max_connections` option to make the tests pass.
+
+## <a name="events">Event hooks</a> ##
+
+The package fires multiple laravel events and you can hook on them within your application, here is the list of them:
+
+ - "customprofile.creating": before creating a new custom profile type field
+ - "customprofile.deleting": before deleting a new custom profile type field
+ - "repository.updating": before running an update query on a repository
+ - "repository.updated": after running an update query on a repository
+ - "service.activated": after an user is activated
+ - "service.registering": before registering a new user
+ - "service.registered": after registering a new user
