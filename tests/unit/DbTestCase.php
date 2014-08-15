@@ -18,14 +18,10 @@ class DbTestCase extends TestCase
 	|--------------------------------------------------------------------------
 	| Database connection
 	|--------------------------------------------------------------------------
-	| Edit the file in "packages/jacopo/laravel-authentication-acl/config/testing/database"
-    | to change the current database connection for the tests.
+	| Edit the file "packages/jacopo/laravel-authentication-acl/config/testing/database.php"
+    | to change the database connection for the tests.
     |
     */
-    const SQLITE = "Sqlite";
-    const MYSQL = "Mysql";
-    const PGSQL = "Pgsql";
-
     protected $connection_info;
     protected $current_connection;
 
