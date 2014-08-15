@@ -59,5 +59,10 @@ class TestCase extends OrchestraTestCase  {
     {
         Config::set('mail.pretend', true);
     }
+
+    /**
+     * @test
+     **/
+    public function dummy() {}
 }
  

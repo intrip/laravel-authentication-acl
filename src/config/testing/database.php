@@ -1,18 +1,33 @@
 <?php
 return [
     /*
-     * The default dbms connection used for testing
-     */
-    "default"     => "sqlite",
+    |--------------------------------------------------------------------------
+    | Testing Connection name
+    |--------------------------------------------------------------------------
+    |
+    */
+    'default' => 'sqlite',
 
     'connections' => [
 
-            "sqlite" => [
+            'sqlite' => [
                     'driver'   => 'sqlite',
                     'database' => ':memory:',
                     'prefix'   => '',
             ],
-            "pgsql"  => [
+
+            'mysql' => [
+                    'driver'    => 'mysql',
+                    'host'      => 'localhost',
+                    'database'  => 'authentication_test',
+                    'username'  => 'root',
+                    'password'  => 'root',
+                    'charset'   => 'utf8',
+                    'collation' => 'utf8_unicode_ci',
+                    'prefix'    => '',
+            ],
+
+            'pgsql' => [
                     'driver'   => 'pgsql',
                     'host'     => 'localhost',
                     'database' => 'authentication_test',
@@ -20,18 +35,7 @@ return [
                     'password' => 'root',
                     'charset'  => 'utf8',
                     'prefix'   => '',
-                    'schema'   => 'public'
+                    'schema'   => 'public',
             ],
-            "mysql"  => [
-                    'driver'    => 'mysql',
-                    'host'      => 'localhost',
-                    'database'  => 'authentication_test',
-                    'username'  => 'root',
-                    'password'  => 'root',
-                    'charset'   => 'utf8',
-                    'prefix'    => '',
-                    'collation' => 'utf8_unicode_ci',
-                    'schema'    => 'public'
-            ]
-    ]
+    ],
 ];
