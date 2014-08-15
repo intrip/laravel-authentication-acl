@@ -49,6 +49,8 @@ $connections = [
         'pgsql'
 ];
 $config_file_path = __DIR__ . '/src/config/testing/database.php';
+// the default testing connection
+$default_connection = 'sqlite';
 
 bootLaravel();
 
@@ -57,4 +59,5 @@ foreach($connections as $current_connection)
     $connection_under_test = replaceCurrentConnection($current_connection, $config_file_path);
     printMessage($current_connection);
     passthru("vendor/bin/phpunit");
+    $connection_under_test = replaceCurrentConnection($current_connection, $default_connection);
 }
