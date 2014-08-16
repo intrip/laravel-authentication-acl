@@ -59,5 +59,5 @@ foreach($connections as $current_connection)
     $connection_under_test = replaceCurrentConnection($current_connection, $config_file_path);
     printMessage($current_connection);
     passthru("vendor/bin/phpunit");
-    $connection_under_test = replaceCurrentConnection($current_connection, $default_connection);
+    $connection_under_test = replaceCurrentConnection($default_connection, $config_file_path);
 }
