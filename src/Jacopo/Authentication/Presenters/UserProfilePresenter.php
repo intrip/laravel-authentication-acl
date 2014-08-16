@@ -36,7 +36,7 @@ class UserProfilePresenter extends AbstractPresenter
 
     public function gravatar($size = 30)
     {
-        return "http://www.gravatar.com/avatar/" . md5( strtolower( trim( $this->resource->user()->first()->email ) ) ) . "?d=" . urlencode( $this->default_avatar ) . "&s=" . $size;
+        return "http://www.gravatar.com/avatar/" . md5( strtolower( trim( $this->resource->user()->first()->email ) ) ) .  "?s=" . $size;
 
     }
 

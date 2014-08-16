@@ -116,7 +116,7 @@ class UserProfilePresenterTest extends DbTestCase
      */
     private function getExpectedAvatar($size)
     {
-        return $this->expected_gravatar = "http://www.gravatar.com/avatar/" . md5(strtolower(trim($this->user_email))) . "?d=" . urlencode($this->default_path) . "&s=" . $size;
+        return $this->expected_gravatar = "http://www.gravatar.com/avatar/" . md5(strtolower(trim($this->user_email))) . "?s=" . $size;
     }
 }
  
