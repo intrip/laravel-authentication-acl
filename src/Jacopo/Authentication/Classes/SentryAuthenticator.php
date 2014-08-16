@@ -11,6 +11,7 @@ use Jacopo\Authentication\Exceptions\AuthenticationErrorException;
 use Jacopo\Authentication\Exceptions\UserNotFoundException;
 use Jacopo\Authentication\Interfaces\AuthenticateInterface;
 use App;
+use Event;
 
 class SentryAuthenticator implements AuthenticateInterface
 {
@@ -41,6 +42,8 @@ class SentryAuthenticator implements AuthenticateInterface
      */
     public function authenticate(array $credentials, $remember = false)
     {
+        Event::fire('service.authenticating', [$credentials, $remember]);
+
         try
         {
             $user = $this->sentry->authenticate($credentials, $remember);
@@ -66,6 +69,8 @@ class SentryAuthenticator implements AuthenticateInterface
         }
 
         if(!$this->errors->isEmpty()) throw new AuthenticationErrorException;
+
+        Event::fire('service.authenticated', [$credentials, $remember, $user]);
     }
 
     /**
@@ -110,7 +115,9 @@ class SentryAuthenticator implements AuthenticateInterface
      */
     public function logout()
     {
+        Event::fire('service.delogging');
         $this->sentry->logout();
+        Event::fire('service.delogged');
     }
 
     /**

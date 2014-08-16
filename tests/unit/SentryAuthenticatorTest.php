@@ -7,6 +7,7 @@ use Jacopo\Authentication\Classes\SentryAuthenticator;
 use Jacopo\Authentication\Models\User;
 use Jacopo\Authentication\Tests\Unit\Traits\UserFactory;
 use Mockery as m;
+use Event;
 
 class SentryAuthenticatorTest extends DbTestCase
 {
@@ -37,6 +38,53 @@ class SentryAuthenticatorTest extends DbTestCase
         $this->mockSentryAuthenticateSuccess($credentials, $remember, new User);
         $authenticator = new SentryAuthenticator;
         $authenticator->authenticate($credentials, $remember);
+    }
+
+    /**
+     * @test
+     **/
+    public function firesEventBeforeAndAfterAuthenticate()
+    {
+        $this->mockSentryAuthenticateSuccess([], false, new User);
+        $authenticator = new SentryAuthenticator;
+
+        $fired_authenticating = false;
+        Event::listen('service.authenticating', function () use (&$fired_authenticating)
+        {
+            $fired_authenticating = true;
+        });
+        $fired_authenticated = false;
+        Event::listen('service.authenticated', function () use (&$fired_authenticated)
+        {
+            $fired_authenticated = true;
+        });
+
+        $authenticator->authenticate([], false);
+        $this->assertTrue($fired_authenticating, 'Event service.authenticating has not been fired.');
+        $this->assertTrue($fired_authenticated, 'Event service.authenticating has not been fired.');
+    }
+
+    /**
+     * @test
+     **/
+    public function firesEventBeforeAndAfterLogout()
+    {
+        $fired_delogging = false;
+        Event::listen('service.delogging', function () use (&$fired_delogging)
+        {
+            $fired_delogging = true;
+        });
+        $fired_delogged = false;
+        Event::listen('service.delogged', function () use (&$fired_delogged)
+        {
+            $fired_delogged = true;
+        });
+
+        $authenticator = new SentryAuthenticator();
+
+        $authenticator->logout();
+        $this->assertTrue($fired_delogging, 'Event service.delogging has not been fired.');
+        $this->assertTrue($fired_delogged, 'Event service.delogged has not been fired.');
     }
 
     /**

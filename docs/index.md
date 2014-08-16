@@ -272,12 +272,17 @@ If you're using postgres for testing you need to increase your `max_connections`
 
 ## <a name="events">Event hooks</a> ##
 
-The package fires multiple laravel events and you can hook on them within your application, here is the list of them:
+The package fires multiple laravel events and you can hook on them within your application, here is the list of them(with the variables being sent):
 
- - "customprofile.creating": before creating a new custom profile type field
- - "customprofile.deleting": before deleting a new custom profile type field
- - "repository.updating": before running an update query on a repository
- - "repository.updated": after running an update query on a repository
- - "service.activated": after an user is activated
- - "service.registering": before registering a new user
- - "service.registered": after registering a new user
+ - "customprofile.creating{}": before creating a new custom profile type field
+ - "customprofile.deleting{}": before deleting a new custom profile type field
+ - "repository.updating{$object}": before running an update query on a repository
+ - "repository.updated{$object}": after running an update query on a repository
+ - "repository.deleting{$object}": after running an update query on a repository
+ - "service.activated{$user}": after an user is activated
+ - "service.registering{$input}": before registering a new user
+ - "service.registered{$input}": after registering a new user
+ - "service.authenticating{$input, $remember}": before logging in
+ - "service.authenticated{$input, $remember, $user}": after logging in
+ - "service.delogging{}": before logging out
+ - "service.delogged{}": after logging out
