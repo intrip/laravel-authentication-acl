@@ -153,12 +153,17 @@ Here is the sceenshoot of the admin login page:
 
 <img src="images/login.png">
 
-After the login you will be redirected to the admin panel:
+After the login you will be redirected to the dashboard page:
+
+<a href="images/dashboard.png" target="_blank" ><img src="images/dashboard.png" class="max-100"></a>
+
+The main panel contains four main menu links(on top): dashboard, users, groups and permissions. Following this link you will be redirected to the corresponding area.
+On every page you may see a panel to filter the results in the list (on the right) and a sidebar on the left with the link to add a new resource or to list all the resources.
+
+You can see all the users and filter them with the users link(on top):
 
 <a href="images/admin_main.png" target="_blank" ><img src="images/admin_main.png" class="max-100"></a>
 
-The main panel contains three main menu links(on top): users, groups and permissions. Following this link you will be redirected to the corresponding area.
-On every page you may see a panel to filter the results in the list (on the right) and a sidebar on the left with the link to add a new resource or to list all the resources.
 If you want to create a new user you need to click on the _add user/add new_ button:
 
 <a href="images/add_user.png" target="_blank" ><img src="images/add_user.png" class="max-100"></a>
