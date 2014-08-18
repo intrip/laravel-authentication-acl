@@ -142,6 +142,13 @@ After installing the package you can find all his configuration files under the 
       main configuration file.<br/>
       If you need to get the path of the current user avatar you can use the following code: `$logged_user->user_profile()->first()->presenter()->avatar($size)`
 
+  6. How to use my custom views?
+
+     If you want to use your custom views first run the following command: ```php artisan view:publish jacopo/laravel-authentication-acl```. That command creates
+     a copy of the default views in _app/views/packages/jacopo/laravel-authentication-acl folder_. If you edit them they will be used instead of the default views
+     for the package. Any composer update command will not override your costumization so it's __update free__. Enjoy!.
+
+
 
 ## <a name="usage">Usage</a> ##
 You have four main link to access the application.
