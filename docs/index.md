@@ -293,7 +293,7 @@ The package fires multiple laravel events and you can hook on them within your a
  - "repository.deleting{$object}": after running an update query on a repository
  - "service.activated{$user}": after an user is activated
  - "service.registering{$input}": before registering a new user
- - "service.registered{$input}": after registering a new user
+ - "service.registered{$input, $user}": after registering a new user
  - "service.authenticating{$input, $remember}": before logging in
  - "service.authenticated{$input, $remember, $user}": after logging in
  - "service.delogging{}": before logging out

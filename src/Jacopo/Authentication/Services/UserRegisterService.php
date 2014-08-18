@@ -68,7 +68,7 @@ class UserRegisterService
 
         $this->sendRegistrationMailToClient($input);
 
-        Event::fire('service.registered', [$input]);
+        Event::fire('service.registered', [$input, $user]);
 
         return $user;
     }
