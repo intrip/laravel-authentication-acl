@@ -48,17 +48,17 @@ var appender = function (spec) {
         '<input type="text" disabled="disabled" class="form-control margin-top-10" value="' + orderings[index].ordering + '" >' +
         '</div>';
     var delete_ordering = '<div class="col-md-12 margin-top-10">' +
-        '<a onclick="myAppender.removeOrdering(' + orderings.length + ');" class="btn btn-default pull-right ' + spec.remove_ordering_button + '"><i class="fa fa-minus"></i> Remove</a>' +
+        '<a onclick="myAppender.removeOrdering(' + index + ');" class="btn btn-default pull-right ' + spec.remove_ordering_button + '"><i class="fa fa-minus"></i> Remove</a>' +
         '</div>';
 
-    append_sorting_field.append('<div class="ordering-container" id="ordering_' + orderings.length + '" >' + order_by_placeholder + field_placeholder + delete_ordering + '</div>');
+    append_sorting_field.append('<div class="ordering-container" id="ordering_' + index + '" >' + order_by_placeholder + field_placeholder + delete_ordering + '</div>');
   }
 
   that.removeOrdering = function (number) {
     var ordering_fields = document.getElementById('ordering_' + number);
     ordering_fields.parentNode.removeChild(ordering_fields);
 
-    orderings = orderings.splice(number, 1);
+    orderings.splice(number, 1);
   }
 
   that.appendOrdering = function () {
@@ -84,8 +84,8 @@ var appender = function (spec) {
         ordering_str = orderings[i].ordering;
       }
       else {
-      order_by_str += separator + orderings[i].order_by;
-      ordering_str += separator + orderings[i].ordering;
+        order_by_str += separator + orderings[i].order_by;
+        ordering_str += separator + orderings[i].ordering;
       }
     }
 
