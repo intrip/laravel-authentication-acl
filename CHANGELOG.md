@@ -24,3 +24,5 @@
 
 ###version 1.1.9
 - Multiple ordering search filter
+- Better fit and gravatar handling
+- Basic events to hook into the application
