@@ -83,9 +83,10 @@ var appender = function (spec) {
         order_by_str = orderings[i].order_by;
         ordering_str = orderings[i].ordering;
       }
-
+      else {
       order_by_str += separator + orderings[i].order_by;
       ordering_str += separator + orderings[i].ordering;
+      }
     }
 
     $("#" + spec.order_by_field).val(order_by_str);
@@ -115,6 +116,10 @@ var appender = function (spec) {
     $(".form-error-message").removeClass('hidden');
   }
 
+  that.getOrderings = function(){
+    return orderings;
+  };
+
   return that;
 };
 
@@ -143,7 +148,7 @@ $(document).ready(function () {
     myAppender.addOrdering();
   });
 
-  $("#" + spec.search_submit_button).click(function () {
+  $("#" + spec.search_submit_button).click(function (e) {
     myAppender.fillOrderingInput();
   });
 });
