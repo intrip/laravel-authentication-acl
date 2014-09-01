@@ -3,6 +3,7 @@
 use Carbon\Carbon;
 use DB;
 use Jacopo\Authentication\Models\User;
+use Jacopo\Authentication\Models\UserProfile;
 use Jacopo\Authentication\Repository\EloquentUserProfileRepository;
 use Jacopo\Authentication\Tests\Unit\Traits\UserFactory;
 
@@ -112,14 +113,27 @@ class EloquentUserProfileRepositoryTest extends DbTestCase
     /**
      * @test
      **/
-    public function canCreateNewEmptyProfileIfDoesntExists()
+    public function canCreateNewEmptyProfile()
     {
-        $users = $this->make('Jacopo\Authentication\Models\User', $this->getUserStub());
+        $user = $this->make('Jacopo\Authentication\Models\User', $this->getUserStub())->first();
 
-        $this->repo_profile->attachEmptyProfile($users[0]);
+        $this->repo_profile->attachEmptyProfile($user);
 
-        $attached_profile = $this->repo_profile->getFromUserId($users[0]->id);
+        $attached_profile = $this->repo_profile->getFromUserId($user->id);
         $this->assertNotEmpty($attached_profile);
+    }
+
+    /**
+     * @test
+     **/
+    public function attachNewProfileOnlyIfDoesNotExists()
+    {
+        $user = $this->make('Jacopo\Authentication\Models\User', $this->getUserStub())->first();
+
+        $this->repo_profile->attachEmptyProfile($user);
+        $this->repo_profile->attachEmptyProfile($user);
+
+        $this->assertEquals(1, UserProfile::get()->count());
     }
 }
  
