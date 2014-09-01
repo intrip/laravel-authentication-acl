@@ -55,6 +55,16 @@ class EloquentUserProfileRepository extends EloquentBaseRepository implements Us
 
     public function attachEmptyProfile($user)
     {
+        if($this->hasAlreadyAnUserProfile($user)) return;
+
         return $this->create(["user_id" => $user->id]);
+    }
+
+    /**
+     * @param $user
+     * @return mixed
+     */
+    protected function hasAlreadyAnUserProfile($user) {
+        return $user->user_profile()->count();
     }
 }
