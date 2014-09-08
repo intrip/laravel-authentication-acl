@@ -47,7 +47,7 @@ class UserProfilePresenterTest extends DbTestCase
      **/
     public function canGetAvatar()
     {
-        $expected_avatar = "data:image;base64," . $this->user_profile->avatar;
+        $expected_avatar = "data:image/png;base64," . $this->user_profile->avatar;
         $this->assertEquals($expected_avatar, $this->presenter->custom_avatar);
     }
 
@@ -82,7 +82,7 @@ class UserProfilePresenterTest extends DbTestCase
 
         $this->useGravatar(false);
 
-        $expected_avatar = "data:image;base64," . $this->user_profile->avatar;
+        $expected_avatar = "data:image/png;base64," . $this->user_profile->avatar;
         $this->assertEquals($expected_avatar, $this->presenter->custom_avatar);
     }
 
