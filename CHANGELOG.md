@@ -26,3 +26,8 @@
 - Multiple ordering search filter
 - Better fit and gravatar handling
 - Basic events to hook into the application
+
+###version 1.1.10
+- Fixed some javascript paths
+- Updated to Jquery 1.1.11
+- Fixed a bug that was saving multiple profiles when saving the user page
