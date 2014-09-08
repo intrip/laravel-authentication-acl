@@ -31,7 +31,7 @@ class UserProfilePresenter extends AbstractPresenter
      */
     protected function getBase64ImageSrcHeader()
     {
-        return "data:image;base64,";
+        return "data:image/png;base64,";
     }
 
     public function gravatar($size = 30)
