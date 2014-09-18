@@ -79,7 +79,7 @@
                                 <div class="form-group">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                                        {{Form::password('password_confirmation', ['id' => 'password_confirmation', 'class' => 'form-control', 'id' =>'password2', 'placeholder' => 'Confirm password', 'required'])}}
+                                        {{Form::password('password_confirmation', ['class' => 'form-control', 'id' =>'password2', 'placeholder' => 'Confirm password', 'required'])}}
                                     </div>
                                 </div>
                             </div>
