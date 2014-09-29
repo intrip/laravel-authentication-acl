@@ -338,4 +338,10 @@ class UserController extends Controller
         return Redirect::action('Jacopo\Authentication\Controllers\UserController@editProfile', ['user_id' => $user_id])
                        ->withMessage('Avatar changed succesfully');
     }
+
+    public function refreshCaptcha()
+    {
+        return View::make('laravel-authentication-acl::client.auth.captcha-image')
+                ->with(['captcha' => App::make('captcha_validator')]);
+    }
 } 

@@ -53,6 +53,10 @@ Route::post('/user/signup', [
 Route::get('/user/signup', [
         'uses' => "Jacopo\\Authentication\\Controllers\\UserController@signup"
 ]);
+Route::post('captcha-ajax', [
+        "before" => "captcha-ajax",
+        'uses'   => "Jacopo\\Authentication\\Controllers\\UserController@refreshCaptcha"
+]);
 Route::get('/user/email-confirmation', ['uses' => "Jacopo\\Authentication\\Controllers\\UserController@emailConfirmation"]);
 Route::get('/user/signup-success', 'Jacopo\Authentication\Controllers\UserController@signupSuccess');
 

@@ -94,8 +94,10 @@
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
                                     <div class="input-group">
-                                        <img src="{{$captcha->getImageSrcTag()}}">
-                                        <a href="{{URL::current()}}" class="btn btn-small btn-info margin-left-5"><i class="fa fa-refresh"></i></a>
+                                        <span id="captcha-img-container">
+                                            @include('laravel-authentication-acl::client.auth.captcha-image')
+                                        </span>
+                                        <a id="captcha-gen-button" href="#" class="btn btn-small btn-info margin-left-5"><i class="fa fa-refresh"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -136,6 +138,20 @@
       var passwordsInfo 	= $('#pass-info'); //id of indicator element
 
       passwordStrengthCheck(password1,password2,passwordsInfo);
+
+      //------------------------------------
+      // captcha regeneration
+      //------------------------------------
+      $("#captcha-gen-button").click(function(e){
+      		e.preventDefault();
+
+      		$.ajax({
+              url: "/captcha-ajax",
+              method: "POST"
+            }).done(function(image) {
+              $("#captcha-img-container").html(image);
+            });
+      	});
     });
   </script>
 </body>
