@@ -33,11 +33,9 @@
     "codeception/codeception": "~2.0"
   },
   "autoload": {
-    "psr-0": {
-      "Jacopo\\Authentication": "src/"
-    },
     "psr-4": {
-      "Jacopo\\Authentication\\Tests\\": "tests/"
+      "Jacopo\\Authentication\\": "src/Jacopo/Authentication",
+      "Jacopo\\Authentication\\Tests\\Unit\\": "tests/phpunit"
     },
     "classmap": [
       "src/controllers",
