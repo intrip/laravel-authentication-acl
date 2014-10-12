@@ -19,6 +19,7 @@ To install this software you need:
 
   * Laravel framework 4.*
   * Php 5.4+
+  * enable fileinfo extension <a href="http://php.net/manual/en/fileinfo.installation.php">how to enable it </a>
 
 ## <a name="setup">Setup</a> ##
 
