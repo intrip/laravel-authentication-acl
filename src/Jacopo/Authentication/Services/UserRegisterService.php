@@ -11,7 +11,6 @@ use Jacopo\Authentication\Exceptions\UserNotFoundException;
 use Jacopo\Authentication\Helpers\DbHelper;
 use Jacopo\Authentication\Validators\UserSignupValidator;
 use Jacopo\Library\Exceptions\ValidationException;
-use Redirect;
 
 /**
  * Class UserRegisterService
@@ -130,7 +129,7 @@ class UserRegisterService
                                                "first_name" => $input["first_name"],
                                                "token"      => $this->activation_enabled ? App::make('authenticator')->getActivationToken($input["email"]) : ''
                                        ],
-                        "Registration request to: " . Config::get('laravel-authentication-acl::app_name'),
+                        Config::get('laravel-authentication-acl::mail.user_registration_request_subject'),
                         $view_file);
     }
 
@@ -145,7 +144,7 @@ class UserRegisterService
         $mailer = App::make('jmailer');
         // if i activate a deactivated user
         $mailer->sendTo($user->email, ["email" => $user->email],
-                        "Your user is activated on: " . Config::get('laravel-authentication-acl::app_name'),
+                        Config::get('laravel-authentication-acl::mail.user_registraction_activation_subject'),
                         "laravel-authentication-acl::admin.mail.registration-activated-client");
     }
 

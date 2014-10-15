@@ -30,7 +30,7 @@ return [
                  */
                 "route"       => "users",
                 /*
-                 * the acual link associated to the menu item
+                 * the actual link associated to the menu item
                  */
                 "link"        => URL::route('users.list'),
                 /*

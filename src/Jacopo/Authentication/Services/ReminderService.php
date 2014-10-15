@@ -2,6 +2,7 @@
 
 use Illuminate\Support\MessageBag;
 use App;
+use Config;
 use Jacopo\Library\Exceptions\MailException;
 use Jacopo\Authentication\Exceptions\UserNotFoundException;
 use Jacopo\Library\Exceptions\InvalidException;
@@ -33,7 +34,7 @@ class ReminderService {
     /**
      * Email subject
      */
-    protected $subject = "Password recovery request";
+    protected $subject;
     /**
      * Femplate mail file
      *
@@ -58,6 +59,7 @@ class ReminderService {
         $this->auth = App::make('authenticator');
         $this->mailer = App::make('jmailer');
         $this->errors = new MessageBag();
+        $this->subject = Config::get('laravel-authentication-acl::mail.user_password_recovery_subject');
     }
 
     public function send($to)
