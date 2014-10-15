@@ -34,3 +34,6 @@
 
 ###version 1.1.11
 - Fixed base64 avatar encoding bug
+
+###version 1.1.13
+- Fixed some documentation information about system requirements
