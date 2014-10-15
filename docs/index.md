@@ -19,6 +19,8 @@ To install this software you need:
 
   * Laravel framework 4.*
   * Php 5.4+
+  * GD Library or Imagick
+  * Enable Fileinfo extension(may be needed for windows users) <a href="http://php.net/manual/en/fileinfo.installation.php">how to enable it</a>
 
 ## <a name="setup">Setup</a> ##
 
