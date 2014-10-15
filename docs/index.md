@@ -95,7 +95,7 @@ After installing the package you can find all his configuration files under the 
     your before option in the routes file as following:
 
         Route::get('/example', [
-                'before' => 'has_perm:_permissionA,_permissionB'
+                'before' => 'has_permission:_permissionA,_permissionB',
                 'uses' => 'Jacopo\Authentication\Controllers\UserController@getList'
         ]);
     In this case if the user has '_permissionA' or '_permissionB' permission he can see the page, otherwise gets a 401 error.
