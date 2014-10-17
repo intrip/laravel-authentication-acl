@@ -59,7 +59,7 @@ class ReminderService {
         $this->auth = App::make('authenticator');
         $this->mailer = App::make('jmailer');
         $this->errors = new MessageBag();
-        $this->subject = Config::get('laravel-authentication-acl::mail.user_password_recovery_subject');
+        $this->subject = Config::get('laravel-authentication-acl::messages.email.user_password_recovery_subject');
     }
 
     public function send($to)

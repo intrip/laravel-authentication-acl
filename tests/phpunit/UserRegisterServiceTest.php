@@ -112,7 +112,7 @@ class UserRegisterServiceTest extends DbTestCase
         $user->email = "user@user.com";
 
         StateKeeper::set('expected_to', $user->email);
-        StateKeeper::set('expected_subject', Config::get('laravel-authentication-acl::mail.user_registraction_activation_subject') );
+        StateKeeper::set('expected_subject', Config::get('laravel-authentication-acl::messages.email.user_registraction_activation_subject') );
         StateKeeper::set('expected_body', 'Your email has been confirmed succesfully.');
 
         Event::listen('mailer.sending', 'Jacopo\Authentication\Tests\Unit\AuthControllerTest@checkForSingleMailData');
@@ -186,7 +186,7 @@ class UserRegisterServiceTest extends DbTestCase
 
         $user_email = "email@email.com";
         StateKeeper::set('expected_to', $user_email);
-        StateKeeper::set('expected_subject', Config::get('laravel-authentication-acl::mail.user_registration_request_subject') );
+        StateKeeper::set('expected_subject', Config::get('laravel-authentication-acl::messages.email.user_registration_request_subject') );
         StateKeeper::set('expected_body', 'You account has been created. However, before you can use it you need to confirm your email address first by clicking the');
 
         Event::listen('mailer.sending', 'Jacopo\Authentication\Tests\Unit\AuthControllerTest@checkForSingleMailData');
@@ -243,7 +243,7 @@ class UserRegisterServiceTest extends DbTestCase
 
         $user_email = "email@email.com";
         StateKeeper::set('expected_to', $user_email);
-        StateKeeper::set('expected_subject', Config::get('laravel-authentication-acl::mail.user_registration_request_subject') );
+        StateKeeper::set('expected_subject', Config::get('laravel-authentication-acl::messages.email.user_registration_request_subject') );
         StateKeeper::set('expected_body', 'You can now login to the website using the');
 
         Event::listen('mailer.sending', 'Jacopo\Authentication\Tests\Unit\AuthControllerTest@checkForSingleMailData');

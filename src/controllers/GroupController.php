@@ -73,7 +73,7 @@ class GroupController extends \Controller
             // passing the id incase fails editing an already existing item
             return Redirect::route("users.groups.edit", $id ? ["id" => $id]: [])->withInput()->withErrors($errors);
         }
-        return Redirect::action('Jacopo\Authentication\Controllers\GroupController@editGroup',["id" => $obj->id])->withMessage("Gruppo modificato con successo.");
+        return Redirect::action('Jacopo\Authentication\Controllers\GroupController@editGroup',["id" => $obj->id])->withMessage(Config::get('laravel-authentication-acl::messages.flash.success.group_edit_success'));
     }
 
     public function deleteGroup()
@@ -87,7 +87,7 @@ class GroupController extends \Controller
             $errors = $this->f->getErrors();
             return Redirect::action('Jacopo\Authentication\Controllers\GroupController@getList')->withErrors($errors);
         }
-        return Redirect::action('Jacopo\Authentication\Controllers\GroupController@getList')->withMessage("Gruppo cancellato con successo.");
+        return Redirect::action('Jacopo\Authentication\Controllers\GroupController@getList')->withMessage(Config::get('laravel-authentication-acl::messages.flash.success.group_delete_success'));
     }
 
     public function editPermission()
@@ -104,8 +104,8 @@ class GroupController extends \Controller
         }
         catch(JacopoExceptionsInterface $e)
         {
-            return Redirect::route("users.groups.edit")->withInput()->withErrors(new MessageBag(["permissions" => "Permesso non trovato"]));
+            return Redirect::route("users.groups.edit")->withInput()->withErrors(new MessageBag(["permissions" => Config::get('laravel-authentication-acl::messages.flash.error.group_permission_not_found')]));
         }
-        return Redirect::action('Jacopo\Authentication\Controllers\GroupController@editGroup',["id" => $obj->id])->withMessage("Permesso modificato con successo.");
+        return Redirect::action('Jacopo\Authentication\Controllers\GroupController@editGroup',["id" => $obj->id])->withMessage(Config::get('laravel-authentication-acl::messages.flash.success.group_permission_edit_success'));
     }
 }
