@@ -73,7 +73,7 @@ class GroupController extends \Controller
             // passing the id incase fails editing an already existing item
             return Redirect::route("users.groups.edit", $id ? ["id" => $id]: [])->withInput()->withErrors($errors);
         }
-        return Redirect::action('Jacopo\Authentication\Controllers\GroupController@editGroup',["id" => $obj->id])->withMessage("Gruppo modificato con successo.");
+        return Redirect::action('Jacopo\Authentication\Controllers\GroupController@editGroup',["id" => $obj->id])->withMessage("Group edited successfully.");
     }
 
     public function deleteGroup()
@@ -87,7 +87,7 @@ class GroupController extends \Controller
             $errors = $this->f->getErrors();
             return Redirect::action('Jacopo\Authentication\Controllers\GroupController@getList')->withErrors($errors);
         }
-        return Redirect::action('Jacopo\Authentication\Controllers\GroupController@getList')->withMessage("Gruppo cancellato con successo.");
+        return Redirect::action('Jacopo\Authentication\Controllers\GroupController@getList')->withMessage("Group deleted successfully.");
     }
 
     public function editPermission()
@@ -104,8 +104,8 @@ class GroupController extends \Controller
         }
         catch(JacopoExceptionsInterface $e)
         {
-            return Redirect::route("users.groups.edit")->withInput()->withErrors(new MessageBag(["permissions" => "Permesso non trovato"]));
+            return Redirect::route("users.groups.edit")->withInput()->withErrors(new MessageBag(["permissions" => "Permission not found"]));
         }
-        return Redirect::action('Jacopo\Authentication\Controllers\GroupController@editGroup',["id" => $obj->id])->withMessage("Permesso modificato con successo.");
+        return Redirect::action('Jacopo\Authentication\Controllers\GroupController@editGroup',["id" => $obj->id])->withMessage("Permission edited succesfully.");
     }
 }
