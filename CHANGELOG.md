@@ -37,3 +37,6 @@
 
 ###version 1.1.13
 - Fixed some documentation information about system requirements
+
+###version 1.1.14
+- Fixed some hardcoded messages from italian to english
