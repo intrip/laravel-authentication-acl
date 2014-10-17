@@ -6,8 +6,11 @@ use Jacopo\Authentication\Tests\Unit\DbTestCase;
 // bootstrap laravel
 $app = require __DIR__ . '/../../../../bootstrap/start.php';
 $unitTesting = true;
-$testEnvironment = 'testing';
+$testEnvironment = 'testing-acceptance';
 $app->boot();
+
+//@todo here set the correct environment then move from file sqlite to memory also here
+dd($app->environment());
 
 /*
 |--------------------------------------------------------------------------

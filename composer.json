@@ -35,7 +35,8 @@
   "autoload": {
     "psr-4": {
       "Jacopo\\Authentication\\": "src/Jacopo/Authentication",
-      "Jacopo\\Authentication\\Tests\\Unit\\": "tests/phpunit"
+      "Jacopo\\Authentication\\Tests\\Unit\\": "tests/phpunit",
+      "Jacopo\\Authentication\\Codeception\\": "tests/"
     },
     "classmap": [
       "src/controllers",

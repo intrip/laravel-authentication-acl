@@ -7,6 +7,4 @@ namespace Codeception\Module;
 class AcceptanceHelper extends \Codeception\Module
 {
 
-	//@todo add get captcha
-
 }

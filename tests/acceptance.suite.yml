@@ -8,7 +8,7 @@ modules:
    enabled: [WebDriver]
    config:
       WebDriver:
-         url: 'http://local.authentication'
+         url: 'http://testing-acceptance.authentication'
          browser: firefox
 #         window_size: 1024x768
 #         wait: 10

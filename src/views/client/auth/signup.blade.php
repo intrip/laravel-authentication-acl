@@ -33,7 +33,7 @@
                 <div class="alert alert-success">{{$message}}</div>
                 @endif
                 <div class="panel-body">
-                    {{Form::open(["action" => 'Jacopo\Authentication\Controllers\UserController@postSignup', "method" => "POST"])}}
+                    {{Form::open(["action" => 'Jacopo\Authentication\Controllers\UserController@postSignup', "method" => "POST", "id" => "user_signup"])}}
                     {{-- Field hidden to fix chrome and safari autocomplete bug --}}
                     {{Form::password('__to_hide_password_autocomplete', ['class' => 'hidden'])}}
                         <div class="row">
