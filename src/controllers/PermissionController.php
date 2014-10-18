@@ -8,7 +8,7 @@ use Jacopo\Library\Form\FormModel;
 use Jacopo\Authentication\Models\Permission;
 use Jacopo\Authentication\Validators\PermissionValidator;
 use Jacopo\Library\Exceptions\JacopoExceptionsInterface;
-use View, Input, Redirect, App;
+use View, Input, Redirect, App, Config;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class PermissionController extends \Controller
@@ -65,7 +65,7 @@ class PermissionController extends \Controller
             return Redirect::route("permission.edit", $id ? ["id" => $id]: [])->withInput()->withErrors($errors);
         }
 
-        return Redirect::action('Jacopo\Authentication\Controllers\PermissionController@editPermission',["id" => $obj->id])->withMessage("Permission edited with success.");
+        return Redirect::action('Jacopo\Authentication\Controllers\PermissionController@editPermission',["id" => $obj->id])->withMessage(Config::get('laravel-authentication-acl::messages.flash.success.permission_permission_edit_success'));
     }
 
     public function deletePermission()
@@ -79,6 +79,6 @@ class PermissionController extends \Controller
             $errors = $this->f->getErrors();
             return Redirect::action('Jacopo\Authentication\Controllers\PermissionController@getList')->withErrors($errors);
         }
-        return Redirect::action('Jacopo\Authentication\Controllers\PermissionController@getList')->withMessage("Permission deleted with success.");
+        return Redirect::action('Jacopo\Authentication\Controllers\PermissionController@getList')->withMessage(Config::get('laravel-authentication-acl::messages.flash.success.permission_permission_delete_success'));
     }
 } 

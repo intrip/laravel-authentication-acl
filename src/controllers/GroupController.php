@@ -12,7 +12,7 @@ use Jacopo\Authentication\Models\Group;
 use Jacopo\Authentication\Exceptions\UserNotFoundException;
 use Jacopo\Authentication\Validators\GroupValidator;
 use Jacopo\Library\Exceptions\JacopoExceptionsInterface;
-use View, Input, Redirect, App;
+use View, Input, Redirect, App, Config;
 
 class GroupController extends \Controller
 {

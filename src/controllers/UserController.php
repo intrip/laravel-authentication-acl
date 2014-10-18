@@ -99,7 +99,7 @@ class UserController extends Controller
         DbHelper::commit();
 
         return Redirect::action('Jacopo\Authentication\Controllers\UserController@editUser', ["id" => $user->id])
-                       ->withMessage("User edited with success.");
+                       ->withMessage(Config::get('laravel-authentication-acl::messages.flash.success.user_edit_success'));
     }
 
     public function deleteUser()
@@ -112,7 +112,7 @@ class UserController extends Controller
             $errors = $this->f->getErrors();
             return Redirect::action('Jacopo\Authentication\Controllers\UserController@getList')->withErrors($errors);
         }
-        return Redirect::action('Jacopo\Authentication\Controllers\UserController@getList')->withMessage("User deleted with success.");
+        return Redirect::action('Jacopo\Authentication\Controllers\UserController@getList')->withMessage(Config::get('laravel-authentication-acl::messages.flash.success.user_delete_success'));
     }
 
     public function addGroup()
@@ -126,10 +126,10 @@ class UserController extends Controller
         } catch(JacopoExceptionsInterface $e)
         {
             return Redirect::action('Jacopo\Authentication\Controllers\UserController@editUser', ["id" => $user_id])
-                           ->withErrors(new MessageBag(["name" => "Group nt present."]));
+                           ->withErrors(new MessageBag(["name" => Config::get('laravel-authentication-acl::messages.flash.error.user_group_not_found')]));
         }
         return Redirect::action('Jacopo\Authentication\Controllers\UserController@editUser', ["id" => $user_id])
-                       ->withMessage("Group added with success.");
+                       ->withMessage(Config::get('laravel-authentication-acl::messages.flash.success.user_group_add_success'));
     }
 
     public function deleteGroup()
@@ -143,10 +143,10 @@ class UserController extends Controller
         } catch(JacopoExceptionsInterface $e)
         {
             return Redirect::action('Jacopo\Authentication\Controllers\UserController@editUser', ["id" => $user_id])
-                           ->withErrors(new MessageBag(["name" => "Group not present."]));
+                           ->withErrors(new MessageBag(["name" => Config::get('laravel-authentication-acl::messages.flash.error.user_group_not_found')]));
         }
         return Redirect::action('Jacopo\Authentication\Controllers\UserController@editUser', ["id" => $user_id])
-                       ->withMessage("Group deleted with success.");
+                       ->withMessage(Config::get('laravel-authentication-acl::messages.flash.success.user_group_delete_success'));
     }
 
     public function editPermission()
@@ -162,10 +162,10 @@ class UserController extends Controller
             $obj = $this->user_repository->update($id, $input);
         } catch(JacopoExceptionsInterface $e)
         {
-            return Redirect::route("users.edit")->withInput()->withErrors(new MessageBag(["permissions" => "Permission not found"]));
+            return Redirect::route("users.edit")->withInput()->withErrors(new MessageBag(["permissions" => Config::get('laravel-authentication-acl::messages.flash.error.user_permission_not_found')]));
         }
         return Redirect::action('Jacopo\Authentication\Controllers\UserController@editUser', ["id" => $obj->id])
-                       ->withMessage("Permission edited with success.");
+                       ->withMessage(Config::get('laravel-authentication-acl::messages.flash.success.user_permission_add_success'));
     }
 
     public function editProfile()
@@ -178,7 +178,7 @@ class UserController extends Controller
         } catch(UserNotFoundException $e)
         {
             return Redirect::action('Jacopo\Authentication\Controllers\UserController@getList')
-                           ->withErrors(new MessageBag(['model' => 'User not found.']));
+                           ->withErrors(new MessageBag(['model' => Config::get('laravel-authentication-acl::messages.flash.error.user_user_not_found')]));
         } catch(ProfileNotFoundException $e)
         {
             $user_profile = new UserProfile(["user_id" => $user_id]);
@@ -208,7 +208,7 @@ class UserController extends Controller
         }
         return Redirect::back()
                        ->withInput()
-                       ->withMessage("Profile edited with success.");
+                       ->withMessage(Config::get('laravel-authentication-acl::messages.flash.success.user_profile_edit_success'));
     }
 
     public function editOwnProfile()
@@ -287,10 +287,10 @@ class UserController extends Controller
         }
 
         return Redirect::action('Jacopo\Authentication\Controllers\UserController@postEditProfile', ["user_id" => $user_id])
-                       ->with('message', "Field {$description} added succesfully.");
+                       ->with('message', Config::get('laravel-authentication-acl::messages.flash.success.custom_field_added'));
     }
 
-    public function deleteCustomFieldType()
+  public function deleteCustomFieldType()
     {
         $id = Input::get('id');
         $user_id = Input::get('user_id');
@@ -301,7 +301,7 @@ class UserController extends Controller
         } catch(ModelNotFoundException $e)
         {
             return Redirect::action('Jacopo\Authentication\Controllers\UserController@postEditProfile', ["user_id" => $user_id])
-                           ->withErrors(new MessageBag(["model" => "Cannot find the custom field."]));
+                           ->withErrors(new MessageBag(["model" => Config::get('laravel-authentication-acl::messages.flash.error.custom_field_not_found')]));
         } catch(PermissionException $e)
         {
             return Redirect::action('Jacopo\Authentication\Controllers\UserController@postEditProfile', ["user_id" => $user_id])
@@ -309,7 +309,7 @@ class UserController extends Controller
         }
 
         return Redirect::action('Jacopo\Authentication\Controllers\UserController@postEditProfile', ["user_id" => $user_id])
-                       ->with('message', "Field removed succesfully.");
+                       ->with('message', Config::get('laravel-authentication-acl::messages.flash.success.custom_field_removed'));
     }
 
     public function changeAvatar()
@@ -325,18 +325,18 @@ class UserController extends Controller
                            ->withInput()->withErrors($validator->getErrors());
         }
 
-        // change picture
+      // change picture
         try
         {
             $this->profile_repository->updateAvatar($profile_id);
         } catch(NotFoundException $e)
         {
             return Redirect::action('Jacopo\Authentication\Controllers\UserController@editProfile', ['user_id' => $user_id])->withInput()
-                           ->withErrors(new MessageBag(['avatar' => 'Cannot upload the file.']));
+                           ->withErrors(new MessageBag(['avatar' => Config::get('laravel-authentication-acl::messages.flash.error.')]));
         }
 
         return Redirect::action('Jacopo\Authentication\Controllers\UserController@editProfile', ['user_id' => $user_id])
-                       ->withMessage('Avatar changed succesfully');
+                       ->withMessage(Config::get('laravel-authentication-acl::messages.flash.success.avatar_edit_success'));
     }
 
     public function refreshCaptcha()
