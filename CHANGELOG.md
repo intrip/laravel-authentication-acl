@@ -41,5 +41,5 @@
 ###version 1.1.14
 - Fixed some hardcoded messages from italian to english
 
-###version 1.1.14
+###version 1.1.15
 - Fixed a group edit error page bug
