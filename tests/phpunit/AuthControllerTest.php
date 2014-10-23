@@ -6,6 +6,7 @@ use Jacopo\Authentication\Exceptions\AuthenticationErrorException;
 use Jacopo\Authentication\Tests\Unit\Traits\Helper;
 use Jacopo\Authentication\Tests\Unit\Traits\UserFactory;
 use Mockery as m;
+use Config;
 use App;
 
 /**
@@ -49,7 +50,7 @@ class AuthControllerTest extends DbTestCase
                 "remember" => $remember
         ]);
 
-        $this->assertRedirectedTo('/');
+        $this->assertRedirectedTo(Config::get('laravel-authentication-acl::config.user_login_redirect_url'));
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php namespace Jacopo\Authentication\Controllers;
 
-use Controller, View, Sentry, Input, Redirect, App;
+use Controller, View, Sentry, Input, Redirect, App, Config;
 use Jacopo\Authentication\Validators\ReminderValidator;
 use Jacopo\Library\Exceptions\JacopoExceptionsInterface;
 use Jacopo\Authentication\Services\ReminderService;
@@ -66,7 +66,7 @@ class AuthController extends Controller {
             return Redirect::action('Jacopo\Authentication\Controllers\AuthController@getClientLogin')->withInput()->withErrors($errors);
         }
 
-        return Redirect::to('/');
+        return Redirect::to(Config::get('laravel-authentication-acl::config.user_login_redirect_url'));
     }
 
     /**
