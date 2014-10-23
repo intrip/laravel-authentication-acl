@@ -40,3 +40,6 @@
 
 ###version 1.1.14
 - Fixed some hardcoded messages from italian to english
+
+###version 1.1.14
+- Fixed a group edit error page bug
