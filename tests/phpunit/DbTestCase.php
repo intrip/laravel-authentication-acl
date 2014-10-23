@@ -13,7 +13,6 @@ use Illuminate\Validation\Factory;
 
 class DbTestCase extends TestCase
 {
-
   /*
 	|--------------------------------------------------------------------------
 	| Database connection

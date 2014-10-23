@@ -4,13 +4,10 @@ require __DIR__ . "/../vendor/autoload.php";
 use Jacopo\Authentication\Tests\Unit\DbTestCase;
 
 // bootstrap laravel
-$app = require __DIR__ . '/../../../../bootstrap/start.php';
 $unitTesting = true;
 $testEnvironment = 'testing-acceptance';
+$app = require __DIR__ . '/../../../../bootstrap/start.php';
 $app->boot();
-
-//@todo here set the correct environment then move from file sqlite to memory also here
-dd($app->environment());
 
 /*
 |--------------------------------------------------------------------------
@@ -20,10 +17,13 @@ dd($app->environment());
 |
 */
 
+//orchestra risetta l'env in testing e non test-acceptance fai change per compatibility
+// fixa il createapplication in testCase
+
 if (!function_exists('_codeCeption_setUp')) {
-  function _codeCeption_setUp() {
-    (new DbTestCase())->setUp();
+  function _codeCeption_setUp($environment) {
+    (new DbTestCase())->setCustomEnvironment($environment)->setUp();
   }
 }
 
-_codeCeption_setUp();
+_codeCeption_setUp($testEnvironment);
