@@ -40,3 +40,11 @@
 
 ###version 1.1.14
 - Fixed some hardcoded messages from italian to english
+
+###version 1.1.15
+- Fixed a group edit error page bug
+
+###version 1.2.1-x
+- Ajax captcha
+- Added editable routes in configuration file
+- Extended test coverage
