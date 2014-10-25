@@ -4,6 +4,12 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Config;
 use Jacopo\Authentication\Tests\Unit\Stubs\NullLogger;
 use \Orchestra\Testbench\TestCase as OrchestraTestCase;
+use Illuminate\Config\EnvironmentVariables;
+use Illuminate\Config\Repository as ConfigRepository;
+use Illuminate\Foundation\Application;
+use Illuminate\Foundation\AliasLoader;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Facade;
 
 /**
  * Test TestCase
@@ -13,7 +19,7 @@ use \Orchestra\Testbench\TestCase as OrchestraTestCase;
 class TestCase extends OrchestraTestCase {
 
   // custom environment
-  protected $custom_environment;
+  protected $custom_environment = 'testing';
 
   public function setUp() {
     parent::setUp();
@@ -57,10 +63,40 @@ class TestCase extends OrchestraTestCase {
   }
 
   public function createApplication() {
-    $app = parent::createApplication();
-    if($this->custom_environment){
-      $app['env'] = $this->custom_environment;
-    }
+
+    $app = new Application;
+
+    $app->detectEnvironment(array(
+                                    'local' => array('your-machine-name'),
+                            ));
+
+    $app->bindInstallPaths($this->getApplicationPaths());
+
+    $app['env'] = $this->custom_environment;
+
+    $app->instance('app', $app);
+
+    Facade::clearResolvedInstances();
+    Facade::setFacadeApplication($app);
+
+    $app->registerCoreContainerAliases();
+
+    with($envVariables = new EnvironmentVariables($app->getEnvironmentVariablesLoader()))->load($app['env']);
+
+    $app->instance('config', $config = new ConfigRepository($app->getConfigLoader(), $app['env']));
+    $app->startExceptionHandling();
+
+    date_default_timezone_set($this->getApplicationTimezone());
+
+    $aliases = array_merge($this->getApplicationAliases(), $this->getPackageAliases());
+    AliasLoader::getInstance($aliases)->register();
+
+    Request::enableHttpMethodParameterOverride();
+
+    $providers = array_merge($this->getApplicationProviders(), $this->getPackageProviders());
+    $app->getProviderRepository()->load($app, $providers);
+
+    $this->getEnvironmentSetUp($app);
 
     return $app;
   }

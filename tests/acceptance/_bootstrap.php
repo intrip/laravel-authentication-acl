@@ -1,3 +1,5 @@
 <?php
-// Here you can initialize variables that will be available to your tests
+$testEnvironment = 'testing-acceptance';
+require __DIR__ . "/../helpers/laravel_bootstrap.php";
 
+_codeCeption_setUp($testEnvironment);

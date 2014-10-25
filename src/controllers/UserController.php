@@ -227,6 +227,7 @@ class UserController extends Controller
     public function signup()
     {
         $enable_captcha = Config::get('laravel-authentication-acl::captcha_signup');
+
         if($enable_captcha)
         {
             $captcha = App::make('captcha_validator');

@@ -5,6 +5,7 @@ $last_name = "beschi";
 $email = "fake@email.com";
 $password = $password_confirmation = "password";
 
+//@todo fix this using testing-accept folder for config and overwriting it like test-runner
 Config::set('laravel-authentication-acl::captcha_signup',false);
 
 $I = new AcceptanceTester($scenario);
@@ -20,4 +21,6 @@ $I->fillField('password_confirmation',$password_confirmation);
 
 $I->click('Register');
 
-$I->see('');
+$I->see('Request received');
+
+//@todo make it work with captcha and without and without and with email confirmation
