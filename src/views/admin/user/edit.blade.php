@@ -41,15 +41,16 @@ Admin area: edit user
                         {{Form::text('email', null, ['class' => 'form-control', 'placeholder' => 'user email', 'autocomplete' => 'off'])}}
                     </div>
                     <span class="text-danger">{{$errors->first('email')}}</span>
+				@if(!empty($user->id))
                     <!-- password text field -->
                     <div class="form-group">
-                        {{Form::label('password',isset($user->id) ? "Change password: " : "Password: ")}}
+                        {{Form::label('password', "Change password: " )}}
                         {{Form::password('password', ['class' => 'form-control', 'autocomplete' => 'off', 'placeholder' => ''])}}
                     </div>
                     <span class="text-danger">{{$errors->first('password')}}</span>
                     <!-- password_confirmation text field -->
                     <div class="form-group">
-                        {{Form::label('password_confirmation',isset($user->id) ? "Confirm change password: " : "Confirm password: ")}}
+                        {{Form::label('password_confirmation', "Confirm change password: " )}}
                         {{Form::password('password_confirmation', ['class' => 'form-control', 'placeholder' => '','autocomplete' => 'off'])}}
                     </div>
                     <span class="text-danger">{{$errors->first('password_confirmation')}}</span>
@@ -57,17 +58,30 @@ Admin area: edit user
                         {{Form::label("activated","User active: ")}}
                         {{Form::select('activated', ["1" => "Yes", "0" => "No"], (isset($user->activated) && $user->activated) ? $user->activated : "0", ["class"=> "form-control"] )}}
                     </div>
+				@endif
                     <div class="form-group">
                         {{Form::label("banned","Banned: ")}}
                         {{Form::select('banned', ["1" => "Yes", "0" => "No"], (isset($user->banned) && $user->banned) ? $user->banned : "0", ["class"=> "form-control"] )}}
                     </div>
+				@if(empty($user->id))
+                    <!-- send_welcome_email checkbox -->
+                    <div class="form-group">
+                        {{Form::label('send_welcome_email', "Send welcome email: " )}}
+                        {{Form::select('send_welcome_email', ["1" => "Yes", "0" => "No"], "1", ["class"=> "form-control"] )}}
+                    </div>
+				@endif
                     {{Form::hidden('id')}}
                     {{Form::hidden('form_name','user')}}
-                    <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@deleteUser',['id' => $user->id, '_token' => csrf_token()])}}" class="btn btn-danger pull-right margin-left-5 delete">Delete user</a>
+				@if(!empty($user->id))
+                    <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@deleteUser',['id' => $user->id, '_token' => csrf_token()])}}" class="btn btn-danger margin-left-5 delete">Delete user</a>
+				@endif
+
                     {{Form::submit('Save', array("class"=>"btn btn-info pull-right "))}}
                     {{Form::close()}}
                     </div>
+
                     <div class="col-md-6 col-xs-12">
+				@if(!empty($user->id))
                         <h4><i class="fa fa-users"></i> Groups</h4>
                         @include('laravel-authentication-acl::admin.user.groups')
 
@@ -75,6 +89,7 @@ Admin area: edit user
                         <h4><i class="fa fa-lock"></i> Permission</h4>
                         {{-- permissions --}}
                         @include('laravel-authentication-acl::admin.user.perm')
+				@endif
                     </div>
                 </div>
             </div>

@@ -83,10 +83,17 @@ class UserController extends Controller
     {
         $id = Input::get('id');
 
+		$new_user = Input::all();
+		if(!$id && empty($new_user['password']))
+		{
+			$new_user['password'] = $new_user['password_confirmation'] = substr(str_shuffle(MD5(microtime())), 0, 10);
+			$new_user['activated'] = '1'; // Forcing activation of new accounts or the password create process will fail.
+		}
+
         DbHelper::startTransaction();
         try
         {
-            $user = $this->f->process(Input::all());
+            $user = $this->f->process($new_user);
             $this->profile_repository->attachEmptyProfile($user);
         } catch(JacopoExceptionsInterface $e)
         {
@@ -97,10 +104,38 @@ class UserController extends Controller
         }
 
         DbHelper::commit();
+		$flash_message = "User edited with success";
+		if(!$id && $new_user['send_welcome_email']) // Send welcome email to new users created by admins
+		{
+	        $this->sendWelcomeMail($new_user);
+			$flash_message = "New user was added successfully.";
+		}
 
         return Redirect::action('Jacopo\Authentication\Controllers\UserController@editUser', ["id" => $user->id])
-                       ->withMessage("User edited with success.");
+                       ->withMessage($flash_message);
     }
+
+	private function sendWelcomeMail($new_user)
+	{
+
+		$admin_user = $this->auth->getLoggedUser();
+		$admin_name = trim($admin_user->first_name." ".$admin_user->last_name);
+		if($admin_name == null)
+		{
+			$admin_name = $admin_user->email;
+		}
+
+        $view_file = "laravel-authentication-acl::admin.mail.welcome-new-user";
+        $mailer = App::make('jmailer');
+        // send email to client
+        $mailer->sendTo($new_user['email'], [
+			"email"      => $new_user["email"],
+			"admin_name" => $admin_name,
+			"token"      => App::make('authenticator')->getToken($new_user["email"])
+			],
+			"Invitation to join " . Config::get('laravel-authentication-acl::app_name'),
+			$view_file);
+	}
 
     public function deleteUser()
     {
