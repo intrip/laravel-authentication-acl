@@ -12,7 +12,7 @@ class CreateProfileFieldTypes extends Migration {
 	 */
 	public function up()
 	{
-        Schema::create('profile_field_type', function($table)
+        Schema::create('profile_field_type', function(Blueprint $table)
         {
             $table->increments('id');
             $table->string('description');

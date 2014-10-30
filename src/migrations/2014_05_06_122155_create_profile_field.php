@@ -12,7 +12,7 @@ class CreateProfileField extends Migration {
 	 */
 	public function up()
 	{
-        Schema::create('profile_field', function($table)
+        Schema::create('profile_field', function(Blueprint $table)
         {
             $table->increments('id');
             $table->integer('profile_id')->unsigned();

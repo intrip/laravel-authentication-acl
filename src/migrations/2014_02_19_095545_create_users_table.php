@@ -12,7 +12,7 @@ class CreateUsersTable extends Migration {
      */
     public function up()
     {
-        Schema::create('users', function($table)
+        Schema::create('users', function(Blueprint $table)
         {
             $table->increments('id');
             $table->string('email');

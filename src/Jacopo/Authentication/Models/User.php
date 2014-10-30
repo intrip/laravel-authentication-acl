@@ -18,8 +18,8 @@ class User extends CartaUser
     protected $guarded = ["id"];
 
     /**
-     * Validates the user and throws a number of
-     * Exceptions if validation fails.
+     * Validates the user and throws
+     * Exception if fails.
      *
      * @override
      * @return bool

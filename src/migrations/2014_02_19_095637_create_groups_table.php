@@ -12,7 +12,7 @@ class CreateGroupsTable extends Migration {
      */
     public function up()
     {
-        Schema::create('groups', function($table)
+        Schema::create('groups', function(Blueprint $table)
         {
             $table->increments('id');
             $table->string('name');

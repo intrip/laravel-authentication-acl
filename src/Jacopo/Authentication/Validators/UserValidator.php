@@ -29,6 +29,10 @@ class UserValidator extends OverrideConnectionValidator
                 static::$rules["email"][] = "unique:users,email,{$input['id']}";
             }
         });
+
+        // make unique keys for email and password
+        static::$rules["email"] = array_unique(static::$rules["email"]);
+        static::$rules["password"] = array_unique(static::$rules["password"]);
     }
 
     /**

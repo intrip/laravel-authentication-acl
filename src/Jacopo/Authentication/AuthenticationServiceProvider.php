@@ -66,6 +66,11 @@ class AuthenticationServiceProvider extends ServiceProvider
         $this->setupConnection();
 
         $this->registerCommands();
+
+        if(App::environment() == 'testing-acceptance')
+        {
+            App::instance('config', new \Jacopo\Authentication\Middleware\Config());
+        }
     }
 
     protected function overwriteSentryConfig()

@@ -5,7 +5,6 @@ $last_name = "beschi";
 $email = "fake@email.com";
 $password = $password_confirmation = "password";
 
-//@todo fix this using testing-accept folder for config and overwriting it like test-runner
 Config::set('laravel-authentication-acl::captcha_signup',false);
 
 $I = new AcceptanceTester($scenario);
