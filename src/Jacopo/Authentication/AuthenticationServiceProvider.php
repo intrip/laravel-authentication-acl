@@ -7,6 +7,7 @@ use Jacopo\Authentication\Classes\CustomProfile\Repository\CustomProfileReposito
 use PrepareCommand;
 use TestRunner;
 use Config;
+use Jacopo\Authentication\Middleware\Config as ConfigMiddleware;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
@@ -67,10 +68,7 @@ class AuthenticationServiceProvider extends ServiceProvider
 
         $this->registerCommands();
 
-        if(App::environment() == 'testing-acceptance')
-        {
-            App::instance('config', new \Jacopo\Authentication\Middleware\Config());
-        }
+        $this->setupAcceptanceTestingParams();
     }
 
     protected function overwriteSentryConfig()
@@ -203,5 +201,20 @@ class AuthenticationServiceProvider extends ServiceProvider
     {
         $this->registerInstallCommand();
         $this->registerPrepareCommand();
+    }
+
+    protected function setupAcceptanceTestingParams()
+    {
+        if(App::environment() == 'testing-acceptance')
+        {
+            $this->useMiddlewareCustomConfig();
+        }
+    }
+
+    protected function useMiddlewareCustomConfig()
+    {
+        App::instance('config', new ConfigMiddleware());
+
+        Config::swap(new ConfigMiddleware());
     }
 }

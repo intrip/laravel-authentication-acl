@@ -1,28 +1,49 @@
 <?php  namespace Jacopo\Authentication\Middleware;
 
+use Jacopo\Authentication\Middleware\Models\Config as ConfigModel;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Jacopo\Authentication\Middleware\Interfaces\ConfigRepositoryInterface;
-use App;
 
 class Repository implements ConfigRepositoryInterface {
-    protected $session;
+    protected $model;
 
-    protected $session_test_key = 'laravel-authentication-acl.tests.config';
-
-    function __construct($session = null)
+    function __construct($model = null)
     {
-        $this->session = $session ?: App::make('session');
+        $this->model = $model ?: new ConfigModel();
     }
 
     public function setOption($key, $value)
     {
-        $this->session->set($key,$value);
+        try
+        {
+            $model = $this->model->whereKey($key)->firstOrFail();
+        } catch(ModelNotFoundException $e)
+        {
+            $model = new ConfigModel();
+        }
+
+        $model->fill([
+                             "key"   => $key,
+                             "value" => $value
+                     ])
+              ->save();
 
         return $this;
     }
 
     public function getOption($key)
     {
-        return $this->session->get($key);
+
+        dd($this->model->all());
+
+        try
+        {
+            $model = $this->model->where('key', '=', $key)->firstOrFail();
+        } catch(ModelNotFoundException $e)
+        {
+            return null;
+        }
+
+        return $model->value;
     }
 } 

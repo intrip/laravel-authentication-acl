@@ -9,7 +9,9 @@ class Config implements ArrayAccess {
     protected $config_repository;
     protected $repository;
     protected $overridden_data;
-    protected static $overridden = [];
+    public static $overridden = [
+            "laravel-authentication-acl::captcha_signup" => true
+    ];
 
     public function __construct($repository = null)
     {
@@ -43,7 +45,7 @@ class Config implements ArrayAccess {
     public function getOverridden($key)
     {
         // check for overridden keys
-        if(!isset(static::$overridden[$key]) )
+        if(!isset(static::$overridden[$key]))
         {
             return null;
         }

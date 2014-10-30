@@ -25,8 +25,7 @@ use View, Input, Redirect, App, Config, Controller;
 use Jacopo\Authentication\Interfaces\AuthenticateInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class UserController extends Controller
-{
+class UserController extends Controller {
     /**
      * @var \Jacopo\Authentication\Repository\SentryUserRepository
      */
@@ -112,7 +111,8 @@ class UserController extends Controller
             $errors = $this->f->getErrors();
             return Redirect::action('Jacopo\Authentication\Controllers\UserController@getList')->withErrors($errors);
         }
-        return Redirect::action('Jacopo\Authentication\Controllers\UserController@getList')->withMessage(Config::get('laravel-authentication-acl::messages.flash.success.user_delete_success'));
+        return Redirect::action('Jacopo\Authentication\Controllers\UserController@getList')
+                       ->withMessage(Config::get('laravel-authentication-acl::messages.flash.success.user_delete_success'));
     }
 
     public function addGroup()
@@ -162,7 +162,8 @@ class UserController extends Controller
             $obj = $this->user_repository->update($id, $input);
         } catch(JacopoExceptionsInterface $e)
         {
-            return Redirect::route("users.edit")->withInput()->withErrors(new MessageBag(["permissions" => Config::get('laravel-authentication-acl::messages.flash.error.user_permission_not_found')]));
+            return Redirect::route("users.edit")->withInput()
+                           ->withErrors(new MessageBag(["permissions" => Config::get('laravel-authentication-acl::messages.flash.error.user_permission_not_found')]));
         }
         return Redirect::action('Jacopo\Authentication\Controllers\UserController@editUser', ["id" => $obj->id])
                        ->withMessage(Config::get('laravel-authentication-acl::messages.flash.success.user_permission_add_success'));
@@ -217,11 +218,12 @@ class UserController extends Controller
 
         $custom_profile_repo = App::make('custom_profile_repository', $logged_user->user_profile()->first()->id);
 
-        return View::make('laravel-authentication-acl::admin.user.self-profile')->with([
-                                                                                               "user_profile"   => $logged_user->user_profile()
-                                                                                                                               ->first(),
-                                                                                               "custom_profile" => $custom_profile_repo
-                                                                                       ]);
+        return View::make('laravel-authentication-acl::admin.user.self-profile')
+                   ->with([
+                                  "user_profile"   => $logged_user->user_profile()
+                                                                  ->first(),
+                                  "custom_profile" => $custom_profile_repo
+                          ]);
     }
 
     public function signup()
@@ -291,7 +293,7 @@ class UserController extends Controller
                        ->with('message', Config::get('laravel-authentication-acl::messages.flash.success.custom_field_added'));
     }
 
-  public function deleteCustomFieldType()
+    public function deleteCustomFieldType()
     {
         $id = Input::get('id');
         $user_id = Input::get('user_id');
@@ -326,7 +328,7 @@ class UserController extends Controller
                            ->withInput()->withErrors($validator->getErrors());
         }
 
-      // change picture
+        // change picture
         try
         {
             $this->profile_repository->updateAvatar($profile_id);
@@ -343,6 +345,6 @@ class UserController extends Controller
     public function refreshCaptcha()
     {
         return View::make('laravel-authentication-acl::client.auth.captcha-image')
-                ->with(['captcha' => App::make('captcha_validator')]);
+                   ->with(['captcha' => App::make('captcha_validator')]);
     }
 } 

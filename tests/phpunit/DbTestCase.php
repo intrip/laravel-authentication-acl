@@ -118,6 +118,9 @@ class DbTestCase extends TestCase
   protected function createTestDbSchema()
   {
       $this->artisan->call('migrate', ["--database" => "testbench", '--path' => '../src/migrations']);
+
+      // test custom config data for acceptance testsuite
+      $this->artisan->call('migrate', ["--database" => "testbench", '--path' => '../src/migrations_test']);
   }
 
   /**

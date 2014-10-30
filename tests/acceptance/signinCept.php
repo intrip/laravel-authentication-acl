@@ -5,7 +5,9 @@ $last_name = "beschi";
 $email = "fake@email.com";
 $password = $password_confirmation = "password";
 
-Config::set('laravel-authentication-acl::captcha_signup',false);
+//@todo fix the error that make use the wrong connection
+// then make an api to get session data that works only for testing-acceptance env and check the captcha
+Config::override('laravel-authentication-acl::captcha_signup',false);
 
 $I = new AcceptanceTester($scenario);
 $I->wantTo('signup a new user');
