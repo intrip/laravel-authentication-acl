@@ -6,11 +6,11 @@ return [
     |--------------------------------------------------------------------------
     |
     */
-    'default' => 'sqlite',
+    'default' => 'sqlitedb',
 
     'connections' => [
 
-            'sqlite' => array(
+            'sqlitedb' => array(
                     'driver'   => 'sqlite',
                     'database' => __DIR__.'/../../database/testing-acceptance.sqlite',
                     'prefix'   => '',

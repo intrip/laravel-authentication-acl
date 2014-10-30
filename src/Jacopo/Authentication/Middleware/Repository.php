@@ -33,9 +33,6 @@ class Repository implements ConfigRepositoryInterface {
 
     public function getOption($key)
     {
-
-        dd($this->model->all());
-
         try
         {
             $model = $this->model->where('key', '=', $key)->firstOrFail();
