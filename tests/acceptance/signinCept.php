@@ -6,6 +6,7 @@ $email = "fake@email.com";
 $password = $password_confirmation = "password";
 
 Config::override('laravel-authentication-acl::captcha_signup',false);
+Config::override('mail.pretend',true);
 
 $I = new AcceptanceTester($scenario);
 $I->wantTo('signup a new user');
@@ -19,9 +20,7 @@ $I->fillField('password',$password);
 $I->fillField('password_confirmation',$password_confirmation);
 
 $I->click('Register');
-
 $I->see('Request received');
 
-//@todo check for data in the db then go with the activation part
-
+//@todo assert mail data
 //@todo make it work with captcha
