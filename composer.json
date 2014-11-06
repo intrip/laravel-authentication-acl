@@ -21,7 +21,7 @@
     "illuminate/support": "4.2.*",
     "intervention/image": "2.*",
     "cartalyst/sentry": "2.1.*",
-    "jacopo/laravel-library": "1.0.*",
+    "jacopo/laravel-library": "1.2.*",
     "gregwar/captcha": "1.0.11"
   },
   "require-dev": {
