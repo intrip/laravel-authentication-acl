@@ -28,7 +28,7 @@ You can see the full documentation and usage [here](docs/index.md)
  - Create custom menu items with configurable permissions
  - Can handle permission on custom user routes
  - Have two login forms: admin area and user area
- - Many usable hasing algorithms sha256, md5 etc...
+ - Many usable hashing algorithms sha256, md5 etc...
  - Laravel4 based and easy to integrate in any Laravel application
  - Have an Api that integrates with your application
  - Bootstrap 3 and responsive design (mobile first)
