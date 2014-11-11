@@ -48,4 +48,4 @@
 - Ajax captcha
 - Added editable routes in configuration file
 - Extended test coverage
-- Setted up basic acceptance testsuite
+- Setted up basic acceptance testsuiteg
