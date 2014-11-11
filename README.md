@@ -1,7 +1,7 @@
 laravel-authentication-acl
 ==========================
 
-[![Build Status](https://travis-ci.org/intrip/laravel-authentication-acl.png)](https://travis-ci.org/intrip/laravel-authentication-acl)
+[![Build Status](https://travis-ci.org/intrip/laravel-authentication-acl.svg?branch=1.2)](https://travis-ci.org/intrip/laravel-authentication-acl)
 
 
 ## This version is the latest one for the Laravel 4.2.* branch

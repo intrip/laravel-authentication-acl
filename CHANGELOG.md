@@ -44,7 +44,8 @@
 ###version 1.1.15
 - Fixed a group edit error page bug
 
-###version 1.2.1-x
+###version 1.2.1-6
 - Ajax captcha
 - Added editable routes in configuration file
 - Extended test coverage
+- Setted up basic acceptance testsuite
