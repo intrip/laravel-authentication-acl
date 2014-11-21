@@ -6,7 +6,7 @@ use Jacopo\Library\Validators\OverrideConnectionValidator;
 class UserSignupValidator extends OverrideConnectionValidator
 {
   protected static $messages = [
-      "mail_signup" => "an user with that email already exists."
+      "mail_signup" => "A user with that email already exists."
   ];
 
   protected static $rules = [
