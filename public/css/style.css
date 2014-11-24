@@ -88,6 +88,12 @@ div.paginator
 {
     cursor: pointer;
 }
+.centered-form .input-group {
+	width: 100%;
+}
+.centered-form .input-group-addon {
+	width: 3em;
+}
 /*///////////////// signup form ////////////////*/
 .centered-form
 {
