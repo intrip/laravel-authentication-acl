@@ -89,7 +89,9 @@ class ReminderService {
 
     private function prepareResetPasswordLink($token, $to)
     {
-        $this->body = link_to_action("Jacopo\\Authentication\\Controllers\\AuthController@getChangePassword","Click here to change your password.", ["email"=> $to, "token"=> $token] );
+        $this->body = link_to_action("Jacopo\\Authentication\\Controllers\\AuthController@getChangePassword",
+                 Config::get('laravel-authentication-acl::messages.links.change_password'),
+                ["email"=> $to, "token"=> $token] );
     }
 
     public function reset($email, $token, $password)
@@ -110,13 +112,13 @@ class ReminderService {
             // Attempt to reset the user password
             if (! $user->attemptResetPassword($token, $password))
             {
-                $this->errors->add('user', 'There was a problem changing the password.');
+                $this->errors->add('user', Config::get('laravel-authentication-acl::messages.flash.error.reset_password_error') );
                 throw new InvalidException();
             }
         }
         else
         {
-            $this->errors->add('user', 'Confirmation code is not valid.');
+            $this->errors->add('user', Config::get('laravel-authentication-acl::messages.flash.error.captcha_error') );
             throw new InvalidException();
         }
     }
