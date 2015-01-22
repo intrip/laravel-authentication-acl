@@ -25,7 +25,8 @@ class UserProfile extends BaseModel
         'code',
         'address',
         'avatar',
-        'timezone'
+        'timezone',
+        'username'
     ];
 
     protected $guarded = ["id"];
