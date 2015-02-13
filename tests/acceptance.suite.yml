@@ -1,0 +1,14 @@
+# Codeception Test Suite Configuration
+
+# suite for acceptance tests.
+# using webdriver: phantom.js or selenium
+
+class_name: AcceptanceTester
+modules:
+   enabled: [WebDriver]
+   config:
+      WebDriver:
+         url: 'http://testing-acceptance.authentication'
+         browser: firefox
+#         window_size: 1024x768
+#         wait: 10

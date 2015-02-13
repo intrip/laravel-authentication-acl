@@ -1,14 +1,13 @@
 <?php namespace Jacopo\Authentication;
 
 use App;
-use InstallCommand;
 use Jacopo\Authentication\Classes\Captcha\GregWarCaptchaValidator;
 use Jacopo\Authentication\Classes\CustomProfile\Repository\CustomProfileRepository;
-use PrepareCommand;
+use Jacopo\Authentication\Commands\InstallCommand;
+use Jacopo\Authentication\Commands\PrepareCommand;
 use TestRunner;
 use Config;
 use Jacopo\Authentication\Middleware\Config as ConfigMiddleware;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 use Jacopo\Authentication\Classes\SentryAuthenticator;
@@ -18,7 +17,6 @@ use Jacopo\Authentication\Repository\EloquentUserProfileRepository;
 use Jacopo\Authentication\Repository\SentryGroupRepository;
 use Jacopo\Authentication\Repository\SentryUserRepository;
 use Jacopo\Authentication\Services\UserRegisterService;
-use Jacopo\Library\Form\FormModel;
 
 class AuthenticationServiceProvider extends ServiceProvider
 {
