@@ -9,8 +9,8 @@ Authenticator:
     fixa la issue migrate:refresh di 1.2
 ###1.3
     sto copiando un pezzo alla volta, manca:
-    config
     test
+    sposta config in sottodir acl o qualcosa di simile e accedici con config.acl.x
     rifare un giro di tutte le parti
     1. sposta tutti i file di configurazione in config e fixa l'accesso alla confir
     2. rinomina tutte le rotte come named e mettile in un file routes
