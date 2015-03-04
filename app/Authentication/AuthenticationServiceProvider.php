@@ -51,8 +51,6 @@ class AuthenticationServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/../../resources/views', 'laravel-authentication-acl');
         // include filters
         require __DIR__ . "/filters.php";
-        // include routes.php
-        require __DIR__ . "/routes.php";
         // include view composers
         require __DIR__ . "/composers.php";
         // include event subscribers
