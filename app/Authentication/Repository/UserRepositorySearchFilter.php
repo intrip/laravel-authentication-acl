@@ -1,4 +1,4 @@
-<?php  namespace Jacopo\Authentication\Repository;
+<?php  namespace LaravelAcl\Authentication\Repository;
 
 /**
  * Class UserRepositorySearchFilter
@@ -7,7 +7,7 @@
  */
 use App;
 use DB;
-use Jacopo\Library\Traits\ConnectionTrait;
+use LaravelAcl\Library\Traits\ConnectionTrait;
 
 class UserRepositorySearchFilter
 {

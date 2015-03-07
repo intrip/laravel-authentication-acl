@@ -1,7 +1,7 @@
 <?php
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
-use Jacopo\Authentication\Helpers\FileRouteHelper;
+use LaravelAcl\Authentication\Helpers\FileRouteHelper;
 
 /*
 |--------------------------------------------------------------------------

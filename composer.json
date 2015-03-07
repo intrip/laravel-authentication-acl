@@ -19,9 +19,7 @@
 			"database"
 		],
 		"psr-4": {
-			"LaravelAuthenticationACL\\": "app/",
-      "Jacopo\\Authentication\\": "app/Authentication",
-      "Jacopo\\Library\\": "app/Library"
+			"LaravelAcl\\": "app/"
 		}
 	},
 	"autoload-dev": {

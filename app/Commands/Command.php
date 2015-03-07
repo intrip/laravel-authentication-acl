@@ -1,4 +1,4 @@
-<?php namespace LaravelAuthenticationACL\Commands;
+<?php namespace LaravelAcl\Commands;
 
 abstract class Command {
 

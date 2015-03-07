@@ -1,4 +1,4 @@
-<?php namespace LaravelAuthenticationACL\Providers;
+<?php namespace LaravelAcl\Providers;
 
 use Illuminate\Routing\Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -12,7 +12,7 @@ class RouteServiceProvider extends ServiceProvider {
 	 *
 	 * @var string
 	 */
-	protected $namespace = 'LaravelAuthenticationACL\Http\Controllers';
+	protected $namespace = 'LaravelAcl\Http\Controllers';
 
 	/**
 	 * Define your route model bindings, pattern filters, etc.

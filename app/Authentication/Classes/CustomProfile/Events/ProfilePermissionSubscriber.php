@@ -1,6 +1,6 @@
-<?php  namespace Jacopo\Authentication\Classes\CustomProfile\Events;
+<?php  namespace LaravelAcl\Authentication\Classes\CustomProfile\Events;
 use App;
-use Jacopo\Authentication\Exceptions\PermissionException;
+use LaravelAcl\Authentication\Exceptions\PermissionException;
 
 /**
  * Class ProfilePermissionSubscriber
@@ -28,8 +28,8 @@ class ProfilePermissionSubscriber
      */
     public function subscribe($events)
     {
-        $events->listen('customprofile.creating', 'Jacopo\Authentication\Classes\CustomProfile\Events\ProfilePermissionSubscriber@checkProfileTypePermission');
-        $events->listen('customprofile.deleting', 'Jacopo\Authentication\Classes\CustomProfile\Events\ProfilePermissionSubscriber@checkProfileTypePermission');
+        $events->listen('customprofile.creating', 'LaravelAcl\Authentication\Classes\CustomProfile\Events\ProfilePermissionSubscriber@checkProfileTypePermission');
+        $events->listen('customprofile.deleting', 'LaravelAcl\Authentication\Classes\CustomProfile\Events\ProfilePermissionSubscriber@checkProfileTypePermission');
     }
 
 } 

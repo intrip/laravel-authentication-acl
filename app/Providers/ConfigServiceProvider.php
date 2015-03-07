@@ -1,4 +1,4 @@
-<?php namespace LaravelAuthenticationACL\Providers;
+<?php namespace LaravelAcl\Providers;
 
 use Illuminate\Support\ServiceProvider;
 

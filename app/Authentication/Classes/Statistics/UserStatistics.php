@@ -1,4 +1,4 @@
-<?php  namespace Jacopo\Authentication\Classes\Statistics; 
+<?php  namespace LaravelAcl\Authentication\Classes\Statistics;
 /**
  * Class UserStatistics
  *

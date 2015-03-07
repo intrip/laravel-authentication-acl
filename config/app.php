@@ -139,12 +139,12 @@ return [
 		/*
 		 * Application Service Providers...
 		 */
-		'LaravelAuthenticationACL\Providers\AppServiceProvider',
-		'LaravelAuthenticationACL\Providers\BusServiceProvider',
-		'LaravelAuthenticationACL\Providers\ConfigServiceProvider',
-		'LaravelAuthenticationACL\Providers\EventServiceProvider',
-		'LaravelAuthenticationACL\Providers\RouteServiceProvider',
-        'Jacopo\Authentication\AuthenticationServiceProvider',
+		'LaravelAcl\Providers\AppServiceProvider',
+		'LaravelAcl\Providers\BusServiceProvider',
+		'LaravelAcl\Providers\ConfigServiceProvider',
+		'LaravelAcl\Providers\EventServiceProvider',
+		'LaravelAcl\Providers\RouteServiceProvider',
+        'LaravelAcl\Authentication\AuthenticationServiceProvider',
 
 	],
 

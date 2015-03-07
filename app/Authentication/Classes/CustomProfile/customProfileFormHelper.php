@@ -1,4 +1,4 @@
-<?php  namespace Jacopo\Authentication\Classes\CustomProfile; 
+<?php  namespace LaravelAcl\Authentication\Classes\CustomProfile;
 /**
  * Class customProfileFormHelper
  *

@@ -13,24 +13,24 @@ use Illuminate\Session\TokenMismatchException;
  */
 Route::get('/admin/login', [
         "as" => "user.admin.login",
-        "uses" => "Jacopo\\Authentication\\Controllers\\AuthController@getAdminLogin"
+        "uses" => "LaravelAcl\\Authentication\\Controllers\\AuthController@getAdminLogin"
 ]);
 Route::get('/login', [
         "as" => "user.login",
-        "uses" =>"Jacopo\\Authentication\\Controllers\\AuthController@getClientLogin"
+        "uses" =>"LaravelAcl\\Authentication\\Controllers\\AuthController@getClientLogin"
 ]);
 Route::get('/user/logout', [
         "as" => "user.logout",
-        "uses" => "Jacopo\\Authentication\\Controllers\\AuthController@getLogout"
+        "uses" => "LaravelAcl\\Authentication\\Controllers\\AuthController@getLogout"
 ]);
 Route::post('/user/login', [
         "before" => "csrf",
-        "uses"   => "Jacopo\\Authentication\\Controllers\\AuthController@postAdminLogin",
+        "uses"   => "LaravelAcl\\Authentication\\Controllers\\AuthController@postAdminLogin",
         "as"     => "user.login.process"
 ]);
 Route::post('/login', [
         "before" => "csrf",
-        "uses"   => "Jacopo\\Authentication\\Controllers\\AuthController@postClientLogin",
+        "uses"   => "LaravelAcl\\Authentication\\Controllers\\AuthController@postClientLogin",
         "as"     => "user.login"
 ]);
 
@@ -39,15 +39,15 @@ Route::post('/login', [
  */
 Route::get('/user/change-password', [
         "as" => "user.change-password",
-        "uses" => 'Jacopo\Authentication\Controllers\AuthController@getChangePassword'
+        "uses" => 'LaravelAcl\Authentication\Controllers\AuthController@getChangePassword'
 ]);
 Route::get('/user/recovery-password', [
         "as" => "user.recovery-password",
-        "uses" => "Jacopo\\Authentication\\Controllers\\AuthController@getReminder"
+        "uses" => "LaravelAcl\\Authentication\\Controllers\\AuthController@getReminder"
 ]);
 Route::post('/user/change-password/', [
         "before" => "csrf",
-        'uses'   => "Jacopo\\Authentication\\Controllers\\AuthController@postChangePassword",
+        'uses'   => "LaravelAcl\\Authentication\\Controllers\\AuthController@postChangePassword",
         "as"     => "user.reminder.process"
 ]);
 
@@ -61,7 +61,7 @@ Route::get('/user/change-password-success', [
 );
 Route::post('/user/reminder', [
         "before" => "csrf",
-        'uses'   => "Jacopo\\Authentication\\Controllers\\AuthController@postReminder",
+        'uses'   => "LaravelAcl\\Authentication\\Controllers\\AuthController@postReminder",
         "as"     => "user.reminder"
 ]);
 Route::get('/user/reminder-success', [
@@ -78,24 +78,24 @@ Route::get('/user/reminder-success', [
  */
 Route::post('/user/signup', [
         "before" => "csrf",
-        'uses'   => "Jacopo\\Authentication\\Controllers\\UserController@postSignup",
+        'uses'   => "LaravelAcl\\Authentication\\Controllers\\UserController@postSignup",
         "as" => "user.signup.process"
 ]);
 Route::get('/user/signup', [
-        'uses' => "Jacopo\\Authentication\\Controllers\\UserController@signup",
+        'uses' => "LaravelAcl\\Authentication\\Controllers\\UserController@signup",
         "as" => "user.signup"
 ]);
 Route::post('captcha-ajax', [
         "before" => "captcha-ajax",
-        'uses'   => "Jacopo\\Authentication\\Controllers\\UserController@refreshCaptcha",
+        'uses'   => "LaravelAcl\\Authentication\\Controllers\\UserController@refreshCaptcha",
         "as" => "user.captcha-ajax.process"
 ]);
 Route::get('/user/email-confirmation', [
-        'uses' => "Jacopo\\Authentication\\Controllers\\UserController@emailConfirmation",
+        'uses' => "LaravelAcl\\Authentication\\Controllers\\UserController@emailConfirmation",
         "as" => "user.email-confirmation"
 ]);
 Route::get('/user/signup-success', [
-        "uses" => 'Jacopo\Authentication\Controllers\UserController@signupSuccess',
+        "uses" => 'LaravelAcl\Authentication\Controllers\UserController@signupSuccess',
         "as" => "user.signup-success"
 ]);
 
@@ -112,7 +112,7 @@ Route::group(['before' => ['admin_logged', 'can_see']], function ()
      */
     Route::get('/admin/users/dashboard', [
             'as'   => 'dashboard.default',
-            'uses' => 'Jacopo\Authentication\Controllers\DashboardController@base'
+            'uses' => 'LaravelAcl\Authentication\Controllers\DashboardController@base'
     ]);
 
     /**
@@ -120,64 +120,64 @@ Route::group(['before' => ['admin_logged', 'can_see']], function ()
      */
     Route::get('/admin/users/list', [
             'as'   => 'users.list',
-            'uses' => 'Jacopo\Authentication\Controllers\UserController@getList'
+            'uses' => 'LaravelAcl\Authentication\Controllers\UserController@getList'
     ]);
     Route::get('/admin/users/edit', [
             'as'   => 'users.edit',
-            'uses' => 'Jacopo\Authentication\Controllers\UserController@editUser'
+            'uses' => 'LaravelAcl\Authentication\Controllers\UserController@editUser'
     ]);
     Route::post('/admin/users/edit', [
             "before" => "csrf",
             'as'     => 'users.edit',
-            'uses'   => 'Jacopo\Authentication\Controllers\UserController@postEditUser'
+            'uses'   => 'LaravelAcl\Authentication\Controllers\UserController@postEditUser'
     ]);
     Route::get('/admin/users/delete', [
             "before" => "csrf",
             'as'     => 'users.delete',
-            'uses'   => 'Jacopo\Authentication\Controllers\UserController@deleteUser'
+            'uses'   => 'LaravelAcl\Authentication\Controllers\UserController@deleteUser'
     ]);
     Route::post('/admin/users/groups/add', [
             "before" => "csrf",
             'as'     => 'users.groups.add',
-            'uses'   => 'Jacopo\Authentication\Controllers\UserController@addGroup'
+            'uses'   => 'LaravelAcl\Authentication\Controllers\UserController@addGroup'
     ]);
     Route::post('/admin/users/groups/delete', [
             "before" => "csrf",
             'as'     => 'users.groups.delete',
-            'uses'   => 'Jacopo\Authentication\Controllers\UserController@deleteGroup'
+            'uses'   => 'LaravelAcl\Authentication\Controllers\UserController@deleteGroup'
     ]);
     Route::post('/admin/users/editpermission', [
             "before" => "csrf",
             'as'     => 'users.edit.permission',
-            'uses'   => 'Jacopo\Authentication\Controllers\UserController@editPermission'
+            'uses'   => 'LaravelAcl\Authentication\Controllers\UserController@editPermission'
     ]);
     Route::get('/admin/users/profile/edit', [
             'as'   => 'users.profile.edit',
-            'uses' => 'Jacopo\Authentication\Controllers\UserController@editProfile'
+            'uses' => 'LaravelAcl\Authentication\Controllers\UserController@editProfile'
     ]);
     Route::post('/admin/users/profile/edit', [
             'before' => 'csrf',
             'as'     => 'users.profile.edit',
-            'uses'   => 'Jacopo\Authentication\Controllers\UserController@postEditProfile'
+            'uses'   => 'LaravelAcl\Authentication\Controllers\UserController@postEditProfile'
     ]);
     Route::post('/admin/users/profile/addField', [
             'before' => 'csrf',
             'as'     => 'users.profile.addfield',
-            'uses'   => 'Jacopo\Authentication\Controllers\UserController@addCustomFieldType'
+            'uses'   => 'LaravelAcl\Authentication\Controllers\UserController@addCustomFieldType'
     ]);
     Route::post('/admin/users/profile/deleteField', [
             'before' => 'csrf',
             'as'     => 'users.profile.deletefield',
-            'uses'   => 'Jacopo\Authentication\Controllers\UserController@deleteCustomFieldType'
+            'uses'   => 'LaravelAcl\Authentication\Controllers\UserController@deleteCustomFieldType'
     ]);
     Route::post('/admin/users/profile/avatar', [
             'before' => 'csrf',
             'as'     => 'users.profile.changeavatar',
-            'uses'   => 'Jacopo\Authentication\Controllers\UserController@changeAvatar'
+            'uses'   => 'LaravelAcl\Authentication\Controllers\UserController@changeAvatar'
     ]);
     Route::get('/admin/users/profile/self', [
             'as'   => 'users.selfprofile.edit',
-            'uses' => 'Jacopo\Authentication\Controllers\UserController@editOwnProfile'
+            'uses' => 'LaravelAcl\Authentication\Controllers\UserController@editOwnProfile'
     ]);
 
     /**
@@ -185,26 +185,26 @@ Route::group(['before' => ['admin_logged', 'can_see']], function ()
      */
     Route::get('/admin/groups/list', [
             'as'   => 'groups.list',
-            'uses' => 'Jacopo\Authentication\Controllers\GroupController@getList'
+            'uses' => 'LaravelAcl\Authentication\Controllers\GroupController@getList'
     ]);
     Route::get('/admin/groups/edit', [
             'as'   => 'groups.edit',
-            'uses' => 'Jacopo\Authentication\Controllers\GroupController@editGroup'
+            'uses' => 'LaravelAcl\Authentication\Controllers\GroupController@editGroup'
     ]);
     Route::post('/admin/groups/edit', [
             "before" => "csrf",
             'as'     => 'groups.edit',
-            'uses'   => 'Jacopo\Authentication\Controllers\GroupController@postEditGroup'
+            'uses'   => 'LaravelAcl\Authentication\Controllers\GroupController@postEditGroup'
     ]);
     Route::get('/admin/groups/delete', [
             "before" => "csrf",
             'as'     => 'groups.delete',
-            'uses'   => 'Jacopo\Authentication\Controllers\GroupController@deleteGroup'
+            'uses'   => 'LaravelAcl\Authentication\Controllers\GroupController@deleteGroup'
     ]);
     Route::post('/admin/groups/editpermission', [
             "before" => "csrf",
             'as'     => 'groups.edit.permission',
-            'uses'   => 'Jacopo\Authentication\Controllers\GroupController@editPermission'
+            'uses'   => 'LaravelAcl\Authentication\Controllers\GroupController@editPermission'
     ]);
 
     /**
@@ -212,21 +212,21 @@ Route::group(['before' => ['admin_logged', 'can_see']], function ()
      */
     Route::get('/admin/permissions/list', [
             'as'   => 'permission.list',
-            'uses' => 'Jacopo\Authentication\Controllers\PermissionController@getList'
+            'uses' => 'LaravelAcl\Authentication\Controllers\PermissionController@getList'
     ]);
     Route::get('/admin/permissions/edit', [
             'as'   => 'permission.edit',
-            'uses' => 'Jacopo\Authentication\Controllers\PermissionController@editPermission'
+            'uses' => 'LaravelAcl\Authentication\Controllers\PermissionController@editPermission'
     ]);
     Route::post('/admin/permissions/edit', [
             "before" => "csrf",
             'as'     => 'permission.edit',
-            'uses'   => 'Jacopo\Authentication\Controllers\PermissionController@postEditPermission'
+            'uses'   => 'LaravelAcl\Authentication\Controllers\PermissionController@postEditPermission'
     ]);
     Route::get('/admin/permissions/delete', [
             "before" => "csrf",
             'as'     => 'permission.delete',
-            'uses'   => 'Jacopo\Authentication\Controllers\PermissionController@deletePermission'
+            'uses'   => 'LaravelAcl\Authentication\Controllers\PermissionController@deletePermission'
     ]);
 });
 

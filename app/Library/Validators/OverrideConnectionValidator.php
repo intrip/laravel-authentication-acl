@@ -1,8 +1,8 @@
-<?php namespace Jacopo\Library\Validators;
+<?php namespace LaravelAcl\Library\Validators;
 
 use Illuminate\Validation\DatabasePresenceVerifier;
-use Jacopo\Library\Traits\OverrideConnectionTrait;
-use Jacopo\Library\Validators\AbstractValidator;
+use LaravelAcl\Library\Traits\OverrideConnectionTrait;
+use LaravelAcl\Library\Validators\AbstractValidator;
 
 class OverrideConnectionValidator extends AbstractValidator
 {

@@ -1,4 +1,4 @@
-<?php  namespace Jacopo\Authentication\Interfaces;
+<?php  namespace LaravelAcl\Authentication\Interfaces;
 /**
  * Interface MenuCollectionInterface
  *
@@ -8,7 +8,7 @@ interface MenuCollectionInterface
 {
     /**
      * Obtain all the menu items
-     * @return \Jacopo\Authentication\Classes\MenuItem
+     * @return \LaravelAcl\Authentication\Classes\MenuItem
      */
     public function getItemList();
 

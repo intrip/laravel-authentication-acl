@@ -1,4 +1,4 @@
-<?php namespace Jacopo\Library\Validators;
+<?php namespace LaravelAcl\Library\Validators;
 
 use Validator as V;
 use Event;

@@ -1,8 +1,8 @@
-<?php  namespace Jacopo\Authentication\Middleware;
+<?php  namespace LaravelAcl\Authentication\Middleware;
 
-use Jacopo\Authentication\Middleware\Models\Config as ConfigModel;
+use LaravelAcl\Authentication\Middleware\Models\Config as ConfigModel;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Jacopo\Authentication\Middleware\Interfaces\ConfigRepositoryInterface;
+use LaravelAcl\Authentication\Middleware\Interfaces\ConfigRepositoryInterface;
 
 class Repository implements ConfigRepositoryInterface {
     protected $model;

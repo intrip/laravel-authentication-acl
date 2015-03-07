@@ -1,11 +1,11 @@
-<?php  namespace Jacopo\Authentication\Classes\Menu;
+<?php  namespace LaravelAcl\Authentication\Classes\Menu;
 /**
  * Class MenuItemCollection
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
 
-use Jacopo\Authentication\Interfaces\MenuCollectionInterface;
+use LaravelAcl\Authentication\Interfaces\MenuCollectionInterface;
 
 class MenuItemCollection implements MenuCollectionInterface
 {

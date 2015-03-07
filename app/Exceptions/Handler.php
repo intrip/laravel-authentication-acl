@@ -1,4 +1,4 @@
-<?php namespace LaravelAuthenticationACL\Exceptions;
+<?php namespace LaravelAcl\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;

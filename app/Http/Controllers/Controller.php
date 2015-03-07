@@ -1,4 +1,4 @@
-<?php namespace LaravelAuthenticationACL\Http\Controllers;
+<?php namespace LaravelAcl\Http\Controllers;
 
 use Illuminate\Foundation\Bus\DispatchesCommands;
 use Illuminate\Routing\Controller as BaseController;

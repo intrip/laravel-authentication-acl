@@ -1,5 +1,5 @@
 <?php
-use Jacopo\Authentication\Classes\Statistics\UserStatistics;
+use LaravelAcl\Authentication\Classes\Statistics\UserStatistics;
 /**
  * Dashboard information
  */

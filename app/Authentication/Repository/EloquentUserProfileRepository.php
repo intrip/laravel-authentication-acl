@@ -1,14 +1,14 @@
-<?php  namespace Jacopo\Authentication\Repository;
+<?php  namespace LaravelAcl\Authentication\Repository;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Jacopo\Authentication\Classes\Images\ImageHelperTrait;
-use Jacopo\Authentication\Exceptions\UserNotFoundException;
-use Jacopo\Authentication\Exceptions\ProfileNotFoundException;
-use Jacopo\Authentication\Models\User;
-use Jacopo\Authentication\Models\UserProfile;
-use Jacopo\Authentication\Repository\Interfaces\UserProfileRepositoryInterface;
-use Jacopo\Library\Repository\EloquentBaseRepository;
-use Jacopo\Library\Repository\Interfaces\BaseRepositoryInterface;
+use LaravelAcl\Authentication\Classes\Images\ImageHelperTrait;
+use LaravelAcl\Authentication\Exceptions\UserNotFoundException;
+use LaravelAcl\Authentication\Exceptions\ProfileNotFoundException;
+use LaravelAcl\Authentication\Models\User;
+use LaravelAcl\Authentication\Models\UserProfile;
+use LaravelAcl\Authentication\Repository\Interfaces\UserProfileRepositoryInterface;
+use LaravelAcl\Library\Repository\EloquentBaseRepository;
+use LaravelAcl\Library\Repository\Interfaces\BaseRepositoryInterface;
 
 /**
  * Class EloquentUserProfileRepository

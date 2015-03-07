@@ -1,4 +1,4 @@
-<?php namespace Jacopo\Library\Form;
+<?php namespace LaravelAcl\Library\Form;
 /**
  * Class FormModel
  *
@@ -6,19 +6,19 @@
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
-use Jacopo\Library\Validators\ValidatorInterface;
-use Jacopo\Library\Exceptions\ValidationException;
+use LaravelAcl\Library\Validators\ValidatorInterface;
+use LaravelAcl\Library\Exceptions\ValidationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\MessageBag;
-use Jacopo\Library\Exceptions\NotFoundException;
-use Jacopo\Authentication\Exceptions\PermissionException;
+use LaravelAcl\Library\Exceptions\NotFoundException;
+use LaravelAcl\Authentication\Exceptions\PermissionException;
 use Event;
 
 class FormModel implements FormInterface{
 
     /**
      * Validator
-     * @var \Jacopo\Library\Validators\ValidatorInterface
+     * @var \LaravelAcl\Library\Validators\ValidatorInterface
      */
     protected $v;
     /**
@@ -46,7 +46,7 @@ class FormModel implements FormInterface{
     /**
      * Process the input and calls the repository
      * @param array $input
-     * @throws \Jacopo\Library\Exceptions\JacopoExceptionsInterface
+     * @throws \LaravelAcl\Library\Exceptions\JacopoExceptionsInterface
      */
     public function process(array $input)
     {
@@ -65,7 +65,7 @@ class FormModel implements FormInterface{
     /**
      * Calls create or update depending on giving or not the id
      * @param $input
-     * @throws \Jacopo\Library\Exceptions\NotFundException
+     * @throws \LaravelAcl\Library\Exceptions\NotFundException
      */
     protected function callRepository($input)
     {
@@ -115,7 +115,7 @@ class FormModel implements FormInterface{
     /**
      * Run delete on the repository
      * @param $input
-     * @throws \Jacopo\Library\Exceptions\NotFoundException
+     * @throws \LaravelAcl\Library\Exceptions\NotFoundException
      * @todo test with exceptions
      */
     public function delete(array $input)

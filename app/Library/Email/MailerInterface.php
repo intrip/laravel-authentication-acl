@@ -1,4 +1,4 @@
-<?php namespace Jacopo\Library\Email;
+<?php namespace LaravelAcl\Library\Email;
 
 interface MailerInterface
 {

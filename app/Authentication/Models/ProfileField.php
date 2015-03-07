@@ -1,4 +1,4 @@
-<?php  namespace Jacopo\Authentication\Models;
+<?php  namespace LaravelAcl\Authentication\Models;
 
 /**
  * Class ProfileType
@@ -13,11 +13,11 @@ class ProfileField extends BaseModel
 
     public function profile_field_type()
     {
-        return $this->belongsTo('Jacopo\Authentication\Models\ProfileFieldType','profile_field_type_id');
+        return $this->belongsTo('LaravelAcl\Authentication\Models\ProfileFieldType','profile_field_type_id');
     }
 
     public function user_profile()
     {
-        return $this->belongsTo('Jacopo\Authentication\Models\UserProfile','user_profile_id');
+        return $this->belongsTo('LaravelAcl\Authentication\Models\UserProfile','user_profile_id');
     }
 } 

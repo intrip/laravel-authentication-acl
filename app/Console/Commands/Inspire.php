@@ -1,4 +1,4 @@
-<?php namespace LaravelAuthenticationACL\Console\Commands;
+<?php namespace LaravelAcl\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Foundation\Inspiring;

@@ -1,7 +1,7 @@
-<?php namespace Jacopo\Authentication\Commands;
+<?php namespace LaravelAcl\Authentication\Commands;
 
 use Illuminate\Console\Command;
-use Jacopo\Authentication\Seeds\DbSeeder;
+use LaravelAcl\Authentication\Seeds\DbSeeder;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 

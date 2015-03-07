@@ -1,4 +1,4 @@
-<?php namespace Jacopo\Authentication\Seeds;
+<?php namespace LaravelAcl\Authentication\Seeds;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model as Eloquent;
@@ -14,9 +14,9 @@ class DbSeeder extends Seeder
     {
         Eloquent::unguard();
 
-        $this->call('Jacopo\Authentication\Seeds\PermissionSeeder');
-        $this->call('Jacopo\Authentication\Seeds\GroupsSeeder');
-        $this->call('Jacopo\Authentication\Seeds\UserSeeder');
+        $this->call('LaravelAcl\Authentication\Seeds\PermissionSeeder');
+        $this->call('LaravelAcl\Authentication\Seeds\GroupsSeeder');
+        $this->call('LaravelAcl\Authentication\Seeds\UserSeeder');
 
         Eloquent::reguard();
     }

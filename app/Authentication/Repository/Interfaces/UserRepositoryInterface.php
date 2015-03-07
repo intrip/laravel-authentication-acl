@@ -1,4 +1,4 @@
-<?php namespace Jacopo\Authentication\Repository\Interfaces;
+<?php namespace LaravelAcl\Authentication\Repository\Interfaces;
 /**
  * Interface UserRepositoryInterface
  *

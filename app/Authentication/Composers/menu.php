@@ -1,5 +1,5 @@
 <?php
-use Jacopo\Authentication\Classes\Menu\SentryMenuFactory;
+use LaravelAcl\Authentication\Classes\Menu\SentryMenuFactory;
 
 /**
  * menu items available depending on permissions

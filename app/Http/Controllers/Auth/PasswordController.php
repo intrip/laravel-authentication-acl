@@ -1,6 +1,6 @@
-<?php namespace LaravelAuthenticationACL\Http\Controllers\Auth;
+<?php namespace LaravelAcl\Http\Controllers\Auth;
 
-use LaravelAuthenticationACL\Http\Controllers\Controller;
+use LaravelAcl\Http\Controllers\Controller;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\PasswordBroker;
 use Illuminate\Foundation\Auth\ResetsPasswords;

@@ -1,5 +1,5 @@
 <?php
-namespace Jacopo\Authentication\Repository;
+namespace LaravelAcl\Authentication\Repository;
 
 /**
  * Class UserRepository
@@ -13,12 +13,12 @@ use DateTime;
 use Event;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Config;
-use Jacopo\Authentication\Exceptions\UserExistsException;
-use Jacopo\Authentication\Exceptions\UserNotFoundException as NotFoundException;
-use Jacopo\Authentication\Models\Group;
-use Jacopo\Authentication\Models\User;
-use Jacopo\Authentication\Repository\Interfaces\UserRepositoryInterface;
-use Jacopo\Library\Repository\EloquentBaseRepository;
+use LaravelAcl\Authentication\Exceptions\UserExistsException;
+use LaravelAcl\Authentication\Exceptions\UserNotFoundException as NotFoundException;
+use LaravelAcl\Authentication\Models\Group;
+use LaravelAcl\Authentication\Models\User;
+use LaravelAcl\Authentication\Repository\Interfaces\UserRepositoryInterface;
+use LaravelAcl\Library\Repository\EloquentBaseRepository;
 
 class SentryUserRepository extends EloquentBaseRepository implements UserRepositoryInterface
 {
@@ -66,7 +66,7 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
      *
      * @param       id
      * @param array $data
-     * @throws \Jacopo\Authentication\Exceptions\UserNotFoundException
+     * @throws \LaravelAcl\Authentication\Exceptions\UserNotFoundException
      * @return mixed
      * @override
      */
@@ -104,7 +104,7 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
      * Add a group to the user
      *
      * @param $id group id
-     * @throws \Jacopo\Authentication\Exceptions\UserNotFoundException
+     * @throws \LaravelAcl\Authentication\Exceptions\UserNotFoundException
      */
     public function addGroup($user_id, $group_id)
     {
@@ -123,7 +123,7 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
      * Remove a group to the user
      *
      * @param $id group id
-     * @throws \Jacopo\Authentication\Exceptions\UserNotFoundException
+     * @throws \LaravelAcl\Authentication\Exceptions\UserNotFoundException
      */
     public function removeGroup($user_id, $group_id)
     {
@@ -143,7 +143,7 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
      *
      * @param string login_name
      * @return mixed
-     * @throws \Jacopo\Library\Exceptions\NotFoundException
+     * @throws \LaravelAcl\Library\Exceptions\NotFoundException
      */
     public function activate($login_name)
     {
@@ -157,7 +157,7 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
 
     /**
      * @param $login_name
-     * @throws \Jacopo\Authentication\Exceptions\UserNotFoundException
+     * @throws \LaravelAcl\Authentication\Exceptions\UserNotFoundException
      */
     public function findByLogin($login_name)
     {
@@ -176,7 +176,7 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
      * Obtain a list of user from a given group
      *
      * @param String $group_name
-     * @throws \Jacopo\Authentication\Exceptions\UserNotFoundException
+     * @throws \LaravelAcl\Authentication\Exceptions\UserNotFoundException
      * @return mixed
      */
     public function findFromGroupName($group_name)

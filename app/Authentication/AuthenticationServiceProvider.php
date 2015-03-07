@@ -1,22 +1,22 @@
-<?php namespace Jacopo\Authentication;
+<?php namespace LaravelAcl\Authentication;
 
 use App;
-use Jacopo\Authentication\Classes\Captcha\GregWarCaptchaValidator;
-use Jacopo\Authentication\Classes\CustomProfile\Repository\CustomProfileRepository;
-use Jacopo\Authentication\Commands\InstallCommand;
-use Jacopo\Authentication\Commands\PrepareCommand;
+use LaravelAcl\Authentication\Classes\Captcha\GregWarCaptchaValidator;
+use LaravelAcl\Authentication\Classes\CustomProfile\Repository\CustomProfileRepository;
+use LaravelAcl\Authentication\Commands\InstallCommand;
+use LaravelAcl\Authentication\Commands\PrepareCommand;
 use TestRunner;
 use Config;
-use Jacopo\Authentication\Middleware\Config as ConfigMiddleware;
+use LaravelAcl\Authentication\Middleware\Config as ConfigMiddleware;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
-use Jacopo\Authentication\Classes\SentryAuthenticator;
-use Jacopo\Authentication\Helpers\SentryAuthenticationHelper;
-use Jacopo\Authentication\Repository\EloquentPermissionRepository;
-use Jacopo\Authentication\Repository\EloquentUserProfileRepository;
-use Jacopo\Authentication\Repository\SentryGroupRepository;
-use Jacopo\Authentication\Repository\SentryUserRepository;
-use Jacopo\Authentication\Services\UserRegisterService;
+use LaravelAcl\Authentication\Classes\SentryAuthenticator;
+use LaravelAcl\Authentication\Helpers\SentryAuthenticationHelper;
+use LaravelAcl\Authentication\Repository\EloquentPermissionRepository;
+use LaravelAcl\Authentication\Repository\EloquentUserProfileRepository;
+use LaravelAcl\Authentication\Repository\SentryGroupRepository;
+use LaravelAcl\Authentication\Repository\SentryUserRepository;
+use LaravelAcl\Authentication\Services\UserRegisterService;
 
 class AuthenticationServiceProvider extends ServiceProvider
 {
@@ -58,8 +58,6 @@ class AuthenticationServiceProvider extends ServiceProvider
         // include custom validators
         require __DIR__ . "/validators.php";
 
-        $this->overwriteSentryConfig();
-
         $this->setupConnection();
 
         $this->registerCommands();
@@ -67,11 +65,6 @@ class AuthenticationServiceProvider extends ServiceProvider
         $this->setupAcceptanceTestingParams();
     }
 
-    protected function overwriteSentryConfig()
-    {
-        //$this->app['config']->getLoader()->addNamespace('cartalyst/sentry',
-        //                                                __DIR__ . '/../../config/sentry');
-    }
 
     protected function bindClasses()
     {
@@ -80,7 +73,7 @@ class AuthenticationServiceProvider extends ServiceProvider
             return new SentryAuthenticator;
         });
 
-        $this->app->bind('Jacopo\Authentication\Interfaces\AuthenticateInterface', function ()
+        $this->app->bind('LaravelAcl\Authentication\Interfaces\AuthenticateInterface', function ()
         {
             return $this->app['authenticator'];
         });
@@ -128,7 +121,7 @@ class AuthenticationServiceProvider extends ServiceProvider
 
     protected function loadOtherProviders()
     {
-        $this->app->register('Jacopo\Library\LibraryServiceProvider');
+        $this->app->register('LaravelAcl\Library\LibraryServiceProvider');
         $this->app->register('Cartalyst\Sentry\SentryServiceProvider');
         $this->app->register('Intervention\Image\ImageServiceProvider');
         $this->registerIlluminateForm();

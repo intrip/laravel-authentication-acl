@@ -1,4 +1,4 @@
-<?php namespace LaravelAuthenticationACL\Http\Controllers;
+<?php namespace LaravelAcl\Http\Controllers;
 
 class WelcomeController extends Controller {
 

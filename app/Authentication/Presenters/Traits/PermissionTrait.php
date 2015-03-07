@@ -1,5 +1,5 @@
-<?php  namespace Jacopo\Authentication\Presenters\Traits;
-use Jacopo\Authentication\Models\Permission;
+<?php  namespace LaravelAcl\Authentication\Presenters\Traits;
+use LaravelAcl\Authentication\Models\Permission;
 
 /**
  * Trait PermissionTrait

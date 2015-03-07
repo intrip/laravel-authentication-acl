@@ -1,8 +1,8 @@
-<?php namespace Jacopo\Library;
+<?php namespace LaravelAcl\Library;
 
 use Illuminate\Support\ServiceProvider;
-use Jacopo\Library\Email\SwiftMailer;
-use Jacopo\Library\Form\FormModel;
+use LaravelAcl\Library\Email\SwiftMailer;
+use LaravelAcl\Library\Form\FormModel;
 
 class LibraryServiceProvider extends ServiceProvider {
 

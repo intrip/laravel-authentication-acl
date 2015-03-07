@@ -1,4 +1,4 @@
-<?php namespace Jacopo\Authentication\Exceptions;
+<?php namespace LaravelAcl\Authentication\Exceptions;
 /**
  * Class UserNotFoundException
  *
@@ -6,6 +6,6 @@
  */
 
 use Exception;
-use Jacopo\Library\Exceptions\JacopoExceptionsInterface;
+use LaravelAcl\Library\Exceptions\JacopoExceptionsInterface;
 
 class UserNotFoundException extends Exception implements JacopoExceptionsInterface {}

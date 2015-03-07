@@ -1,4 +1,4 @@
-<?php namespace Jacopo\Library\Presenters;
+<?php namespace LaravelAcl\Library\Presenters;
 
 use Illuminate\Support\Collection;
 use Illuminate\Pagination\Paginator;

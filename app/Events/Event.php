@@ -1,4 +1,4 @@
-<?php namespace LaravelAuthenticationACL\Events;
+<?php namespace LaravelAcl\Events;
 
 abstract class Event {
 

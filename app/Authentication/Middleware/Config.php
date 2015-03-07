@@ -1,8 +1,8 @@
-<?php namespace Jacopo\Authentication\Middleware;
+<?php namespace LaravelAcl\Authentication\Middleware;
 
 use App;
 use ArrayAccess;
-use Jacopo\Library\Exceptions\NotFoundException;
+use LaravelAcl\Library\Exceptions\NotFoundException;
 
 class Config implements ArrayAccess {
 

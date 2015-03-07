@@ -1,4 +1,4 @@
-<?php  namespace Jacopo\Authentication\Helpers;
+<?php  namespace LaravelAcl\Authentication\Helpers;
 
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;

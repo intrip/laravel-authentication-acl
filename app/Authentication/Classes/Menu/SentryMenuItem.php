@@ -1,11 +1,11 @@
-<?php  namespace Jacopo\Authentication\Classes\Menu;
+<?php  namespace LaravelAcl\Authentication\Classes\Menu;
 /**
  * Class MenuItem
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
-use Jacopo\Authentication\Helpers\SentryAuthenticationHelper;
-use Jacopo\Authentication\Interfaces\MenuInterface;
+use LaravelAcl\Authentication\Helpers\SentryAuthenticationHelper;
+use LaravelAcl\Authentication\Interfaces\MenuInterface;
 use App;
 
 class SentryMenuItem implements MenuInterface

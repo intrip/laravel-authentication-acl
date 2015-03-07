@@ -1,11 +1,11 @@
-<?php namespace Jacopo\Authentication\Models;
+<?php namespace LaravelAcl\Authentication\Models;
 /**
  * Class User
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
 use Cartalyst\Sentry\Users\Eloquent\User as CartaUser;
-use Jacopo\Library\Traits\OverrideConnectionTrait;
+use LaravelAcl\Library\Traits\OverrideConnectionTrait;
 use Cartalyst\Sentry\Users\UserExistsException;
 use Cartalyst\Sentry\Users\LoginRequiredException;
 
@@ -46,6 +46,6 @@ class User extends CartaUser
 
     public function user_profile()
     {
-        return $this->hasMany('Jacopo\Authentication\Models\UserProfile');
+        return $this->hasMany('LaravelAcl\Authentication\Models\UserProfile');
     }
 } 

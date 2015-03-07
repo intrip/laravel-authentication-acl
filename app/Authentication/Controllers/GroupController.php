@@ -1,28 +1,28 @@
-<?php  namespace Jacopo\Authentication\Controllers;
+<?php  namespace LaravelAcl\Authentication\Controllers;
 /**
  * Class GroupController
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
 use Illuminate\Support\MessageBag;
-use Jacopo\Authentication\Presenters\GroupPresenter;
-use Jacopo\Library\Form\FormModel;
-use Jacopo\Authentication\Helpers\FormHelper;
-use Jacopo\Authentication\Models\Group;
-use Jacopo\Authentication\Exceptions\UserNotFoundException;
-use Jacopo\Authentication\Validators\GroupValidator;
-use Jacopo\Library\Exceptions\JacopoExceptionsInterface;
+use LaravelAcl\Authentication\Presenters\GroupPresenter;
+use LaravelAcl\Library\Form\FormModel;
+use LaravelAcl\Authentication\Helpers\FormHelper;
+use LaravelAcl\Authentication\Models\Group;
+use LaravelAcl\Authentication\Exceptions\UserNotFoundException;
+use LaravelAcl\Authentication\Validators\GroupValidator;
+use LaravelAcl\Library\Exceptions\JacopoExceptionsInterface;
 use View, Input, Redirect, App, Config;
 use Illuminate\Routing\Controller;
 
 class GroupController extends Controller
 {
     /**
-     * @var \Jacopo\Authentication\Repository\SentryGroupRepository
+     * @var \LaravelAcl\Authentication\Repository\SentryGroupRepository
      */
     protected $group_repository;
     /**
-     * @var \Jacopo\Authentication\Validators\GroupValidator
+     * @var \LaravelAcl\Authentication\Validators\GroupValidator
      */
     protected $group_validator;
     /**
@@ -74,7 +74,7 @@ class GroupController extends Controller
             // passing the id incase fails editing an already existing item
             return Redirect::route("groups.edit", $id ? ["id" => $id]: [])->withInput()->withErrors($errors);
         }
-        return Redirect::action('Jacopo\Authentication\Controllers\GroupController@editGroup',["id" => $obj->id])->withMessage(Config::get('laravel-authentication-acl::messages.flash.success.group_edit_success'));
+        return Redirect::action('LaravelAcl\Authentication\Controllers\GroupController@editGroup',["id" => $obj->id])->withMessage(Config::get('laravel-authentication-acl::messages.flash.success.group_edit_success'));
     }
 
     public function deleteGroup()
@@ -86,9 +86,9 @@ class GroupController extends Controller
         catch(JacopoExceptionsInterface $e)
         {
             $errors = $this->f->getErrors();
-            return Redirect::action('Jacopo\Authentication\Controllers\GroupController@getList')->withErrors($errors);
+            return Redirect::action('LaravelAcl\Authentication\Controllers\GroupController@getList')->withErrors($errors);
         }
-        return Redirect::action('Jacopo\Authentication\Controllers\GroupController@getList')->withMessage(Config::get('laravel-authentication-acl::messages.flash.success.group_delete_success'));
+        return Redirect::action('LaravelAcl\Authentication\Controllers\GroupController@getList')->withMessage(Config::get('laravel-authentication-acl::messages.flash.success.group_delete_success'));
     }
 
     public function editPermission()
@@ -107,6 +107,6 @@ class GroupController extends Controller
         {
             return Redirect::route("users.groups.edit")->withInput()->withErrors(new MessageBag(["permissions" => Config::get('laravel-authentication-acl::messages.flash.error.group_permission_not_found')]));
         }
-        return Redirect::action('Jacopo\Authentication\Controllers\GroupController@editGroup',["id" => $obj->id])->withMessage(Config::get('laravel-authentication-acl::messages.flash.success.group_permission_edit_success'));
+        return Redirect::action('LaravelAcl\Authentication\Controllers\GroupController@editGroup',["id" => $obj->id])->withMessage(Config::get('laravel-authentication-acl::messages.flash.success.group_permission_edit_success'));
     }
 }

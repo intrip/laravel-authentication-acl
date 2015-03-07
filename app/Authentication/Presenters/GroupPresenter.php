@@ -1,11 +1,11 @@
-<?php  namespace Jacopo\Authentication\Presenters;
+<?php  namespace LaravelAcl\Authentication\Presenters;
 /**
  * Class GroupPresenter
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
-use Jacopo\Authentication\Presenters\Traits\PermissionTrait;
-use Jacopo\Library\Presenters\AbstractPresenter;
+use LaravelAcl\Authentication\Presenters\Traits\PermissionTrait;
+use LaravelAcl\Library\Presenters\AbstractPresenter;
 
 class GroupPresenter extends AbstractPresenter
 {

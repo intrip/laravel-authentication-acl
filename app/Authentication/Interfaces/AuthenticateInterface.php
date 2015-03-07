@@ -1,4 +1,4 @@
-<?php namespace Jacopo\Authentication\Interfaces;
+<?php namespace LaravelAcl\Authentication\Interfaces;
 
 interface AuthenticateInterface
 {
@@ -35,7 +35,7 @@ interface AuthenticateInterface
    *
    * @param $email
    * @return mixed
-   * @throws \Jacopo\Authentication\Exceptions\UserNotFoundException
+   * @throws \LaravelAcl\Authentication\Exceptions\UserNotFoundException
    * @return mixed
    */
   public function getUser($email);

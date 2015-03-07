@@ -1,4 +1,4 @@
-<?php  namespace Jacopo\Authentication\Validators; 
+<?php  namespace LaravelAcl\Authentication\Validators;
 /**
  * Class UserSignupEmailValidator
  *
@@ -6,9 +6,9 @@
  */
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\MessageBag;
-use Jacopo\Authentication\Exceptions\UserNotFoundException;
+use LaravelAcl\Authentication\Exceptions\UserNotFoundException;
 use App, Session, Input, Config;
-use Jacopo\Library\Validators\OverrideConnectionValidator;
+use LaravelAcl\Library\Validators\OverrideConnectionValidator;
 
 class UserSignupEmailValidator extends OverrideConnectionValidator
 {

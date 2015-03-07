@@ -1,5 +1,5 @@
 suites:
     main:
-        namespace: LaravelAuthenticationACL
-        psr4_prefix: LaravelAuthenticationACL
+        namespace: LaravelAcl
+        psr4_prefix: LaravelAcl
         src_path: app

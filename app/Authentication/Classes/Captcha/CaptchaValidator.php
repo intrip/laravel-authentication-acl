@@ -1,4 +1,4 @@
-<?php  namespace Jacopo\Authentication\Classes\Captcha; 
+<?php  namespace LaravelAcl\Authentication\Classes\Captcha;
 /**
  * Class CaptchaValidator
  *

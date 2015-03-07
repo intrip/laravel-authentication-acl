@@ -1,4 +1,4 @@
-<?php  namespace Jacopo\Authentication\Models;
+<?php  namespace LaravelAcl\Authentication\Models;
 /**
  * Class Permission
  *

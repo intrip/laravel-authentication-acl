@@ -1,6 +1,6 @@
-<?php namespace LaravelAuthenticationACL\Services;
+<?php namespace LaravelAcl\Services;
 
-use LaravelAuthenticationACL\User;
+use LaravelAcl\User;
 use Validator;
 use Illuminate\Contracts\Auth\Registrar as RegistrarContract;
 

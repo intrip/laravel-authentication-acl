@@ -1,4 +1,4 @@
-<?php  namespace Jacopo\Authentication\Classes\Menu;
+<?php  namespace LaravelAcl\Authentication\Classes\Menu;
 /**
  * Class SentryFactory
  *

@@ -1,6 +1,6 @@
-<?php  namespace Jacopo\Authentication\Models;
+<?php  namespace LaravelAcl\Authentication\Models;
 
-use Jacopo\Authentication\Presenters\UserProfilePresenter;
+use LaravelAcl\Authentication\Presenters\UserProfilePresenter;
 
 /**
  * Class UserProfile
@@ -31,12 +31,12 @@ class UserProfile extends BaseModel
 
     public function user()
     {
-        return $this->belongsTo('Jacopo\Authentication\Models\User', "user_id");
+        return $this->belongsTo('LaravelAcl\Authentication\Models\User', "user_id");
     }
 
     public function profile_field()
     {
-        return $this->hasMany('Jacopo\Authentication\Models\ProfileField');
+        return $this->hasMany('LaravelAcl\Authentication\Models\ProfileField');
     }
 
     public function getAvatarAttribute()

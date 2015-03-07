@@ -1,4 +1,4 @@
-<?php namespace Jacopo\Library\Validators;
+<?php namespace LaravelAcl\Library\Validators;
 
 interface ValidatorInterface
 {

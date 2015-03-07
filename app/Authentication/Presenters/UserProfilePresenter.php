@@ -1,6 +1,6 @@
-<?php  namespace Jacopo\Authentication\Presenters;
+<?php  namespace LaravelAcl\Authentication\Presenters;
 
-use Jacopo\Library\Presenters\AbstractPresenter;
+use LaravelAcl\Library\Presenters\AbstractPresenter;
 use Config;
 
 /**

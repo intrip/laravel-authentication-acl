@@ -1,14 +1,14 @@
-<?php namespace Jacopo\Authentication\Services;
+<?php namespace LaravelAcl\Authentication\Services;
 
 use Illuminate\Support\MessageBag;
 use App;
 use Config;
-use Jacopo\Library\Exceptions\MailException;
-use Jacopo\Authentication\Exceptions\UserNotFoundException;
-use Jacopo\Library\Exceptions\InvalidException;
-use Jacopo\Library\Exceptions\JacopoExceptionsInterface;
-use Jacopo\Library\Email\MailerInterface;
-use Jacopo\Authentication\Interfaces\AuthenticatorInterface;
+use LaravelAcl\Library\Exceptions\MailException;
+use LaravelAcl\Authentication\Exceptions\UserNotFoundException;
+use LaravelAcl\Library\Exceptions\InvalidException;
+use LaravelAcl\Library\Exceptions\JacopoExceptionsInterface;
+use LaravelAcl\Library\Email\MailerInterface;
+use LaravelAcl\Authentication\Interfaces\AuthenticatorInterface;
 /**
  * Class ReminderService
  *
@@ -48,7 +48,7 @@ class ReminderService {
      */
     protected $errors ;
     /**
-     * @var \Jacopo\Authentication\Interfaces\AuthenticatorInterface
+     * @var \LaravelAcl\Authentication\Interfaces\AuthenticatorInterface
      */
     protected $auth;
 
@@ -89,7 +89,7 @@ class ReminderService {
 
     private function prepareResetPasswordLink($token, $to)
     {
-        $this->body = link_to_action("Jacopo\\Authentication\\Controllers\\AuthController@getChangePassword",
+        $this->body = link_to_action("LaravelAcl\\Authentication\\Controllers\\AuthController@getChangePassword",
                  Config::get('laravel-authentication-acl::messages.links.change_password'),
                 ["email"=> $to, "token"=> $token] );
     }

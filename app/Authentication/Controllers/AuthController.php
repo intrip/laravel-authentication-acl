@@ -1,9 +1,9 @@
-<?php namespace Jacopo\Authentication\Controllers;
+<?php namespace LaravelAcl\Authentication\Controllers;
 
 use View, Sentry, Input, Redirect, App, Config;
-use Jacopo\Authentication\Validators\ReminderValidator;
-use Jacopo\Library\Exceptions\JacopoExceptionsInterface;
-use Jacopo\Authentication\Services\ReminderService;
+use LaravelAcl\Authentication\Validators\ReminderValidator;
+use LaravelAcl\Library\Exceptions\JacopoExceptionsInterface;
+use LaravelAcl\Authentication\Services\ReminderService;
 use Illuminate\Routing\Controller;
 
 class AuthController extends Controller {
@@ -43,7 +43,7 @@ class AuthController extends Controller {
         catch(JacopoExceptionsInterface $e)
         {
             $errors = $this->authenticator->getErrors();
-            return Redirect::action('Jacopo\Authentication\Controllers\AuthController@getAdminLogin')->withInput()->withErrors($errors);
+            return Redirect::action('LaravelAcl\Authentication\Controllers\AuthController@getAdminLogin')->withInput()->withErrors($errors);
         }
 
         return Redirect::to('/admin/users/dashboard');
@@ -63,7 +63,7 @@ class AuthController extends Controller {
         catch(JacopoExceptionsInterface $e)
         {
             $errors = $this->authenticator->getErrors();
-            return Redirect::action('Jacopo\Authentication\Controllers\AuthController@getClientLogin')->withInput()->withErrors($errors);
+            return Redirect::action('LaravelAcl\Authentication\Controllers\AuthController@getClientLogin')->withInput()->withErrors($errors);
         }
 
         return Redirect::to(Config::get('laravel-authentication-acl::config.user_login_redirect_url'));
@@ -106,7 +106,7 @@ class AuthController extends Controller {
         catch(JacopoExceptionsInterface $e)
         {
             $errors = $this->reminder->getErrors();
-            return Redirect::action("Jacopo\\Authentication\\Controllers\\AuthController@getReminder")->withErrors($errors);
+            return Redirect::action("LaravelAcl\\Authentication\\Controllers\\AuthController@getReminder")->withErrors($errors);
         }
     }
 
@@ -126,7 +126,7 @@ class AuthController extends Controller {
 
         if (! $this->reminder_validator->validate(Input::all()) )
         {
-          return Redirect::action("Jacopo\\Authentication\\Controllers\\AuthController@getChangePassword")->withErrors($this->reminder_validator->getErrors())->withInput();
+          return Redirect::action("LaravelAcl\\Authentication\\Controllers\\AuthController@getChangePassword")->withErrors($this->reminder_validator->getErrors())->withInput();
         }
 
         try
@@ -136,7 +136,7 @@ class AuthController extends Controller {
         catch(JacopoExceptionsInterface $e)
         {
             $errors = $this->reminder->getErrors();
-            return Redirect::action("Jacopo\\Authentication\\Controllers\\AuthController@getChangePassword")->withErrors($errors);
+            return Redirect::action("LaravelAcl\\Authentication\\Controllers\\AuthController@getChangePassword")->withErrors($errors);
         }
 
         return Redirect::to("user/change-password-success");

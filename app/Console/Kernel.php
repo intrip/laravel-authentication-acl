@@ -1,4 +1,4 @@
-<?php namespace LaravelAuthenticationACL\Console;
+<?php namespace LaravelAcl\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -11,7 +11,7 @@ class Kernel extends ConsoleKernel {
 	 * @var array
 	 */
 	protected $commands = [
-		'LaravelAuthenticationACL\Console\Commands\Inspire',
+		'LaravelAcl\Console\Commands\Inspire',
 	];
 
 	/**

@@ -1,4 +1,4 @@
-<?php  namespace Jacopo\Authentication\Interfaces;
+<?php  namespace LaravelAcl\Authentication\Interfaces;
 /**
  * Interface AuthenticationHelperInterface
  *

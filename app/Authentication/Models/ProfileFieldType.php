@@ -1,4 +1,4 @@
-<?php  namespace Jacopo\Authentication\Models;
+<?php  namespace LaravelAcl\Authentication\Models;
 
 /**
  * Class ProfileTypeField
@@ -13,6 +13,6 @@ class ProfileFieldType extends BaseModel
 
     public function profile_field()
     {
-        return $this->hasMany('Jacopo\Authentication\Models\ProfileField');
+        return $this->hasMany('LaravelAcl\Authentication\Models\ProfileField');
     }
 } 

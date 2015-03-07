@@ -7,7 +7,7 @@
 | Check if the current record is editable
 |
 */
-use Jacopo\Authentication\Events\EditableSubscriber;
+use LaravelAcl\Authentication\Events\EditableSubscriber;
 Event::subscribe(new EditableSubscriber());
 /*
 |--------------------------------------------------------------------------
@@ -17,5 +17,5 @@ Event::subscribe(new EditableSubscriber());
 | Check if the current use can edit the Profile permission types
 |
 */
-use Jacopo\Authentication\Classes\CustomProfile\Events\ProfilePermissionSubscriber;
+use LaravelAcl\Authentication\Classes\CustomProfile\Events\ProfilePermissionSubscriber;
 Event::subscribe(new ProfilePermissionSubscriber());

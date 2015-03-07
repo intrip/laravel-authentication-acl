@@ -1,4 +1,4 @@
-<?php namespace Jacopo\Authentication\Commands;
+<?php namespace LaravelAcl\Authentication\Commands;
 
 class CallWrapper
 {

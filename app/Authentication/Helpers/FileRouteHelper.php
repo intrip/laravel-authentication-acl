@@ -1,12 +1,12 @@
-<?php  namespace Jacopo\Authentication\Helpers;
+<?php  namespace LaravelAcl\Authentication\Helpers;
 /**
  * Class FileRouteHelper
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
 use Config, Route, App;
-use Jacopo\Authentication\Interfaces\AuthenticationRoutesInterface;
-use Jacopo\Library\Views\Helper as ViewHelper;
+use LaravelAcl\Authentication\Interfaces\AuthenticationRoutesInterface;
+use LaravelAcl\Library\Views\Helper as ViewHelper;
 
 class FileRouteHelper implements AuthenticationRoutesInterface
 {

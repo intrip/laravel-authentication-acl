@@ -1,4 +1,4 @@
-<?php namespace Jacopo\Library\Views;
+<?php namespace LaravelAcl\Library\Views;
 /**
  * Class View Helper
  *

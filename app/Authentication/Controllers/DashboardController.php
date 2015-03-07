@@ -1,4 +1,4 @@
-<?php  namespace Jacopo\Authentication\Controllers;
+<?php  namespace LaravelAcl\Authentication\Controllers;
 
 use Illuminate\Routing\Controller;
 use View;

@@ -1,6 +1,6 @@
-<?php  namespace Jacopo\Authentication\Validators; 
+<?php  namespace LaravelAcl\Authentication\Validators;
 
-use Jacopo\Library\Validators\AbstractValidator;
+use LaravelAcl\Library\Validators\AbstractValidator;
 
 class UserProfileUserValidator extends AbstractValidator{
     protected static $rules = array(

@@ -1,10 +1,10 @@
-<?php  namespace Jacopo\Authentication\Classes\CustomProfile\Repository;
+<?php  namespace LaravelAcl\Authentication\Classes\CustomProfile\Repository;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
-use Jacopo\Authentication\Models\ProfileField;
-use Jacopo\Authentication\Models\ProfileFieldType;
+use LaravelAcl\Authentication\Models\ProfileField;
+use LaravelAcl\Authentication\Models\ProfileFieldType;
 
 /**
  * Class CustomProfileRepository

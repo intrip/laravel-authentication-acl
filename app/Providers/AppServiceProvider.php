@@ -1,4 +1,4 @@
-<?php namespace LaravelAuthenticationACL\Providers;
+<?php namespace LaravelAcl\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider {
 	{
 		$this->app->bind(
 			'Illuminate\Contracts\Auth\Registrar',
-			'LaravelAuthenticationACL\Services\Registrar'
+			'LaravelAcl\Services\Registrar'
 		);
 	}
 

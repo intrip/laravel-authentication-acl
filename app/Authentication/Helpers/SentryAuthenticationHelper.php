@@ -1,12 +1,12 @@
-<?php  namespace Jacopo\Authentication\Helpers;
+<?php  namespace LaravelAcl\Authentication\Helpers;
 /**
  * Class SentryAuthenticationHelper
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
 use Illuminate\Support\Facades\Config;
-use Jacopo\Authentication\Interfaces\AuthenticationHelperInterface;
-use Jacopo\Authentication\Interfaces\PermissionProfileHelperInterface;
+use LaravelAcl\Authentication\Interfaces\AuthenticationHelperInterface;
+use LaravelAcl\Authentication\Interfaces\PermissionProfileHelperInterface;
 use Session, App;
 
 class SentryAuthenticationHelper implements AuthenticationHelperInterface, PermissionProfileHelperInterface

@@ -1,3 +1,3 @@
-<?php namespace Jacopo\Library\Exceptions;
+<?php namespace LaravelAcl\Library\Exceptions;
 
 class NotFoundException extends \Exception implements JacopoExceptionsInterface {}

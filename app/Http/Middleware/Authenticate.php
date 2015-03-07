@@ -1,4 +1,4 @@
-<?php namespace LaravelAuthenticationACL\Http\Middleware;
+<?php namespace LaravelAcl\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;

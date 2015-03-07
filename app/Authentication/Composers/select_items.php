@@ -1,5 +1,5 @@
 <?php
-use Jacopo\Authentication\Helpers\FormHelper;
+use LaravelAcl\Authentication\Helpers\FormHelper;
 /**
  * permission select
  */

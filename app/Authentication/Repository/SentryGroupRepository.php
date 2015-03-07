@@ -1,13 +1,13 @@
-<?php  namespace Jacopo\Authentication\Repository;
+<?php  namespace LaravelAcl\Authentication\Repository;
 /**
  * Class GroupRepository
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Jacopo\Library\Repository\Interfaces\BaseRepositoryInterface;
-use Jacopo\Authentication\Models\Group;
-use Jacopo\Authentication\Exceptions\UserNotFoundException as NotFoundException;
+use LaravelAcl\Library\Repository\Interfaces\BaseRepositoryInterface;
+use LaravelAcl\Authentication\Models\Group;
+use LaravelAcl\Authentication\Exceptions\UserNotFoundException as NotFoundException;
 use App, Event;
 use Cartalyst\Sentry\Groups\GroupNotFoundException;
 
@@ -70,7 +70,7 @@ class SentryGroupRepository implements BaseRepositoryInterface
      *
      * @param $id
      * @return mixed
-     * @throws \Jacopo\Authentication\Exceptions\UserNotFoundException
+     * @throws \LaravelAcl\Authentication\Exceptions\UserNotFoundException
      */
     public function find($id)
     {

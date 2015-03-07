@@ -1,4 +1,4 @@
-<?php  namespace Jacopo\Library\Traits; 
+<?php  namespace LaravelAcl\Library\Traits;
 use App;
 /**
  * Trait ConnectionTrait

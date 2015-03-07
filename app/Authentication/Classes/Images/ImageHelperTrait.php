@@ -1,8 +1,8 @@
-<?php  namespace Jacopo\Authentication\Classes\Images;
+<?php  namespace LaravelAcl\Authentication\Classes\Images;
 
 use Image;
 use Illuminate\Support\Facades\Input;
-use Jacopo\Library\Exceptions\NotFoundException;
+use LaravelAcl\Library\Exceptions\NotFoundException;
 
 /**
  * Trait ImageHelperTrait

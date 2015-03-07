@@ -28,7 +28,7 @@ return [
 	|
 	*/
 
-	'model' => 'LaravelAuthenticationACL\User',
+	'model' => 'LaravelAcl\User',
 
 	/*
 	|--------------------------------------------------------------------------

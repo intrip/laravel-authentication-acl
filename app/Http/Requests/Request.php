@@ -1,4 +1,4 @@
-<?php namespace LaravelAuthenticationACL\Http\Requests;
+<?php namespace LaravelAcl\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 

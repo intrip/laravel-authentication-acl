@@ -1,16 +1,16 @@
-<?php  namespace Jacopo\Authentication\Services;
+<?php  namespace LaravelAcl\Authentication\Services;
 
 use Config;
 use DB;
 use Event;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\MessageBag;
-use Jacopo\Authentication\Exceptions\TokenMismatchException;
-use Jacopo\Authentication\Exceptions\UserExistsException;
-use Jacopo\Authentication\Exceptions\UserNotFoundException;
-use Jacopo\Authentication\Helpers\DbHelper;
-use Jacopo\Authentication\Validators\UserSignupValidator;
-use Jacopo\Library\Exceptions\ValidationException;
+use LaravelAcl\Authentication\Exceptions\TokenMismatchException;
+use LaravelAcl\Authentication\Exceptions\UserExistsException;
+use LaravelAcl\Authentication\Exceptions\UserNotFoundException;
+use LaravelAcl\Authentication\Helpers\DbHelper;
+use LaravelAcl\Authentication\Validators\UserSignupValidator;
+use LaravelAcl\Library\Exceptions\ValidationException;
 
 /**
  * Class UserRegisterService
@@ -20,15 +20,15 @@ use Jacopo\Library\Exceptions\ValidationException;
 class UserRegisterService
 {
     /**
-     * @var \Jacopo\Authentication\Repository\Interfaces\UserRepositoryInterface
+     * @var \LaravelAcl\Authentication\Repository\Interfaces\UserRepositoryInterface
      */
     protected $user_repository;
     /**
-     * @var \Jacopo\Authentication\Repository\Interfaces\UserProfileRepositoryInterface
+     * @var \LaravelAcl\Authentication\Repository\Interfaces\UserProfileRepositoryInterface
      */
     protected $profile_repository;
     /**
-     * @var \Jacopo\Authentication\Validators\UserSignupValidator
+     * @var \LaravelAcl\Authentication\Validators\UserSignupValidator
      */
     protected $user_signup_validator;
     /**
@@ -49,7 +49,7 @@ class UserRegisterService
         $this->user_signup_validator = $v ? $v : new UserSignupValidator;
         $this->activation_enabled = Config::get('laravel-authentication-acl::email_confirmation');
         Event::listen('service.activated',
-                      'Jacopo\Authentication\Services\UserRegisterService@sendActivationEmailToClient');
+                      'LaravelAcl\Authentication\Services\UserRegisterService@sendActivationEmailToClient');
     }
 
 
@@ -74,7 +74,7 @@ class UserRegisterService
 
     /**
      * @param array $input
-     * @throws \Jacopo\Library\Exceptions\ValidationException
+     * @throws \LaravelAcl\Library\Exceptions\ValidationException
      */
     protected function validateInput(array $input)
     {
@@ -151,8 +151,8 @@ class UserRegisterService
     /**
      * @param $email
      * @param $token
-     * @throws \Jacopo\Authentication\Exceptions\UserNotFoundException
-     * @throws \Jacopo\Authentication\Exceptions\TokenMismatchException
+     * @throws \LaravelAcl\Authentication\Exceptions\UserNotFoundException
+     * @throws \LaravelAcl\Authentication\Exceptions\TokenMismatchException
      */
     public function checkUserActivationCode($email, $token)
     {

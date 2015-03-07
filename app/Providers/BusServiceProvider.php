@@ -1,4 +1,4 @@
-<?php namespace LaravelAuthenticationACL\Providers;
+<?php namespace LaravelAcl\Providers;
 
 use Illuminate\Bus\Dispatcher;
 use Illuminate\Support\ServiceProvider;
@@ -16,7 +16,7 @@ class BusServiceProvider extends ServiceProvider {
 		$dispatcher->mapUsing(function($command)
 		{
 			return Dispatcher::simpleMapping(
-				$command, 'LaravelAuthenticationACL\Commands', 'LaravelAuthenticationACL\Handlers\Commands'
+				$command, 'LaravelAcl\Commands', 'LaravelAcl\Handlers\Commands'
 			);
 		});
 	}

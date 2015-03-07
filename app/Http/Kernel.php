@@ -1,4 +1,4 @@
-<?php namespace LaravelAuthenticationACL\Http;
+<?php namespace LaravelAcl\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -15,7 +15,7 @@ class Kernel extends HttpKernel {
 		'Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse',
 		'Illuminate\Session\Middleware\StartSession',
 		'Illuminate\View\Middleware\ShareErrorsFromSession',
-		'LaravelAuthenticationACL\Http\Middleware\VerifyCsrfToken',
+		'LaravelAcl\Http\Middleware\VerifyCsrfToken',
 	];
 
 	/**
@@ -24,9 +24,9 @@ class Kernel extends HttpKernel {
 	 * @var array
 	 */
 	protected $routeMiddleware = [
-		'auth' => 'LaravelAuthenticationACL\Http\Middleware\Authenticate',
+		'auth' => 'LaravelAcl\Http\Middleware\Authenticate',
 		'auth.basic' => 'Illuminate\Auth\Middleware\AuthenticateWithBasicAuth',
-		'guest' => 'LaravelAuthenticationACL\Http\Middleware\RedirectIfAuthenticated',
+		'guest' => 'LaravelAcl\Http\Middleware\RedirectIfAuthenticated',
 	];
 
 }

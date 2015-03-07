@@ -1,6 +1,6 @@
-<?php  namespace Jacopo\Authentication\Validators;
+<?php  namespace LaravelAcl\Authentication\Validators;
 
-use Jacopo\Library\Validators\AbstractValidator;
+use LaravelAcl\Library\Validators\AbstractValidator;
 
 /**
  * Class UserProfileAvatarValidator

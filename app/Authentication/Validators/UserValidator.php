@@ -1,6 +1,6 @@
-<?php namespace Jacopo\Authentication\Validators;
+<?php namespace LaravelAcl\Authentication\Validators;
 
-use Jacopo\Library\Validators\OverrideConnectionValidator;
+use LaravelAcl\Library\Validators\OverrideConnectionValidator;
 use Event;
 
 
