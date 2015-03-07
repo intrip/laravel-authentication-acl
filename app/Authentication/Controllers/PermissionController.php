@@ -66,7 +66,7 @@ class PermissionController extends Controller
             return Redirect::route("permission.edit", $id ? ["id" => $id]: [])->withInput()->withErrors($errors);
         }
 
-        return Redirect::action('LaravelAcl\Authentication\Controllers\PermissionController@editPermission',["id" => $obj->id])->withMessage(Config::get('laravel-authentication-acl::messages.flash.success.permission_permission_edit_success'));
+        return Redirect::action('LaravelAcl\Authentication\Controllers\PermissionController@editPermission',["id" => $obj->id])->withMessage(Config::get('acl_messages.flash.success.permission_permission_edit_success'));
     }
 
     public function deletePermission()
@@ -80,6 +80,6 @@ class PermissionController extends Controller
             $errors = $this->f->getErrors();
             return Redirect::action('LaravelAcl\Authentication\Controllers\PermissionController@getList')->withErrors($errors);
         }
-        return Redirect::action('LaravelAcl\Authentication\Controllers\PermissionController@getList')->withMessage(Config::get('laravel-authentication-acl::messages.flash.success.permission_permission_delete_success'));
+        return Redirect::action('LaravelAcl\Authentication\Controllers\PermissionController@getList')->withMessage(Config::get('acl_messages.flash.success.permission_permission_delete_success'));
     }
 } 

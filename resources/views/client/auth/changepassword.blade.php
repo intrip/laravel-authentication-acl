@@ -7,7 +7,7 @@ Change password
     <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
         <div class="panel panel-info">
             <div class="panel-heading">
-                <h3 class="panel-title">Change your password to {{Config::get('laravel-authentication-acl::app_name')}}</h3>
+                <h3 class="panel-title">Change your password to {{Config::get('acl_base.app_name')}}</h3>
             </div>
             @if($errors && ! $errors->isEmpty() )
             @foreach($errors->all() as $error)

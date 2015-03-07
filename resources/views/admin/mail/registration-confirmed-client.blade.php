@@ -6,7 +6,7 @@
     {{ HTML::style('packages/jacopo/laravel-authentication-acl/css/mail-base.css') }}
 </head>
 <body>
-<h2>Welcome to: {{Config::get('laravel-authentication-acl::app_name')}}</h2>
+<h2>Welcome to: {{Config::get('acl_base.app_name')}}</h2>
 <div>
     <h3>Dear: {{$body['first_name']}}</h3>
     <strong>You account has been created.</strong> You can now login to the website using the

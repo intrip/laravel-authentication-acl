@@ -47,7 +47,7 @@ class UserRegisterService
         $this->user_repository = App::make('user_repository');
         $this->profile_repository = App::make('profile_repository');
         $this->user_signup_validator = $v ? $v : new UserSignupValidator;
-        $this->activation_enabled = Config::get('laravel-authentication-acl::email_confirmation');
+        $this->activation_enabled = Config::get('acl_email_confirmation');
         Event::listen('service.activated',
                       'LaravelAcl\Authentication\Services\UserRegisterService@sendActivationEmailToClient');
     }
@@ -109,7 +109,7 @@ class UserRegisterService
 
     protected function getDefaultActivatedState()
     {
-        return Config::get('laravel-authentication-acl::email_confirmation') ? false : true;
+        return Config::get('acl_email_confirmation') ? false : true;
     }
 
     /**
@@ -129,7 +129,7 @@ class UserRegisterService
                                                "first_name" => $input["first_name"],
                                                "token"      => $this->activation_enabled ? App::make('authenticator')->getActivationToken($input["email"]) : ''
                                        ],
-                        Config::get('laravel-authentication-acl::messages.email.user_registration_request_subject'),
+                        Config::get('acl_messages.email.user_registration_request_subject'),
                         $view_file);
     }
 
@@ -144,7 +144,7 @@ class UserRegisterService
         $mailer = App::make('jmailer');
         // if i activate a deactivated user
         $mailer->sendTo($user->email, ["email" => $user->email],
-                        Config::get('laravel-authentication-acl::messages.email.user_registraction_activation_subject'),
+                        Config::get('acl_messages.email.user_registraction_activation_subject'),
                         "laravel-authentication-acl::admin.mail.registration-activated-client");
     }
 

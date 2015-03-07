@@ -1,0 +1,13 @@
+html,body {
+    height:100%;
+}
+.container-full {
+    margin: 0 auto;
+    width: 100%;
+    min-height: 100%;
+    background-color: #EAEAEA;
+    overflow: hidden;
+}
+.v-center {
+    margin-top:7%;
+}

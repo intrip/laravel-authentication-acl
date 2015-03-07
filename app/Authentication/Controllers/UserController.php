@@ -99,7 +99,7 @@ class UserController extends Controller {
         DbHelper::commit();
 
         return Redirect::action('LaravelAcl\Authentication\Controllers\UserController@editUser', ["id" => $user->id])
-                       ->withMessage(Config::get('laravel-authentication-acl::messages.flash.success.user_edit_success'));
+                       ->withMessage(Config::get('acl_messages.flash.success.user_edit_success'));
     }
 
     public function deleteUser()
@@ -113,7 +113,7 @@ class UserController extends Controller {
             return Redirect::action('LaravelAcl\Authentication\Controllers\UserController@getList')->withErrors($errors);
         }
         return Redirect::action('LaravelAcl\Authentication\Controllers\UserController@getList')
-                       ->withMessage(Config::get('laravel-authentication-acl::messages.flash.success.user_delete_success'));
+                       ->withMessage(Config::get('acl_messages.flash.success.user_delete_success'));
     }
 
     public function addGroup()
@@ -127,10 +127,10 @@ class UserController extends Controller {
         } catch(JacopoExceptionsInterface $e)
         {
             return Redirect::action('LaravelAcl\Authentication\Controllers\UserController@editUser', ["id" => $user_id])
-                           ->withErrors(new MessageBag(["name" => Config::get('laravel-authentication-acl::messages.flash.error.user_group_not_found')]));
+                           ->withErrors(new MessageBag(["name" => Config::get('acl_messages.flash.error.user_group_not_found')]));
         }
         return Redirect::action('LaravelAcl\Authentication\Controllers\UserController@editUser', ["id" => $user_id])
-                       ->withMessage(Config::get('laravel-authentication-acl::messages.flash.success.user_group_add_success'));
+                       ->withMessage(Config::get('acl_messages.flash.success.user_group_add_success'));
     }
 
     public function deleteGroup()
@@ -144,10 +144,10 @@ class UserController extends Controller {
         } catch(JacopoExceptionsInterface $e)
         {
             return Redirect::action('LaravelAcl\Authentication\Controllers\UserController@editUser', ["id" => $user_id])
-                           ->withErrors(new MessageBag(["name" => Config::get('laravel-authentication-acl::messages.flash.error.user_group_not_found')]));
+                           ->withErrors(new MessageBag(["name" => Config::get('acl_messages.flash.error.user_group_not_found')]));
         }
         return Redirect::action('LaravelAcl\Authentication\Controllers\UserController@editUser', ["id" => $user_id])
-                       ->withMessage(Config::get('laravel-authentication-acl::messages.flash.success.user_group_delete_success'));
+                       ->withMessage(Config::get('acl_messages.flash.success.user_group_delete_success'));
     }
 
     public function editPermission()
@@ -164,10 +164,10 @@ class UserController extends Controller {
         } catch(JacopoExceptionsInterface $e)
         {
             return Redirect::route("users.edit")->withInput()
-                           ->withErrors(new MessageBag(["permissions" => Config::get('laravel-authentication-acl::messages.flash.error.user_permission_not_found')]));
+                           ->withErrors(new MessageBag(["permissions" => Config::get('acl_messages.flash.error.user_permission_not_found')]));
         }
         return Redirect::action('LaravelAcl\Authentication\Controllers\UserController@editUser', ["id" => $obj->id])
-                       ->withMessage(Config::get('laravel-authentication-acl::messages.flash.success.user_permission_add_success'));
+                       ->withMessage(Config::get('acl_messages.flash.success.user_permission_add_success'));
     }
 
     public function editProfile()
@@ -180,7 +180,7 @@ class UserController extends Controller {
         } catch(UserNotFoundException $e)
         {
             return Redirect::action('LaravelAcl\Authentication\Controllers\UserController@getList')
-                           ->withErrors(new MessageBag(['model' => Config::get('laravel-authentication-acl::messages.flash.error.user_user_not_found')]));
+                           ->withErrors(new MessageBag(['model' => Config::get('acl_messages.flash.error.user_user_not_found')]));
         } catch(ProfileNotFoundException $e)
         {
             $user_profile = new UserProfile(["user_id" => $user_id]);
@@ -210,7 +210,7 @@ class UserController extends Controller {
         }
         return Redirect::back()
                        ->withInput()
-                       ->withMessage(Config::get('laravel-authentication-acl::messages.flash.success.user_profile_edit_success'));
+                       ->withMessage(Config::get('acl_messages.flash.success.user_profile_edit_success'));
     }
 
     public function editOwnProfile()
@@ -229,7 +229,7 @@ class UserController extends Controller {
 
     public function signup()
     {
-        $enable_captcha = Config::get('laravel-authentication-acl::captcha_signup');
+        $enable_captcha = Config::get('acl_captcha_signup');
 
         if($enable_captcha)
         {
@@ -257,7 +257,7 @@ class UserController extends Controller {
 
     public function signupSuccess()
     {
-        $email_confirmation_enabled = Config::get('laravel-authentication-acl::email_confirmation');
+        $email_confirmation_enabled = Config::get('acl_email_confirmation');
         return $email_confirmation_enabled ? View::make('laravel-authentication-acl::client.auth.signup-email-confirmation') : View::make('laravel-authentication-acl::client.auth.signup-success');
     }
 
@@ -291,7 +291,7 @@ class UserController extends Controller {
         }
 
         return Redirect::action('LaravelAcl\Authentication\Controllers\UserController@postEditProfile', ["user_id" => $user_id])
-                       ->with('message', Config::get('laravel-authentication-acl::messages.flash.success.custom_field_added'));
+                       ->with('message', Config::get('acl_messages.flash.success.custom_field_added'));
     }
 
     public function deleteCustomFieldType()
@@ -305,7 +305,7 @@ class UserController extends Controller {
         } catch(ModelNotFoundException $e)
         {
             return Redirect::action('LaravelAcl\Authentication\Controllers\UserController@postEditProfile', ["user_id" => $user_id])
-                           ->withErrors(new MessageBag(["model" => Config::get('laravel-authentication-acl::messages.flash.error.custom_field_not_found')]));
+                           ->withErrors(new MessageBag(["model" => Config::get('acl_messages.flash.error.custom_field_not_found')]));
         } catch(PermissionException $e)
         {
             return Redirect::action('LaravelAcl\Authentication\Controllers\UserController@postEditProfile', ["user_id" => $user_id])
@@ -313,7 +313,7 @@ class UserController extends Controller {
         }
 
         return Redirect::action('LaravelAcl\Authentication\Controllers\UserController@postEditProfile', ["user_id" => $user_id])
-                       ->with('message', Config::get('laravel-authentication-acl::messages.flash.success.custom_field_removed'));
+                       ->with('message', Config::get('acl_messages.flash.success.custom_field_removed'));
     }
 
     public function changeAvatar()
@@ -336,11 +336,11 @@ class UserController extends Controller {
         } catch(NotFoundException $e)
         {
             return Redirect::action('LaravelAcl\Authentication\Controllers\UserController@editProfile', ['user_id' => $user_id])->withInput()
-                           ->withErrors(new MessageBag(['avatar' => Config::get('laravel-authentication-acl::messages.flash.error.')]));
+                           ->withErrors(new MessageBag(['avatar' => Config::get('acl_messages.flash.error.')]));
         }
 
         return Redirect::action('LaravelAcl\Authentication\Controllers\UserController@editProfile', ['user_id' => $user_id])
-                       ->withMessage(Config::get('laravel-authentication-acl::messages.flash.success.avatar_edit_success'));
+                       ->withMessage(Config::get('acl_messages.flash.success.avatar_edit_success'));
     }
 
     public function refreshCaptcha()

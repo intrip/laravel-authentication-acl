@@ -4,7 +4,7 @@
  */
 View::composer('laravel-authentication-acl::*', function ($view)
 {
-    $view->with('app_name', Config::get('laravel-authentication-acl::app_name'));
+    $view->with('app_name', Config::get('acl_app_name'));
 });
 
 /**
@@ -20,5 +20,5 @@ View::composer('laravel-authentication-acl::*', function ($view)
  */
 View::composer(['laravel-authentication-acl::admin.user.profile', 'laravel-authentication-acl::admin.user.self-profile'], function ($view)
 {
-    $view->with('use_gravatar', \Config::get('laravel-authentication-acl::config.use_gravatar'));
+    $view->with('use_gravatar', \Config::get('acl_config.use_gravatar'));
 });

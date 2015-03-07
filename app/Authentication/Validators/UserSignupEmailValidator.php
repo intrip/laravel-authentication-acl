@@ -30,7 +30,7 @@ class UserSignupEmailValidator extends OverrideConnectionValidator
         }
 
         // if email confirmation is disabled we dont send email again
-        if(! Config::get('laravel-authentication-acl::email_confirmation') ) return false;
+        if(! Config::get('acl_email_confirmation') ) return false;
 
         // send email
         $this->resendConfirmationEmail($value);

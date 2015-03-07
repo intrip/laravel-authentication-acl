@@ -1,0 +1,107 @@
+/*
+ * Base structure
+ */
+
+/* Move down content because we have a fixed navbar that is 50px tall */
+body {
+    padding-top: 50px;
+    font-family: Helvetica, "Helvetica Neue", Arial, sans-serif;
+}
+
+/*
+ * General structure
+ */
+.pagination>.active>span, .pagination>.active>span:hover
+{
+    background-color: #5bc0de;
+    border: 1px solid #46b8da;
+}
+.navbar {
+    background-color: #292C2D;
+}
+a{
+    color: #5bc0de;
+}
+a:hover {
+    color: #4597AF;
+}
+
+
+/*
+ * Global add-ons
+ */
+
+.sub-header {
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.sidebar{
+  padding: 0;
+}
+/*
+ * Sidebar
+ */
+@media (min-width: 768px) {
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 1000;
+        display: block;
+        padding: 70px 20px 20px;
+        background-color: #f5f5f5;
+        border-right: 1px solid #eee;
+    }
+
+    /* Sidebar navigation */
+    .nav-sidebar {
+        margin-left: -20px;
+        margin-right: -21px; /* 20px padding + 1px border */
+        margin-bottom: 20px;
+    }
+}
+.nav-sidebar
+{
+    border-bottom: 1px solid #d9edf7;
+}
+.nav-sidebar > li > a {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.nav-sidebar > .active > a {
+    color: #fff;
+    background-color: #5bc0de;
+}
+
+
+/*
+ * Main content
+ */
+
+.main {
+    padding: 20px;
+}
+.main .page-header {
+    margin-top: 0;
+}
+
+
+/*
+ * Placeholder dashboard ideas
+ */
+
+.placeholders {
+    margin-bottom: 30px;
+    text-align: center;
+}
+.placeholders h4 {
+    margin-bottom: 0;
+}
+.placeholder {
+    margin-bottom: 20px;
+}
+.placeholder img {
+    border-radius: 50%;
+}

@@ -65,7 +65,7 @@ class UserSignupEmailValidatorTest extends DbTestCase {
         ];
 
         StateKeeper::set('expected_to', $input["email"]);
-        StateKeeper::set('expected_subject',"Registration request to: " . Config::get('laravel-authentication-acl::app_name'));
+        StateKeeper::set('expected_subject',"Registration request to: " . Config::get('acl_base.app_name'));
         StateKeeper::set('expected_body', 'You account has been created. However, before you can use it you need to confirm your email address first by clicking the');
         Input::shouldReceive('all')->once()->andReturn($input)
                 ->shouldReceive('getScheme')

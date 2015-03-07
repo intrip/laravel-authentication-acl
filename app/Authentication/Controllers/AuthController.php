@@ -66,7 +66,7 @@ class AuthController extends Controller {
             return Redirect::action('LaravelAcl\Authentication\Controllers\AuthController@getClientLogin')->withInput()->withErrors($errors);
         }
 
-        return Redirect::to(Config::get('laravel-authentication-acl::config.user_login_redirect_url'));
+        return Redirect::to(Config::get('acl_config.user_login_redirect_url'));
     }
 
     /**

@@ -50,7 +50,7 @@ class AuthControllerTest extends DbTestCase
                 "remember" => $remember
         ]);
 
-        $this->assertRedirectedTo(Config::get('laravel-authentication-acl::config.user_login_redirect_url'));
+        $this->assertRedirectedTo(Config::get('acl_base.config.user_login_redirect_url'));
     }
 
     /**

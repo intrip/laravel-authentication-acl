@@ -15,7 +15,7 @@ class UserProfilePresenter extends AbstractPresenter
 
     function __construct($resource)
     {
-        $this->default_avatar = Config::get('laravel-authentication-acl::config.default_avatar_path');
+        $this->default_avatar = Config::get('acl_config.default_avatar_path');
         return parent::__construct($resource);
     }
 
@@ -42,7 +42,7 @@ class UserProfilePresenter extends AbstractPresenter
 
     public function avatar($size = 30)
     {
-        $use_gravatar = Config::get('laravel-authentication-acl::config.use_gravatar');
+        $use_gravatar = Config::get('acl_config.use_gravatar');
 
         return $use_gravatar ? $this->gravatar($size) : $this->custom_avatar();
     }

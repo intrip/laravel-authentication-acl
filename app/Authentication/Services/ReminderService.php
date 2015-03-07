@@ -59,7 +59,7 @@ class ReminderService {
         $this->auth = App::make('authenticator');
         $this->mailer = App::make('jmailer');
         $this->errors = new MessageBag();
-        $this->subject = Config::get('laravel-authentication-acl::messages.email.user_password_recovery_subject');
+        $this->subject = Config::get('acl_messages.email.user_password_recovery_subject');
     }
 
     public function send($to)
@@ -90,7 +90,7 @@ class ReminderService {
     private function prepareResetPasswordLink($token, $to)
     {
         $this->body = link_to_action("LaravelAcl\\Authentication\\Controllers\\AuthController@getChangePassword",
-                 Config::get('laravel-authentication-acl::messages.links.change_password'),
+                 Config::get('acl_messages.links.change_password'),
                 ["email"=> $to, "token"=> $token] );
     }
 
@@ -112,13 +112,13 @@ class ReminderService {
             // Attempt to reset the user password
             if (! $user->attemptResetPassword($token, $password))
             {
-                $this->errors->add('user', Config::get('laravel-authentication-acl::messages.flash.error.reset_password_error') );
+                $this->errors->add('user', Config::get('acl_messages.flash.error.reset_password_error') );
                 throw new InvalidException();
             }
         }
         else
         {
-            $this->errors->add('user', Config::get('laravel-authentication-acl::messages.flash.error.captcha_error') );
+            $this->errors->add('user', Config::get('acl_messages.flash.error.captcha_error') );
             throw new InvalidException();
         }
     }

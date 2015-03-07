@@ -6,7 +6,7 @@
     {{ HTML::style('//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css') }}
 </head>
 <body>
-<h2><i class="fa fa-pencil"></i> Registration request on: {{Config::get('laravel-authentication-acl::app_name')}}</h2>
+<h2><i class="fa fa-pencil"></i> Registration request on: {{Config::get('acl_base.app_name')}}</h2>
 <div>
     <h3>Dear: {{$body['first_name']}}</h3>
     <strong>You account has been created. However, before you can use it you need to confirm your email address first by clicking the

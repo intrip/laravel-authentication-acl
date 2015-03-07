@@ -137,11 +137,11 @@ class AuthenticationServiceProvider extends ServiceProvider
 
     protected function setupConnection()
     {
-        $connection = Config::get('laravel-authentication-acl::database.default');
+        $connection = Config::get('acl_database.default');
 
         if($connection !== 'default')
         {
-            $authenticator_conn = Config::get('laravel-authentication-acl::database.connections.' . $connection);
+            $authenticator_conn = Config::get('acl_database.connections.' . $connection);
         } else
         {
             $connection = Config::get('database.default');

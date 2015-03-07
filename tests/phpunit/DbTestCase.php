@@ -53,7 +53,7 @@ class DbTestCase extends TestCase {
 
     protected function getConnectionInfo()
     {
-        $this->current_connection = Config::get('laravel-authentication-acl::database.default');
+        $this->current_connection = Config::get('acl_base.database.default');
         $this->connection_info = Config::get("laravel-authentication-acl::database.connections.{$this->current_connection}");
     }
 

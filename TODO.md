@@ -8,19 +8,14 @@ Authenticator:
     1. support issues e pr
     fixa la issue migrate:refresh di 1.2
 ###1.3
-    rinomina namespace in LaravelAcl e basta
-    sposta tutta la config nella dir main e con prefisso acl_x e fix tutte le read...
-    setta i middleware nuovi come filtri
-    fixa la dir structure
-    1. sposta tutti i file di configurazione in config e fixa l'accesso alla confir
-    2. rinomina tutte le rotte come named e mettile in un file routes
-    3. sposta tutti i file in modo da avere stesso namespace ma metti tutto in app
-    4. fixa il resto del sw
-    5. fixa i test
-    6. fixa il setup
-    7. quando funziona ristuttura il resto in modo da farlo più l5 like e aggiorna i test ecc
-    8. fai i test applicazione
-    9. pialla gulp e vedi se vuoi usare elixir
+    1) sposta tutta la config nella dir main e con prefisso acl_x e fix tutte le read...
+    2) fixa la dir structure passo passo spostando il codice sotto le varie dir di l5 convention
+    4) setta i middleware nuovi come filtri
+    5) fixa il resto del sw
+    6) fixa il setup script
+    7) fixa i test e i namespace dei test
+    8) fai i test applicazione
+    9) pialla gulp e vedi se vuoi usare elixir
 
 POI (1.3.0):
  

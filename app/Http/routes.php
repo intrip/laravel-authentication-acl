@@ -232,7 +232,7 @@ Route::group(['before' => ['admin_logged', 'can_see']], function ()
 
 //////////////////// Other routes //////////////////////////
 
-if(Config::get('laravel-authentication-acl::handle_errors'))
+if(Config::get('acl_base.handle_errors'))
 {
     App::error(function (RuntimeException $exception, $code)
     {

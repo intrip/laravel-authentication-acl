@@ -40,7 +40,7 @@ class SentryAuthenticationHelper implements AuthenticationHelperInterface, Permi
         // edit his profile
         if($user_id == $current_user_id) return true;
         // has special permission to edit other user profiles
-        $edit_perm = Config::get('laravel-authentication-acl::permissions.edit_profile');
+        $edit_perm = Config::get('acl_permissions.edit_profile');
         if($this->hasPermission($edit_perm) ) return true;
 
         return false;
@@ -53,7 +53,7 @@ class SentryAuthenticationHelper implements AuthenticationHelperInterface, Permi
      */
     public function checkCustomProfileEditPermission()
     {
-        $edit_perm = Config::get('laravel-authentication-acl::permissions.edit_custom_profile');
+        $edit_perm = Config::get('acl_permissions.edit_custom_profile');
         return $this->hasPermission($edit_perm) ? true : false;
     }
 
@@ -64,7 +64,7 @@ class SentryAuthenticationHelper implements AuthenticationHelperInterface, Permi
      */
     public function getNotificationRegistrationUsersEmail()
     {
-        $group_name = Config::get('laravel-authentication-acl::permissions.profile_notification_group');
+        $group_name = Config::get('acl_permissions.profile_notification_group');
         $user_r = App::make('user_repository');
         $users = $user_r->findFromGroupName($group_name)->lists('email');
 
