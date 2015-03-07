@@ -1,6 +1,6 @@
 <?php  namespace LaravelAcl\Authentication\Controllers;
 
-use Illuminate\Routing\Controller;
+use LaravelAcl\Authentication\Controllers\Controller;
 use View;
 
 class DashboardController extends Controller{

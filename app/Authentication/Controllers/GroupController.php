@@ -13,7 +13,7 @@ use LaravelAcl\Authentication\Exceptions\UserNotFoundException;
 use LaravelAcl\Authentication\Validators\GroupValidator;
 use LaravelAcl\Library\Exceptions\JacopoExceptionsInterface;
 use View, Input, Redirect, App, Config;
-use Illuminate\Routing\Controller;
+use LaravelAcl\Authentication\Controllers\Controller;
 
 class GroupController extends Controller
 {

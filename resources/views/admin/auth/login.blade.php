@@ -1,4 +1,4 @@
-@extends('laravel-authentication-acl::...layouts.baseauth')
+@extends('laravel-authentication-acl::admin.layouts.baseauth')
 @section('title')
 Admin login
 @stop

@@ -4,7 +4,7 @@ use View, Sentry, Input, Redirect, App, Config;
 use LaravelAcl\Authentication\Validators\ReminderValidator;
 use LaravelAcl\Library\Exceptions\JacopoExceptionsInterface;
 use LaravelAcl\Authentication\Services\ReminderService;
-use Illuminate\Routing\Controller;
+use LaravelAcl\Authentication\Controllers\Controller;
 
 class AuthController extends Controller {
 
@@ -106,7 +106,7 @@ class AuthController extends Controller {
         catch(JacopoExceptionsInterface $e)
         {
             $errors = $this->reminder->getErrors();
-            return Redirect::action("LaravelAcl\\Authentication\\Controllers\\AuthController@getReminder")->withErrors($errors);
+            return Redirect::action("LaravelAcl\\Http\\Controllers\\AuthController@getReminder")->withErrors($errors);
         }
     }
 
@@ -126,7 +126,7 @@ class AuthController extends Controller {
 
         if (! $this->reminder_validator->validate(Input::all()) )
         {
-          return Redirect::action("LaravelAcl\\Authentication\\Controllers\\AuthController@getChangePassword")->withErrors($this->reminder_validator->getErrors())->withInput();
+          return Redirect::action("LaravelAcl\\Http\\Controllers\\AuthController@getChangePassword")->withErrors($this->reminder_validator->getErrors())->withInput();
         }
 
         try
@@ -136,7 +136,7 @@ class AuthController extends Controller {
         catch(JacopoExceptionsInterface $e)
         {
             $errors = $this->reminder->getErrors();
-            return Redirect::action("LaravelAcl\\Authentication\\Controllers\\AuthController@getChangePassword")->withErrors($errors);
+            return Redirect::action("LaravelAcl\\Http\\Controllers\\AuthController@getChangePassword")->withErrors($errors);
         }
 
         return Redirect::to("user/change-password-success");

@@ -22,7 +22,7 @@ use LaravelAcl\Authentication\Validators\UserValidator;
 use LaravelAcl\Library\Exceptions\JacopoExceptionsInterface;
 use LaravelAcl\Authentication\Validators\UserProfileValidator;
 use View, Input, Redirect, App, Config;
-use Illuminate\Routing\Controller;
+use LaravelAcl\Authentication\Controllers\Controller;
 use LaravelAcl\Authentication\Interfaces\AuthenticateInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 

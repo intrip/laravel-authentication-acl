@@ -1,4 +1,5 @@
 <?php
+use Illuminate\Session\TokenMismatchException;
 
 /*
   |--------------------------------------------------------------------------
@@ -6,31 +7,30 @@
   |--------------------------------------------------------------------------
   |
   */
-use Illuminate\Session\TokenMismatchException;
 
 /**
  * User login and logout
  */
 Route::get('/admin/login', [
         "as" => "user.admin.login",
-        "uses" => "LaravelAcl\\Authentication\\Controllers\\AuthController@getAdminLogin"
+        "uses" => "AuthController@getAdminLogin"
 ]);
 Route::get('/login', [
         "as" => "user.login",
-        "uses" =>"LaravelAcl\\Authentication\\Controllers\\AuthController@getClientLogin"
+        "uses" =>"AuthController@getClientLogin"
 ]);
 Route::get('/user/logout', [
         "as" => "user.logout",
-        "uses" => "LaravelAcl\\Authentication\\Controllers\\AuthController@getLogout"
+        "uses" => "AuthController@getLogout"
 ]);
 Route::post('/user/login', [
         "before" => "csrf",
-        "uses"   => "LaravelAcl\\Authentication\\Controllers\\AuthController@postAdminLogin",
+        "uses"   => "AuthController@postAdminLogin",
         "as"     => "user.login.process"
 ]);
 Route::post('/login', [
         "before" => "csrf",
-        "uses"   => "LaravelAcl\\Authentication\\Controllers\\AuthController@postClientLogin",
+        "uses"   => "AuthController@postClientLogin",
         "as"     => "user.login"
 ]);
 
@@ -43,11 +43,11 @@ Route::get('/user/change-password', [
 ]);
 Route::get('/user/recovery-password', [
         "as" => "user.recovery-password",
-        "uses" => "LaravelAcl\\Authentication\\Controllers\\AuthController@getReminder"
+        "uses" => "AuthController@getReminder"
 ]);
 Route::post('/user/change-password/', [
         "before" => "csrf",
-        'uses'   => "LaravelAcl\\Authentication\\Controllers\\AuthController@postChangePassword",
+        'uses'   => "AuthController@postChangePassword",
         "as"     => "user.reminder.process"
 ]);
 
@@ -61,7 +61,7 @@ Route::get('/user/change-password-success', [
 );
 Route::post('/user/reminder', [
         "before" => "csrf",
-        'uses'   => "LaravelAcl\\Authentication\\Controllers\\AuthController@postReminder",
+        'uses'   => "AuthController@postReminder",
         "as"     => "user.reminder"
 ]);
 Route::get('/user/reminder-success', [
@@ -78,20 +78,20 @@ Route::get('/user/reminder-success', [
  */
 Route::post('/user/signup', [
         "before" => "csrf",
-        'uses'   => "LaravelAcl\\Authentication\\Controllers\\UserController@postSignup",
+        'uses'   => "UserController@postSignup",
         "as" => "user.signup.process"
 ]);
 Route::get('/user/signup', [
-        'uses' => "LaravelAcl\\Authentication\\Controllers\\UserController@signup",
+        'uses' => "UserController@signup",
         "as" => "user.signup"
 ]);
 Route::post('captcha-ajax', [
         "before" => "captcha-ajax",
-        'uses'   => "LaravelAcl\\Authentication\\Controllers\\UserController@refreshCaptcha",
+        'uses'   => "UserController@refreshCaptcha",
         "as" => "user.captcha-ajax.process"
 ]);
 Route::get('/user/email-confirmation', [
-        'uses' => "LaravelAcl\\Authentication\\Controllers\\UserController@emailConfirmation",
+        'uses' => "UserController@emailConfirmation",
         "as" => "user.email-confirmation"
 ]);
 Route::get('/user/signup-success', [

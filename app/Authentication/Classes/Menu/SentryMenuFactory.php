@@ -9,7 +9,7 @@ use Config;
 
 class SentryMenuFactory
 {
-    public static $config_file = "laravel-authentication-acl::menu.list";
+    public static $config_file = "acl_menu.list";
 
     public static function create($config_file = null)
     {

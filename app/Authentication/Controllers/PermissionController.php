@@ -9,7 +9,7 @@ use LaravelAcl\Authentication\Models\Permission;
 use LaravelAcl\Authentication\Validators\PermissionValidator;
 use LaravelAcl\Library\Exceptions\JacopoExceptionsInterface;
 use View, Input, Redirect, App, Config;
-use Illuminate\Routing\Controller;
+use LaravelAcl\Authentication\Controllers\Controller;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class PermissionController extends Controller

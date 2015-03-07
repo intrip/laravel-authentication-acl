@@ -12,7 +12,7 @@ class RouteServiceProvider extends ServiceProvider {
 	 *
 	 * @var string
 	 */
-	protected $namespace = 'LaravelAcl\Http\Controllers';
+	protected $namespace = 'LaravelAcl\Authentication\Controllers';
 
 	/**
 	 * Define your route model bindings, pattern filters, etc.
