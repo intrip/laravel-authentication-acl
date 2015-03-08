@@ -15,9 +15,9 @@
         @endif
         {{-- print errors --}}
         @if($errors && ! $errors->isEmpty() )
-        @foreach($errors->all() as $error)
-        <div class="alert alert-danger">{{$error}}</div>
-        @endforeach
+            @foreach($errors->all() as $error)
+                <div class="alert alert-danger">{{$error}}</div>
+            @endforeach
         @endif
         <div class="panel panel-info">
             <div class="panel-heading">

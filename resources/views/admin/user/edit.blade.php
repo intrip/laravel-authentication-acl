@@ -1,4 +1,4 @@
-@extends('laravel-authentication-acl::...layouts.base-2cols')
+@extends('laravel-authentication-acl::admin.layouts.base-2cols')
 
 @section('title')
 Admin area: edit user
@@ -27,12 +27,12 @@ Admin area: edit user
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-12 col-xs-12">
-                        <a href="{!! URL::action('Jacopo\Authentication\Controllers\UserController@postEditProfile',["user_id" => $user->id]) !!}" class="btn btn-info pull-right" {!! ! isset($user->id) ? 'disabled="disabled"' : '' !!}><i class="fa fa-user"></i> Edit profile</a>
+                        <a href="{!! URL::route('users.profile.edit',["user_id" => $user->id]) !!}" class="btn btn-info pull-right" {!! ! isset($user->id) ? 'disabled="disabled"' : '' !!}><i class="fa fa-user"></i> Edit profile</a>
                     </div>
                 </div>
                 <div class="col-md-6 col-xs-12">
                     <h4>Login data</h4>
-                    {!! Form::model($user, [ 'url' => URL::action('Jacopo\Authentication\Controllers\UserController@postEditUser')] )  !!}
+                    {!! Form::model($user, [ 'url' => URL::route('users.edit')] )  !!}
                     {!! -- Field hidden to fix chrome and safari autocomplete bug -- !!}
                     {!! Form::password('__to_hide_password_autocomplete', ['class' => 'hidden']) !!}
                     <!-- email text field -->
@@ -63,7 +63,7 @@ Admin area: edit user
                     </div>
                     {!! Form::hidden('id') !!}
                     {!! Form::hidden('form_name','user') !!}
-                    <a href="{!! URL::action('Jacopo\Authentication\Controllers\UserController@deleteUser',['id' => $user->id, '_token' => csrf_token()]) !!}" class="btn btn-danger pull-right margin-left-5 delete">Delete user</a>
+                    <a href="{!! URL::route('users.delete',['id' => $user->id, '_token' => csrf_token()]) !!}" class="btn btn-danger pull-right margin-left-5 delete">Delete user</a>
                     {!! Form::submit('Save', array("class"=>"btn btn-info pull-right ")) !!}
                     {!! Form::close() !!}
                     </div>

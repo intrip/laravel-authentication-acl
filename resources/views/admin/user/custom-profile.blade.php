@@ -1,7 +1,7 @@
 <h4><i class="fa fa-magic"></i> Custom fields:</h4>
 
 {{-- add fields --}}
-{!! Form::open(["action" => "Jacopo\Authentication\Controllers\UserController@addCustomFieldType", 'class' => 'form-add-profile-field', 'role' => 'form']) !!}
+{!! Form::open(["route" => 'users.profile.addfield', 'class' => 'form-add-profile-field', 'role' => 'form']) !!}
 <div class="form-group">
     <div class="input-group">
         <span class="input-group-addon form-button button-add-profile-field"><span class="glyphicon glyphicon-plus-sign add-input"></span></span>
@@ -13,7 +13,7 @@
 
 {{-- delete fields --}}
 @foreach($custom_profile->getAllTypesWithValues() as $profile_data)
-{!! Form::open(["action" => "Jacopo\Authentication\Controllers\UserController@deleteCustomFieldType", 'name' => $profile_data->id, 'role' => 'form']) !!}
+{!! Form::open(["route" => 'users.profile.deletefield', 'name' => $profile_data->id, 'role' => 'form']) !!}
 <div class="form-group">
     <div class="input-group">
         <span class="input-group-addon form-button button-del-profile-field" name="{!! $profile_data->id !!}"><span
