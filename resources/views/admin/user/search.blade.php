@@ -3,7 +3,7 @@
         <h3 class="panel-title bariol-thin"><i class="fa fa-search"></i> User search</h3>
     </div>
     <div class="panel-body">
-        {!! Form::open(['action' => 'Jacopo\Authentication\Controllers\UserController@getList','method' => 'get']) !!}
+        {!! Form::open(['route' => 'users.list','method' => 'get']) !!}
         <!-- email text field -->
         <div class="form-group">
             {!! Form::label('email','Email: ') !!}
@@ -49,7 +49,7 @@
         </div>
         @include('laravel-authentication-acl::partials.sorting')
         <div class="form-group">
-            <a href="{!! URL::action('Jacopo\Authentication\Controllers\UserController@getList') !!}" class="btn btn-default search-reset">Reset</a>
+            <a href="{!! URL::route('users.list') !!}" class="btn btn-default search-reset">Reset</a>
             {!! Form::submit('Search', ["class" => "btn btn-info", "id" => "search-submit"]) !!}
         </div>
         {!! Form::close() !!}

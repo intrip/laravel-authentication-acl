@@ -1,4 +1,4 @@
-@extends('laravel-authentication-acl::...layouts.base-fullscreen')
+@extends('laravel-authentication-acl::client.layouts.base-fullscreen')
 @section ('title')
 500
 @stop

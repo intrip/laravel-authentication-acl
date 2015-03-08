@@ -1,4 +1,4 @@
-@extends('laravel-authentication-acl::...layouts.base-fullscreen')
+@extends('laravel-authentication-acl::client.layouts.base-fullscreen')
 @section ('title')
 Password recovery success
 @stop
@@ -9,7 +9,7 @@ Password recovery success
         <h1><i class="fa fa-thumbs-up"></i>  Password changed successfully</h1>
         <p class="lead">
             Your password has been changed succesfully. Now you can login to our site.
-            <a href="{{URL::to('/')}}"><i class="fa fa-home"></i> Go to homepage</a>
+            <a href="{!! URL::to('/') !!}"><i class="fa fa-home"></i> Go to homepage</a>
         </p>
     </div>
 </div>

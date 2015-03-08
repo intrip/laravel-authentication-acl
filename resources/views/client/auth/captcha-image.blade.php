@@ -1,1 +1,1 @@
-<img src="{{$captcha->getImageSrcTag()}}">
+<img src="{!! $captcha->getImageSrcTag() !!}">

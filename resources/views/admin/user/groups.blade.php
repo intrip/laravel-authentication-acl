@@ -1,5 +1,5 @@
 {{-- add group --}}
-{!! Form::open(["action" => "Jacopo\Authentication\Controllers\UserController@addGroup", 'class' => 'form-add-group', 'role' => 'form']) !!}
+{!! Form::open(["route" => "users.groups.add", 'class' => 'form-add-group', 'role' => 'form']) !!}
 <div class="form-group">
     <div class="input-group">
         <span class="input-group-addon form-button button-add-group"><span class="glyphicon glyphicon-plus-sign add-input"></span></span>
@@ -19,7 +19,7 @@
 {{-- delete group --}}
 @if( ! $user->groups->isEmpty() )
 @foreach($user->groups as $group)
-    {!! Form::open(["action" => "Jacopo\Authentication\Controllers\UserController@deleteGroup", "role"=>"form", 'name' => $group->id]) !!}
+    {!! Form::open(["route" => "users.groups.delete", "role"=>"form", 'name' => $group->id]) !!}
     <div class="form-group">
         <div class="input-group">
             <span class="input-group-addon form-button button-del-group" name="{!! $group->id !!}"><span class="glyphicon glyphicon-minus-sign add-input"></span></span>

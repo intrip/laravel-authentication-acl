@@ -1,4 +1,4 @@
-@extends('laravel-authentication-acl::...layouts.base')
+@extends('laravel-authentication-acl::client.layouts.base')
 @section ('title')
     Password recovery
 @stop
@@ -15,7 +15,7 @@
             @endforeach
             @endif
             <div class="panel-body">
-                {!! Form::open(array('url' => URL::action("Jacopo\Authentication\Controllers\AuthController@postReminder"), 'method' => 'post') ) !!}
+                {!! Form::open(array('url' => URL::route("user.reminder"), 'method' => 'post') ) !!}
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12">
                         <div class="form-group">
@@ -31,7 +31,7 @@
                 {!! Form::close() !!}
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 margin-top-10">
-                        <a href="{!! URL::Action('Jacopo\Authentication\Controllers\AuthController@getClientLogin') !!}"><i class="fa fa-arrow-left"></i> Back to login</a>
+                        <a href="{!! URL::route('user.login') !!}"><i class="fa fa-arrow-left"></i> Back to login</a>
                     </div>
                 </div>
             </div>

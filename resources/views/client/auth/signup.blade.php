@@ -33,7 +33,7 @@
                 <div class="alert alert-success">{!! $message !!}</div>
                 @endif
                 <div class="panel-body">
-                    {!! Form::open(["action" => 'Jacopo\Authentication\Controllers\UserController@postSignup', "method" => "POST", "id" => "user_signup"]) !!}
+                    {!! Form::open(["route" => 'user.signup.process', "method" => "POST", "id" => "user_signup"]) !!}
                     {{-- Field hidden to fix chrome and safari autocomplete bug --}}
                     {!! Form::password('__to_hide_password_autocomplete', ['class' => 'hidden']) !!}
                         <div class="row">
@@ -116,7 +116,7 @@
                     </form>
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 margin-top-10">
-                        {!! link_to_action('Jacopo\Authentication\Controllers\AuthController@getClientLogin','Already have an account? Login here') !!}
+                        {!! link_to_route('user.login','Already have an account? Login here') !!}
                     </div>
                 </div>
                 </div>

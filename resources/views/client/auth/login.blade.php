@@ -7,15 +7,15 @@ User login
     <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title bariol-thin">Login to {{Config::get('acl_base.app_name')}}</h3>
+                <h3 class="panel-title bariol-thin">Login to {!! Config::get('acl_base.app_name') !!}</h3>
             </div>
             <?php $message = Session::get('message'); ?>
             @if( isset($message) )
-            <div class="alert alert-success">{{$message}}</div>
+            <div class="alert alert-success">{!! $message !!}</div>
             @endif
             @if($errors && ! $errors->isEmpty() )
             @foreach($errors->all() as $error)
-            <div class="alert alert-danger">{{$error}}</div>
+            <div class="alert alert-danger">{!! $error !!}</div>
             @endforeach
             @endif
             <div class="panel-body">
@@ -47,7 +47,7 @@ User login
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 margin-top-10">
         {!! link_to_route('user.recovery-password','Forgot password?') !!}
-        or <a href="{{URL::route('user.signup')}}"><i class="fa fa-sign-in"></i> Signup here</a>
+        or <a href="{!! URL::route('user.signup') !!}"><i class="fa fa-sign-in"></i> Signup here</a>
             </div>
         </div>
             </div>

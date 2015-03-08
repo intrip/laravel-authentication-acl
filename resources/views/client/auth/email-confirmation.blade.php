@@ -1,4 +1,4 @@
-@extends('laravel-authentication-acl::...layouts.base-fullscreen')
+@extends('laravel-authentication-acl::client.layouts.base-fullscreen')
 @section ('title')
 Registration completed
 @stop
@@ -11,9 +11,9 @@ Registration completed
             <h1><i class="fa fa-bolt"></i> Oops, something went wrong: the email is invalid</h1>
         @else
                 <h1><i class="fa fa-thumbs-up"></i> Congratulations, you successfully registered to
-                    {{Config::get('acl_base.app_name')}}</h1>
+                    {!! Config::get('acl_base.app_name') !!}</h1>
                 <p class="lead">Your email has been confirmed.
-                    Now you can login to the website using the {{link_to('/login','Following link')}}</p>
+                    Now you can login to the website using the {!! link_to('/login','Following link') !!}</p>
         @endif
         </div>
     </div>
