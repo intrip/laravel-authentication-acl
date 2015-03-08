@@ -1,4 +1,4 @@
-@extends('laravel-authentication-acl::...layouts.base-2cols')
+@extends('laravel-authentication-acl::admin.layouts.base-2cols')
 
 @section('title')
 Admin area: edit group
@@ -9,7 +9,7 @@ Admin area: edit group
     <div class="col-md-12">
         {{-- model general errors from the form --}}
         @if($errors->has('model') )
-        <div class="alert alert-danger">{{$errors->first('model')}}</div>
+        <div class="alert alert-danger">{!! $errors->first('model') !!}</div>
         @endif
 
         {{-- successful message --}}
@@ -26,7 +26,7 @@ Admin area: edit group
                     <div class="col-md-6 col-xs-12">
                         {{-- group base form --}}
                         <h4>General data</h4>
-                        {!! Form::model($group, [ 'url' => [URL::action('Jacopo\Authentication\Controllers\GroupController@postEditGroup'), $group->id], 'method' => 'post'] ) !!}
+                        {!! Form::model($group, [ 'url' => [URL::route('groups.edit'), $group->id], 'method' => 'post'] ) !!}
                         <!-- name text field -->
                         <div class="form-group">
                             {!! Form::label('name','Name: *') !!}
@@ -34,7 +34,7 @@ Admin area: edit group
                         </div>
                         <span class="text-danger">{!! $errors->first('name') !!}</span>
                         {!! Form::hidden('id') !!}
-                        <a href="{!! URL::action('Jacopo\Authentication\Controllers\GroupController@deleteGroup',['id' => $group->id, '_token' => csrf_token()]) !!}" class="btn btn-danger pull-right margin-left-5 delete">Delete</a>
+                        <a href="{!! URL::route('groups.delete',['id' => $group->id, '_token' => csrf_token()]) !!}" class="btn btn-danger pull-right margin-left-5 delete">Delete</a>
                         {!! Form::submit('Save', array("class"=>"btn btn-info pull-right ")) !!}
                         {!! Form::close() !!}
                     </div>

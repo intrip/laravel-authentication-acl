@@ -13,7 +13,7 @@
             <ul class="nav navbar-nav">
                 @if(isset($menu_items))
                     @foreach($menu_items as $item)
-                        <li class="{{Jacopo\Library\Views\Helper::get_active_route_name($item->getRoute())}}"> <a href="{{$item->getLink()}}">{{$item->getName()}}</a></li>
+                        <li class="{!! LaravelAcl\Library\Views\Helper::get_active_route_name($item->getRoute())!!}"> <a href="{!!$item->getLink()!!}">{!!$item->getName()!!}</a></li>
                     @endforeach
                 @endif
             </ul>
@@ -21,15 +21,15 @@
                 <li class="dropdown dropdown-user">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="dropdown-profile">
                         @include('laravel-authentication-acl::partials.avatar', ['size' => 30])
-                        <span id="nav-email">{{isset($logged_user) ? $logged_user->email : 'User'}}</span> <i class="fa fa-caret-down"></i>
+                        <span id="nav-email">{!!isset($logged_user) ? $logged_user->email : 'User'!!}</span> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu">
                             <li>
-                                <a href="{{URL::route('users.selfprofile.edit')}}"><i class="fa fa-user"></i> Your profile</a>
+                                <a href="{!!URL::route('users.selfprofile.edit')!!}"><i class="fa fa-user"></i> Your profile</a>
                             </li>
                             <li class="divider"></li>
                         <li>
-                            <a href="{{URL::action('Jacopo\Authentication\Controllers\AuthController@getLogout')}}"><i class="fa fa-sign-out"></i> Logout</a>
+                            <a href="{!! URL::action('Jacopo\Authentication\Controllers\AuthController@getLogout') !!}"><i class="fa fa-sign-out"></i> Logout</a>
                         </li>
                     </ul>
                 </li>
