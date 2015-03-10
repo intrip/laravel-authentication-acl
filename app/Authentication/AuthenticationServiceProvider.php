@@ -58,11 +58,11 @@ class AuthenticationServiceProvider extends ServiceProvider
         // include custom validators
         require __DIR__ . "/validators.php";
 
-        $this->setupConnection();
+//        $this->setupConnection();
 
         $this->registerCommands();
 
-        $this->setupAcceptanceTestingParams();
+//        $this->setupAcceptanceTestingParams();
     }
 
 

@@ -8,7 +8,7 @@ Authenticator:
     1. support issues e pr
     fixa la issue migrate:refresh di 1.2
 ###1.3
-    1) sposta tutta la config nella dir main e con prefisso acl_x e fix tutte le read...
+    1) Install command db e setup db e prova login
     2) fixa la dir structure passo passo spostando il codice sotto le varie dir di l5 convention
     4) setta i middleware nuovi come filtri
     5) fixa il resto del sw
