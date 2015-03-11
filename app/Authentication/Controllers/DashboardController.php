@@ -1,6 +1,5 @@
 <?php  namespace LaravelAcl\Authentication\Controllers;
 
-use LaravelAcl\Authentication\Controllers\Controller;
 use View;
 
 class DashboardController extends Controller{

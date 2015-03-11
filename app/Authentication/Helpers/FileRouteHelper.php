@@ -13,7 +13,7 @@ class FileRouteHelper implements AuthenticationRoutesInterface
     /**
      * @var string
      */
-    protected $config_path = "laravel-authentication-acl::menu.list";
+    protected $config_path = "acl_menu.list";
     /**
      * @var string
      */

@@ -49,6 +49,7 @@ class UserRepositorySearchFilter
         $users_emails_unique = array_unique($user_emails);
         $results = array_only($users, array_values($users_emails_unique));
 
+        //@TODO fix this
         return App::make('paginator')->make($results, count($results), $this->per_page);
     }
 
@@ -57,7 +58,7 @@ class UserRepositorySearchFilter
      */
     private function createTableJoins()
     {
-        $q = DB::connection($this->getConnectionName());
+        $q = DB::connection();
         $q = $q->table($this->user_table_name)
                ->leftJoin($this->profile_table_name, $this->user_table_name . '.id', '=', $this->profile_table_name . '.user_id')
                ->leftJoin($this->user_groups_table_name, $this->user_table_name . '.id', '=', $this->user_groups_table_name . '.user_id')

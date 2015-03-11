@@ -8,11 +8,11 @@ Authenticator:
     1. support issues e pr
     fixa la issue migrate:refresh di 1.2
 ###1.3
-    1) Install command db e setup db e prova login
+    1) fai un giro di quello che va e fixa un poco: fixa login filtro fallo middleware
     2) fixa la dir structure passo passo spostando il codice sotto le varie dir di l5 convention
     4) setta i middleware nuovi come filtri
     5) fixa il resto del sw
-    6) fixa il setup script
+    6) Install command fix (vedi x php artisan vendor:publish --tag=public --force)
     7) fixa i test e i namespace dei test
     8) fai i test applicazione
     9) pialla gulp e vedi se vuoi usare elixir
