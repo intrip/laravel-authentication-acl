@@ -9,5 +9,5 @@ use LaravelAcl\Library\Traits\OverrideConnectionTrait;
 
 class BaseModel extends Model
 {
-    use OverrideConnectionTrait;
+//    use OverrideConnectionTrait;
 } 

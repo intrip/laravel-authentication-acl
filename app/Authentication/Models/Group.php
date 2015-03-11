@@ -9,7 +9,7 @@ use LaravelAcl\Library\Traits\OverrideConnectionTrait;
 
 class Group extends SentryGroup
 {
-    use OverrideConnectionTrait;
+//    use OverrideConnectionTrait;
 
     protected $guarded = ["id"];
 

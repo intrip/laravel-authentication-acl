@@ -1,7 +1,7 @@
 <?php namespace LaravelAcl\Authentication\Commands;
 
+use DatabaseSeeder;
 use Illuminate\Console\Command;
-use LaravelAcl\Authentication\Seeds\DbSeeder;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
@@ -31,7 +31,7 @@ class InstallCommand extends Command {
 	public function __construct($call_wrapper = null, $db_seeder = null)
 	{
     $this->call_wrapper = $call_wrapper ? $call_wrapper : new CallWrapper($this);
-    $this->db_seeder = $db_seeder ? $db_seeder : new DbSeeder();
+    $this->db_seeder = $db_seeder ? $db_seeder : new DatabaseSeeder();
     parent::__construct();
 	}
 

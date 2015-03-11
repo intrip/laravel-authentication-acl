@@ -13,15 +13,15 @@ class DatabaseSeeder extends Seeder
     {
         Eloquent::unguard();
 
-        $this->call('LaravelAcl\Authentication\Seeds\PermissionSeeder');
-        $this->call('LaravelAcl\Authentication\Seeds\GroupsSeeder');
-        $this->call('LaravelAcl\Authentication\Seeds\UserSeeder');
+        $this->call('PermissionSeeder');
+        $this->call('GroupsSeeder');
+        $this->call('UserSeeder');
 
         Eloquent::reguard();
     }
 }
 
-class PermissionSeeder
+class PermissionSeeder extends Seeder
 {
     public function run ()
     {
@@ -57,7 +57,7 @@ class PermissionSeeder
 /**
  * @property mixed group_repository
  */
-class GroupsSeeder
+class GroupsSeeder extends Seeder
 {
 
     public function run ()
@@ -88,7 +88,7 @@ class GroupsSeeder
     }
 }
 
-class UserSeeder
+class UserSeeder extends Seeder
 {
     protected $admin_email = "admin@admin.com";
     protected $admin_password = "password";

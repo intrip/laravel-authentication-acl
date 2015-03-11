@@ -11,7 +11,7 @@ use Cartalyst\Sentry\Users\LoginRequiredException;
 
 class User extends CartaUser
 {
-    use OverrideConnectionTrait;
+//    use OverrideConnectionTrait;
 
     protected $fillable = ["email", "password", "permissions", "activated", "activation_code", "activated_at", "last_login", "protected", "banned"];
 
