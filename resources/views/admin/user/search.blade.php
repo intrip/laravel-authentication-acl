@@ -47,7 +47,7 @@
             <?php $group_values[""] = "Any"; ?>
             {!! Form::select('group_id', $group_values, Input::get('group_id',''), ["class" => "form-control"]) !!}
         </div>
-        @include('laravel-authentication-acl::partials.sorting')
+        @include('laravel-authentication-acl::admin.user.partials.sorting')
         <div class="form-group">
             <a href="{!! URL::route('users.list') !!}" class="btn btn-default search-reset">Reset</a>
             {!! Form::submit('Search', ["class" => "btn btn-info", "id" => "search-submit"]) !!}

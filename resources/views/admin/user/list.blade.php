@@ -23,7 +23,7 @@
                 @include('laravel-authentication-acl::admin.user.user-table')
             </div>
             <div class="col-md-3">
-                @include('laravel-authentication-acl::adnib.user.search')
+                @include('laravel-authentication-acl::admin.user.search')
             </div>
         </div>
 </div>
