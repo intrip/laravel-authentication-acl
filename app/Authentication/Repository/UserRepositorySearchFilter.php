@@ -7,6 +7,7 @@
  */
 use App;
 use DB;
+use Illuminate\Pagination\Paginator;
 use LaravelAcl\Library\Traits\ConnectionTrait;
 
 class UserRepositorySearchFilter
@@ -49,8 +50,7 @@ class UserRepositorySearchFilter
         $users_emails_unique = array_unique($user_emails);
         $results = array_only($users, array_values($users_emails_unique));
 
-        //@TODO fix this
-        return App::make('paginator')->make($results, count($results), $this->per_page);
+        return new Paginator($results, $this->per_page);
     }
 
     /**

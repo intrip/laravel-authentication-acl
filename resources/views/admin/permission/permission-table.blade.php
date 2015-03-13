@@ -19,8 +19,8 @@
                 <td style="width:45%">{!! $permission->permission !!}</td>
                 <td style="witdh:10%">
                     @if(! $permission->protected)
-                    <a href="{!! URL::action('Jacopo\Authentication\Controllers\PermissionController@editPermission', ['id' => $permission->id]) !!}"><i class="fa fa-pencil-square-o fa-2x"></i></a>
-                    <a href="{!! URL::action('Jacopo\Authentication\Controllers\PermissionController@deletePermission',['id' => $permission->id, '_token' => csrf_token()]) !!}" class="margin-left-5"><i class="fa fa-trash-o delete fa-2x"></i></a>
+                    <a href="{!! URL::route('users.edit.permission', ['id' => $permission->id]) !!}"><i class="fa fa-pencil-square-o fa-2x"></i></a>
+                    <a href="{!! URL::route('permission.delete',['id' => $permission->id, '_token' => csrf_token()]) !!}" class="margin-left-5"><i class="fa fa-trash-o delete fa-2x"></i></a>
                     @else
                         <i class="fa fa-times fa-2x light-blue"></i>
                         <i class="fa fa-times fa-2x margin-left-12 light-blue"></i>

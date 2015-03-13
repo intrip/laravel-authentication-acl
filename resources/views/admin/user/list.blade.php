@@ -20,10 +20,10 @@
                     @endforeach
                 @endif
                 {{-- user lists --}}
-                @include('laravel-authentication-acl::user-table')
+                @include('laravel-authentication-acl::admin.user.user-table')
             </div>
             <div class="col-md-3">
-                @include('laravel-authentication-acl::search')
+                @include('laravel-authentication-acl::adnib.user.search')
             </div>
         </div>
 </div>

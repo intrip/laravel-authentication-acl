@@ -1,4 +1,4 @@
-@extends('laravel-authentication-acl::...layouts.base-2cols')
+@extends('laravel-authentication-acl::admin.layouts.base-2cols')
 
 @section('title')
     Admin area: permission list
@@ -24,7 +24,7 @@
                 <h3 class="panel-title bariol-thin"><i class="fa fa-lock"></i> Permissions</h3>
             </div>
             <div class="panel-body">
-                @include('laravel-authentication-acl::permission-table')
+                @include('laravel-authentication-acl::admin.permission.permission-table')
             </div>
         </div>
     </div>

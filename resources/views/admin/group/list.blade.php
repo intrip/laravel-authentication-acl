@@ -25,7 +25,7 @@
                     <h3 class="panel-title bariol-thin"><i class="fa fa-group"></i> {!! Input::all() ? 'Search results:' : 'Groups' !!}</h3>
                 </div>
                 <div class="panel-body">
-                    @include('laravel-authentication-acl::groups-table')
+                    @include('laravel-authentication-acl::admin.group.groups-table')
                </div>
            </div>
         </div>

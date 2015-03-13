@@ -18,7 +18,7 @@
                 {!! Form::close() !!}
             </div>
             <div class="col-lg-2 col-md-3 col-sm-3">
-                    <a href="{!! URL::action('Jacopo\Authentication\Controllers\UserController@editUser') !!}" class="btn btn-info"><i class="fa fa-plus"></i> Add New</a>
+                    <a href="{!! URL::route('users.edit') !!}" class="btn btn-info"><i class="fa fa-plus"></i> Add New</a>
             </div>
         </div>
       <div class="row">
@@ -45,8 +45,8 @@
                               <td class="hidden-xs">{!! $user->last_login ? $user->last_login : 'not logged yet.' !!}</td>
                               <td>
                                   @if(! $user->protected)
-                                      <a href="{!! URL::action('Jacopo\Authentication\Controllers\UserController@editUser', ['id' => $user->id]) !!}"><i class="fa fa-pencil-square-o fa-2x"></i></a>
-                                      <a href="{!! URL::action('Jacopo\Authentication\Controllers\UserController@deleteUser',['id' => $user->id, '_token' => csrf_token()]) !!}" class="margin-left-5 delete"><i class="fa fa-trash-o fa-2x"></i></a>
+                                      <a href="{!! URL::route('users.edit', ['id' => $user->id]) !!}"><i class="fa fa-pencil-square-o fa-2x"></i></a>
+                                      <a href="{!! URL::route('users.delete',['id' => $user->id, '_token' => csrf_token()]) !!}" class="margin-left-5 delete"><i class="fa fa-trash-o fa-2x"></i></a>
                                   @else
                                       <i class="fa fa-times fa-2x light-blue"></i>
                                       <i class="fa fa-times fa-2x margin-left-12 light-blue"></i>
