@@ -30,7 +30,7 @@
            </div>
         </div>
         <div class="col-md-4">
-            @include('laravel-authentication-acl::search')
+            @include('laravel-authentication-acl::admin.group.search')
         </div>
     </div>
 </div>

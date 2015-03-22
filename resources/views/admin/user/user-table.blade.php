@@ -57,7 +57,7 @@
                       @endforeach
               </table>
               <div class="paginator">
-                  {-- !! $users->appends(Input::except(['page']) )->links() !! --}
+                  {!! $users->appends(Input::except(['page']) )->render() !!}
               </div>
               @else
                   <span class="text-warning"><h5>No results found.</h5></span>

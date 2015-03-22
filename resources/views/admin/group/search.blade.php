@@ -10,7 +10,7 @@
             {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'group name']) !!}
         </div>
         <span class="text-danger">{!! $errors->first('name') !!}</span>
-        {!! Form::submit('Search', ["class" => "btn btn-info pull-right"])}}
-        {!! Form::close()}}
+        {!! Form::submit('Search', ["class" => "btn btn-info pull-right"]) !!}
+        {!! Form::close() !!}
     </div>
 </div>

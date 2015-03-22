@@ -42,7 +42,7 @@ Admin area: edit group
                     {{-- group permission form --}}
                         <h4><i class="fa fa-lock"></i> Permissions</h4>
                         {{-- permissions --}}
-                        @include('laravel-authentication-acl::perm')
+                        @include('laravel-authentication-acl::admin.group.perm')
                     </div>
                 </div>
            </div>

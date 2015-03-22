@@ -27,13 +27,13 @@ Admin area: edit user
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-12 col-xs-12">
-                        <a href="{!! URL::route('users.profile.edit',["user_id" => $user->id]) !!}" class="btn btn-info pull-right" {!! ! isset($user->id) ? 'disabled="disabled"' : '' !!}><i class="fa fa-user"></i> Edit profile</a>
+                        <a href="{!! URL::route('users.profile.edit',['user_id' => $user->id]) !!}" class="btn btn-info pull-right" {!! ! isset($user->id) ? 'disabled="disabled"' : '' !!}><i class="fa fa-user"></i> Edit profile</a>
                     </div>
                 </div>
                 <div class="col-md-6 col-xs-12">
                     <h4>Login data</h4>
                     {!! Form::model($user, [ 'url' => URL::route('users.edit')] )  !!}
-                    {!! -- Field hidden to fix chrome and safari autocomplete bug -- !!}
+                    {-- Field hidden to fix chrome and safari autocomplete bug --}
                     {!! Form::password('__to_hide_password_autocomplete', ['class' => 'hidden']) !!}
                     <!-- email text field -->
                     <div class="form-group">
@@ -69,12 +69,12 @@ Admin area: edit user
                     </div>
                     <div class="col-md-6 col-xs-12">
                         <h4><i class="fa fa-users"></i> Groups</h4>
-                        @include('laravel-authentication-acl::groups')
+                        @include('laravel-authentication-acl::admin.user.groups')
 
                         {{-- group permission form --}}
                         <h4><i class="fa fa-lock"></i> Permission</h4>
                         {{-- permissions --}}
-                        @include('laravel-authentication-acl::perm')
+                        @include('laravel-authentication-acl::admin.user.perm')
                     </div>
                 </div>
             </div>

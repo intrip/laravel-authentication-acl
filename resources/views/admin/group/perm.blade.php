@@ -6,7 +6,7 @@
     </div>
     <span class="text-danger">{!! $errors->first('permissions') !!}</span>
     {!! Form::hidden('id', $group->id) !!}
-    {!! -- add permission operation -- !!}
+    {{-- add permission operation --}}
     {!! Form::hidden('operation', 1) !!}
     </div>
     <div class="form-group">
@@ -25,7 +25,7 @@
                        {!! Form::text('permission_desc', $permission->description, ['class' => 'form-control', 'readonly' => 'readonly']) !!}
          {!! Form::hidden('permissions', $permission->permission) !!}
             {!! Form::hidden('id', $group->id) !!}
-            {!! -- add permission operation -- !!}
+            {{-- add permission operation --}}
             {!! Form::hidden('operation', 0) !!}
         </div>
     </div>
