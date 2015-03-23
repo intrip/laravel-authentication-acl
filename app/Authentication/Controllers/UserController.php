@@ -284,11 +284,11 @@ class UserController extends Controller {
             $this->custom_profile_repository->addNewType($description);
         } catch(PermissionException $e)
         {
-            return Redirect::action('LaravelAcl\Authentication\Controllers\UserController@postEditProfile', ["user_id" => $user_id])
+            return Redirect::route('users.profile.edit', ["user_id" => $user_id])
                            ->withErrors(new MessageBag(["model" => $e->getMessage()]));
         }
 
-        return Redirect::action('LaravelAcl\Authentication\Controllers\UserController@postEditProfile', ["user_id" => $user_id])
+        return Redirect::route('users.profile.edit', ["user_id" => $user_id])
                        ->with('message', Config::get('acl_messages.flash.success.custom_field_added'));
     }
 
