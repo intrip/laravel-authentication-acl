@@ -63,7 +63,7 @@ class AuthController extends Controller {
         catch(JacopoExceptionsInterface $e)
         {
             $errors = $this->authenticator->getErrors();
-            return Redirect::action('LaravelAcl\Authentication\Controllers\AuthController@getClientLogin')->withInput()->withErrors($errors);
+            return Redirect::route("user.login")->withInput()->withErrors($errors);
         }
 
         return Redirect::to(Config::get('acl_config.user_login_redirect_url'));
@@ -101,12 +101,12 @@ class AuthController extends Controller {
         try
         {
             $this->reminder->send($email);
-            return Redirect::to("/user/reminder-success");
+            return Redirect::route("user.reminder-success");
         }
         catch(JacopoExceptionsInterface $e)
         {
             $errors = $this->reminder->getErrors();
-            return Redirect::action("LaravelAcl\\Http\\Controllers\\AuthController@getReminder")->withErrors($errors);
+            return Redirect::route("user.recovery-password")->withErrors($errors);
         }
     }
 
@@ -126,7 +126,7 @@ class AuthController extends Controller {
 
         if (! $this->reminder_validator->validate(Input::all()) )
         {
-          return Redirect::action("LaravelAcl\\Http\\Controllers\\AuthController@getChangePassword")->withErrors($this->reminder_validator->getErrors())->withInput();
+          return Redirect::route("user.change-password")->withErrors($this->reminder_validator->getErrors())->withInput();
         }
 
         try
@@ -136,10 +136,10 @@ class AuthController extends Controller {
         catch(JacopoExceptionsInterface $e)
         {
             $errors = $this->reminder->getErrors();
-            return Redirect::action("LaravelAcl\\Http\\Controllers\\AuthController@getChangePassword")->withErrors($errors);
+            return Redirect::route("user.change-password")->withErrors($errors);
         }
 
-        return Redirect::to("user/change-password-success");
+        return Redirect::route("user.change-password-success");
 
     }
 
