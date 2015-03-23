@@ -46,17 +46,9 @@ class DbHelper
         static::startForeignKeysCheck();
     }
 
-    /**
-     * @return string
-     */
-    public static function getConnectionName()
-    {
-        return (App::environment() != 'testing') ? 'authentication' : '';
-    }
-
     public static function getConnection()
     {
-        return DB::connection(static::getConnectionName());
+        return DB::connection();
     }
 
     /**
