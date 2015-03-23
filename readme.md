@@ -1,23 +1,42 @@
-## Laravel PHP Framework
+laravel-authentication-acl
+==========================
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/downloads.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+[![Build Status](https://travis-ci.org/intrip/laravel-authentication-acl.svg?branch=1.3)](https://travis-ci.org/intrip/laravel-authentication-acl)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
+## Laravel5 Version, be aware this version is still under development and not working yet
 
-Laravel is accessible, yet powerful, providing powerful tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+Laravel Authentication ACL is a Laravel 4 package, based on <a href="https://github.com/cartalyst/sentry" target="_blank">sentry2</a>. <br/>
+This package is made with the purpose of helping other developers to set-up
+a fully featured admin panel with an ACL using Laravel framework.
 
-## Official Documentation
+You can see the full documentation and usage [here](docs/index.md)
 
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
+####Main features:n
+ - User authentication and signup
+ - Configurable email confirmation
+ - Configurable captcha integration
+ - Can create groups and permissions and associate permissions to user or group
+ - Any user can have multiple groups and permissions
+ - Login throttling and password recovery
+ - Password strength check
+ - User banning
+ - Dashboard
+ - Infinite custom profile fields!
+ - User custom avatar and gravatar support
+ - Allow connection to a custom database other then laravel default
+ - Create custom menu items with configurable permissions
+ - Can handle permission on custom user routes
+ - Have two login forms: admin area and user area
+ - Many usable hashing algorithms sha256, md5 etc...
+ - Laravel4 based and easy to integrate in any Laravel application
+ - Have an Api that integrates with your application
+ - Bootstrap 3 and responsive design (mobile first)
+ - Easy install script from command line
+ - Fully customizable and easy to extend
+ - Works with major DBMS (mysql, sqlite, postgres)
+ - 100% object oriented
+ - The code is fully tested with Phpunit
 
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
-
-### License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+####Interested in some new feature?
+There's something you like to see in this package?
+Contact me and i'll do my best to implement that in next releases.
