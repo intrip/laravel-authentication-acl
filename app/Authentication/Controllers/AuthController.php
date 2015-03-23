@@ -43,10 +43,10 @@ class AuthController extends Controller {
         catch(JacopoExceptionsInterface $e)
         {
             $errors = $this->authenticator->getErrors();
-            return Redirect::action('LaravelAcl\Authentication\Controllers\AuthController@getAdminLogin')->withInput()->withErrors($errors);
+            return Redirect::route("user.admin.login")->withInput()->withErrors($errors);
         }
 
-        return Redirect::to('/admin/users/dashboard');
+        return Redirect::route('dashboard.default');
     }
 
     public function postClientLogin()

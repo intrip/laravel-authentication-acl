@@ -33,7 +33,7 @@ Admin area: edit user
                 <div class="col-md-6 col-xs-12">
                     <h4>Login data</h4>
                     {!! Form::model($user, [ 'url' => URL::route('users.edit')] )  !!}
-                    {-- Field hidden to fix chrome and safari autocomplete bug --}
+                    {{-- Field hidden to fix chrome and safari autocomplete bug --}}
                     {!! Form::password('__to_hide_password_autocomplete', ['class' => 'hidden']) !!}
                     <!-- email text field -->
                     <div class="form-group">
