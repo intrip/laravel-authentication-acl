@@ -95,7 +95,7 @@
                                 <div class="form-group">
                                     <div class="input-group">
                                         <span id="captcha-img-container">
-                                            @include('laravel-authentication-acl::captcha-image')
+                                            @include('laravel-authentication-acl::client.auth.captcha-image')
                                         </span>
                                         <a id="captcha-gen-button" href="#" class="btn btn-small btn-info margin-left-5"><i class="fa fa-refresh"></i></a>
                                     </div>
