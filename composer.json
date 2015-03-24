@@ -1,7 +1,21 @@
 {
-	"name": "laravel/laravel",
-	"description": "The Laravel Framework.",
-	"keywords": ["framework", "laravel"],
+  "name": "jacopo/laravel-authentication-acl",
+  "description": "Laravel authentication and ACL package with a cool admin panel",
+  "keywords": [
+    "acl",
+    "authentication",
+    "signup",
+    "admin panel",
+    "profile",
+    "laravel"
+  ],
+  "authors": [
+    {
+      "name": "jacopo",
+      "email": "jacopo@jacopobeschi.com",
+      "homepage": "http://www.jacopobeschi.com"
+    }
+  ],
 	"license": "MIT",
 	"type": "project",
 	"require": {
