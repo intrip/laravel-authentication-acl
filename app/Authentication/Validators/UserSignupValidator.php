@@ -18,7 +18,7 @@ class UserSignupValidator extends OverrideConnectionValidator
 
     public function __construct()
     {
-        $enable_captcha = Config::get('acl_captcha_signup');
+        $enable_captcha = Config::get('acl_base.captcha_signup');
         if($enable_captcha) $this->addCaptchaRule();
     }
 
