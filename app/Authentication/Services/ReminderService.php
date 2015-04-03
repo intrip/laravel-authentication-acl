@@ -89,7 +89,7 @@ class ReminderService {
 
     private function prepareResetPasswordLink($token, $to)
     {
-        $this->body = link_to_action("LaravelAcl\\Authentication\\Controllers\\AuthController@getChangePassword",
+        $this->body = link_to_route("user.change-password",
                  Config::get('acl_messages.links.change_password'),
                 ["email"=> $to, "token"=> $token] );
     }
