@@ -58,10 +58,9 @@ class AuthenticationServiceProvider extends ServiceProvider
         // include custom validators
         require __DIR__ . "/validators.php";
 
-//        $this->setupConnection();
-
         $this->registerCommands();
 
+        $this->setupViewsPublishPath();
 //        $this->setupAcceptanceTestingParams();
     }
 
@@ -219,5 +218,12 @@ class AuthenticationServiceProvider extends ServiceProvider
     {
         AliasLoader::getInstance()->alias('Form', 'Illuminate\Html\FormFacade');
         AliasLoader::getInstance()->alias('HTML', 'Illuminate\Html\HtmlFacade');
+    }
+
+    protected function setupViewsPublishPath()
+    {
+        $this->publishes([
+                                 __DIR__.'../../resources/views' => public_path('jacopo/laravel-authentication-acl'),
+                         ], 'public');
     }
 }
