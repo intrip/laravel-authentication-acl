@@ -5,14 +5,11 @@
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
 use Cartalyst\Sentry\Users\Eloquent\User as CartaUser;
-use LaravelAcl\Library\Traits\OverrideConnectionTrait;
 use Cartalyst\Sentry\Users\UserExistsException;
 use Cartalyst\Sentry\Users\LoginRequiredException;
 
 class User extends CartaUser
 {
-//    use OverrideConnectionTrait;
-
     protected $fillable = ["email", "password", "permissions", "activated", "activation_code", "activated_at", "last_login", "protected", "banned"];
 
     protected $guarded = ["id"];

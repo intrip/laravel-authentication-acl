@@ -1,10 +1,9 @@
 <?php namespace LaravelAcl\Authentication\Validators;
 
-use LaravelAcl\Library\Validators\OverrideConnectionValidator;
 use Event;
+use LaravelAcl\Library\Validators\AbstractValidator;
 
-
-class UserValidator extends OverrideConnectionValidator
+class UserValidator extends AbstractValidator
 {
     protected static $rules = [
         "email" => ["required", "email"],

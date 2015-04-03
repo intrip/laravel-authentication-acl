@@ -1,9 +1,9 @@
 <?php namespace LaravelAcl\Authentication\Validators;
 
 use Event;
-use LaravelAcl\Library\Validators\OverrideConnectionValidator;
+use LaravelAcl\Library\Validators\AbstractValidator;
 
-class PermissionValidator extends OverrideConnectionValidator
+class PermissionValidator extends AbstractValidator
 {
     protected static $rules = array(
         "description" => ["required", "max:255"],

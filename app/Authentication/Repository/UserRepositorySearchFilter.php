@@ -8,12 +8,10 @@
 use App;
 use DB;
 use Illuminate\Pagination\Paginator;
-use LaravelAcl\Library\Traits\ConnectionTrait;
 
 class UserRepositorySearchFilter
 {
     public static $multiple_ordering_separator = ",";
-    use ConnectionTrait;
 
     private $per_page;
     private $user_table_name = "users";

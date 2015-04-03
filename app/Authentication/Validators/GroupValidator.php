@@ -1,9 +1,9 @@
 <?php namespace LaravelAcl\Authentication\Validators;
 
-use LaravelAcl\Library\Validators\OverrideConnectionValidator;
 use Event;
+use LaravelAcl\Library\Validators\AbstractValidator;
 
-class GroupValidator extends OverrideConnectionValidator
+class GroupValidator  extends AbstractValidator
 {
     protected static $rules = array(
         "name" => ["required"],

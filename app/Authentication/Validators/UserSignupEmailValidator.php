@@ -4,13 +4,11 @@
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
-use Illuminate\Support\Facades\Lang;
-use Illuminate\Support\MessageBag;
 use LaravelAcl\Authentication\Exceptions\UserNotFoundException;
+use LaravelAcl\Library\Validators\AbstractValidator;
 use App, Session, Input, Config;
-use LaravelAcl\Library\Validators\OverrideConnectionValidator;
 
-class UserSignupEmailValidator extends OverrideConnectionValidator
+class UserSignupEmailValidator extends AbstractValidator
 {
     public function validateEmailUnique($attribute, $value, $parameters)
     {

@@ -1,9 +1,9 @@
 <?php namespace LaravelAcl\Authentication\Validators;
 
 use Event;
-use LaravelAcl\Library\Validators\OverrideConnectionValidator;
+use LaravelAcl\Library\Validators\AbstractValidator;
 
-class UserProfileValidator extends OverrideConnectionValidator
+class UserProfileValidator extends AbstractValidator
 {
     protected static $rules = array(
         "first_name" => "max:50",

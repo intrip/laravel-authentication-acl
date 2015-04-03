@@ -1,9 +1,9 @@
 <?php namespace LaravelAcl\Authentication\Validators;
 
 use Config;
-use LaravelAcl\Library\Validators\OverrideConnectionValidator;
+use LaravelAcl\Library\Validators\AbstractValidator;
 
-class UserSignupValidator extends OverrideConnectionValidator
+class UserSignupValidator extends AbstractValidator
 {
   protected static $messages = [
       "mail_signup" => "an user with that email already exists."
