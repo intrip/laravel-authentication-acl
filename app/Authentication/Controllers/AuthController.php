@@ -4,7 +4,6 @@ use View, Sentry, Input, Redirect, App, Config;
 use LaravelAcl\Authentication\Validators\ReminderValidator;
 use LaravelAcl\Library\Exceptions\JacopoExceptionsInterface;
 use LaravelAcl\Authentication\Services\ReminderService;
-use LaravelAcl\Authentication\Controllers\Controller;
 
 class AuthController extends Controller {
 
