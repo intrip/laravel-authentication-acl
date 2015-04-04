@@ -58,6 +58,8 @@ class AuthenticationServiceProvider extends ServiceProvider
         // include custom validators
         require __DIR__ . "/validators.php";
 
+        require __DIR__.'/../Http/routes.php';
+
         $this->registerCommands();
 
         $this->setupViewsPublishPath();
