@@ -226,17 +226,17 @@ class AuthenticationServiceProvider extends ServiceProvider
     protected function publishViews()
     {
         $this->publishes([
-                                 __DIR__.'../../resources/views' => public_path('jacopo/laravel-authentication-acl'),
+                                 __DIR__.'/../../resources/views' => public_path('jacopo/laravel-authentication-acl'),
                          ], 'public');
     }
 
     protected function publishConfig()
     {
         $this->publishes([
-                                 __DIR__.'../../config/acl_base.php' => config_path('acl_base.php'),
-                                 __DIR__.'../../config/acl_menu.php' => config_path('acl_menu.php'),
-                                 __DIR__.'../../config/acl_menu.php' => config_path('acl_menu.php'),
-                                 __DIR__.'../../config/acl_permissions.php' => config_path('acl_permissions.php'),
+                                 __DIR__.'/../../config/acl_base.php' => config_path('acl_base.php'),
+                                 __DIR__.'/../../config/acl_menu.php' => config_path('acl_menu.php'),
+                                 __DIR__.'/../../config/acl_menu.php' => config_path('acl_menu.php'),
+                                 __DIR__.'/../../config/acl_permissions.php' => config_path('acl_permissions.php'),
                          ]);
     }
 }
