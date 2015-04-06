@@ -62,9 +62,8 @@ class AuthenticationServiceProvider extends ServiceProvider
 
         $this->registerCommands();
 
-        $this->publishViews();
+        $this->publishAssets();
         $this->publishConfig();
-        //        $this->setupAcceptanceTestingParams();
     }
 
 
@@ -223,10 +222,10 @@ class AuthenticationServiceProvider extends ServiceProvider
         AliasLoader::getInstance()->alias('HTML', 'Illuminate\Html\HtmlFacade');
     }
 
-    protected function publishViews()
+    protected function publishAssets()
     {
         $this->publishes([
-                                 __DIR__.'/../../resources/views' => public_path('packages/jacopo/laravel-authentication-acl'),
+                                 __DIR__.'/../../public/packages/jacopo/laravel-authentication-acl' => public_path('jacopo/laravel-authentication-acl'),
                          ]);
     }
 
