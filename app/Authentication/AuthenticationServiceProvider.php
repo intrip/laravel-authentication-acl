@@ -226,8 +226,8 @@ class AuthenticationServiceProvider extends ServiceProvider
     protected function publishViews()
     {
         $this->publishes([
-                                 __DIR__.'/../../resources/views' => public_path('jacopo/laravel-authentication-acl'),
-                         ], 'public');
+                                 __DIR__.'/../../resources/views' => public_path('packages/jacopo/laravel-authentication-acl'),
+                         ]);
     }
 
     protected function publishConfig()
