@@ -4,7 +4,6 @@ use App;
 use LaravelAcl\Authentication\Classes\Captcha\GregWarCaptchaValidator;
 use LaravelAcl\Authentication\Classes\CustomProfile\Repository\CustomProfileRepository;
 use LaravelAcl\Authentication\Commands\InstallCommand;
-use LaravelAcl\Authentication\Commands\PrepareCommand;
 use TestRunner;
 use Config;
 use LaravelAcl\Authentication\Middleware\Config as ConfigMiddleware;
@@ -61,11 +60,16 @@ class AuthenticationServiceProvider extends ServiceProvider
         require __DIR__.'/../Http/routes.php';
 
         $this->registerCommands();
-
         $this->publishAssets();
         $this->publishConfig();
+
+        $this->overwriteSentryConfig();
     }
 
+    protected function overwriteSentryConfig()
+    {
+        Config::set('cartalyst.sentry', Config::get('acl_sentry'));
+    }
 
     protected function bindClasses()
     {
@@ -136,29 +140,6 @@ class AuthenticationServiceProvider extends ServiceProvider
 
     }
 
-    protected function setupConnection()
-    {
-        $connection = Config::get('acl_database.default');
-
-        if($connection !== 'default')
-        {
-            $authenticator_conn = Config::get('acl_database.connections.' . $connection);
-        } else
-        {
-            $connection = Config::get('database.default');
-            $authenticator_conn = Config::get('database.connections.' . $connection);
-        }
-
-        Config::set('database.connections.authentication', $authenticator_conn);
-
-        $this->setupPresenceVerifierConnection();
-    }
-
-    protected function setupPresenceVerifierConnection()
-    {
-        $this->app['validation.presence']->setConnection('authentication');
-    }
-
     /**
      * Get the services provided by the provider.
      *
@@ -180,20 +161,9 @@ class AuthenticationServiceProvider extends ServiceProvider
         $this->commands('authentication.install');
     }
 
-    private function registerPrepareCommand()
-    {
-        $this->app['authentication.prepare'] = $this->app->share(function ($app)
-        {
-            return new PrepareCommand;
-        });
-
-        $this->commands('authentication.prepare');
-    }
-
     private function registerCommands()
     {
         $this->registerInstallCommand();
-        $this->registerPrepareCommand();
     }
 
     protected function setupAcceptanceTestingParams()
