@@ -56,12 +56,15 @@ class AuthenticationServiceProvider extends ServiceProvider
         require __DIR__ . "/subscribers.php";
         // include custom validators
         require __DIR__ . "/validators.php";
-
+        // package routes
         require __DIR__.'/../Http/routes.php';
 
         $this->registerCommands();
+
+        // publish data
         $this->publishAssets();
         $this->publishConfig();
+        $this->publishViews();
 
         $this->overwriteSentryConfig();
     }
@@ -207,6 +210,14 @@ class AuthenticationServiceProvider extends ServiceProvider
                                  __DIR__.'/../../config/acl_menu.php' => config_path('acl_menu.php'),
                                  __DIR__.'/../../config/acl_permissions.php' => config_path('acl_permissions.php'),
                                  __DIR__.'/../../config/acl_sentry.php' => config_path('acl_sentry.php'),
+                         ]);
+    }
+
+    private function publishViews()
+    {
+
+        $this->publishes([
+                                 __DIR__.'/../../resources/views' => base_path('resources/views/jacopo/laravel-authentication-acl'),
                          ]);
     }
 }
