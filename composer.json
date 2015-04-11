@@ -22,7 +22,7 @@
 		"laravel/framework": "5.0.*",
     "illuminate/html": "5.0.*",
     "intervention/image": "2.*",
-    "cartalyst/sentry": "dev-feature/laravel-5",
+    "jacopo/authentication-sentry": "1.0.0",
     "gregwar/captcha": "1.0.11"
   },
 	"require-dev": {
