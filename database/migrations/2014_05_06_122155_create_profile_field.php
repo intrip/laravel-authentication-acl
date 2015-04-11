@@ -12,6 +12,7 @@ class CreateProfileField extends Migration {
 	 */
 	public function up()
 	{
+        Schema::dropIfExists('profile_field');
         Schema::create('profile_field', function(Blueprint $table)
         {
             $table->increments('id');

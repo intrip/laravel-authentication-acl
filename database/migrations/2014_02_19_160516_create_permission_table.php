@@ -12,6 +12,7 @@ class CreatePermissionTable extends Migration {
 	 */
 	public function up()
 	{
+        Schema::dropIfExists('permission');
         Schema::create('permission', function(Blueprint $table)
         {
             $table->increments('id');

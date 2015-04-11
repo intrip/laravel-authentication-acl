@@ -12,6 +12,7 @@ class CreateUserProfileTable extends Migration {
 	 */
 	public function up()
 	{
+        Schema::dropIfExists('users_profile');
         Schema::create('user_profile', function(Blueprint $table)
         {
             $table->increments('id');
