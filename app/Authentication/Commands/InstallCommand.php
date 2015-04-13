@@ -45,7 +45,7 @@ class InstallCommand extends Command {
         $this->call_wrapper->call('migrate');
         $this->db_seeder->run();
 
-        $this->call_wrapper->call('vendor:publish --force');
+        $this->call_wrapper->call('vendor:publish', ['force']);
 
         $this->info('## Laravel Authentication ACL Installed successfully ##');
     }

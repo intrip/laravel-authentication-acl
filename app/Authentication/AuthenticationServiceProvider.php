@@ -217,11 +217,12 @@ class AuthenticationServiceProvider extends ServiceProvider
                                  __DIR__.'/../../resources/views' => base_path('resources/views/jacopo/laravel-authentication-acl'),
                          ]);
     }
-    protected function publishMigrations()
+    protected function publishDatabase()
     {
 
         $this->publishes([
                                  __DIR__.'/../../database/migrations' => $this->app->databasePath().'/migrations',
+                                 __DIR__.'/../../database/seeds' => $this->app->databasePath().'/seeds',
                          ]);
     }
 
@@ -230,6 +231,6 @@ class AuthenticationServiceProvider extends ServiceProvider
         $this->publishAssets();
         $this->publishConfig();
         $this->publishViews();
-        $this->publishMigrations();
+        $this->publishDatabase();
     }
 }
