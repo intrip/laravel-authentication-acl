@@ -4,7 +4,7 @@ laravel-authentication-acl
 [![Build Status](https://travis-ci.org/intrip/laravel-authentication-acl.svg?branch=1.2)](https://travis-ci.org/intrip/laravel-authentication-acl)
 
 
-## This version is the latest one for the Laravel 4.2.* branch
+## This branch is for Laravel 4.2.*; for the Laravel 5 version use the 1.3 branch
 
 Laravel Authentication ACL is a Laravel 4 package, based on <a href="https://github.com/cartalyst/sentry" target="_blank">sentry2</a>. <br/>
 This package is made with the purpose of helping other developers to set-up
