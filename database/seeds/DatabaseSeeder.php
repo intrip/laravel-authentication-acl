@@ -13,9 +13,9 @@ class DatabaseSeeder extends Seeder
     {
         Eloquent::unguard();
 
-        $this->call('PermissionSeeder');
-        $this->call('GroupsSeeder');
-        $this->call('UserSeeder');
+        $this->call('LaravelAcl\Database\PermissionSeeder');
+        $this->call('LaravelAcl\Database\GroupsSeeder');
+        $this->call('LaravelAcl\Database\UserSeeder');
 
         Eloquent::reguard();
     }
