@@ -1,11 +1,11 @@
-<?php  namespace Jacopo\Authentication\Tests\Unit;
+<?php  namespace LaravelAcl\Authentication\Tests\Unit;
 
 use Carbon\Carbon;
 use DB;
-use Jacopo\Authentication\Models\User;
-use Jacopo\Authentication\Models\UserProfile;
-use Jacopo\Authentication\Repository\EloquentUserProfileRepository;
-use Jacopo\Authentication\Tests\Unit\Traits\UserFactory;
+use LaravelAcl\Authentication\Models\User;
+use LaravelAcl\Authentication\Models\UserProfile;
+use LaravelAcl\Authentication\Repository\EloquentUserProfileRepository;
+use LaravelAcl\Authentication\Tests\Unit\Traits\UserFactory;
 
 /**
  * Test EloquentUserProfileRepositoryTest
@@ -30,11 +30,11 @@ class EloquentUserProfileRepositoryTest extends DbTestCase
      **/
     public function canCreateNewProfile()
     {
-        $users = $this->make('Jacopo\Authentication\Models\User', $this->getUserStub());
+        $users = $this->make('LaravelAcl\Authentication\Models\User', $this->getUserStub());
         $data = $this->prepareFakeProfileData($users[0]->id);
         $profile = $this->repo_profile->create($data);
 
-        $this->assertInstanceOf('\Jacopo\Authentication\Models\UserProfile', $profile);
+        $this->assertInstanceOf('\LaravelAcl\Authentication\Models\UserProfile', $profile);
         $this->assertEquals($data['user_id'], $profile->user_id);
     }
 
@@ -52,7 +52,7 @@ class EloquentUserProfileRepositoryTest extends DbTestCase
      **/
     public function canRetriveProfileFromUserId()
     {
-        $users = $this->make('Jacopo\Authentication\Models\User', $this->getUserStub());
+        $users = $this->make('LaravelAcl\Authentication\Models\User', $this->getUserStub());
         list($profile_data, $profile) = $this->createFakeProfile($users[0]);
         $profile_db = $this->repo_profile->getFromUserId($users[0]->id);
         $this->assertEquals($profile->code, $profile_db->code);
@@ -60,7 +60,7 @@ class EloquentUserProfileRepositoryTest extends DbTestCase
 
     /**
      * @test
-     * @expectedException \Jacopo\Authentication\Exceptions\UserNotFoundException
+     * @expectedException \LaravelAcl\Authentication\Exceptions\UserNotFoundException
      **/
     public function it_throws_exception_if_doesnt_find_the_user()
     {
@@ -69,11 +69,11 @@ class EloquentUserProfileRepositoryTest extends DbTestCase
 
     /**
      * @test
-     * @expectedException \Jacopo\Authentication\Exceptions\ProfileNotFoundException
+     * @expectedException \LaravelAcl\Authentication\Exceptions\ProfileNotFoundException
      **/
     public function it_throws_exception_if_doesnt_find_the_profile()
     {
-        $users = $this->make('Jacopo\Authentication\Models\User', $this->getUserStub());
+        $users = $this->make('LaravelAcl\Authentication\Models\User', $this->getUserStub());
         $this->repo_profile->getFromUserId($users[0]->id);
     }
 
@@ -82,7 +82,7 @@ class EloquentUserProfileRepositoryTest extends DbTestCase
      **/
     public function canCreateAndUserProfile()
     {
-        $users = $this->make('Jacopo\Authentication\Models\User', $this->getUserStub());
+        $users = $this->make('LaravelAcl\Authentication\Models\User', $this->getUserStub());
         list($profile_data, $profile) = $this->createFakeProfile($users[0]);
 
         $this->objectHasAllArrayAttributes($profile_data, $profile);
@@ -115,7 +115,7 @@ class EloquentUserProfileRepositoryTest extends DbTestCase
      **/
     public function canCreateNewEmptyProfile()
     {
-        $user = $this->make('Jacopo\Authentication\Models\User', $this->getUserStub())->first();
+        $user = $this->make('LaravelAcl\Authentication\Models\User', $this->getUserStub())->first();
 
         $this->repo_profile->attachEmptyProfile($user);
 
@@ -128,7 +128,7 @@ class EloquentUserProfileRepositoryTest extends DbTestCase
      **/
     public function attachNewProfileOnlyIfDoesNotExists()
     {
-        $user = $this->make('Jacopo\Authentication\Models\User', $this->getUserStub())->first();
+        $user = $this->make('LaravelAcl\Authentication\Models\User', $this->getUserStub())->first();
 
         $this->repo_profile->attachEmptyProfile($user);
         $this->repo_profile->attachEmptyProfile($user);

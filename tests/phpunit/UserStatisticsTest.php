@@ -1,5 +1,5 @@
-<?php  namespace Jacopo\Authentication\Tests\Unit;
-use Jacopo\Authentication\Classes\Statistics\UserStatistics;
+<?php  namespace LaravelAcl\Authentication\Tests\Unit;
+use LaravelAcl\Authentication\Classes\Statistics\UserStatistics;
 use App;
 /**
  * Test UserTest

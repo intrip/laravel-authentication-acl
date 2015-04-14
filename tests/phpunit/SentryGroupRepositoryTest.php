@@ -1,11 +1,11 @@
-<?php  namespace Jacopo\Authentication\Tests\Unit;
+<?php  namespace LaravelAcl\Authentication\Tests\Unit;
 
 /**
  * Test GroupRepositoryTest
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
-use Jacopo\Authentication\Repository\SentryGroupRepository;
+use LaravelAcl\Authentication\Repository\SentryGroupRepository;
 use Mockery as m;
 
 class SentryGroupRepositoryTest extends DbTestCase
@@ -18,7 +18,7 @@ class SentryGroupRepositoryTest extends DbTestCase
     {
         parent::setUp();
         $this->group_repository = new SentryGroupRepository;
-        $this->group_class = 'Jacopo\Authentication\Models\Group';
+        $this->group_class = 'LaravelAcl\Authentication\Models\Group';
     }
 
     public function tearDown()
@@ -82,7 +82,7 @@ class SentryGroupRepositoryTest extends DbTestCase
 
     /**
      * @test
-     * @expectedException \Jacopo\Authentication\Exceptions\UserNotFoundException
+     * @expectedException \LaravelAcl\Authentication\Exceptions\UserNotFoundException
      **/
     public function itHandleErrorsWithFind()
     {

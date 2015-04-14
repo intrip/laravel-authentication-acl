@@ -1,4 +1,4 @@
-<?php  namespace Jacopo\Authentication\Tests\Unit\Traits;
+<?php  namespace LaravelAcl\Authentication\Tests\Unit\Traits;
 
 use Carbon\Carbon;
 

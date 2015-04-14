@@ -1,10 +1,10 @@
-<?php  namespace Jacopo\Authentication\Tests\Unit;
+<?php  namespace LaravelAcl\Authentication\Tests\Unit;
 
 use Event, App;
-use Jacopo\Authentication\Classes\CustomProfile\Repository\CustomProfileRepository;
-use Jacopo\Authentication\Models\ProfileField;
-use Jacopo\Authentication\Models\ProfileFieldType;
-use Jacopo\Authentication\Tests\Unit\Traits\UserFactory;
+use LaravelAcl\Authentication\Classes\CustomProfile\Repository\CustomProfileRepository;
+use LaravelAcl\Authentication\Models\ProfileField;
+use LaravelAcl\Authentication\Models\ProfileFieldType;
+use LaravelAcl\Authentication\Tests\Unit\Traits\UserFactory;
 
 /**
  * Test CustomProfileTest
@@ -29,7 +29,7 @@ class CustomProfileRepositoryTest extends DbTestCase {
         $this->profile_repository = App::make('profile_repository');
         $this->initializeUserHasher();
 
-        $users = $this->times(2)->make('Jacopo\Authentication\Models\User',(function (){return $this->getUserStub();}));
+        $users = $this->times(2)->make('LaravelAcl\Authentication\Models\User',(function (){return $this->getUserStub();}));
         $this->user_1=  $users[0];
         $this->user_2=  $users[1];
         $this->profile_1 = $this->profile_repository->attachEmptyProfile($this->user_1);

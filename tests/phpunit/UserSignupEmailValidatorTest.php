@@ -1,4 +1,4 @@
-<?php  namespace Jacopo\Authentication\Tests\Unit;
+<?php  namespace LaravelAcl\Authentication\Tests\Unit;
 
 /**
  * Test UserSignupEmailValidatorTest
@@ -6,8 +6,8 @@
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
 use App, Input, Session, Config, Event;
-use Jacopo\Authentication\Tests\Unit\Traits\Helper;
-use Jacopo\Authentication\Validators\UserSignupEmailValidator;
+use LaravelAcl\Authentication\Tests\Unit\Traits\Helper;
+use LaravelAcl\Authentication\Validators\UserSignupEmailValidator;
 use Mockery as m;
 class UserSignupEmailValidatorTest extends DbTestCase {
     use Helper;
@@ -86,7 +86,7 @@ class UserSignupEmailValidatorTest extends DbTestCase {
 
     public function activateSingleEmailCheck()
     {
-        Event::listen('mailer.sending', 'Jacopo\Authentication\Tests\Unit\UserSignupEmailValidatorTest@checkForSingleMailData');
+        Event::listen('mailer.sending', 'LaravelAcl\Authentication\Tests\Unit\UserSignupEmailValidatorTest@checkForSingleMailData');
     }
 }
  

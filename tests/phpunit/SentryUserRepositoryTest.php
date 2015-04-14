@@ -1,7 +1,7 @@
-<?php  namespace Jacopo\Authentication\Tests\Unit;
+<?php  namespace LaravelAcl\Authentication\Tests\Unit;
 
 use App, Config;
-use Jacopo\Authentication\Repository\SentryUserRepository;
+use LaravelAcl\Authentication\Repository\SentryUserRepository;
 use Mockery as m;
 use Cartalyst\Sentry\Users\UserExistsException;
 
@@ -65,7 +65,7 @@ class SentryUserRepositoryTest extends DbTestCase
 
     /**
      * @test
-     * @expectedException \Jacopo\Authentication\Exceptions\UserExistsException
+     * @expectedException \LaravelAcl\Authentication\Exceptions\UserExistsException
      **/
     public function it_throws_exception_if_user_aready_exists()
     {
@@ -133,7 +133,7 @@ class SentryUserRepositoryTest extends DbTestCase
 
     /**
      * @test
-     * @expectedException Jacopo\Authentication\Exceptions\UserNotFoundException
+     * @expectedException LaravelAcl\Authentication\Exceptions\UserNotFoundException
      **/
     public function it_throws_exception_if_cannot_find_user_by_login()
     {

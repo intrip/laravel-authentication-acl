@@ -1,14 +1,14 @@
-<?php  namespace Jacopo\Authentication\Tests\Unit;
+<?php  namespace LaravelAcl\Authentication\Tests\Unit;
 
 /**
  * Test SentryAuthenticationHelperTest
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
-use Jacopo\Authentication\Models\User;
+use LaravelAcl\Authentication\Models\User;
 use Mockery as m;
 use Config;
-use Jacopo\Authentication\Helpers\SentryAuthenticationHelper;
+use LaravelAcl\Authentication\Helpers\SentryAuthenticationHelper;
 
 class SentryAuthenticationHelperTest extends TestCase
 {
@@ -74,7 +74,7 @@ class SentryAuthenticationHelperTest extends TestCase
      **/
     public function it_check_for_permission_to_edit_other_profiles()
     {
-        $helper = m::mock('Jacopo\Authentication\Helpers\SentryAuthenticationHelper')->makePartial()->shouldReceive('hasPermission')->andReturn(true)
+        $helper = m::mock('LaravelAcl\Authentication\Helpers\SentryAuthenticationHelper')->makePartial()->shouldReceive('hasPermission')->andReturn(true)
                    ->getMock();
         $user = new \StdClass;
         $user_id = 1;

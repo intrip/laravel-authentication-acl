@@ -1,10 +1,10 @@
-<?php  namespace Jacopo\Authentication\Tests\Unit;
+<?php  namespace LaravelAcl\Authentication\Tests\Unit;
 
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Session;
-use Jacopo\Authentication\Exceptions\AuthenticationErrorException;
-use Jacopo\Authentication\Tests\Unit\Traits\Helper;
-use Jacopo\Authentication\Tests\Unit\Traits\UserFactory;
+use LaravelAcl\Authentication\Exceptions\AuthenticationErrorException;
+use LaravelAcl\Authentication\Tests\Unit\Traits\Helper;
+use LaravelAcl\Authentication\Tests\Unit\Traits\UserFactory;
 use Mockery as m;
 use Config;
 use App;
@@ -25,7 +25,7 @@ class AuthControllerTest extends DbTestCase
     {
         parent::setUp();
         $this->initializeUserHasher();
-        $this->current_user = $this->make('Jacopo\Authentication\Models\User', $this->getUserStub())->first();
+        $this->current_user = $this->make('LaravelAcl\Authentication\Models\User', $this->getUserStub())->first();
         $this->current_email = $this->current_user->email;
     }
 
@@ -44,7 +44,7 @@ class AuthControllerTest extends DbTestCase
         $remember = "1";
         $this->mockAuthenticatorSuccess($email, $password, $remember);
 
-        $this->action('POST', 'Jacopo\Authentication\Controllers\AuthController@postClientLogin', [
+        $this->action('POST', 'LaravelAcl\Authentication\Controllers\AuthController@postClientLogin', [
                 "email"    => $email,
                 "password" => $password,
                 "remember" => $remember
@@ -63,7 +63,7 @@ class AuthControllerTest extends DbTestCase
         $remember = "1";
         $this->mockAuthenticatorSuccess($email, $password, $remember);
 
-        $this->action('POST', 'Jacopo\Authentication\Controllers\AuthController@postAdminLogin', [
+        $this->action('POST', 'LaravelAcl\Authentication\Controllers\AuthController@postAdminLogin', [
                 "email"    => $email,
                 "password" => $password,
                 "remember" => $remember
@@ -97,13 +97,13 @@ class AuthControllerTest extends DbTestCase
 
         $this->mockAuthenticationFails($email, $password, $remember);
 
-        $this->action('POST', 'Jacopo\Authentication\Controllers\AuthController@postClientLogin', [
+        $this->action('POST', 'LaravelAcl\Authentication\Controllers\AuthController@postClientLogin', [
                 "email"    => $email,
                 "password" => $password,
                 "remember" => $remember
         ]);
 
-        $this->assertRedirectedToAction('Jacopo\Authentication\Controllers\AuthController@getClientLogin');
+        $this->assertRedirectedToAction('LaravelAcl\Authentication\Controllers\AuthController@getClientLogin');
         $this->assertSessionHasErrors();
     }
 
@@ -118,13 +118,13 @@ class AuthControllerTest extends DbTestCase
 
         $this->mockAuthenticationFails($email, $password, $remember);
 
-        $this->action('POST', 'Jacopo\Authentication\Controllers\AuthController@postAdminLogin', [
+        $this->action('POST', 'LaravelAcl\Authentication\Controllers\AuthController@postAdminLogin', [
                 "email"    => $email,
                 "password" => $password,
                 "remember" => $remember
         ]);
 
-        $this->assertRedirectedToAction('Jacopo\Authentication\Controllers\AuthController@getAdminLogin');
+        $this->assertRedirectedToAction('LaravelAcl\Authentication\Controllers\AuthController@getAdminLogin');
         $this->assertSessionHasErrors();
     }
 
@@ -152,9 +152,9 @@ class AuthControllerTest extends DbTestCase
         StateKeeper::set('expected_subject', 'Password recovery request');
         StateKeeper::set('expected_body', 'We received a request to change your password, if you authorize it');
 
-        Event::listen('mailer.sending', 'Jacopo\Authentication\Tests\Unit\AuthControllerTest@checkForSingleMailData');
+        Event::listen('mailer.sending', 'LaravelAcl\Authentication\Tests\Unit\AuthControllerTest@checkForSingleMailData');
 
-        $this->action('POST', 'Jacopo\Authentication\Controllers\AuthController@postReminder', ["email" => $this->current_email]);
+        $this->action('POST', 'LaravelAcl\Authentication\Controllers\AuthController@postReminder', ["email" => $this->current_email]);
         $this->assertRedirectedTo('/user/reminder-success');
     }
 
@@ -163,17 +163,17 @@ class AuthControllerTest extends DbTestCase
      **/
     public function it_process_recovery_and_show_errors()
     {
-        $mock_reminder_service = m::mock('Jacopo\Authentication\Services\ReminderService')
+        $mock_reminder_service = m::mock('LaravelAcl\Authentication\Services\ReminderService')
                                   ->shouldReceive('send')
                                   ->once()
                                   ->andThrow(new AuthenticationErrorException)
                                   ->shouldReceive('getErrors')
                                   ->getMock();
-        $this->app->instance('Jacopo\Authentication\Services\ReminderService', $mock_reminder_service);
+        $this->app->instance('LaravelAcl\Authentication\Services\ReminderService', $mock_reminder_service);
 
-        $this->action('POST', 'Jacopo\Authentication\Controllers\AuthController@postReminder');
+        $this->action('POST', 'LaravelAcl\Authentication\Controllers\AuthController@postReminder');
 
-        $this->assertRedirectedToAction('Jacopo\Authentication\Controllers\AuthController@getReminder');
+        $this->assertRedirectedToAction('LaravelAcl\Authentication\Controllers\AuthController@getReminder');
         $this->assertSessionHasErrors();
     }
 
@@ -182,14 +182,14 @@ class AuthControllerTest extends DbTestCase
      **/
     public function it_change_password_with_success()
     {
-        $mock_reminder_service = m::mock('Jacopo\Authentication\Services\ReminderService')
+        $mock_reminder_service = m::mock('LaravelAcl\Authentication\Services\ReminderService')
                                   ->shouldReceive('reset')
                                   ->once()
                                   ->getMock();
 
-        $this->app->instance('Jacopo\Authentication\Services\ReminderService', $mock_reminder_service);
+        $this->app->instance('LaravelAcl\Authentication\Services\ReminderService', $mock_reminder_service);
 
-        $this->action('POST', 'Jacopo\Authentication\Controllers\AuthController@postChangePassword', ["password" => "newpassword"]);
+        $this->action('POST', 'LaravelAcl\Authentication\Controllers\AuthController@postChangePassword', ["password" => "newpassword"]);
         $this->assertRedirectedTo('/user/change-password-success');
     }
 
@@ -198,17 +198,17 @@ class AuthControllerTest extends DbTestCase
      **/
     public function it_change_password_with_error()
     {
-        $mock_reminder_service = m::mock('Jacopo\Authentication\Services\ReminderService')
+        $mock_reminder_service = m::mock('LaravelAcl\Authentication\Services\ReminderService')
                                   ->shouldReceive('reset')
                                   ->once()
                                   ->andThrow(new AuthenticationErrorException)
                                   ->shouldReceive('getErrors')
                                   ->getMock();
-        $this->app->instance('Jacopo\Authentication\Services\ReminderService', $mock_reminder_service);
+        $this->app->instance('LaravelAcl\Authentication\Services\ReminderService', $mock_reminder_service);
 
-        $this->action('POST', 'Jacopo\Authentication\Controllers\AuthController@postChangePassword', ["password" => "newpassword"]);
+        $this->action('POST', 'LaravelAcl\Authentication\Controllers\AuthController@postChangePassword', ["password" => "newpassword"]);
 
-        $this->assertRedirectedToAction('Jacopo\Authentication\Controllers\AuthController@getChangePassword');
+        $this->assertRedirectedToAction('LaravelAcl\Authentication\Controllers\AuthController@getChangePassword');
         $this->assertSessionHasErrors();
     }
 
@@ -217,9 +217,9 @@ class AuthControllerTest extends DbTestCase
      **/
     public function itValidatePasswordOnChangePassword()
     {
-        $this->action('POST', 'Jacopo\Authentication\Controllers\AuthController@postChangePassword', ["password" => ""]);
+        $this->action('POST', 'LaravelAcl\Authentication\Controllers\AuthController@postChangePassword', ["password" => ""]);
 
-        $this->assertRedirectedToAction('Jacopo\Authentication\Controllers\AuthController@getChangePassword');
+        $this->assertRedirectedToAction('LaravelAcl\Authentication\Controllers\AuthController@getChangePassword');
         $this->assertSessionHasErrors();
         $this->assertSessionHas("_old_input");
     }

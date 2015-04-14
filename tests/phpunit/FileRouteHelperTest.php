@@ -1,9 +1,9 @@
-<?php  namespace Jacopo\Authentication\Tests\Unit;
+<?php  namespace LaravelAcl\Authentication\Tests\Unit;
 
-use Jacopo\Authentication\Helpers\FileRouteHelper;
+use LaravelAcl\Authentication\Helpers\FileRouteHelper;
 use Config, Route, App;
-use Jacopo\Authentication\Helpers\SentryAuthenticationHelper;
-use Jacopo\Authentication\Tests\Unit\Traits\UserFactory;
+use LaravelAcl\Authentication\Helpers\SentryAuthenticationHelper;
+use LaravelAcl\Authentication\Tests\Unit\Traits\UserFactory;
 use Mockery\Container;
 
 /**
@@ -145,7 +145,7 @@ class FileRouteHelperTest extends DbTestCase
 
     protected function createAndLoginUserWithPermissions($permissions)
     {
-        $users_created = $this->make('Jacopo\Authentication\Models\User', array_merge($this->getUserStub(), ["permissions" => $permissions]));
+        $users_created = $this->make('LaravelAcl\Authentication\Models\User', array_merge($this->getUserStub(), ["permissions" => $permissions]));
         $this->logged_user = ($users_created[0]);
 
         App::make('authenticator')->loginById($this->logged_user->id);

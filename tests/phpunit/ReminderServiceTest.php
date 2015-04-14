@@ -1,9 +1,9 @@
-<?php namespace Jacopo\Authentication\Tests\Unit;
+<?php namespace LaravelAcl\Authentication\Tests\Unit;
 
 use Illuminate\Support\Facades\App;
-use Jacopo\Authentication\Exceptions\UserNotFoundException;
-use Jacopo\Authentication\Models\User;
-use Jacopo\Authentication\Services\ReminderService as Reminder;
+use LaravelAcl\Authentication\Exceptions\UserNotFoundException;
+use LaravelAcl\Authentication\Models\User;
+use LaravelAcl\Authentication\Services\ReminderService as Reminder;
 use Mockery as m;
 
 class ReminderServiceTest extends DbTestCase {
@@ -67,7 +67,7 @@ class ReminderServiceTest extends DbTestCase {
 
     /**
      * @test
-     * @expectedException \Jacopo\Authentication\Exceptions\UserNotFoundException
+     * @expectedException \LaravelAcl\Authentication\Exceptions\UserNotFoundException
      **/
     public function itTrowsExceptionIfcannotFindTheUser()
     {
@@ -107,7 +107,7 @@ class ReminderServiceTest extends DbTestCase {
      **/
     public function canResetPasswordSuccesfully()
     {
-        $users = $this->make('Jacopo\Authentication\Models\User');
+        $users = $this->make('LaravelAcl\Authentication\Models\User');
         $user = $users[0];
         $token = App::make('authenticator')->getToken($user->email);
         $new_pass = "new_password";
@@ -124,7 +124,7 @@ class ReminderServiceTest extends DbTestCase {
      **/
     public function canHandleWrongTokenErrors()
     {
-        $users = $this->make('Jacopo\Authentication\Models\User');
+        $users = $this->make('LaravelAcl\Authentication\Models\User');
         $user = $users[0];
         $new_pass = "new_password";
         $token = "wrong token";

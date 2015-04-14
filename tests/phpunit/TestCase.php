@@ -1,22 +1,21 @@
-<?php namespace Jacopo\Authentication\Tests\Unit;
+<?php namespace LaravelAcl\Authentication\Tests\Unit;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Config;
-use Jacopo\Authentication\Tests\Unit\Stubs\NullLogger;
-use \Orchestra\Testbench\TestCase as OrchestraTestCase;
+use LaravelAcl\Authentication\Tests\Unit\Stubs\NullLogger;
 use Illuminate\Config\EnvironmentVariables;
 use Illuminate\Config\Repository as ConfigRepository;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Facade;
-
+use Illuminate\Foundation\Testing\TestCase as LaravelTestCase;
 /**
  * Test TestCase
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
-class TestCase extends OrchestraTestCase {
+class TestCase extends LaravelTestCase {
 
   // custom environment
   protected $custom_environment = 'testing';
@@ -36,7 +35,7 @@ class TestCase extends OrchestraTestCase {
   protected function getPackageProviders() {
     return [
             'Cartalyst\Sentry\SentryServiceProvider',
-            'Jacopo\Authentication\AuthenticationServiceProvider',
+            'LaravelAcl\Authentication\AuthenticationServiceProvider',
             'Jacopo\Library\LibraryServiceProvider',
     ];
   }

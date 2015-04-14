@@ -1,4 +1,4 @@
-<?php  namespace Jacopo\Authentication\Tests\Unit\Stubs; 
+<?php  namespace LaravelAcl\Authentication\Tests\Unit\Stubs;
 
 use Jacopo\Library\Repository\EloquentBaseRepository;
 

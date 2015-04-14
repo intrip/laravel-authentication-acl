@@ -1,11 +1,11 @@
-<?php namespace Jacopo\Authentication\Tests\Unit;
+<?php namespace LaravelAcl\Authentication\Tests\Unit;
 
 use App;
 use Cartalyst\Sentry\Users\UserNotActivatedException;
 use Cartalyst\Sentry\Users\UserNotFoundException;
-use Jacopo\Authentication\Classes\SentryAuthenticator;
-use Jacopo\Authentication\Models\User;
-use Jacopo\Authentication\Tests\Unit\Traits\UserFactory;
+use LaravelAcl\Authentication\Classes\SentryAuthenticator;
+use LaravelAcl\Authentication\Models\User;
+use LaravelAcl\Authentication\Tests\Unit\Traits\UserFactory;
 use Mockery as m;
 use Event;
 
@@ -89,7 +89,7 @@ class SentryAuthenticatorTest extends DbTestCase
 
     /**
      * @test
-     * @expectedException \Jacopo\Authentication\Exceptions\AuthenticationErrorException
+     * @expectedException \LaravelAcl\Authentication\Exceptions\AuthenticationErrorException
      **/
     public function itDoesntAuthenticateBannedUser()
     {
@@ -129,7 +129,7 @@ class SentryAuthenticatorTest extends DbTestCase
 
     /**
      * @test
-     * @expectedException \Jacopo\Authentication\Exceptions\UserNotFoundException
+     * @expectedException \LaravelAcl\Authentication\Exceptions\UserNotFoundException
      **/
     public function canHandleUserNotFoundInGetUser()
     {
@@ -144,7 +144,7 @@ class SentryAuthenticatorTest extends DbTestCase
 
     /**
      * @test
-     * @expectedException \Jacopo\Authentication\Exceptions\AuthenticationErrorException
+     * @expectedException \LaravelAcl\Authentication\Exceptions\AuthenticationErrorException
      **/
     public function canHandleAuthenticationErrors()
     {
@@ -250,7 +250,7 @@ class SentryAuthenticatorTest extends DbTestCase
 
     /**
      * @test
-     * @expectedException \Jacopo\Authentication\Exceptions\AuthenticationErrorException
+     * @expectedException \LaravelAcl\Authentication\Exceptions\AuthenticationErrorException
      **/
     public function itLogoutBannedUsersOnAuthenticate()
     {
@@ -280,7 +280,7 @@ class SentryAuthenticatorTest extends DbTestCase
 
     /**
      * @test
-     * @expectedException Jacopo\Authentication\Exceptions\UserNotFoundException
+     * @expectedException LaravelAcl\Authentication\Exceptions\UserNotFoundException
      */
     public function itHanleErrorsOnGetUser()
     {
@@ -300,7 +300,7 @@ class SentryAuthenticatorTest extends DbTestCase
                       ->shouldReceive('getActivationCode')
                       ->andReturn(true)
                       ->getMock();
-        $mock_auth = m::mock('Jacopo\Authentication\Classes\SentryAuthenticator')
+        $mock_auth = m::mock('LaravelAcl\Authentication\Classes\SentryAuthenticator')
                       ->makePartial()
                       ->shouldReceive('getUser')
                       ->andReturn($mock_user)
@@ -384,7 +384,7 @@ class SentryAuthenticatorTest extends DbTestCase
      */
     private function createMockGetUser($email, $mock_user)
     {
-        $authenticator = m::mock('Jacopo\Authentication\Classes\SentryAuthenticator')
+        $authenticator = m::mock('LaravelAcl\Authentication\Classes\SentryAuthenticator')
                           ->makePartial()
                           ->shouldReceive('getUser')
                           ->once()
@@ -446,7 +446,7 @@ class SentryAuthenticatorTest extends DbTestCase
      **/
     public function canCheckForLoggedUserUnbanned()
     {
-        $unbanned_user = $this->make('Jacopo\Authentication\Models\User', array_merge($this->getUserStub(), ["banned" => 0]))->first();
+        $unbanned_user = $this->make('LaravelAcl\Authentication\Models\User', array_merge($this->getUserStub(), ["banned" => 0]))->first();
         $this->authenticator->loginById($unbanned_user->id);
 
         $this->assertTrue($this->authenticator->check());
@@ -458,7 +458,7 @@ class SentryAuthenticatorTest extends DbTestCase
      **/
     public function failCheckWithBannedUser()
     {
-        $unbanned_user = $this->make('Jacopo\Authentication\Models\User', array_merge($this->getUserStub(), ["banned" => 0]))->first();
+        $unbanned_user = $this->make('LaravelAcl\Authentication\Models\User', array_merge($this->getUserStub(), ["banned" => 0]))->first();
         $authenticator = new SentryAuthenticatorStubLogout();
         $authenticator->loginById($unbanned_user->id);
         $this->banUser($unbanned_user);

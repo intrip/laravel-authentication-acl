@@ -1,9 +1,9 @@
-<?php  namespace Jacopo\Authentication\Tests\Unit;
+<?php  namespace LaravelAcl\Authentication\Tests\Unit;
 
-use Jacopo\Authentication\Models\UserProfile;
-use Jacopo\Authentication\Services\UserProfileService;
-use Jacopo\Authentication\Tests\Unit\Stubs\VoidRepository;
-use Jacopo\Authentication\Tests\Unit\Stubs\VoidValidator;
+use LaravelAcl\Authentication\Models\UserProfile;
+use LaravelAcl\Authentication\Services\UserProfileService;
+use LaravelAcl\Authentication\Tests\Unit\Stubs\VoidRepository;
+use LaravelAcl\Authentication\Tests\Unit\Stubs\VoidValidator;
 use Jacopo\Library\Exceptions\ValidationException;
 use Mockery as m;
 use App;
@@ -147,12 +147,12 @@ class UserProfileServiceTest extends DbTestCase
         $mock_form_profile_success = $this->mockProfileProcessAndReturn(new UserProfile());
         $service = new UserProfileServiceNoPermStub(new VoidValidator(), $mock_form_profile_success);
         $profile = $service->processForm(["user_id" => 1]);
-        $this->assertInstanceOf('Jacopo\Authentication\Models\UserProfile', $profile);
+        $this->assertInstanceOf('LaravelAcl\Authentication\Models\UserProfile', $profile);
     }
 
     /**
      * @test
-     * @expectedException \Jacopo\Authentication\Exceptions\PermissionException
+     * @expectedException \LaravelAcl\Authentication\Exceptions\PermissionException
      **/
     public function it_not_update_profile_and_throw_exception_if_errors_perm()
     {
@@ -174,7 +174,7 @@ class UserProfileServiceTest extends DbTestCase
         try
         {
             $service->processForm(["user_id" => 1]);
-        } catch(\Jacopo\Authentication\Exceptions\PermissionException $e)
+        } catch(\LaravelAcl\Authentication\Exceptions\PermissionException $e)
         {
         }
 

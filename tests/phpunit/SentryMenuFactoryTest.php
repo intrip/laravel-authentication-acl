@@ -1,11 +1,11 @@
-<?php  namespace Jacopo\Authentication\Tests\Unit;
+<?php  namespace LaravelAcl\Authentication\Tests\Unit;
 
 /**
  * Test SentryMenuFactoryTest
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
-use Jacopo\Authentication\Classes\Menu\SentryMenuFactory;
+use LaravelAcl\Authentication\Classes\Menu\SentryMenuFactory;
 use \Config;
 use Mockery as m;
 
@@ -26,7 +26,7 @@ class SentryMenuFactoryTest extends TestCase
 
         $collection = SentryMenuFactory::create();
 
-        $this->assertInstanceOf('Jacopo\Authentication\Classes\Menu\MenuItemCollection', $collection);
+        $this->assertInstanceOf('LaravelAcl\Authentication\Classes\Menu\MenuItemCollection', $collection);
         $items = $collection->getItemList();
         $this->assertEquals(2, count($items));
         $this->assertEquals("name1", $items[0]->getName());
@@ -70,7 +70,7 @@ class SentryMenuFactoryTest extends TestCase
 
         $collection = SentryMenuFactory::create();
 
-        $this->assertInstanceOf('Jacopo\Authentication\Classes\Menu\MenuItemCollection', $collection);
+        $this->assertInstanceOf('LaravelAcl\Authentication\Classes\Menu\MenuItemCollection', $collection);
         $items = $collection->getItemListAvailable();
         $this->assertEquals(1, count($items));
         $this->assertEquals("name1", $items[0]->getName());

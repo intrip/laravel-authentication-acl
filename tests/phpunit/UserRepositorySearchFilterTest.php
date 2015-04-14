@@ -1,11 +1,11 @@
-<?php  namespace Jacopo\Authentication\Tests\Unit;
+<?php  namespace LaravelAcl\Authentication\Tests\Unit;
 
 use App;
 use Carbon\Carbon;
-use Jacopo\Authentication\Repository\SentryUserRepository;
-use Jacopo\Authentication\Repository\UserRepositorySearchFilter;
-use Jacopo\Authentication\Tests\Unit\Traits\HourHelper;
-use Jacopo\Authentication\Tests\Unit\Traits\UserFactory;
+use LaravelAcl\Authentication\Repository\SentryUserRepository;
+use LaravelAcl\Authentication\Repository\UserRepositorySearchFilter;
+use LaravelAcl\Authentication\Tests\Unit\Traits\HourHelper;
+use LaravelAcl\Authentication\Tests\Unit\Traits\UserFactory;
 use Mockery as m;
 
 /**
@@ -210,10 +210,10 @@ class UserRepositorySearchFilterTest extends DbTestCase
      **/
     public function allowOrderingByMultipleFields()
     {
-        $user_1 = $this->make('Jacopo\Authentication\Models\User', $this->getUserStub())->first();
-        $user_profile_1 = $this->make('Jacopo\Authentication\Models\UserProfile', array_merge($this->getUserProfileStub($user_1),["first_name" => "1", "last_name" => "2"]) )->first();
-        $user_2 = $this->make('Jacopo\Authentication\Models\User', $this->getUserStub())->first();
-        $user_profile_2 = $this->make('Jacopo\Authentication\Models\UserProfile', array_merge($this->getUserProfileStub($user_2),["first_name" => "1", "last_name" => "1"]) )->first();
+        $user_1 = $this->make('LaravelAcl\Authentication\Models\User', $this->getUserStub())->first();
+        $user_profile_1 = $this->make('LaravelAcl\Authentication\Models\UserProfile', array_merge($this->getUserProfileStub($user_1),["first_name" => "1", "last_name" => "2"]) )->first();
+        $user_2 = $this->make('LaravelAcl\Authentication\Models\User', $this->getUserStub())->first();
+        $user_profile_2 = $this->make('LaravelAcl\Authentication\Models\UserProfile', array_merge($this->getUserProfileStub($user_2),["first_name" => "1", "last_name" => "1"]) )->first();
 
         $users_ordered = $this->repository_search->all(["order_by" => "first_name,last_name", "ordering" => "asc,asc"]);
 
@@ -293,7 +293,7 @@ class UserRepositorySearchFilterTest extends DbTestCase
      **/
     public function it_order_groups_with_all()
     {
-        $this->times(2)->make('Jacopo\Authentication\Models\User', function(){return $this->getUserStub();});
+        $this->times(2)->make('LaravelAcl\Authentication\Models\User', function(){return $this->getUserStub();});
 
         $group1 = $this->createGroup("1 a first group");
         $group2 = $this->createGroup("2 a second group");

@@ -1,5 +1,5 @@
-<?php  namespace Jacopo\Authentication\Tests\Unit;
-use Jacopo\Authentication\Classes\Captcha\CaptchaValidator;
+<?php  namespace LaravelAcl\Authentication\Tests\Unit;
+use LaravelAcl\Authentication\Classes\Captcha\CaptchaValidator;
 use Validator;
 /**
  * Test CaptchaValidatorTest
@@ -37,7 +37,7 @@ class CaptchaValidatorTest extends TestCase {
         $captcha_value = "captcha value";
         $input = ["captcha_input" => $captcha_value];
         $rules = ["captcha_input" => "captcha"];
-        Validator::extend('captcha', 'Jacopo\Authentication\Tests\Unit\CaptchaImplementationStub@validateCaptcha');
+        Validator::extend('captcha', 'LaravelAcl\Authentication\Tests\Unit\CaptchaImplementationStub@validateCaptcha');
 
         $laravel_validator = Validator::make($input, $rules);
 
@@ -52,7 +52,7 @@ class CaptchaValidatorTest extends TestCase {
         $captcha_value = "captcha value wrong";
         $input = ["captcha_input" => $captcha_value];
         $rules = ["captcha_input" => "captcha"];
-        Validator::extend('captcha', 'Jacopo\Authentication\Tests\Unit\CaptchaImplementationStub@validateCaptcha', $this->captcha_validator->getErrorMessage());
+        Validator::extend('captcha', 'LaravelAcl\Authentication\Tests\Unit\CaptchaImplementationStub@validateCaptcha', $this->captcha_validator->getErrorMessage());
 
         $laravel_validator = Validator::make($input, $rules);
 

@@ -1,4 +1,4 @@
-<?php  namespace Jacopo\Authentication\Tests\Unit;
+<?php  namespace LaravelAcl\Authentication\Tests\Unit;
 
 class StateKeeperTest extends \PHPUnit_Framework_TestCase {
 

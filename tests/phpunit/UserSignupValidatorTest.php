@@ -1,7 +1,7 @@
-<?php  namespace Jacopo\Authentication\Tests\Unit;
+<?php  namespace LaravelAcl\Authentication\Tests\Unit;
 
 use Config;
-use Jacopo\Authentication\Validators\UserSignupValidator;
+use LaravelAcl\Authentication\Validators\UserSignupValidator;
 
 /**
  * Test UserSignupValidatorTest

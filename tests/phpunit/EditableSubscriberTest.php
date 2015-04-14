@@ -1,11 +1,11 @@
-<?php  namespace Jacopo\Authentication\Tests\Unit;
+<?php  namespace LaravelAcl\Authentication\Tests\Unit;
 
 /**
  * Test EditableSubscriberTest
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
-use Jacopo\Authentication\Events\EditableSubscriber;
+use LaravelAcl\Authentication\Events\EditableSubscriber;
 
 class EditableSubscriberTest extends TestCase {
 
@@ -23,7 +23,7 @@ class EditableSubscriberTest extends TestCase {
 
     /**
      * @test
-     * @expectedException \Jacopo\Authentication\Exceptions\PermissionException
+     * @expectedException \LaravelAcl\Authentication\Exceptions\PermissionException
      **/
     public function it_check_if_es_editable_and_throw_new_exception()
     {

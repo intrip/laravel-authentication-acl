@@ -1,14 +1,14 @@
-<?php  namespace Jacopo\Authentication\Tests\Unit;
+<?php  namespace LaravelAcl\Authentication\Tests\Unit;
 
 use App;
 use Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Facade;
-use Jacopo\Authentication\Models\User;
-use Jacopo\Authentication\Models\UserProfile;
-use Jacopo\Authentication\Tests\Unit\Traits\UserFactory;
-use Jacopo\Authentication\Validators\UserValidator;
+use LaravelAcl\Authentication\Models\User;
+use LaravelAcl\Authentication\Models\UserProfile;
+use LaravelAcl\Authentication\Tests\Unit\Traits\UserFactory;
+use LaravelAcl\Authentication\Validators\UserValidator;
 use Jacopo\Library\Exceptions\ValidationException;
 use Mockery as m;
 
@@ -49,9 +49,9 @@ class UserControllerTest extends DbTestCase
         $mock_register = m::mock('StdClass')->shouldReceive('register')->once()->getMock();
         App::instance('register_service', $mock_register);
 
-        $this->action('POST', 'Jacopo\Authentication\Controllers\UserController@postSignup');
+        $this->action('POST', 'LaravelAcl\Authentication\Controllers\UserController@postSignup');
 
-        $this->assertRedirectedToAction('Jacopo\Authentication\Controllers\UserController@signupSuccess');
+        $this->assertRedirectedToAction('LaravelAcl\Authentication\Controllers\UserController@signupSuccess');
 
     }
 
@@ -63,9 +63,9 @@ class UserControllerTest extends DbTestCase
         $mock_register = m::mock('StdClass')->shouldReceive('register')->once()->andThrow(new ValidationException())->shouldReceive('getErrors')->once()->getMock();
         App::instance('register_service', $mock_register);
 
-        $this->action('POST', 'Jacopo\Authentication\Controllers\UserController@postSignup');
+        $this->action('POST', 'LaravelAcl\Authentication\Controllers\UserController@postSignup');
 
-        $this->assertRedirectedToAction('Jacopo\Authentication\Controllers\UserController@signup');
+        $this->assertRedirectedToAction('LaravelAcl\Authentication\Controllers\UserController@signup');
         $this->assertSessionHasErrors();
     }
 
@@ -74,7 +74,7 @@ class UserControllerTest extends DbTestCase
      **/
     public function it_show_the_signup_view_on_signup()
     {
-        $this->action('GET', 'Jacopo\Authentication\Controllers\UserController@signup');
+        $this->action('GET', 'LaravelAcl\Authentication\Controllers\UserController@signup');
 
         $this->assertResponseOk();
     }
@@ -85,7 +85,7 @@ class UserControllerTest extends DbTestCase
     public function itShowCaptchaOnSignupIfEnabled()
     {
         $this->enableCaptchaCheck();
-        $this->action('GET', 'Jacopo\Authentication\Controllers\UserController@signup');
+        $this->action('GET', 'LaravelAcl\Authentication\Controllers\UserController@signup');
 
         $this->assertViewHas("captcha");
     }
@@ -96,7 +96,7 @@ class UserControllerTest extends DbTestCase
     public function itDoesntShowCaptchaOnSignupIfDisabled()
     {
         $this->disableCaptchaCheck();
-        $response = $this->action('GET', 'Jacopo\Authentication\Controllers\UserController@signup');
+        $response = $this->action('GET', 'LaravelAcl\Authentication\Controllers\UserController@signup');
 
         $this->assertArrayNotHasKey("captcha", $response->original->getData());
     }
@@ -121,7 +121,7 @@ class UserControllerTest extends DbTestCase
 
         \View::shouldReceive('make')->once()->with('laravel-authentication-acl::client.auth.signup-email-confirmation');
 
-        $this->action('GET', 'Jacopo\Authentication\Controllers\UserController@signupSuccess');
+        $this->action('GET', 'LaravelAcl\Authentication\Controllers\UserController@signupSuccess');
     }
 
     private function mockConfigGetEmailConfirmation($active)
@@ -139,7 +139,7 @@ class UserControllerTest extends DbTestCase
 
         \View::shouldReceive('make')->once()->with('laravel-authentication-acl::client.auth.signup-success');
 
-        $this->action('GET', 'Jacopo\Authentication\Controllers\UserController@signupSuccess');
+        $this->action('GET', 'LaravelAcl\Authentication\Controllers\UserController@signupSuccess');
     }
 
     /**
@@ -153,7 +153,7 @@ class UserControllerTest extends DbTestCase
             $token)->getMock();
         App::instance('register_service', $mock_service);
 
-        $this->action('GET', 'Jacopo\Authentication\Controllers\UserController@emailConfirmation',
+        $this->action('GET', 'LaravelAcl\Authentication\Controllers\UserController@emailConfirmation',
             '', [
                 "email" => $email,
                 "token" => $token
@@ -170,10 +170,10 @@ class UserControllerTest extends DbTestCase
         $email = "mail";
         $token = "_token";
         $mock_service = m::mock('StdClass')->shouldReceive('checkUserActivationCode')->once()->with($email,
-            $token)->andThrow(new \Jacopo\Authentication\Exceptions\TokenMismatchException)->shouldReceive('getErrors')->once()->andReturn("")->getMock();
+            $token)->andThrow(new \LaravelAcl\Authentication\Exceptions\TokenMismatchException)->shouldReceive('getErrors')->once()->andReturn("")->getMock();
         App::instance('register_service', $mock_service);
 
-        $this->action('GET', 'Jacopo\Authentication\Controllers\UserController@emailConfirmation',
+        $this->action('GET', 'LaravelAcl\Authentication\Controllers\UserController@emailConfirmation',
             '', [
                 "email" => $email,
                 "token" => $token
@@ -191,10 +191,10 @@ class UserControllerTest extends DbTestCase
         $email = "mail";
         $token = "_token";
         $mock_service = m::mock('StdClass')->shouldReceive('checkUserActivationCode')->once()->with($email,
-            $token)->andThrow(new \Jacopo\Authentication\Exceptions\UserNotFoundException())->shouldReceive('getErrors')->once()->andReturn("")->getMock();
+            $token)->andThrow(new \LaravelAcl\Authentication\Exceptions\UserNotFoundException())->shouldReceive('getErrors')->once()->andReturn("")->getMock();
         App::instance('register_service', $mock_service);
 
-        $this->action('GET', 'Jacopo\Authentication\Controllers\UserController@emailConfirmation',
+        $this->action('GET', 'LaravelAcl\Authentication\Controllers\UserController@emailConfirmation',
             '', [
                 "email" => $email,
                 "token" => $token
@@ -214,7 +214,7 @@ class UserControllerTest extends DbTestCase
             "old" => "old input"
         ]);
 
-        $this->action('GET', 'Jacopo\Authentication\Controllers\UserController@getList', [
+        $this->action('GET', 'LaravelAcl\Authentication\Controllers\UserController@getList', [
             "new" => "new input",
             "intersect" => "new intersect"
         ]);
@@ -238,14 +238,14 @@ class UserControllerTest extends DbTestCase
         ];
 
 
-        $this->action('POST', 'Jacopo\Authentication\Controllers\UserController@postEditUser', $input_data);
+        $this->action('POST', 'LaravelAcl\Authentication\Controllers\UserController@postEditUser', $input_data);
 
         $user_created = User::firstOrFail();
         $this->assertNotNull($user_created);
         $profile_created = UserProfile::firstOrFail();
         $this->assertNotNull($profile_created);
 
-        $this->assertRedirectedToAction('Jacopo\Authentication\Controllers\UserController@editUser',
+        $this->assertRedirectedToAction('LaravelAcl\Authentication\Controllers\UserController@editUser',
             ['id' => $user_created->id]);
         $this->assertSessionHas('message');
     }
@@ -255,7 +255,7 @@ class UserControllerTest extends DbTestCase
      **/
     public function editAnUserWithSuccess()
     {
-        $user_created = $this->make('Jacopo\Authentication\Models\User', $this->getUserStub());
+        $user_created = $this->make('LaravelAcl\Authentication\Models\User', $this->getUserStub());
 
         $new_email = "new@mail.com";
         $input_data = [
@@ -266,12 +266,12 @@ class UserControllerTest extends DbTestCase
                 "password_confirmation" => ''
         ];
 
-        $this->action('POST', 'Jacopo\Authentication\Controllers\UserController@postEditUser', $input_data);
+        $this->action('POST', 'LaravelAcl\Authentication\Controllers\UserController@postEditUser', $input_data);
 
         $user_updated = User::find($user_created[0]->id);
         $this->assertEquals($new_email, $user_updated->email);
 
-        $this->assertRedirectedToAction('Jacopo\Authentication\Controllers\UserController@editUser',
+        $this->assertRedirectedToAction('LaravelAcl\Authentication\Controllers\UserController@editUser',
                                         ['id' => $user_updated->id]);
         $this->assertSessionHas('message');
     }
@@ -284,13 +284,13 @@ class UserControllerTest extends DbTestCase
         $this->stopPermissionCheckEvent();
         $field_description = "field desc";
         $user_id = 1;
-        $this->action('POST', 'Jacopo\Authentication\Controllers\UserController@addCustomFieldType', ['description' => $field_description, 'user_id' => $user_id]);
+        $this->action('POST', 'LaravelAcl\Authentication\Controllers\UserController@addCustomFieldType', ['description' => $field_description, 'user_id' => $user_id]);
 
         $profile_fields = $this->custom_type_repository->getAllTypes();
         // check that have created a field type
         $this->assertCount(1, $profile_fields);
 
-        $this->assertRedirectedToAction('Jacopo\Authentication\Controllers\UserController@postEditProfile', ["user_id" => $user_id]);
+        $this->assertRedirectedToAction('LaravelAcl\Authentication\Controllers\UserController@postEditProfile', ["user_id" => $user_id]);
         $this->assertSessionHas('message');
     }
 
@@ -301,9 +301,9 @@ class UserControllerTest extends DbTestCase
     {
         $field_description = "field desc";
         $user_id = 1;
-        $this->action('POST', 'Jacopo\Authentication\Controllers\UserController@addCustomFieldType', ['description' => $field_description, 'user_id' => $user_id]);
+        $this->action('POST', 'LaravelAcl\Authentication\Controllers\UserController@addCustomFieldType', ['description' => $field_description, 'user_id' => $user_id]);
 
-        $this->assertRedirectedToAction('Jacopo\Authentication\Controllers\UserController@postEditProfile', ["user_id" => $user_id]);
+        $this->assertRedirectedToAction('LaravelAcl\Authentication\Controllers\UserController@postEditProfile', ["user_id" => $user_id]);
         $this->assertSessionHas('errors');
     }
 
@@ -312,7 +312,7 @@ class UserControllerTest extends DbTestCase
      **/
     public function canRemoveAPermission()
     {
-        $user_created = $this->make('Jacopo\Authentication\Models\User', array_merge($this->getUserStub(),["permissions" => ["_perm" => 1]]));
+        $user_created = $this->make('LaravelAcl\Authentication\Models\User', array_merge($this->getUserStub(),["permissions" => ["_perm" => 1]]));
 
         $permission_name = "_perm";
         $input = [
@@ -332,7 +332,7 @@ class UserControllerTest extends DbTestCase
      **/
     public function canAddAPermission()
     {
-        $user_created = $this->make('Jacopo\Authentication\Models\User', $this->getUserStub());
+        $user_created = $this->make('LaravelAcl\Authentication\Models\User', $this->getUserStub());
 
         $permission_name = "_perm";
         $input = [
@@ -356,12 +356,12 @@ class UserControllerTest extends DbTestCase
         $field_id = $this->createFieldType();
         $user_id = 1;
 
-        $this->action('POST', 'Jacopo\Authentication\Controllers\UserController@deleteCustomFieldType', ["id" => $field_id, "user_id" => $user_id]);
+        $this->action('POST', 'LaravelAcl\Authentication\Controllers\UserController@deleteCustomFieldType', ["id" => $field_id, "user_id" => $user_id]);
 
         $profile_fields = $this->custom_type_repository->getAllTypes();
         $this->assertCount(0, $profile_fields);
 
-        $this->assertRedirectedToAction('Jacopo\Authentication\Controllers\UserController@postEditProfile', ["user_id" => $user_id]);
+        $this->assertRedirectedToAction('LaravelAcl\Authentication\Controllers\UserController@postEditProfile', ["user_id" => $user_id]);
         $this->assertSessionHas('message');
     }
 
@@ -373,9 +373,9 @@ class UserControllerTest extends DbTestCase
         $this->stopPermissionCheckEvent();
         $user_id = 1;
         $field_id = 1;
-        $this->action('POST', 'Jacopo\Authentication\Controllers\UserController@deleteCustomFieldType', ["id" => $field_id, "user_id" => $user_id]);
+        $this->action('POST', 'LaravelAcl\Authentication\Controllers\UserController@deleteCustomFieldType', ["id" => $field_id, "user_id" => $user_id]);
 
-        $this->assertRedirectedToAction('Jacopo\Authentication\Controllers\UserController@postEditProfile', ["user_id" => $user_id]);
+        $this->assertRedirectedToAction('LaravelAcl\Authentication\Controllers\UserController@postEditProfile', ["user_id" => $user_id]);
         $this->assertSessionHas('errors');
     }
 
@@ -388,9 +388,9 @@ class UserControllerTest extends DbTestCase
         $field_id = $this->createFieldType();
         $user_id = 1;
 
-        $this->action('POST', 'Jacopo\Authentication\Controllers\UserController@deleteCustomFieldType', ["id" => $field_id, "user_id" => $user_id]);
+        $this->action('POST', 'LaravelAcl\Authentication\Controllers\UserController@deleteCustomFieldType', ["id" => $field_id, "user_id" => $user_id]);
 
-        $this->assertRedirectedToAction('Jacopo\Authentication\Controllers\UserController@postEditProfile', ["user_id" => $user_id]);
+        $this->assertRedirectedToAction('LaravelAcl\Authentication\Controllers\UserController@postEditProfile', ["user_id" => $user_id]);
         $this->assertSessionHas('errors');
     }
     
@@ -399,8 +399,8 @@ class UserControllerTest extends DbTestCase
      **/
     public function canViewEditSelfProfile()
     {
-        $created_user = $this->make('Jacopo\Authentication\Models\User', $this->getUserStub())->first();
-        $created_user_profile = $this->make('Jacopo\Authentication\Models\UserProfile', $this->getUserProfileStub($created_user))->first();
+        $created_user = $this->make('LaravelAcl\Authentication\Models\User', $this->getUserStub())->first();
+        $created_user_profile = $this->make('LaravelAcl\Authentication\Models\UserProfile', $this->getUserProfileStub($created_user))->first();
         $this->isLoggedUserWithProfile($created_user);
 
         $this->route('GET','users.selfprofile.edit');
@@ -460,11 +460,11 @@ class UserControllerTest extends DbTestCase
      */
     protected function isLoggedUserWithProfile($created_user)
     {
-        $mock_logged_user = m::mock('Jacopo\Authentication\Interfaces\AuthenticateInterface')->shouldReceive('getLoggedUser')
+        $mock_logged_user = m::mock('LaravelAcl\Authentication\Interfaces\AuthenticateInterface')->shouldReceive('getLoggedUser')
                              ->once()
                              ->andReturn($created_user)
                              ->getMock();
-        App::instance('Jacopo\Authentication\Interfaces\AuthenticateInterface', $mock_logged_user);
+        App::instance('LaravelAcl\Authentication\Interfaces\AuthenticateInterface', $mock_logged_user);
     }
 }
  

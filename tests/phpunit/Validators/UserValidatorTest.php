@@ -1,9 +1,9 @@
-<?php  namespace Jacopo\Authentication\Tests\Unit\Validators;
+<?php  namespace LaravelAcl\Authentication\Tests\Unit\Validators;
 
 use Illuminate\Support\Facades\Event;
-use Jacopo\Authentication\Tests\Unit\DbTestCase;
-use Jacopo\Authentication\Tests\Unit\Traits\UserFactory;
-use Jacopo\Authentication\Validators\UserValidator;
+use LaravelAcl\Authentication\Tests\Unit\DbTestCase;
+use LaravelAcl\Authentication\Tests\Unit\Traits\UserFactory;
+use LaravelAcl\Authentication\Validators\UserValidator;
 
 class UserValidatorTest extends DbTestCase  {
     use UserFactory;
@@ -23,7 +23,7 @@ class UserValidatorTest extends DbTestCase  {
      **/
     public function canValidateUniqueEmailOnUpdate()
     {
-        $user_created = $this->make('Jacopo\Authentication\Models\User', $this->getUserStub());
+        $user_created = $this->make('LaravelAcl\Authentication\Models\User', $this->getUserStub());
 
         $input = [
             "id" => 1,
@@ -39,7 +39,7 @@ class UserValidatorTest extends DbTestCase  {
      **/
     public function canValidateUniqueEmailOnCreate()
     {
-        $user_created = $this->make('Jacopo\Authentication\Models\User', $this->getUserStub());
+        $user_created = $this->make('LaravelAcl\Authentication\Models\User', $this->getUserStub());
 
         $input = [
                 "form_name" => "user",

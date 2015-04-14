@@ -1,11 +1,11 @@
-<?php  namespace Jacopo\Authentication\Tests\Unit;
+<?php  namespace LaravelAcl\Authentication\Tests\Unit;
 
 use App, Config, Event;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\MessageBag;
-use Jacopo\Authentication\Exceptions\UserExistsException;
-use Jacopo\Authentication\Models\User;
-use Jacopo\Authentication\Services\UserRegisterService;
+use LaravelAcl\Authentication\Exceptions\UserExistsException;
+use LaravelAcl\Authentication\Models\User;
+use LaravelAcl\Authentication\Services\UserRegisterService;
 use Jacopo\Library\Exceptions\JacopoExceptionsInterface;
 use Jacopo\Library\Exceptions\NotFoundException;
 use Mockery as m;
@@ -86,7 +86,7 @@ class UserRegisterServiceTest extends DbTestCase
      */
     protected function getValidatorSuccess()
     {
-        $mock_validator = m::mock('Jacopo\Authentication\Validators\UserSignupValidator')->shouldReceive('validate')->andReturn(true)->getMock();
+        $mock_validator = m::mock('LaravelAcl\Authentication\Validators\UserSignupValidator')->shouldReceive('validate')->andReturn(true)->getMock();
 
         return $mock_validator;
     }
@@ -115,7 +115,7 @@ class UserRegisterServiceTest extends DbTestCase
         StateKeeper::set('expected_subject', Config::get('acl_base.messages.email.user_registraction_activation_subject') );
         StateKeeper::set('expected_body', 'Your email has been confirmed succesfully.');
 
-        Event::listen('mailer.sending', 'Jacopo\Authentication\Tests\Unit\AuthControllerTest@checkForSingleMailData');
+        Event::listen('mailer.sending', 'LaravelAcl\Authentication\Tests\Unit\AuthControllerTest@checkForSingleMailData');
 
         $service->sendActivationEmailToClient($user);
     }
@@ -125,7 +125,7 @@ class UserRegisterServiceTest extends DbTestCase
      */
     protected function getValidatorFails()
     {
-        return m::mock('Jacopo\Authentication\Validators\UserSignupValidator')
+        return m::mock('LaravelAcl\Authentication\Validators\UserSignupValidator')
                 ->shouldReceive('validate')
                 ->once()
                 ->andReturn(false)
@@ -164,7 +164,7 @@ class UserRegisterServiceTest extends DbTestCase
 
     /**
      * @test
-     * @expectedException \Jacopo\Authentication\Exceptions\UserExistsException
+     * @expectedException \LaravelAcl\Authentication\Exceptions\UserExistsException
      **/
     public function throwsException_IfUserExists()
     {
@@ -189,7 +189,7 @@ class UserRegisterServiceTest extends DbTestCase
         StateKeeper::set('expected_subject', Config::get('acl_base.messages.email.user_registration_request_subject') );
         StateKeeper::set('expected_body', 'You account has been created. However, before you can use it you need to confirm your email address first by clicking the');
 
-        Event::listen('mailer.sending', 'Jacopo\Authentication\Tests\Unit\AuthControllerTest@checkForSingleMailData');
+        Event::listen('mailer.sending', 'LaravelAcl\Authentication\Tests\Unit\AuthControllerTest@checkForSingleMailData');
 
         $mock_validator = $this->getValidatorSuccess();
         $mock_user_repository = $this->mockUserRepositoryToCreateARandomUser();
@@ -246,7 +246,7 @@ class UserRegisterServiceTest extends DbTestCase
         StateKeeper::set('expected_subject', Config::get('acl_base.messages.email.user_registration_request_subject') );
         StateKeeper::set('expected_body', 'You can now login to the website using the');
 
-        Event::listen('mailer.sending', 'Jacopo\Authentication\Tests\Unit\AuthControllerTest@checkForSingleMailData');
+        Event::listen('mailer.sending', 'LaravelAcl\Authentication\Tests\Unit\AuthControllerTest@checkForSingleMailData');
 
         $mock_validator = $this->getValidatorSuccess();
         $mock_user_repository = $this->mockUserRepositoryToCreateARandomUser();
@@ -270,7 +270,7 @@ class UserRegisterServiceTest extends DbTestCase
      */
     protected function mockAuthActiveToken()
     {
-        return m::mock('Jacopo\Authentication\Interfaces\AuthenticateInterface')
+        return m::mock('LaravelAcl\Authentication\Interfaces\AuthenticateInterface')
                 ->shouldReceive('getActivationToken')
                 ->andReturn(true)
                 ->shouldReceive('getLoggedUser')
@@ -289,7 +289,7 @@ class UserRegisterServiceTest extends DbTestCase
     {
         $this->disableEmailConfirmation();
         Config::set('laravel-authentication-acl::email_confirmation',false);
-        $service = m::mock('Jacopo\Authentication\Services\UserRegisterService');
+        $service = m::mock('LaravelAcl\Authentication\Services\UserRegisterService');
 
         $this->assertTrue($service->getDefaultActivatedState([]));
 
@@ -342,7 +342,7 @@ class UserRegisterServiceTest extends DbTestCase
         try
         {
             $service->checkUserActivationCode($email, $token);
-        } catch(\Jacopo\Authentication\Exceptions\UserNotFoundException $e)
+        } catch(\LaravelAcl\Authentication\Exceptions\UserNotFoundException $e)
         {
             $gotcha = true;
         }
@@ -357,7 +357,7 @@ class UserRegisterServiceTest extends DbTestCase
     public function checksForActivationCodeAndThrowTokenMismatchExceptionWithErrors()
     {
         $user_stub =
-                m::mock('Jacopo\Authentication\Modles\User')->makePartial()->shouldReceive('checkResetPasswordCode')->andReturn(false)->getMock();
+                m::mock('LaravelAcl\Authentication\Modles\User')->makePartial()->shouldReceive('checkResetPasswordCode')->andReturn(false)->getMock();
         $user_stub->activation_code = "";
         $mock_repo = m::mock('StdClass')->shouldReceive('findByLogin')->andReturn($user_stub)->getMock();
         App::instance('user_repository', $mock_repo);
@@ -369,7 +369,7 @@ class UserRegisterServiceTest extends DbTestCase
         try
         {
             $service->checkUserActivationCode($email, $token);
-        } catch(\Jacopo\Authentication\Exceptions\TokenMismatchException $e)
+        } catch(\LaravelAcl\Authentication\Exceptions\TokenMismatchException $e)
         {
             $gotcha = true;
         }
@@ -383,7 +383,7 @@ class UserRegisterServiceTest extends DbTestCase
      **/
     public function fireEvent_OnCheckUserActivationCode()
     {
-        $user_stub = m::mock('Jacopo\Authentication\Modles\User');
+        $user_stub = m::mock('LaravelAcl\Authentication\Modles\User');
         $user_stub->activation_code = "12345_";
         $mock_repo = m::mock('StdClass')->shouldReceive('findByLogin')->andReturn($user_stub)->shouldReceive('activate')->once()->andReturn(true)
                       ->getMock();

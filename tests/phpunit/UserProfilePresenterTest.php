@@ -1,8 +1,8 @@
-<?php  namespace Jacopo\Authentication\Tests\Unit;
+<?php  namespace LaravelAcl\Authentication\Tests\Unit;
 
 use Config;
-use Jacopo\Authentication\Presenters\UserProfilePresenter;
-use Jacopo\Authentication\Tests\Unit\Traits\UserFactory;
+use LaravelAcl\Authentication\Presenters\UserProfilePresenter;
+use LaravelAcl\Authentication\Tests\Unit\Traits\UserFactory;
 
 /**
  * Test UserProfilePresenterTest
@@ -88,8 +88,8 @@ class UserProfilePresenterTest extends DbTestCase
 
     private function initializeUserWithProfile()
     {
-        $this->user = $this->initializeUserHasher()->make('Jacopo\Authentication\Models\User', $this->getUserStub())->first();
-        $this->user_profile = $this->make('Jacopo\Authentication\Models\UserProfile', $this->getUserProfileStub($this->user))->first();
+        $this->user = $this->initializeUserHasher()->make('LaravelAcl\Authentication\Models\User', $this->getUserStub())->first();
+        $this->user_profile = $this->make('LaravelAcl\Authentication\Models\UserProfile', $this->getUserProfileStub($this->user))->first();
     }
 
     private function setAvatarDefaultPath()

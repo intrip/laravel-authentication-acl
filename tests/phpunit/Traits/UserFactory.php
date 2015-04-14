@@ -1,7 +1,7 @@
-<?php  namespace Jacopo\Authentication\Tests\Unit\Traits;
+<?php  namespace LaravelAcl\Authentication\Tests\Unit\Traits;
 
 use Illuminate\Support\Facades\App;
-use Jacopo\Authentication\Models\User;
+use LaravelAcl\Authentication\Models\User;
 
 trait UserFactory {
 

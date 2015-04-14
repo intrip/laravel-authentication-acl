@@ -1,4 +1,4 @@
-<?php  namespace Jacopo\Authentication\Tests\Unit; 
+<?php  namespace LaravelAcl\Authentication\Tests\Unit;
 
 use Illuminate\Support\Facades\Route;
 use Mockery as m;

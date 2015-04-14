@@ -1,11 +1,11 @@
-<?php  namespace Jacopo\Authentication\Tests\Unit;
+<?php  namespace LaravelAcl\Authentication\Tests\Unit;
 
 /**
  * Test GroupPresenterTest
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
-use Jacopo\Authentication\Presenters\GroupPresenter;
+use LaravelAcl\Authentication\Presenters\GroupPresenter;
 use Mockery as m;
 
 class GroupPresenterTest extends DbTestCase

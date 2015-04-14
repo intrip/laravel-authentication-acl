@@ -1,4 +1,4 @@
-<?php  namespace Jacopo\Authentication\Tests\Unit;
+<?php  namespace LaravelAcl\Authentication\Tests\Unit;
 
 /**
  * Test FormHelperTest
@@ -7,8 +7,8 @@
  */
 use Illuminate\Support\Collection;
 use Mockery as m;
-use Jacopo\Authentication\Helpers\FormHelper;
-use Jacopo\Authentication\Models\Permission;
+use LaravelAcl\Authentication\Helpers\FormHelper;
+use LaravelAcl\Authentication\Models\Permission;
 
 class FormHelperTest extends TestCase {
 
@@ -62,7 +62,7 @@ class FormHelperTest extends TestCase {
      */
     protected function mockPermissionFetch($objs)
     {
-        $mock_permission = m::mock('Jacopo\Authentication\Repository\EloquentPermissionRepository');
+        $mock_permission = m::mock('LaravelAcl\Authentication\Repository\EloquentPermissionRepository');
         $mock_permission->shouldReceive('all')->andReturn(new Collection($objs));
         return $mock_permission;
     }

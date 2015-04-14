@@ -1,7 +1,7 @@
 <?php
 
-use Jacopo\Authentication\Middleware\Repository;
-use Jacopo\Authentication\Tests\Unit\DbTestCase;
+use LaravelAcl\Authentication\Middleware\Repository;
+use LaravelAcl\Authentication\Tests\Unit\DbTestCase;
 
 class RepositoryTest extends DbTestCase  {
 

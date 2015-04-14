@@ -1,4 +1,4 @@
-<?php  namespace Jacopo\Authentication\Tests\Unit;
+<?php  namespace LaravelAcl\Authentication\Tests\Unit;
 
 use InstallCommand;
 use Mockery as m;

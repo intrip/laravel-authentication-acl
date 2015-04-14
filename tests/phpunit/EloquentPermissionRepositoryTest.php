@@ -1,15 +1,15 @@
-<?php  namespace Jacopo\Authentication\Tests\Unit;
+<?php  namespace LaravelAcl\Authentication\Tests\Unit;
 
 /**
  * Test PermissionRepositoryTest
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
-use Jacopo\Authentication\Models\User;
+use LaravelAcl\Authentication\Models\User;
 use Mockery as m;
 use App, Event, DB;
-use Jacopo\Authentication\Models\Permission;
-use Jacopo\Authentication\Repository\EloquentPermissionRepository as PermissionRepository;
+use LaravelAcl\Authentication\Models\Permission;
+use LaravelAcl\Authentication\Repository\EloquentPermissionRepository as PermissionRepository;
 
 class EloquentPermissionRepositoryTest extends DbTestCase {
 
@@ -20,7 +20,7 @@ class EloquentPermissionRepositoryTest extends DbTestCase {
         parent::setUp();
         $active = 1;
         $this->createUserWithPerm(["_perm" => $active]);
-        $group_class = 'Jacopo\Authentication\Models\Group';
+        $group_class = 'LaravelAcl\Authentication\Models\Group';
         $this->make($group_class, $this->getModelGroupStub());
     }
 
@@ -41,7 +41,7 @@ class EloquentPermissionRepositoryTest extends DbTestCase {
 
     /**
      * @test
-     * @expectedException \Jacopo\Authentication\Exceptions\PermissionException
+     * @expectedException \LaravelAcl\Authentication\Exceptions\PermissionException
      **/
     public function IfAssociatedToGroupThrowsException()
     {
@@ -62,7 +62,7 @@ class EloquentPermissionRepositoryTest extends DbTestCase {
 
     /**
      * @test
-     * @expectedException \Jacopo\Authentication\Exceptions\PermissionException
+     * @expectedException \LaravelAcl\Authentication\Exceptions\PermissionException
      **/
     public function ifAssociatedToUserThrowsException()
     {

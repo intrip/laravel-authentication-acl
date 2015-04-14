@@ -1,9 +1,9 @@
-<?php namespace Jacopo\Authentication\Tests\Unit\Middleware;
+<?php namespace LaravelAcl\Authentication\Tests\Unit\Middleware;
 
 use App;
 use Exception;
-use Jacopo\Authentication\Middleware\Config;
-use Jacopo\Authentication\Tests\Unit\DbTestCase;
+use LaravelAcl\Authentication\Middleware\Config;
+use LaravelAcl\Authentication\Tests\Unit\DbTestCase;
 use Jacopo\Library\Exceptions\NotFoundException;
 use Mockery as m;
 
@@ -30,7 +30,7 @@ class ConfigTest extends DbTestCase {
         App::instance('config', $config_get);
 
         $config = new Config;
-        $repository = m::mock('Jacopo\Authentication\Middleware\Interfaces\ConfigRepositoryInterface');
+        $repository = m::mock('LaravelAcl\Authentication\Middleware\Interfaces\ConfigRepositoryInterface');
         $repository->shouldReceive('getOption')
                    ->with($param_1)
                    ->andThrow(new Exception("getOption should not be called"));
@@ -48,7 +48,7 @@ class ConfigTest extends DbTestCase {
         $value = 'value';
         $config = new Config;
 
-        $repository = m::mock('Jacopo\Authentication\Middleware\Interfaces\ConfigRepositoryInterface');
+        $repository = m::mock('LaravelAcl\Authentication\Middleware\Interfaces\ConfigRepositoryInterface');
         $repository->shouldReceive('setOption')
                    ->once()
                    ->with($field, $value)

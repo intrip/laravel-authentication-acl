@@ -1,6 +1,6 @@
-<?php  namespace Jacopo\Authentication\Tests\Unit\Traits;
+<?php  namespace LaravelAcl\Authentication\Tests\Unit\Traits;
 
-use Jacopo\Authentication\Tests\Unit\StateKeeper;
+use LaravelAcl\Authentication\Tests\Unit\StateKeeper;
 
 trait Helper
 {

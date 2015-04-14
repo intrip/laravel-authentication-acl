@@ -1,11 +1,11 @@
-<?php  namespace Jacopo\Authentication\Tests\Unit;
+<?php  namespace LaravelAcl\Authentication\Tests\Unit;
 
 /**
  * Test MenuItemCollectionTest
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
-use Jacopo\Authentication\Classes\Menu\MenuItemCollection;
+use LaravelAcl\Authentication\Classes\Menu\MenuItemCollection;
 use Mockery as m;
 
 class MenuItemCollectionTest extends TestCase {

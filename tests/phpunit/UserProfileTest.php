@@ -1,6 +1,6 @@
-<?php  namespace Jacopo\Authentication\Tests\Unit;
+<?php  namespace LaravelAcl\Authentication\Tests\Unit;
 
-use Jacopo\Authentication\Models\UserProfile;
+use LaravelAcl\Authentication\Models\UserProfile;
 
 /**
  * Test UserProfileTest
@@ -48,7 +48,7 @@ class UserProfileTest extends DbTestCase
     {
         $profile_presenter = $this->profile_model->presenter();
 
-        $this->assertInstanceOf('Jacopo\Authentication\Presenters\UserProfilePresenter', $profile_presenter);
+        $this->assertInstanceOf('LaravelAcl\Authentication\Presenters\UserProfilePresenter', $profile_presenter);
     }
 
 }

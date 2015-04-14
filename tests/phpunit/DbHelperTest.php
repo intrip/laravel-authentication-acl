@@ -1,10 +1,10 @@
-<?php  namespace Jacopo\Authentication\Tests\Unit;
+<?php  namespace LaravelAcl\Authentication\Tests\Unit;
 
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-use Jacopo\Authentication\Helpers\DbHelper;
-use Jacopo\Authentication\Models\BaseModel;
+use LaravelAcl\Authentication\Helpers\DbHelper;
+use LaravelAcl\Authentication\Models\BaseModel;
 use Mockery as m;
 
 class DbHelperTest extends DbTestCase

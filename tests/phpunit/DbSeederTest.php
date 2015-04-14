@@ -1,9 +1,9 @@
-<?php  namespace Jacopo\Authentication\Tests\Unit;
+<?php  namespace LaravelAcl\Authentication\Tests\Unit;
 
 use App;
-use Jacopo\Authentication\Models\Permission;
-use Jacopo\Authentication\Models\User;
-use Jacopo\Authentication\Seeds\DbSeeder;
+use LaravelAcl\Authentication\Models\Permission;
+use LaravelAcl\Authentication\Models\User;
+use LaravelAcl\Authentication\Seeds\DbSeeder;
 
 /**
  * Test UserSeederTest

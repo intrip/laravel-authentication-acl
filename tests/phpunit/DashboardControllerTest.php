@@ -1,6 +1,6 @@
-<?php  namespace Jacopo\Authentication\Tests\Unit;
+<?php  namespace LaravelAcl\Authentication\Tests\Unit;
 
-use Jacopo\Authentication\Models\User;
+use LaravelAcl\Authentication\Models\User;
 use Mockery as m;
 use App;
 

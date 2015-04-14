@@ -1,5 +1,5 @@
-<?php  namespace Jacopo\Authentication\Tests\Unit;
-use Jacopo\Authentication\Classes\CustomProfile\Events\ProfilePermissionSubscriber;
+<?php  namespace LaravelAcl\Authentication\Tests\Unit;
+use LaravelAcl\Authentication\Classes\CustomProfile\Events\ProfilePermissionSubscriber;
 use Mockery as m;
 use App;
 /**
@@ -31,7 +31,7 @@ class ProfilePermissionSubscriberTest extends TestCase {
 
     /**
      * @test
-     * @expectedException \Jacopo\Authentication\Exceptions\PermissionException
+     * @expectedException \LaravelAcl\Authentication\Exceptions\PermissionException
      **/
     public function throwsExceptionIfTypePermissionFails()
     {
