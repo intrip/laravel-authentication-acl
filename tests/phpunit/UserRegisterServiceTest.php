@@ -6,8 +6,8 @@ use Illuminate\Support\MessageBag;
 use LaravelAcl\Authentication\Exceptions\UserExistsException;
 use LaravelAcl\Authentication\Models\User;
 use LaravelAcl\Authentication\Services\UserRegisterService;
-use Jacopo\Library\Exceptions\JacopoExceptionsInterface;
-use Jacopo\Library\Exceptions\NotFoundException;
+use LaravelAcl\Library\Exceptions\JacopoExceptionsInterface;
+use LaravelAcl\Library\Exceptions\NotFoundException;
 use Mockery as m;
 
 /**

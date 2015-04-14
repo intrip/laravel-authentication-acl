@@ -36,7 +36,7 @@ class TestCase extends LaravelTestCase {
     return [
             'Cartalyst\Sentry\SentryServiceProvider',
             'LaravelAcl\Authentication\AuthenticationServiceProvider',
-            'Jacopo\Library\LibraryServiceProvider',
+            'LaravelAcl\Library\LibraryServiceProvider',
     ];
   }
 

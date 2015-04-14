@@ -4,7 +4,7 @@ use App;
 use Exception;
 use LaravelAcl\Authentication\Middleware\Config;
 use LaravelAcl\Authentication\Tests\Unit\DbTestCase;
-use Jacopo\Library\Exceptions\NotFoundException;
+use LaravelAcl\Library\Exceptions\NotFoundException;
 use Mockery as m;
 
 class ConfigTest extends DbTestCase {

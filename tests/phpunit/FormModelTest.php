@@ -1,8 +1,8 @@
-<?php namespace Jacopo\Library\Tests;
+<?php namespace LaravelAcl\Library\Tests;
 
-use Jacopo\Library\Form\FormModel;
+use LaravelAcl\Authentication\Tests\Unit\TestCase;
+use LaravelAcl\Library\Form\FormModel;
 use Mockery as m;
-use Jacopo\Library\Tests\TestCase;
 
 class FormModelTest extends TestCase
 {
@@ -15,7 +15,7 @@ class FormModelTest extends TestCase
     }
 
     /**
-     * @expectedException \Jacopo\Library\Exceptions\ValidationException
+     * @expectedException \LaravelAcl\Library\Exceptions\ValidationException
      */
     public function testProcessThrowsValidationException()
     {
@@ -52,13 +52,13 @@ class FormModelTest extends TestCase
     }
 
     /**
-     * @expectedException \Jacopo\Library\Exceptions\NotFoundException
+     * @expectedException \LaravelAcl\Library\Exceptions\NotFoundException
      */
     public function testProcessThrowNotFound()
     {
         $stub_validator = new ValidatorInterfaceStub();
 
-        $mock_repo = m::mock('StdClass')->shouldReceive('update')->andThrow(new \Jacopo\Library\Exceptions\NotFoundException)->getMock();
+        $mock_repo = m::mock('StdClass')->shouldReceive('update')->andThrow(new \LaravelAcl\Library\Exceptions\NotFoundException)->getMock();
         $form = new FormModel($stub_validator, $mock_repo);
         $form->process(array("id" => "1"));
     }
@@ -74,7 +74,7 @@ class FormModelTest extends TestCase
 
     /**
      * @test
-     * @expectedException \Jacopo\Library\Exceptions\NotFoundException
+     * @expectedException \LaravelAcl\Library\Exceptions\NotFoundException
      *
      */
     public function it_throws_NotFoundException()
@@ -87,7 +87,7 @@ class FormModelTest extends TestCase
     }
 }
 
-class ValidatorInterfaceStub implements \Jacopo\Library\Validators\ValidatorInterface
+class ValidatorInterfaceStub implements \LaravelAcl\Library\Validators\ValidatorInterface
 {
     public function validate($input){
         return true;

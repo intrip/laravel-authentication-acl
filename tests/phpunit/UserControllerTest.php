@@ -9,7 +9,7 @@ use LaravelAcl\Authentication\Models\User;
 use LaravelAcl\Authentication\Models\UserProfile;
 use LaravelAcl\Authentication\Tests\Unit\Traits\UserFactory;
 use LaravelAcl\Authentication\Validators\UserValidator;
-use Jacopo\Library\Exceptions\ValidationException;
+use LaravelAcl\Library\Exceptions\ValidationException;
 use Mockery as m;
 
 /**

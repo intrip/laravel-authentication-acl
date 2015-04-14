@@ -1,6 +1,6 @@
 <?php  namespace LaravelAcl\Authentication\Tests\Unit\Stubs;
 
-use Jacopo\Library\Repository\EloquentBaseRepository;
+use LaravelAcl\Library\Repository\EloquentBaseRepository;
 
 class VoidRepository extends EloquentBaseRepository{
     public function __construct(){}

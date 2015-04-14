@@ -4,7 +4,7 @@ use LaravelAcl\Authentication\Models\UserProfile;
 use LaravelAcl\Authentication\Services\UserProfileService;
 use LaravelAcl\Authentication\Tests\Unit\Stubs\VoidRepository;
 use LaravelAcl\Authentication\Tests\Unit\Stubs\VoidValidator;
-use Jacopo\Library\Exceptions\ValidationException;
+use LaravelAcl\Library\Exceptions\ValidationException;
 use Mockery as m;
 use App;
 
@@ -45,11 +45,11 @@ class UserProfileServiceTest extends DbTestCase
 
     /**
      * @test
-     * @expectedException \Jacopo\Library\Exceptions\InvalidException
+     * @expectedException \LaravelAcl\Library\Exceptions\InvalidException
      **/
     public function it_throw_exception_if_cannot_process()
     {
-        $mock_form_profile = m::mock('Jacopo\Library\Form\FormModel');
+        $mock_form_profile = m::mock('LaravelAcl\Library\Form\FormModel');
         $mock_form_profile->shouldReceive('process')->once()->andThrow(new ValidationException);
         $mock_form_profile->shouldReceive('getErrors')->once()->andReturn(["error"]);
 
@@ -187,7 +187,7 @@ class UserProfileServiceTest extends DbTestCase
      */
     private function mockProfileProcessAndReturn($return)
     {
-        $mock_form_profile_success = m::mock('Jacopo\Library\Form\FormModel')->shouldReceive('process')->andReturn($return)->getMock();
+        $mock_form_profile_success = m::mock('LaravelAcl\Library\Form\FormModel')->shouldReceive('process')->andReturn($return)->getMock();
 
         return $mock_form_profile_success;
     }
