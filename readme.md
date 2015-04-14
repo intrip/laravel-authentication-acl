@@ -11,7 +11,7 @@ a fully featured admin panel with an ACL using Laravel framework.
 
 You can see the full documentation and usage [here](docs/index.md)
 
-####Main features:n
+####Main features:
  - User authentication and signup
  - Configurable email confirmation
  - Configurable captcha integration
