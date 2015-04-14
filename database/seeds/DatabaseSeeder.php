@@ -1,4 +1,4 @@
-<?php
+<?php namespace LaravelAcl\Database;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model as Eloquent;

@@ -1,9 +1,7 @@
 <?php namespace LaravelAcl\Authentication\Commands;
 
-use DatabaseSeeder;
 use Illuminate\Console\Command;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Input\InputArgument;
+use LaravelAcl\Database\DatabaseSeeder;
 
 class InstallCommand extends Command {
 
@@ -42,10 +40,10 @@ class InstallCommand extends Command {
      */
     public function fire()
     {
+        $this->call_wrapper->call('vendor:publish', ['force']);
+
         $this->call_wrapper->call('migrate');
         $this->db_seeder->run();
-
-        $this->call_wrapper->call('vendor:publish', ['force']);
 
         $this->info('## Laravel Authentication ACL Installed successfully ##');
     }
