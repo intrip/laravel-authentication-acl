@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model as Eloquent;
+use Illuminate\Support\Facades\App;
+
 /**
  * Class DbSeeder
  *
