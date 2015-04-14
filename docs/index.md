@@ -1,6 +1,6 @@
 # Laravel Authentication ACL documentation #
 
-Laravel Authentication ACL is a Laravel 4 package, based on <a href="https://github.com/cartalyst/sentry" target="_blank">sentry2</a>. <br/>
+Laravel Authentication ACL is a Laravel 5 package, based on <a href="https://github.com/cartalyst/sentry" target="_blank">sentry2</a>. <br/>
 This package is made with the purpose to help developer setting up
 a simple admin panel with an ACL using Laravel framework.
 
@@ -17,7 +17,7 @@ a simple admin panel with an ACL using Laravel framework.
 
 To install this software you need:
 
-  * Laravel framework 4.2.*
+  * Laravel framework 5.*
   * Php 5.4+
   * GD Library or Imagick
   * Enable Fileinfo extension(may be needed for windows users) <a href="http://php.net/manual/en/fileinfo.installation.php">how to enable it</a>
@@ -26,25 +26,25 @@ To install this software you need:
 
 To install authentication follow this steps:
 
-  1. Create an empty <a href="http://laravel.com/docs/quick" target="_blank">Laravel 4</a> installation if you don't have any.
+  1. Create an empty <a href="http://laravel.com/docs/quick" target="_blank">Laravel 5</a> installation if you don't have any.
 
   2. Add to your _composer.json_ require field the following lines:
       ```
       "require": {
         ...
-        "jacopo/laravel-authentication-acl": "1.2.*"
+        "jacopo/laravel-authentication-acl": "1.3.*"
       },
       ```
 
   3. Now run `composer update` command.
 
-  4. Now open the file _app/config/app.php_ and add to the 'providers' option the following line:
-  'Jacopo\Authentication\AuthenticationServiceProvider',
+  4. Now open the file _config/app.php_ and add to the 'providers' option the following line:
+  'LaravelAcl\Authentication\AuthenticationServiceProvider',
 
-  5. Then run this command to publish the configuration files:
-  `php artisan authentication:prepare`
-  Now you can find configuration files in _app/config/packages/jacopo/laravel-authentication-acl_ folder.
-  If you want to use a custom db(database) access configuration only for this package (while keeping other db connections for the rest of the application) edit the _app/config/packages/jacopo/laravel-authentication-acl/database.php_ file.
+  5. Then run the install command:
+  `php artisan authentication:install`
+  _Note_: you need to setup your database configuration before running the command, check out: <a href="http://laravel.com/docs/5.0/database#configuration" target="_blank">configuring laravel database</a>
+  Now you can find various configuration files under _config/_ folder.
 
   6. Now you need to install the application, to do that run the command: `php artisan authentication:install`.
 
@@ -59,19 +59,18 @@ To install authentication follow this steps:
 * http://url_of_your_application/user/logout the logout page
 
 ### Note on sending emails ###
-Keep in mind this software will send various notification emails, dont't forget to edit your _laravel app/config/mail.php_ file.
+Keep in mind this software will send various notification emails, dont't forget to edit your _laravel config/mail.php_ file aswell.
 
 ## <a name="configuration">Configuration</a> ##
 
-After installing the package you can find all his configuration files under the folder: _app/config/packages/jacopo/authentication_. All the files are self documented, here is a brief overview of each configuration file:
+After installing the package you can find all his configuration files under laravel config folder. All the files are self documented, here is a brief overview of each configuration file:
 
-  * _sentry/config.php_: the low level authentication configuration part, it helps you handle session cookie's name,login throttling and custom password hashing
-  * _way-form/config.php_: system configuration files for form handling (do not edit)
-  * _config.php_: basic configuration
-  * _menu.php_: to create __dynamic admin menu__ with arbitrary permissions
-  * _database.php_: custom database configuration file
-  * _permission.php_: general permissions configuration
-  
+  * _acl_sentry.php_: the low level authentication configuration part, it helps you handle session cookie's name,login throttling and custom password hashing, this is the original sentry configuration file updated to work with the package
+  * _acl_base.php_: base configuration file
+  * _acl_menu.php_: to create __dynamic admin menu__ with arbitrary permissions
+  * _acl_permissions.php_: general permissions configuration
+  * _acl_messages.php_: for custom application messages
+
 ## <a name="howto">How To</a> ##
 
   1. How to add a new menu item?
