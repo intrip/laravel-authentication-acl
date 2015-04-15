@@ -9,15 +9,13 @@ use Artisan, DB, Closure, App, Config;
 use BadMethodCallException;
 use Illuminate\Support\Collection;
 use Illuminate\Validation\DatabasePresenceVerifier;
-use Illuminate\Validation\Factory;
 
 class DbTestCase extends TestCase {
+
     /*
-      |--------------------------------------------------------------------------
-      | Database connection
-      |--------------------------------------------------------------------------
-      | Edit the file "packages/jacopo/laravel-authentication-acl/config/testing/database.php"
-    | to change the database connection for the tests.
+    |--------------------------------------------------------------------------
+    | Database connection
+    |--------------------------------------------------------------------------
     |
     */
     protected $connection_info;
@@ -37,30 +35,23 @@ class DbTestCase extends TestCase {
     public function setUp()
     {
         parent::setUp();
+        #TODO fix this then fix db schema creation
         $this->artisan = $this->app->make('artisan');
         $this->faker = \Faker\Factory::create();
         $this->setupDbConnection();
-        $this->overwriteDatabasePresenceVerifierForTesting();
     }
 
     protected function setupDbConnection()
     {
         $this->getConnectionInfo();
-        $this->overrideCurrentConnection();
         $this->cleanTables();
         $this->createTestDbSchema();
     }
 
     protected function getConnectionInfo()
     {
-        $this->current_connection = Config::get('acl_base.database.default');
-        $this->connection_info = Config::get("laravel-authentication-acl::database.connections.{$this->current_connection}");
-    }
-
-    protected function overrideCurrentConnection()
-    {
-        $this->app['config']->set('database.default', 'testbench');
-        $this->app['config']->set('database.connections.testbench', $this->connection_info);
+        $this->current_connection = Config::get('database.default');
+        $this->connection_info = Config::get("database.connections.{$this->current_connection}");
     }
 
     protected function cleanTables()
@@ -182,19 +173,5 @@ class DbTestCase extends TestCase {
         {
             if(!in_array($key, $except)) $this->assertEquals($value, $object->$key);
         }
-    }
-
-    protected function overwriteDatabasePresenceVerifierForTesting()
-    {
-        App::bindShared('validation.presence', function ($app)
-        {
-            $verifier = new DatabasePresenceVerifier($this->app['db']);
-            $verifier->setConnection('testbench');
-
-            return $verifier;
-        });
-
-        $validator = App::make('validator');
-        $validator->setPresenceVerifier(App::make('validation.presence'));
     }
 }

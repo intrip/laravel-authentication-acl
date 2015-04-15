@@ -4,6 +4,7 @@
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
+use LaravelAcl\Authentication\Commands\CallWrapper;
 use Mockery as m;
 class CallWrapperTest extends PHPUnit_Framework_TestCase {
 

@@ -4,7 +4,6 @@ use App;
 use LaravelAcl\Authentication\Classes\Captcha\GregWarCaptchaValidator;
 use LaravelAcl\Authentication\Classes\CustomProfile\Repository\CustomProfileRepository;
 use LaravelAcl\Authentication\Commands\InstallCommand;
-use TestRunner;
 use Config;
 use LaravelAcl\Authentication\Middleware\Config as ConfigMiddleware;
 use Illuminate\Foundation\AliasLoader;
@@ -17,8 +16,7 @@ use LaravelAcl\Authentication\Repository\SentryGroupRepository;
 use LaravelAcl\Authentication\Repository\SentryUserRepository;
 use LaravelAcl\Authentication\Services\UserRegisterService;
 
-class AuthenticationServiceProvider extends ServiceProvider
-{
+class AuthenticationServiceProvider extends ServiceProvider {
 
     /**
      * Indicates if loading of the provider is deferred.
@@ -26,6 +24,20 @@ class AuthenticationServiceProvider extends ServiceProvider
      * @var bool
      */
     protected $defer = false;
+
+    protected $providers = [
+            'LaravelAcl\Library\LibraryServiceProvider',
+            'Cartalyst\Sentry\SentryServiceProvider',
+            'Intervention\Image\ImageServiceProvider',
+            'Illuminate\Html\HtmlServiceProvider'
+    ];
+
+    protected $aliases = [
+            "Sentry" => 'Cartalyst\Sentry\Facades\Laravel\Sentry',
+            "Image"  => 'Intervention\Image\Facades\Image',
+            'Form'   => 'Illuminate\Html\FormFacade',
+            'HTML'   => 'Illuminate\Html\HtmlFacade'
+    ];
 
     /**
      * Register the service provider.
@@ -35,7 +47,7 @@ class AuthenticationServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->loadOtherProviders();
+        $this->loadProvidersDependency();
         $this->registerAliases();
     }
 
@@ -47,7 +59,7 @@ class AuthenticationServiceProvider extends ServiceProvider
         $this->bindClasses();
 
         // setup views path
-        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'laravel-authentication-acl');
+        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'laravel-authentication-acl');
         // include filters
         require __DIR__ . "/filters.php";
         // include view composers
@@ -57,7 +69,7 @@ class AuthenticationServiceProvider extends ServiceProvider
         // include custom validators
         require __DIR__ . "/validators.php";
         // package routes
-        require __DIR__.'/../Http/routes.php';
+        require __DIR__ . '/../Http/routes.php';
 
         $this->registerCommands();
 
@@ -124,20 +136,20 @@ class AuthenticationServiceProvider extends ServiceProvider
         });
     }
 
-    protected function loadOtherProviders()
+    protected function loadProvidersDependency()
     {
-        $this->app->register('LaravelAcl\Library\LibraryServiceProvider');
-        $this->app->register('Cartalyst\Sentry\SentryServiceProvider');
-        $this->app->register('Intervention\Image\ImageServiceProvider');
-        $this->registerIlluminateForm();
+        foreach($this->providers as $provider)
+        {
+            $this->app->register($provider);
+        }
     }
 
     protected function registerAliases()
     {
-        AliasLoader::getInstance()->alias("Sentry", 'Cartalyst\Sentry\Facades\Laravel\Sentry');
-        AliasLoader::getInstance()->alias("Image", 'Intervention\Image\Facades\Image');
-        $this->registerIlluminateFormAlias();
-
+        foreach($this->aliases as $alias => $original)
+        {
+            AliasLoader::getInstance()->alias($alias, $original);
+        }
     }
 
     /**
@@ -148,7 +160,7 @@ class AuthenticationServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return array();
+        return $this->providers;
     }
 
     private function registerInstallCommand()
@@ -181,50 +193,6 @@ class AuthenticationServiceProvider extends ServiceProvider
         Config::swap(new ConfigMiddleware());
     }
 
-    protected function registerIlluminateForm()
-    {
-        $this->app->register('Illuminate\Html\HtmlServiceProvider');
-    }
-
-    protected function registerIlluminateFormAlias()
-    {
-        AliasLoader::getInstance()->alias('Form', 'Illuminate\Html\FormFacade');
-        AliasLoader::getInstance()->alias('HTML', 'Illuminate\Html\HtmlFacade');
-    }
-
-    protected function publishAssets()
-    {
-        $this->publishes([
-                                 __DIR__.'/../../public/packages/jacopo/laravel-authentication-acl' => public_path('packages/jacopo/laravel-authentication-acl'),
-                         ]);
-    }
-
-    protected function publishConfig()
-    {
-        $this->publishes([
-                                 __DIR__.'/../../config/acl_base.php' => config_path('acl_base.php'),
-                                 __DIR__.'/../../config/acl_menu.php' => config_path('acl_menu.php'),
-                                 __DIR__.'/../../config/acl_menu.php' => config_path('acl_menu.php'),
-                                 __DIR__.'/../../config/acl_permissions.php' => config_path('acl_permissions.php'),
-                                 __DIR__.'/../../config/acl_sentry.php' => config_path('acl_sentry.php'),
-                         ]);
-    }
-
-    protected function publishViews()
-    {
-
-        $this->publishes([
-                                 __DIR__.'/../../resources/views' => base_path('resources/views/jacopo/laravel-authentication-acl'),
-                         ]);
-    }
-    protected function publishMigrations()
-    {
-
-        $this->publishes([
-                                 __DIR__.'/../../database/migrations' => $this->app->databasePath().'/migrations',
-//                                 __DIR__.'/../../database/seeds' => $this->app->databasePath().'/seeds',
-                         ]);
-    }
 
     protected function publishData()
     {
@@ -232,5 +200,41 @@ class AuthenticationServiceProvider extends ServiceProvider
         $this->publishConfig();
         $this->publishViews();
         $this->publishMigrations();
+    }
+
+    protected function publishAssets()
+    {
+        $this->publishes([
+                                 __DIR__ .
+                                 '/../../public/packages/jacopo/laravel-authentication-acl' => public_path('packages/jacopo/laravel-authentication-acl'),
+                         ]);
+    }
+
+    protected function publishConfig()
+    {
+        $this->publishes([
+                                 __DIR__ . '/../../config/acl_base.php'        => config_path('acl_base.php'),
+                                 __DIR__ . '/../../config/acl_menu.php'        => config_path('acl_menu.php'),
+                                 __DIR__ . '/../../config/acl_menu.php'        => config_path('acl_menu.php'),
+                                 __DIR__ . '/../../config/acl_permissions.php' => config_path('acl_permissions.php'),
+                                 __DIR__ . '/../../config/acl_sentry.php'      => config_path('acl_sentry.php'),
+                         ]);
+    }
+
+    protected function publishViews()
+    {
+
+        $this->publishes([
+                                 __DIR__ . '/../../resources/views' => base_path('resources/views/jacopo/laravel-authentication-acl'),
+                         ]);
+    }
+
+    protected function publishMigrations()
+    {
+
+        $this->publishes([
+                                 __DIR__ . '/../../database/migrations' => $this->app->databasePath() . '/migrations',
+                                 //                                 __DIR__.'/../../database/seeds' => $this->app->databasePath().'/seeds',
+                         ]);
     }
 }

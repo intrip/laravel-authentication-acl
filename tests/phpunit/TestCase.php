@@ -1,15 +1,10 @@
 <?php namespace LaravelAcl\Authentication\Tests\Unit;
 
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Config;
 use LaravelAcl\Authentication\Tests\Unit\Stubs\NullLogger;
 use Illuminate\Config\EnvironmentVariables;
-use Illuminate\Config\Repository as ConfigRepository;
-use Illuminate\Foundation\Application;
-use Illuminate\Foundation\AliasLoader;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Facade;
 use Illuminate\Foundation\Testing\TestCase as LaravelTestCase;
+
 /**
  * Test TestCase
  *
@@ -17,109 +12,61 @@ use Illuminate\Foundation\Testing\TestCase as LaravelTestCase;
  */
 class TestCase extends LaravelTestCase {
 
-  // custom environment
-  protected $custom_environment = 'testing';
+    protected $custom_environment;
 
-  public function setUp() {
-    parent::setUp();
-    require_once __DIR__ . "/../../src/routes.php";
+    public function setUp()
+    {
+        parent::setUp();
+        $this->useNullLogger();
+    }
 
-    $this->useMailPretend();
-    $this->useNullLogger();
-  }
+    public function useNullLogger()
+    {
+        \Mail::setLogger(new NullLogger());
+    }
 
-  public function useNullLogger() {
-    \Mail::setLogger(new NullLogger());
-  }
+    protected function getNowDateTime()
+    {
+        return Carbon::now()->toDateTimeString();
+    }
 
-  protected function getPackageProviders() {
-    return [
-            'Cartalyst\Sentry\SentryServiceProvider',
-            'LaravelAcl\Authentication\AuthenticationServiceProvider',
-            'LaravelAcl\Library\LibraryServiceProvider',
-    ];
-  }
+    /**
+     * @param $class
+     */
+    protected function assertHasErrors($class)
+    {
+        $this->assertFalse($class->getErrors()->isEmpty());
+    }
 
-  protected function getPackageAliases() {
-    return [
-            'Sentry' => 'Cartalyst\Sentry\Facades\Laravel\Sentry',
-    ];
-  }
+    /**
+     * @return mixed
+     */
+    public function getCustomEnvironment()
+    {
+        return $this->custom_environment;
+    }
 
-  protected function getNowDateTime() {
-    return Carbon::now()->toDateTimeString();
-  }
+    /**
+     * @param mixed $custom_environment
+     */
+    public function setCustomEnvironment($custom_environment)
+    {
+        $this->custom_environment = $custom_environment;
 
-  /**
-   * @param $class
-   */
-  protected function assertHasErrors($class) {
-    $this->assertFalse($class->getErrors()->isEmpty());
-  }
+        return $this;
+    }
 
-  protected function useMailPretend() {
-    Config::set('mail.pretend', true);
-  }
 
-  public function createApplication() {
-
-    $app = new Application;
-
-    $app->detectEnvironment(array(
-                                    'local' => array('your-machine-name'),
-                            ));
-
-    $app->bindInstallPaths($this->getApplicationPaths());
-
-    $app['env'] = $this->custom_environment;
-
-    $app->instance('app', $app);
-
-    Facade::clearResolvedInstances();
-    Facade::setFacadeApplication($app);
-
-    $app->registerCoreContainerAliases();
-
-    with($envVariables = new EnvironmentVariables($app->getEnvironmentVariablesLoader()))->load($app['env']);
-
-    $app->instance('config', $config = new ConfigRepository($app->getConfigLoader(), $app['env']));
-    $app->startExceptionHandling();
-
-    date_default_timezone_set($this->getApplicationTimezone());
-
-    $aliases = array_merge($this->getApplicationAliases(), $this->getPackageAliases());
-    AliasLoader::getInstance($aliases)->register();
-
-    Request::enableHttpMethodParameterOverride();
-
-    $providers = array_merge($this->getApplicationProviders(), $this->getPackageProviders());
-    $app->getProviderRepository()->load($app, $providers);
-
-    $this->getEnvironmentSetUp($app);
-
-    return $app;
-  }
-
-  /**
-   * @test
-   **/
-  public function dummy() {
-  }
-
-  /**
-   * @return mixed
-   */
-  public function getCustomEnvironment() {
-    return $this->custom_environment;
-  }
-
-  /**
-   * @param mixed $custom_environment
-   */
-  public function setCustomEnvironment($custom_environment) {
-    $this->custom_environment = $custom_environment;
-
-    return $this;
-  }
+    /**
+     * Creates the application.
+     *
+     * @return \Illuminate\Foundation\Application
+     */
+    public function createApplication()
+    {
+        $app = require __DIR__ . '/../../bootstrap/app.php';
+        $app->make('Illuminate\Contracts\Console\Kernel')->bootstrap();
+        return $app;
+    }
 }
  
