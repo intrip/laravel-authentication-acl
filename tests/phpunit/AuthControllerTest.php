@@ -1,7 +1,6 @@
 <?php  namespace LaravelAcl\Authentication\Tests\Unit;
 
 use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Session;
 use LaravelAcl\Authentication\Exceptions\AuthenticationErrorException;
 use LaravelAcl\Authentication\Tests\Unit\Traits\Helper;
 use LaravelAcl\Authentication\Tests\Unit\Traits\UserFactory;
@@ -14,8 +13,7 @@ use App;
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
-class AuthControllerTest extends DbTestCase
-{
+class AuthControllerTest extends DbTestCase {
     use Helper, UserFactory;
 
     protected $current_user;
@@ -44,7 +42,7 @@ class AuthControllerTest extends DbTestCase
         $remember = "1";
         $this->mockAuthenticatorSuccess($email, $password, $remember);
 
-        $this->action('POST', 'LaravelAcl\Authentication\Controllers\AuthController@postClientLogin', [
+        $this->route('POST', 'user.login', [
                 "email"    => $email,
                 "password" => $password,
                 "remember" => $remember
@@ -63,7 +61,7 @@ class AuthControllerTest extends DbTestCase
         $remember = "1";
         $this->mockAuthenticatorSuccess($email, $password, $remember);
 
-        $this->action('POST', 'LaravelAcl\Authentication\Controllers\AuthController@postAdminLogin', [
+        $this->route('POST', 'user.login.process', [
                 "email"    => $email,
                 "password" => $password,
                 "remember" => $remember
@@ -79,10 +77,12 @@ class AuthControllerTest extends DbTestCase
      */
     private function mockAuthenticatorSuccess($email, $password, $remember)
     {
-        $mock_authenticator_success = m::mock('StdClass')->shouldReceive('authenticate')->with([
-                                                                                                       "email"    => $email,
-                                                                                                       "password" => $password
-                                                                                               ], $remember)->getMock();
+        $mock_authenticator_success = m::mock('StdClass')
+                                       ->shouldReceive('authenticate')
+                                       ->with([
+                                                      "email"    => $email,
+                                                      "password" => $password
+                                              ], $remember)->getMock();
         App::instance('authenticator', $mock_authenticator_success);
     }
 
@@ -97,13 +97,13 @@ class AuthControllerTest extends DbTestCase
 
         $this->mockAuthenticationFails($email, $password, $remember);
 
-        $this->action('POST', 'LaravelAcl\Authentication\Controllers\AuthController@postClientLogin', [
+        $this->route('POST', "user.login", [
                 "email"    => $email,
                 "password" => $password,
                 "remember" => $remember
         ]);
 
-        $this->assertRedirectedToAction('LaravelAcl\Authentication\Controllers\AuthController@getClientLogin');
+        $this->assertRedirectedToAction('user.login');
         $this->assertSessionHasErrors();
     }
 
@@ -118,13 +118,13 @@ class AuthControllerTest extends DbTestCase
 
         $this->mockAuthenticationFails($email, $password, $remember);
 
-        $this->action('POST', 'LaravelAcl\Authentication\Controllers\AuthController@postAdminLogin', [
+        $this->route('POST', 'user.login.process', [
                 "email"    => $email,
                 "password" => $password,
                 "remember" => $remember
         ]);
 
-        $this->assertRedirectedToAction('LaravelAcl\Authentication\Controllers\AuthController@getAdminLogin');
+        $this->assertRedirectedToAction('user.admin.login');
         $this->assertSessionHasErrors();
     }
 

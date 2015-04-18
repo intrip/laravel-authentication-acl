@@ -8,7 +8,6 @@
 use Artisan, DB, Closure, App, Config;
 use BadMethodCallException;
 use Illuminate\Support\Collection;
-use Illuminate\Validation\DatabasePresenceVerifier;
 
 class DbTestCase extends TestCase {
 
@@ -35,14 +34,14 @@ class DbTestCase extends TestCase {
     public function setUp()
     {
         parent::setUp();
-        #TODO fix this then fix db schema creation
-        $this->artisan = $this->app->make('artisan');
         $this->faker = \Faker\Factory::create();
+        $this->artisan = $this->app['Illuminate\Contracts\Console\Kernel'];
         $this->setupDbConnection();
     }
 
     protected function setupDbConnection()
     {
+        $this->overrideDefaultConnection();
         $this->getConnectionInfo();
         $this->cleanTables();
         $this->createTestDbSchema();
@@ -118,10 +117,10 @@ class DbTestCase extends TestCase {
 
     protected function createTestDbSchema()
     {
-        $this->artisan->call('migrate', ["--database" => "testbench", '--path' => '../src/migrations']);
+        $this->artisan->call('migrate');
 
         // test custom config data for acceptance testsuite
-        $this->artisan->call('migrate', ["--database" => "testbench", '--path' => '../src/migrations_test']);
+//        $this->artisan->call('migrate', ["--database" => "testbench", '--path' => '../src/migrations_test']);
     }
 
     /**
@@ -173,5 +172,10 @@ class DbTestCase extends TestCase {
         {
             if(!in_array($key, $except)) $this->assertEquals($value, $object->$key);
         }
+    }
+
+    protected function overrideDefaultConnection()
+    {
+        Config::set('database.default', 'sqlite');
     }
 }

@@ -3,7 +3,7 @@
 use App;
 use LaravelAcl\Authentication\Models\Permission;
 use LaravelAcl\Authentication\Models\User;
-use LaravelAcl\Authentication\Seeds\DbSeeder;
+use LaravelAcl\Database\DatabaseSeeder;
 
 /**
  * Test UserSeederTest
@@ -22,7 +22,7 @@ class DbSeederTest extends DbTestCase
     {
         parent::setUp();
 
-        $this->dbSeeder = $seeder = new DbSeeder();
+        $this->dbSeeder = $seeder = new DatabaseSeeder();
         $this->user_repository = App::make('user_repository');
         $this->permission_repository = App::make('permission_repository');
         $this->group_repository = App::make('group_repository');
