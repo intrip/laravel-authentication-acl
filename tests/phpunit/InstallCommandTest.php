@@ -35,7 +35,9 @@ class InstallCommandTest extends TestCase {
                         ->once()
                         ->getMock();
 
-        $command = new CommandTester(new InstallCommand($mock_call, $mock_seeder));
+        $installCommand = new InstallCommand($mock_call, $mock_seeder);
+        $installCommand->setLaravel($this->app);
+        $command = new CommandTester($installCommand);
         $command->execute([]);
 
         $this->assertEquals("## Laravel Authentication ACL Installed successfully ##\n", $command->getDisplay());
