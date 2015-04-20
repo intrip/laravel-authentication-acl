@@ -5,8 +5,10 @@
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
-use Mail;
-use Log;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use Swift_RfcComplianceException;
+use Swift_TransportException;
 
 class SwiftMailer implements MailerInterface
 {
@@ -21,12 +23,12 @@ class SwiftMailer implements MailerInterface
                 $message->to($to)->subject($subject);
             });
         }
-        catch( \Swift_TransportException $e)
+        catch( Swift_TransportException $e)
         {
             Log::error('impossibile inviare l\'email:'.$e->getMessage());
             return false;
         }
-        catch( \Swift_RfcComplianceException $e)
+        catch( Swift_RfcComplianceException $e)
         {
             Log::error('impossibile inviare l\'email:'.$e->getMessage());
             return false;
