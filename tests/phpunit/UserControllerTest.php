@@ -2,9 +2,7 @@
 
 use App;
 use Config;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Facade;
 use LaravelAcl\Authentication\Models\User;
 use LaravelAcl\Authentication\Models\UserProfile;
 use LaravelAcl\Authentication\Tests\Unit\Traits\UserFactory;

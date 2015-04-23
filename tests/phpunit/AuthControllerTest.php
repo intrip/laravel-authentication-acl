@@ -33,7 +33,6 @@ class AuthControllerTest extends DbTestCase {
     }
 
     /**
-     * @group fail
      * @test
      **/
     public function it_login_client_with_success()
@@ -43,12 +42,11 @@ class AuthControllerTest extends DbTestCase {
         $remember = "1";
         $this->mockAuthenticatorSuccess($email, $password, $remember);
 
-        $response = $this->route('POST', 'user.login', [
+        $this->route('POST', 'user.login', [
                 "email"    => $email,
                 "password" => $password,
                 "remember" => $remember
         ]);
-        dd($response);
         $this->assertRedirectedTo(Config::get('acl_base.config.user_login_redirect_url'));
     }
 
@@ -104,7 +102,7 @@ class AuthControllerTest extends DbTestCase {
                 "remember" => $remember
         ]);
 
-        $this->assertRedirectedToAction('user.login');
+        $this->assertRedirectedToRoute('user.login');
         $this->assertSessionHasErrors();
     }
 
@@ -125,7 +123,7 @@ class AuthControllerTest extends DbTestCase {
                 "remember" => $remember
         ]);
 
-        $this->assertRedirectedToAction('user.admin.login');
+        $this->assertRedirectedToRoute('user.admin.login');
         $this->assertSessionHasErrors();
     }
 
@@ -146,6 +144,7 @@ class AuthControllerTest extends DbTestCase {
 
     /**
      * @test
+     * TODO fix this when try to send mail
      **/
     public function it_process_recovery_data_and_redirect_with_success()
     {
@@ -155,7 +154,7 @@ class AuthControllerTest extends DbTestCase {
 
         Event::listen('mailer.sending', 'LaravelAcl\Authentication\Tests\Unit\AuthControllerTest@checkForSingleMailData');
 
-        $this->action('POST', 'LaravelAcl\Authentication\Controllers\AuthController@postReminder', ["email" => $this->current_email]);
+        $this->route('POST', 'user.reminder', ["email" => $this->current_email]);
         $this->assertRedirectedTo('/user/reminder-success');
     }
 

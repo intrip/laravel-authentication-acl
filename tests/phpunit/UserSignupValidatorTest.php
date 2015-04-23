@@ -46,12 +46,12 @@ class UserSignupValidatorTest extends TestCase {
 
     protected function disableCaptchaCheck()
     {
-        Config::set('laravel-authentication-acl::captcha_signup', false);
+        Config::set('acl_base.captcha_signup', false);
     }
 
     protected function enableCaptchaCheck()
     {
-        Config::set('laravel-authentication-acl::captcha_signup', true);
+        Config::set('acl_base.captcha_signup', true);
     }
 
 }
