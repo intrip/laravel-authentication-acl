@@ -65,7 +65,7 @@ class AuthController extends Controller {
             return redirect()->route("user.login")->withInput()->withErrors($errors);
         }
 
-        return redirect(Config::get('acl_config.user_login_redirect_url'));
+        return Redirect::to(Config::get('acl_base.user_login_redirect_url'));
     }
 
     /**
