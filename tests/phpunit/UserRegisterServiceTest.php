@@ -1,13 +1,11 @@
 <?php  namespace LaravelAcl\Authentication\Tests\Unit;
 
 use App, Config, Event;
-use Illuminate\Database\QueryException;
 use Illuminate\Support\MessageBag;
 use LaravelAcl\Authentication\Exceptions\UserExistsException;
 use LaravelAcl\Authentication\Models\User;
 use LaravelAcl\Authentication\Services\UserRegisterService;
 use LaravelAcl\Library\Exceptions\JacopoExceptionsInterface;
-use LaravelAcl\Library\Exceptions\NotFoundException;
 use Mockery as m;
 
 /**
@@ -231,7 +229,7 @@ class UserRegisterServiceTest extends DbTestCase
 
     private function enableEmailConfirmation()
     {
-        Config::set('laravel-authentication-acl::email_confirmation', true);
+        Config::set('acl_base.email_confirmation', true);
     }
 
     /**
@@ -279,7 +277,7 @@ class UserRegisterServiceTest extends DbTestCase
 
     private function disableEmailConfirmation()
     {
-        Config::set('laravel-authentication-acl::email_confirmation', false);
+        Config::set('acl_base.email_confirmation', false);
     }
 
     /**
@@ -288,12 +286,12 @@ class UserRegisterServiceTest extends DbTestCase
     public function setupActiveStateOfUser()
     {
         $this->disableEmailConfirmation();
-        Config::set('laravel-authentication-acl::email_confirmation',false);
+        Config::set('acl_base.email_confirmation',false);
         $service = m::mock('LaravelAcl\Authentication\Services\UserRegisterService');
 
         $this->assertTrue($service->getDefaultActivatedState([]));
 
-        Config::set('laravel-authentication-acl::email_confirmation',true);
+        Config::set('acl_base.email_confirmation',true);
         $this->assertFalse($service->getDefaultActivatedState([]));
     }
 

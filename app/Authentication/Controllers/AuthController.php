@@ -20,7 +20,7 @@ class AuthController extends Controller {
 
     public function getClientLogin()
     {
-        return View::make('laravel-authentication-acl::client.auth.login');
+        return view('laravel-authentication-acl::client.auth.login');
     }
 
     public function getAdminLogin()
@@ -42,10 +42,10 @@ class AuthController extends Controller {
         catch(JacopoExceptionsInterface $e)
         {
             $errors = $this->authenticator->getErrors();
-            return Redirect::route("user.admin.login")->withInput()->withErrors($errors);
+            return redirect()->route("user.admin.login")->withInput()->withErrors($errors);
         }
 
-        return Redirect::route('dashboard.default');
+        return redirect()->route('dashboard.default');
     }
 
     public function postClientLogin()
@@ -62,10 +62,10 @@ class AuthController extends Controller {
         catch(JacopoExceptionsInterface $e)
         {
             $errors = $this->authenticator->getErrors();
-            return Redirect::route("user.login")->withInput()->withErrors($errors);
+            return redirect()->route("user.login")->withInput()->withErrors($errors);
         }
 
-        return Redirect::to(Config::get('acl_config.user_login_redirect_url'));
+        return redirect(Config::get('acl_config.user_login_redirect_url'));
     }
 
     /**
@@ -77,7 +77,7 @@ class AuthController extends Controller {
     {
         $this->authenticator->logout();
 
-        return Redirect::to('/');
+        return redirect('/');
     }
 
     /**
@@ -85,7 +85,7 @@ class AuthController extends Controller {
      */
     public function getReminder()
     {
-        return View::make("laravel-authentication-acl::client.auth.reminder");
+        return view("laravel-authentication-acl::client.auth.reminder");
     }
 
     /**
@@ -100,12 +100,12 @@ class AuthController extends Controller {
         try
         {
             $this->reminder->send($email);
-            return Redirect::route("user.reminder-success");
+            return redirect()->route("user.reminder-success");
         }
         catch(JacopoExceptionsInterface $e)
         {
             $errors = $this->reminder->getErrors();
-            return Redirect::route("user.recovery-password")->withErrors($errors);
+            return redirect()->route("user.recovery-password")->withErrors($errors);
         }
     }
 
@@ -125,7 +125,7 @@ class AuthController extends Controller {
 
         if (! $this->reminder_validator->validate(Input::all()) )
         {
-          return Redirect::route("user.change-password")->withErrors($this->reminder_validator->getErrors())->withInput();
+          return redirect()->route("user.change-password")->withErrors($this->reminder_validator->getErrors())->withInput();
         }
 
         try
@@ -135,10 +135,10 @@ class AuthController extends Controller {
         catch(JacopoExceptionsInterface $e)
         {
             $errors = $this->reminder->getErrors();
-            return Redirect::route("user.change-password")->withErrors($errors);
+            return redirect()->route("user.change-password")->withErrors($errors);
         }
 
-        return Redirect::route("user.change-password-success");
+        return redirect()->route("user.change-password-success");
 
     }
 

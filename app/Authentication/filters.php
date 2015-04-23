@@ -14,7 +14,7 @@ use LaravelAcl\Authentication\Helpers\FileRouteHelper;
  * Check that the current user is logged and active and redirect to admin login
  */
 Route::filter('admin_logged', function () {
-    if(!App::make('authenticator')->check()) return Redirect::to('/admin/login');
+    if(!App::make('authenticator')->check()) return redirect('/admin/login');
 });
 
 /*
@@ -23,7 +23,7 @@ Route::filter('admin_logged', function () {
  */
 Route::filter('logged', function ($request, $response, $custom_url = null) {
     $redirect_url = $custom_url ?: '/login';
-    if(!App::make('authenticator')->check()) return Redirect::to($redirect_url);
+    if(!App::make('authenticator')->check()) return redirect($redirect_url);
 });
 
 /*

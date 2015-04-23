@@ -33,6 +33,7 @@ class AuthControllerTest extends DbTestCase {
     }
 
     /**
+     * @group fail
      * @test
      **/
     public function it_login_client_with_success()
@@ -42,12 +43,12 @@ class AuthControllerTest extends DbTestCase {
         $remember = "1";
         $this->mockAuthenticatorSuccess($email, $password, $remember);
 
-        $this->route('POST', 'user.login', [
+        $response = $this->route('POST', 'user.login', [
                 "email"    => $email,
                 "password" => $password,
                 "remember" => $remember
         ]);
-
+        dd($response);
         $this->assertRedirectedTo(Config::get('acl_base.config.user_login_redirect_url'));
     }
 
