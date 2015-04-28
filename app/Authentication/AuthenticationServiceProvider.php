@@ -5,6 +5,7 @@ use LaravelAcl\Authentication\Classes\Captcha\GregWarCaptchaValidator;
 use LaravelAcl\Authentication\Classes\CustomProfile\Repository\CustomProfileRepository;
 use LaravelAcl\Authentication\Commands\InstallCommand;
 use Config;
+use LaravelAcl\Authentication\Helpers\FileRouteHelper;
 use LaravelAcl\Authentication\Middleware\Config as ConfigMiddleware;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
@@ -133,6 +134,11 @@ class AuthenticationServiceProvider extends ServiceProvider {
         $this->app->bind('captcha_validator', function ($app)
         {
             return new GregWarCaptchaValidator();
+        });
+
+        $this->app->bind('route_perm_helper', function ($app)
+        {
+            return new FileRouteHelper();
         });
     }
 

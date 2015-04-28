@@ -3,9 +3,11 @@
 use App;
 use Config;
 use Illuminate\Support\Facades\Event;
+use Session;
 use LaravelAcl\Authentication\Models\User;
 use LaravelAcl\Authentication\Models\UserProfile;
-use LaravelAcl\Authentication\Tests\Unit\Traits\UserFactory;
+use LaravelAcl\Authentication\Tests\Unit\Traits\Helper;
+use LaravelAcl\Authentication\Tests\Unit\Traits\AuthHelper;
 use LaravelAcl\Authentication\Validators\UserValidator;
 use LaravelAcl\Library\Exceptions\ValidationException;
 use Mockery as m;
@@ -17,7 +19,8 @@ use Mockery as m;
  */
 class UserControllerTest extends DbTestCase
 {
-    use UserFactory;
+    use Helper;
+    use AuthHelper;
 
     protected $custom_type_repository;
     protected $faker;
@@ -47,9 +50,9 @@ class UserControllerTest extends DbTestCase
         $mock_register = m::mock('StdClass')->shouldReceive('register')->once()->getMock();
         App::instance('register_service', $mock_register);
 
-        $this->action('POST', 'LaravelAcl\Authentication\Controllers\UserController@postSignup');
+        $this->route('POST', "user.signup.process");
 
-        $this->assertRedirectedToAction('LaravelAcl\Authentication\Controllers\UserController@signupSuccess');
+        $this->assertRedirectedToRoute("user.signup-success");
 
     }
 
@@ -112,36 +115,36 @@ class UserControllerTest extends DbTestCase
     /**
      * @test
      **/
-    public function it_showConfirmationEmailSuccessOnSignup_ifEmailConfirmationIsEnabled()
+    public function it_show_confirmation_email_success_on_signup_if_email_confirmation_is_enabled()
     {
-        $active = true;
-        $this->mockConfigGetEmailConfirmation($active);
+        $this->replaceGetEmailConfirmation(true);
 
-        \View::shouldReceive('make')->once()->with('laravel-authentication-acl::client.auth.signup-email-confirmation');
+        $response = $this->route('GET', 'user.signup-success');
 
-        $this->action('GET', 'LaravelAcl\Authentication\Controllers\UserController@signupSuccess');
+        $this->assertResponseIncludes($response, 'You account has been created. However');
     }
 
-    private function mockConfigGetEmailConfirmation($active)
+    private function replaceGetEmailConfirmation($active)
     {
-        Config::set('laravel-authentication-acl::email_confirmation', $active);
+        Config::set('acl_base.email_confirmation', $active);
     }
 
     /**
      * @test
+     * @group error
      **/
     public function it_showSuccessSignup_ifEmailConfirmationIsDisabled()
     {
-        $active = false;
-        $this->mockConfigGetEmailConfirmation($active);
+        $this->replaceGetEmailConfirmation(false);
 
-        \View::shouldReceive('make')->once()->with('laravel-authentication-acl::client.auth.signup-success');
+        $response = $this->route('GET', 'user.signup-success');
 
-        $this->action('GET', 'LaravelAcl\Authentication\Controllers\UserController@signupSuccess');
+        $this->assertResponseIncludes($response, 'Now you can login to the website ');
     }
 
     /**
      * @test
+     * @group error
      **/
     public function it_show_view_with_success_if_token_is_valid()
     {
@@ -162,6 +165,7 @@ class UserControllerTest extends DbTestCase
 
     /**
      * @test
+     * @group error
      **/
     public function it_show_view_with_error_if_token_is_invalid()
     {
@@ -183,6 +187,7 @@ class UserControllerTest extends DbTestCase
 
     /**
      * @test
+     * @group error
      **/
     public function it_show_view_errors_if_user_is_not_found()
     {
@@ -204,15 +209,18 @@ class UserControllerTest extends DbTestCase
 
     /**
      * @test
+     * @group error
      **/
     public function it_show_user_lists_on_lists()
     {
-        \Session::put('_old_input', [
+        $this->loginAnAdmin();
+
+        Session::put('_old_input', [
             "intersect" => "old intersect",
             "old" => "old input"
         ]);
 
-        $this->action('GET', 'LaravelAcl\Authentication\Controllers\UserController@getList', [
+        $response = $this->route('GET', 'users.list', [
             "new" => "new input",
             "intersect" => "new intersect"
         ]);
@@ -222,7 +230,7 @@ class UserControllerTest extends DbTestCase
 
     /**
      * @test
-     * @group valid
+     * @group error
      **/
     public function createNewUserWithSuccess()
     {
@@ -234,6 +242,8 @@ class UserControllerTest extends DbTestCase
             "password_confirmation" => "password",
             "activated" => true
         ];
+
+        //@jtodoIMP go from here
 
 
         $this->action('POST', 'LaravelAcl\Authentication\Controllers\UserController@postEditUser', $input_data);

@@ -5,6 +5,8 @@ use LaravelAcl\Authentication\Models\User;
 
 trait UserFactory {
 
+    protected $current_user;
+
     protected function getUserStub()
     {
         return [
@@ -12,6 +14,23 @@ trait UserFactory {
                 "password" => $this->faker->text(10),
                 "activated" => 1,
         ];
+    }
+
+    protected function getAdminStub()
+    {
+        return array_merge($this->getUserStub(), ['permissions' => ['_superadmin' => 1]]);
+    }
+
+    protected function getFakeUser()
+    {
+        $this->current_user = new User($this->getUserStub());
+        return $this->current_user;
+    }
+
+    protected function getFakeAdmin()
+    {
+        $this->current_user = new User($this->getAdminStub());
+        return $this->current_user;
     }
 
     protected function getUserProfileStub(User $user)

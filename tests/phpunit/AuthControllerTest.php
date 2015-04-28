@@ -16,7 +16,6 @@ use App;
 class AuthControllerTest extends DbTestCase {
     use Helper, UserFactory;
 
-    protected $current_user;
     protected $current_email;
 
     public function setUp()

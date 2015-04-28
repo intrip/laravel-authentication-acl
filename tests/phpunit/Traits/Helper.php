@@ -44,4 +44,8 @@ trait Helper
     protected function assertMessagSubjectEquals($message, $expected_subject) {
         return $this->assertEquals($message->getSubject(), $expected_subject, 'Message has not the subject: '. $expected_subject. 'but: '. $message);
     }
+
+    protected function assertResponseIncludes($response, $text) {
+        return $this->assertEquals(true, strpos($response->getContent(), $text), 'The message does not contain: '. $text. 'but: '. $response->getcontent());
+    }
 } 

@@ -36,7 +36,7 @@ Route::filter('logged', function ($request, $response, $custom_url = null) {
 */
 
 Route::filter('can_see', function () {
-    $route_helper = new FileRouteHelper;
+    $route_helper = App::make('route_perm_helper');
     if(!$route_helper->hasPermForRoute(Route::currentRouteName())) App::abort('401');
 });
 
