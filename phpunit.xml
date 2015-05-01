@@ -10,8 +10,8 @@
          stopOnFailure="false"
          syntaxCheck="false">
     <testsuites>
-        <testsuite name="Application Test Suite">
-            <directory>./tests/</directory>
+        <testsuite name="Unit Test Suite">
+            <directory>./tests/unit/</directory>
         </testsuite>
     </testsuites>
     <php>
