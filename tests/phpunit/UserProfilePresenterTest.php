@@ -38,6 +38,7 @@ class UserProfilePresenterTest extends DbTestCase
      **/
     public function canGetDefaultAvatar()
     {
+        // remove avatar
         $this->user_profile->avatar = null;
         $this->assertEquals($this->default_path, $this->presenter->custom_avatar);
     }
@@ -94,7 +95,7 @@ class UserProfilePresenterTest extends DbTestCase
 
     private function setAvatarDefaultPath()
     {
-        Config::set('laravel-authentication-acl::config.default_avatar_path', $this->default_path);
+        Config::set('acl_base.default_avatar_path', $this->default_path);
     }
 
     /**
@@ -108,7 +109,7 @@ class UserProfilePresenterTest extends DbTestCase
 
     private function useGravatar($use)
     {
-        Config::set('laravel-authentication-acl::config.use_gravatar', $use);
+        Config::set('acl_base.use_gravatar', $use);
     }
 
     /**
