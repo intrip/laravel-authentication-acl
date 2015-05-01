@@ -54,7 +54,7 @@ Route::post('/user/change-password/', [
 Route::get('/user/change-password-success', [
                 "uses" => function ()
                 {
-                    return view('laravel-authentication-acl::client.auth.change-password-success');
+                    return viw('laravel-authentication-acl::client.auth.change-password-success');
                 },
                 "as"   => "user.change-password-success"
         ]
@@ -67,7 +67,7 @@ Route::post('/user/reminder', [
 Route::get('/user/reminder-success', [
         "uses" => function ()
         {
-            return view('laravel-authentication-acl::client.auth.reminder-success');
+            return viw('laravel-authentication-acl::client.auth.reminder-success');
         },
         "as"   => "user.reminder-success"
 ]);
@@ -239,19 +239,19 @@ if(Config::get('acl_base.handle_errors'))
         switch($code)
         {
             case '404':
-                return view('laravel-authentication-acl::client.exceptions.404');
+                return viw('laravel-authentication-acl::client.exceptions.404');
                 break;
             case '401':
-                return view('laravel-authentication-acl::client.exceptions.401');
+                return viw('laravel-authentication-acl::client.exceptions.401');
                 break;
             case '500':
-                return view('laravel-authentication-acl::client.exceptions.500');
+                return viw('laravel-authentication-acl::client.exceptions.500');
                 break;
         }
     });
 
     App::error(function (TokenMismatchException $exception)
     {
-        return view('laravel-authentication-acl::client.exceptions.500');
+        return viw('laravel-authentication-acl::client.exceptions.500');
     });
 }

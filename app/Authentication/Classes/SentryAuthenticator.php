@@ -2,7 +2,7 @@
 
 /**
  * Class SentryAuthenticator
- * Sentry authenticate implementatione
+ * Sentry authenticate implementation
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */

@@ -20,8 +20,7 @@ class SentryAuthenticationHelper implements AuthenticationHelperInterface, Permi
      */
     public function hasPermission(array $permissions)
     {
-        $sentry = App::make('sentry');
-        $current_user = $sentry->getUser();
+        $current_user = $this->currentUser();
         if(! $current_user) return false;
         if($permissions && (! $current_user->hasAnyAccess($permissions)) ) return false;
 
@@ -35,7 +34,7 @@ class SentryAuthenticationHelper implements AuthenticationHelperInterface, Permi
      */
     public function checkProfileEditPermission($user_id)
     {
-        $current_user_id = App::make('sentry')->getUser()->id;
+        $current_user_id = $this->currentUser()->id;
 
         // edit his profile
         if($user_id == $current_user_id) return true;
@@ -54,6 +53,7 @@ class SentryAuthenticationHelper implements AuthenticationHelperInterface, Permi
     public function checkCustomProfileEditPermission()
     {
         $edit_perm = Config::get('acl_permissions.edit_custom_profile');
+
         return $this->hasPermission($edit_perm) ? true : false;
     }
 
@@ -71,4 +71,13 @@ class SentryAuthenticationHelper implements AuthenticationHelperInterface, Permi
         return $users;
     }
 
+    /**
+     * @return mixed
+     */
+    protected function currentUser()
+    {
+        $sentry = App::make('sentry');
+        $current_user = $sentry->getUser();
+        return $current_user;
+    }
 }

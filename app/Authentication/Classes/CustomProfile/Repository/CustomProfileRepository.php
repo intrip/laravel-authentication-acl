@@ -27,6 +27,7 @@ class CustomProfileRepository
 
     public static function addNewType($description)
     {
+        // firing event so it can get catched for permission handling
         Event::fire('customprofile.creating');
         $profile_field_type = ProfileFieldType::create(["description" => $description]);
 
@@ -35,6 +36,7 @@ class CustomProfileRepository
 
     public static function deleteType($id)
     {
+        // firing event so it can get catched for permission handling
         Event::fire('customprofile.deleting');
         $success = ProfileFieldType::findOrFail($id)->delete();
 

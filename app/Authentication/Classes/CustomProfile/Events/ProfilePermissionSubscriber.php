@@ -9,7 +9,7 @@ use LaravelAcl\Authentication\Exceptions\PermissionException;
  */
 class ProfilePermissionSubscriber 
 {
-    protected $permission_error_message = "You don't have the permission to edit custom user profiles.";
+    protected $permission_error_message = "You don't have the permission to edit custom the user profiles.";
 
     /**
      * Check if the object is editable

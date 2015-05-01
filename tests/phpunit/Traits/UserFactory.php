@@ -12,7 +12,7 @@ trait UserFactory {
         return [
                 "email" => $this->faker->email(),
                 "password" => $this->faker->text(10),
-                "activated" => 1,
+                "activated" => 1
         ];
     }
 
@@ -51,7 +51,7 @@ trait UserFactory {
 
     protected function getModelStub()
     {
-        return [];
+        return $this->getUserStub();
     }
 
     protected function initializeUserHasher()

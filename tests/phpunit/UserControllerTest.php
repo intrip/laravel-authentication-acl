@@ -131,7 +131,6 @@ class UserControllerTest extends DbTestCase
 
     /**
      * @test
-     * @group error
      **/
     public function it_showSuccessSignup_ifEmailConfirmationIsDisabled()
     {
@@ -144,7 +143,6 @@ class UserControllerTest extends DbTestCase
 
     /**
      * @test
-     * @group error
      **/
     public function it_show_view_with_success_if_token_is_valid()
     {
@@ -165,7 +163,6 @@ class UserControllerTest extends DbTestCase
 
     /**
      * @test
-     * @group error
      **/
     public function it_show_view_with_error_if_token_is_invalid()
     {
@@ -187,7 +184,6 @@ class UserControllerTest extends DbTestCase
 
     /**
      * @test
-     * @group error
      **/
     public function it_show_view_errors_if_user_is_not_found()
     {
@@ -197,7 +193,7 @@ class UserControllerTest extends DbTestCase
             $token)->andThrow(new \LaravelAcl\Authentication\Exceptions\UserNotFoundException())->shouldReceive('getErrors')->once()->andReturn("")->getMock();
         App::instance('register_service', $mock_service);
 
-        $this->action('GET', 'LaravelAcl\Authentication\Controllers\UserController@emailConfirmation',
+        $this->route('GET', "user.email-confirmation",
             '', [
                 "email" => $email,
                 "token" => $token
@@ -209,7 +205,6 @@ class UserControllerTest extends DbTestCase
 
     /**
      * @test
-     * @group error
      **/
     public function it_show_user_lists_on_lists()
     {
@@ -220,7 +215,7 @@ class UserControllerTest extends DbTestCase
             "old" => "old input"
         ]);
 
-        $response = $this->route('GET', 'users.list', [
+        $this->route('GET', 'users.list', [
             "new" => "new input",
             "intersect" => "new intersect"
         ]);
@@ -230,10 +225,11 @@ class UserControllerTest extends DbTestCase
 
     /**
      * @test
-     * @group error
      **/
     public function createNewUserWithSuccess()
     {
+        $this->loginAnAdmin();
+
         $input_data = [
             "id" => "",
             "email" => $this->faker->email(),
@@ -243,17 +239,14 @@ class UserControllerTest extends DbTestCase
             "activated" => true
         ];
 
-        //@jtodoIMP go from here
+        $this->route('POST', 'users.edit', $input_data);
 
-
-        $this->action('POST', 'LaravelAcl\Authentication\Controllers\UserController@postEditUser', $input_data);
-
-        $user_created = User::firstOrFail();
+        $user_created = User::get()->last();
         $this->assertNotNull($user_created);
-        $profile_created = UserProfile::firstOrFail();
+        $profile_created = UserProfile::get()->last();
         $this->assertNotNull($profile_created);
 
-        $this->assertRedirectedToAction('LaravelAcl\Authentication\Controllers\UserController@editUser',
+        $this->assertRedirectedToRoute('users.edit',
             ['id' => $user_created->id]);
         $this->assertSessionHas('message');
     }
@@ -263,23 +256,23 @@ class UserControllerTest extends DbTestCase
      **/
     public function editAnUserWithSuccess()
     {
-        $user_created = $this->make('LaravelAcl\Authentication\Models\User', $this->getUserStub());
+        $this->loginAnAdmin();
 
         $new_email = "new@mail.com";
         $input_data = [
-                "id" => $user_created[0]->id,
+                "id" => $this->current_user->id,
                 "form_name" => "user",
                 "email" => $new_email,
                 "password" => '',
                 "password_confirmation" => ''
         ];
 
-        $this->action('POST', 'LaravelAcl\Authentication\Controllers\UserController@postEditUser', $input_data);
+        $this->route('POST', 'users.edit', $input_data);
 
-        $user_updated = User::find($user_created[0]->id);
+        $user_updated = User::find($this->current_user->id);
         $this->assertEquals($new_email, $user_updated->email);
 
-        $this->assertRedirectedToAction('LaravelAcl\Authentication\Controllers\UserController@editUser',
+        $this->assertRedirectedToRoute('users.edit',
                                         ['id' => $user_updated->id]);
         $this->assertSessionHas('message');
     }
@@ -289,29 +282,32 @@ class UserControllerTest extends DbTestCase
      **/
     public function canAddCustomFieldType()
     {
-        $this->stopPermissionCheckEvent();
+        $this->loginAnAdmin();
+
         $field_description = "field desc";
-        $user_id = 1;
-        $this->action('POST', 'LaravelAcl\Authentication\Controllers\UserController@addCustomFieldType', ['description' => $field_description, 'user_id' => $user_id]);
+        $this->route('POST', 'users.profile.addfield', ['description' => $field_description, 'user_id' => $this->current_user->id]);
 
         $profile_fields = $this->custom_type_repository->getAllTypes();
         // check that have created a field type
         $this->assertCount(1, $profile_fields);
 
-        $this->assertRedirectedToAction('LaravelAcl\Authentication\Controllers\UserController@postEditProfile', ["user_id" => $user_id]);
+        $this->assertRedirectedToRoute('users.profile.edit', ["user_id" => $this->current_user->id]);
         $this->assertSessionHas('message');
     }
 
     /**
      * @test
      **/
-    public function itHandleCreationPermissions_OnCustomFieldType()
+    public function check_for_permissions_when_adding_custom_field_type()
     {
-        $field_description = "field desc";
-        $user_id = 1;
-        $this->action('POST', 'LaravelAcl\Authentication\Controllers\UserController@addCustomFieldType', ['description' => $field_description, 'user_id' => $user_id]);
+        // create a fake user with id=1
+        $fake_user = $this->make('LaravelAcl\Authentication\Models\User')[0];
+        // login another user
+        $this->loginAnUser();
 
-        $this->assertRedirectedToAction('LaravelAcl\Authentication\Controllers\UserController@postEditProfile', ["user_id" => $user_id]);
+        $this->route('POST', 'users.profile.addfield', ['description' => "field desc", 'user_id' => $fake_user->id]);
+
+        $this->assertRedirectedToRoute('users.profile.edit', ["user_id" => $fake_user->id]);
         $this->assertSessionHas('errors');
     }
 
@@ -320,38 +316,44 @@ class UserControllerTest extends DbTestCase
      **/
     public function canRemoveAPermission()
     {
-        $user_created = $this->make('LaravelAcl\Authentication\Models\User', array_merge($this->getUserStub(),["permissions" => ["_perm" => 1]]));
-
+        $this->loginAnAdmin();
         $permission_name = "_perm";
+
+        // create a user with permission _perm
+        $user_created = $this->make('LaravelAcl\Authentication\Models\User', array_merge($this->getUserStub(),["permissions" => [$permission_name => 1]] ) )[0];
+
         $input = [
                 "permissions" => $permission_name,
-                "id" => $user_created[0]->id,
+                "id" => $user_created->id,
                 "operation" => $this->remove_operation,
         ];
 
-        $this->route('POST', 'users.edit.permission', $input);
+        $response = $this->route('POST', 'users.edit.permission', $input);
 
-        $user_found = User::find($user_created[0]->id);
+        $user_found = User::find($user_created->id);
         $this->assertEmpty($user_found->permissions);
     }
 
     /**
      * @test
      **/
-    public function canAddAPermission()
+    public function can_add_a_permission()
     {
-        $user_created = $this->make('LaravelAcl\Authentication\Models\User', $this->getUserStub());
-
+        $this->loginAnAdmin();
         $permission_name = "_perm";
+
+        // create a user with permission _perm
+        $user_created = $this->make('LaravelAcl\Authentication\Models\User', array_merge($this->getUserStub(),["permissions" => [$permission_name => 1]] ) )[0];
+
         $input = [
             "permissions" => $permission_name,
-            "id" => $user_created[0]->id,
+            "id" => $user_created->id,
             "operation" => $this->add_operation,
         ];
 
         $this->route('POST', 'users.edit.permission', $input);
 
-        $user_found = User::find($user_created[0]->id);
+        $user_found = User::find($user_created->id);
         $this->assertUserHasPermission($user_found, $permission_name);
     }
 
@@ -360,61 +362,51 @@ class UserControllerTest extends DbTestCase
      **/
     public function canDeleteCustomFieldType()
     {
+        $this->loginAnAdmin();
         $this->stopPermissionCheckEvent();
         $field_id = $this->createFieldType();
         $user_id = 1;
 
-        $this->action('POST', 'LaravelAcl\Authentication\Controllers\UserController@deleteCustomFieldType', ["id" => $field_id, "user_id" => $user_id]);
+        $this->route('POST', 'users.profile.deletefield', ["id" => $field_id, "user_id" => $user_id]);
 
         $profile_fields = $this->custom_type_repository->getAllTypes();
         $this->assertCount(0, $profile_fields);
 
-        $this->assertRedirectedToAction('LaravelAcl\Authentication\Controllers\UserController@postEditProfile', ["user_id" => $user_id]);
+        $this->assertRedirectedToRoute('users.profile.edit', ["user_id" => $user_id]);
         $this->assertSessionHas('message');
     }
 
     /**
      * @test
      **/
-    public function itHandleDeleteErrors()
+    public function check_for_permissions_when_removing_custom_field_type()
     {
+        // create a fake user with id=1
+        $fake_user = $this->make('LaravelAcl\Authentication\Models\User')[0];
+        // login another user
+        $this->loginAnUser();
+
         $this->stopPermissionCheckEvent();
-        $user_id = 1;
         $field_id = 1;
-        $this->action('POST', 'LaravelAcl\Authentication\Controllers\UserController@deleteCustomFieldType', ["id" => $field_id, "user_id" => $user_id]);
+        $this->route('POST', 'users.profile.deletefield', ["id" => $field_id, "user_id" => $fake_user->id]);
 
-        $this->assertRedirectedToAction('LaravelAcl\Authentication\Controllers\UserController@postEditProfile', ["user_id" => $user_id]);
-        $this->assertSessionHas('errors');
-    }
-
-    /**
-     * @test
-     **/
-    public function itHandleDeletePemissionError()
-    {
-        $this->stopPermissionCheckCreate();
-        $field_id = $this->createFieldType();
-        $user_id = 1;
-
-        $this->action('POST', 'LaravelAcl\Authentication\Controllers\UserController@deleteCustomFieldType', ["id" => $field_id, "user_id" => $user_id]);
-
-        $this->assertRedirectedToAction('LaravelAcl\Authentication\Controllers\UserController@postEditProfile', ["user_id" => $user_id]);
+        $this->assertRedirectedToRoute('users.profile.edit', ["user_id" => $fake_user->id]);
         $this->assertSessionHas('errors');
     }
     
     /**
      * @test
      **/
-    public function canViewEditSelfProfile()
+    public function can_see_profile_edit_of_himself()
     {
         $created_user = $this->make('LaravelAcl\Authentication\Models\User', $this->getUserStub())->first();
         $created_user_profile = $this->make('LaravelAcl\Authentication\Models\UserProfile', $this->getUserProfileStub($created_user))->first();
-        $this->isLoggedUserWithProfile($created_user);
+        $this->loginUser($created_user);
 
-        $this->route('GET','users.selfprofile.edit');
+        $response = $this->route('GET','users.selfprofile.edit');
 
         $this->assertResponseOk();
-        $view_user_profile = $this->client->getResponse()->original->user_profile;
+        $view_user_profile = $response->original->user_profile;
         $this->assertObjectHasAllAttributes($created_user_profile->toArray(), $view_user_profile);
     }
 

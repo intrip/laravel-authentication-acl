@@ -35,7 +35,7 @@ return [
                 "link"        => '/admin/users/list',
                 /*
                  * the list of 'permission name' associated to the menu
-                 * item: if the logged use has one or more of the permission
+                 * item: if the logged user has one or more of the permission
                  * in the list he can see the menu link and access the area
                  * associated with that.
                  * Every route that you create with the 'route' as a prefix
@@ -47,7 +47,7 @@ return [
                  * if there is any route that you want to skip for the permission check
                  * put it in this array
                  */
-                "skip_permissions" => ["users.selfprofile.edit", "users.profile.edit"]
+                "skip_permissions" => ["users.selfprofile.edit", "users.profile.edit", "users.profile.addfield", "users.profile.deletefield"]
             ],
             [
                     "name"        => "Groups",
