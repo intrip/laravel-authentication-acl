@@ -1,10 +1,21 @@
 <?php  namespace LaravelAcl\Authentication\Tests\Unit;
 
 use LaravelAcl\Authentication\Models\User;
+use LaravelAcl\Authentication\Tests\Unit\Traits\AuthHelper;
+use LaravelAcl\Authentication\Tests\Unit\Traits\Helper;
 use Mockery as m;
 use App;
 
 class DashboardControllerTest extends DbTestCase  {
+
+    use Helper;
+    use AuthHelper;
+
+    public function setUp()
+    {
+        parent::setUp();
+        $this->initializeUserHasher();
+    }
 
     public function tearDown()
     {
@@ -16,9 +27,7 @@ class DashboardControllerTest extends DbTestCase  {
      **/
     public function canShowDashboardPage()
     {
-        $mock_authenticator = m::mock('StdClass');
-        $mock_authenticator->shouldReceive('getLoggedUser')->andReturn(new User());
-        App::instance('authenticator', $mock_authenticator);
+        $this->loginAnUser();
 
         $this->route('GET', 'dashboard.default');
 

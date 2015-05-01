@@ -10,7 +10,6 @@ class ClientLoggedFilterTest extends TestCase  {
     public function setUp()
     {
         parent::setUp();
-        $this->app['router']->enableFilters();
         Route::get('check', ['before' => 'logged', 'uses' => function(){return '';}]);
         Route::get('check_custom', ['before' => "logged:{$this->custom_url}", 'uses' => function(){return '';}]);
     }
