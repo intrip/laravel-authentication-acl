@@ -22,15 +22,17 @@ class UserSignupEmailValidator extends AbstractValidator
             return true;
         }
 
+
         if($user->activated)
         {
             return false;
         }
 
         // if email confirmation is disabled we dont send email again
-        if(! Config::get('acl_email_confirmation') ) return false;
+        if(! Config::get('acl_base.email_confirmation') ) return false;
 
         // send email
+
         $this->resendConfirmationEmail($value);
         // set session message
         Session::flash('message', "We sent you again the mail confirmation. Please check your inbox.");

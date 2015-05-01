@@ -2,9 +2,7 @@
 
 use LaravelAcl\Authentication\Helpers\FileRouteHelper;
 use Config, Route, App;
-use LaravelAcl\Authentication\Helpers\SentryAuthenticationHelper;
 use LaravelAcl\Authentication\Tests\Unit\Traits\UserFactory;
-use Mockery\Container;
 
 /**
  * Test FileRouteHelperTest
@@ -132,7 +130,7 @@ class FileRouteHelperTest extends DbTestCase
      */
     protected function setCustomMenuConfig($route_name, $permissions, array $to_skip = [])
     {
-        Config::set('laravel-authentication-acl::menu.list',
+        Config::set('acl_menu.list',
                     [[
                              "name"        => "Test",
                              "route"       => $route_name,

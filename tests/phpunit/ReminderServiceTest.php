@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\App;
 use LaravelAcl\Authentication\Exceptions\UserNotFoundException;
-use LaravelAcl\Authentication\Models\User;
 use LaravelAcl\Authentication\Services\ReminderService as Reminder;
 use Mockery as m;
 
@@ -11,13 +10,14 @@ class ReminderServiceTest extends DbTestCase {
     protected $token;
 
     protected $to = "destination@mail.com";
+    protected $template = "template_path";
     protected $reminder;
 
     public function setUp()
     {
         parent::setUp();
 
-        $this->token = "pseudorandom token";
+        $this->token = "pseudorandom_token";
         $this->reminder = new Reminder;
     }
 
@@ -36,12 +36,11 @@ class ReminderServiceTest extends DbTestCase {
      */
     public function itCanSendEmail()
     {
-        $return = true;
-        $template = "";
-        $this->mockMailerSendTo($return, $template, $this->to);
+        $success = true;
+        $this->mockMailerSendTo($success, $this->template, $this->to);
         $this->mockGetTokenSuccesfully();
         $reminder = new Reminder();
-        $reminder->setTemplate($template);
+        $reminder->setTemplate($this->template);
 
         $success = $reminder->send($this->to);
 
@@ -54,13 +53,11 @@ class ReminderServiceTest extends DbTestCase {
      */
     public function itThrowsExceptionOnSendEmailErrors()
     {
-        $return = false;
-        $template = "";
-        $to = "destination@mail.com";
-        $this->mockMailerSendTo($return, $template, $this->to);
+        $success = false;
+        $this->mockMailerSendTo($success, $this->template, $this->to);
         $this->mockGetTokenSuccesfully();
         $reminder = new Reminder();
-        $reminder->setTemplate($template);
+        $reminder->setTemplate($this->template);
 
         $reminder->send($this->to);
     }
@@ -80,8 +77,8 @@ class ReminderServiceTest extends DbTestCase {
     private function mockMailerSendTo($return, $template, $to)
     {
         $mock_mail = m::mock('LaravelAcl\Library\Email\MailerInterface')->shouldReceive('sendTo')
-            ->once($to, m::any(), m::any(), $template)
-            ->with()
+            ->once()
+            ->with($to, m::any(), m::any(), $template)
             ->andReturn($return)
             ->getMock();
         App::instance('jmailer', $mock_mail);

@@ -80,6 +80,7 @@ class ReminderService {
         // send email with change password link
         $success = $this->mailer->sendTo($to, $this->body, $this->subject, $this->template);
 
+
         if(! $success)
         {
             $this->errors->add('mail', 'There was an error sending the email');
@@ -142,6 +143,11 @@ class ReminderService {
     public function getTemplate()
     {
         return $this->template;
+    }
+
+    public function getMailer()
+    {
+        return $this->mailer;
     }
 
 } 

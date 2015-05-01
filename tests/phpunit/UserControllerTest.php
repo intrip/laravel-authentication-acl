@@ -94,22 +94,22 @@ class UserControllerTest extends DbTestCase
     /**
      * @test
      **/
-    public function itDoesntShowCaptchaOnSignupIfDisabled()
+    public function it_doesnt_show_captcha_on_signup_if_disabled()
     {
         $this->disableCaptchaCheck();
-        $response = $this->action('GET', 'LaravelAcl\Authentication\Controllers\UserController@signup');
+        $response = $this->route('GET', "user.signup");
 
         $this->assertArrayNotHasKey("captcha", $response->original->getData());
     }
 
     protected function disableCaptchaCheck()
     {
-        Config::set('laravel-authentication-acl::captcha_signup', false);
+        Config::set('acl_base.captcha_signup', false);
     }
 
     protected function enableCaptchaCheck()
     {
-        Config::set('laravel-authentication-acl::captcha_signup', true);
+        Config::set('acl_base.captcha_signup', true);
     }
 
     /**

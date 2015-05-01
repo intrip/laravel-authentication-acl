@@ -24,6 +24,7 @@ class UserSignupEmailValidatorTest extends DbTestCase {
     {
         m::close();
     }
+
     /**
      * @test
      **/
@@ -67,9 +68,10 @@ class UserSignupEmailValidatorTest extends DbTestCase {
         StateKeeper::set('expected_to', $input["email"]);
         StateKeeper::set('expected_subject',"Registration request to: " . Config::get('acl_base.app_name'));
         StateKeeper::set('expected_body', 'You account has been created. However, before you can use it you need to confirm your email address first by clicking the');
-        Input::shouldReceive('all')->once()->andReturn($input)
-                ->shouldReceive('getScheme')
-                ->shouldReceive('root');
+        $mock_register_service = m::mock('register_service')
+            ->shouldReceive('sendRegistrationMailToClient')
+            ->getMock();
+        App::instance('register_service', $mock_register_service);
         $this->activateSingleEmailCheck();
 
         $this->user_repository->create($input);
@@ -81,7 +83,7 @@ class UserSignupEmailValidatorTest extends DbTestCase {
 
     private function enableEmailConfirmation()
     {
-        Config::set('laravel-authentication-acl::email_confirmation', true);
+        Config::set('acl_base.email_confirmation', true);
     }
 
     public function activateSingleEmailCheck()

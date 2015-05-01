@@ -69,7 +69,7 @@ class UserRepositorySearchFilterTest extends DbTestCase
         $users = $this->repository_search->all();
         $this->assertInstanceOf('Illuminate\Pagination\Paginator', $users);
         $this->assertEquals($per_page, $users->count());
-        $this->assertEquals($per_page, $users->getPerPage());
+        $this->assertEquals($per_page, $users->perPage());
         $this->assertEquals("name", $users->first()->first_name);
     }
 
