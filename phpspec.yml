@@ -1,5 +1,0 @@
-suites:
-    main:
-        namespace: LaravelAcl
-        psr4_prefix: LaravelAcl
-        src_path: app

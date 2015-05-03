@@ -1,7 +1,8 @@
 laravel-authentication-acl
 ==========================
 
-<!-- [![Build Status](https://travis-ci.org/intrip/laravel-authentication-acl.svg?branch=1.3)](https://travis-ci.org/intrip/laravel-authentication-acl) -->
+[![Build Status](https://travis-ci.org/intrip/laravel-authentication-acl.svg?branch=1.3)](https://travis-ci.org/intrip/laravel-authentication-acl)
+[![Total Downloads](https://poser.pugx.org/jacopo/laravel-authentication-acl/d/total.svg)](https://packagist.org/packages/jacopo/laravel-authentication-acl)
 
 ## This is the Laravel 5 Version, for Laravel 4.2 version use the 1.2 branch
 
