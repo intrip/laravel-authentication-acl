@@ -216,17 +216,17 @@ Route::group(['before' => ['admin_logged', 'can_see']], function ()
     ]);
     Route::get('/admin/permissions/edit', [
             'as'   => 'permission.edit',
-            'uses' => 'LaravelAcl\Authentication\Controllers\\\\PermissionController@editPermission'
+            'uses' => 'LaravelAcl\Authentication\Controllers\PermissionController@editPermission'
     ]);
     Route::post('/admin/permissions/edit', [
             "before" => "csrf",
             'as'     => 'permission.edit',
-            'uses'   => 'LaravelAcl\Authentication\Controllers\\\\PermissionController@postEditPermission'
+            'uses'   => 'LaravelAcl\Authentication\Controllers\PermissionController@postEditPermission'
     ]);
     Route::get('/admin/permissions/delete', [
             "before" => "csrf",
             'as'     => 'permission.delete',
-            'uses'   => 'LaravelAcl\Authentication\Controllers\\\\PermissionController@deletePermission'
+            'uses'   => 'LaravelAcl\Authentication\Controllers\PermissionController@deletePermission'
     ]);
 });
 
