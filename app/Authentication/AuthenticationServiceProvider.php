@@ -231,7 +231,7 @@ class AuthenticationServiceProvider extends ServiceProvider {
     {
 
         $this->publishes([
-                                 __DIR__ . '/../../resources/views' => base_path('resources/views/jacopo/laravel-authentication-acl'),
+                                 __DIR__ . '/../../resources/views' => base_path('resources/views/vendor/laravel-authentication-acl'),
                          ]);
     }
 
