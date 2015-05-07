@@ -36,7 +36,7 @@ To install authentication follow this steps:
       },
       ```
 
-  3. Now run `composer update` command.
+  3. Now run `composer install` command.
 
   4. Now open the file _config/app.php_ and add to the 'providers' option the following line:
   'LaravelAcl\Authentication\AuthenticationServiceProvider',
