@@ -212,7 +212,7 @@ class AuthenticationServiceProvider extends ServiceProvider {
     {
         $this->publishes([
                                  __DIR__ .
-                                 '/../../public/packages/jacopo/laravel-authentication-acl' => public_path('packages/jacopo/laravel-authentication-acl'),
+                                 '/../../public/packages/jacopo/laravel-authentication-acl' => public_path('jacopo/laravel-authentication-acl'),
                          ]);
     }
 
