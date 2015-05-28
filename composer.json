@@ -50,12 +50,12 @@
 		"post-install-cmd": [
 			"php artisan clear-compiled",
 			"php artisan optimize",
-      "php artisan vendor:publish --tag=acl --force"
+      "php artisan vendor:publish --tag=acl"
 		],
 		"post-update-cmd": [
 			"php artisan clear-compiled",
 			"php artisan optimize",
-      "php artisan vendor:publish --tag=acl --force"
+      "php artisan vendor:publish --tag=acl"
 		],
 		"post-create-project-cmd": [
 			"php -r \"copy('.env.example', '.env');\"",
