@@ -74,7 +74,7 @@ class AuthenticationServiceProvider extends ServiceProvider {
 
         $this->registerCommands();
 
-        $this->publishData();
+        $this->setupPublishDataCommand();
 
         $this->overwriteSentryConfig();
     }
@@ -200,7 +200,7 @@ class AuthenticationServiceProvider extends ServiceProvider {
     }
 
 
-    protected function publishData()
+    protected function setupPublishDataCommand()
     {
         $this->publishAssets();
         $this->publishConfig();
@@ -211,9 +211,9 @@ class AuthenticationServiceProvider extends ServiceProvider {
     protected function publishAssets()
     {
         $this->publishes([
-                                 __DIR__ .
-                                 '/../../public/packages/jacopo/laravel-authentication-acl' => public_path('jacopo/laravel-authentication-acl'),
+                                 __DIR__ . '/../../public/packages/jacopo/laravel-authentication-acl' => public_path('packages/jacopo/laravel-authentication-acl'),
                          ]);
+
     }
 
     protected function publishConfig()
@@ -230,7 +230,7 @@ class AuthenticationServiceProvider extends ServiceProvider {
     {
 
         $this->publishes([
-                                 __DIR__ . '/../../resources/views' => base_path('resources/views/jacopo/laravel-authentication-acl'),
+                                 __DIR__ . '/../../resources/views' => base_path('resources/views/vendor/laravel-authentication-acl'),
                          ]);
     }
 
