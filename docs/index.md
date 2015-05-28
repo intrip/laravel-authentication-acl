@@ -145,8 +145,8 @@ After installing the package you can find all his configuration files under lara
 
   6. How to use my custom views?
 
-     Automatically on install the views,config and assets of the package will be published you can override the views under the folder: 'views/vendor/laravel-autentication-acl'
-     Any composer update command will not override your custumization so it's __update free__. Enjoy!.
+     In order to override the views,config and assets of the package run the following command: 'php artisan vendor:publish' you can override the views under the folder: 'views/vendor/laravel-autentication-acl'
+     Any composer update command will not override your costumization so it's __update free__. Enjoy!.
 
 
 

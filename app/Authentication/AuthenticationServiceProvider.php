@@ -212,7 +212,7 @@ class AuthenticationServiceProvider extends ServiceProvider {
     {
         $this->publishes([
                                  __DIR__ . '/../../public/packages/jacopo/laravel-authentication-acl' => public_path('packages/jacopo/laravel-authentication-acl'),
-                         ], 'acl');
+                         ]);
 
     }
 
@@ -223,7 +223,7 @@ class AuthenticationServiceProvider extends ServiceProvider {
                                  __DIR__ . '/../../config/acl_menu.php'        => config_path('acl_menu.php'),
                                  __DIR__ . '/../../config/acl_permissions.php' => config_path('acl_permissions.php'),
                                  __DIR__ . '/../../config/acl_sentry.php'      => config_path('acl_sentry.php'),
-                         ], 'acl');
+                         ]);
     }
 
     protected function publishViews()
@@ -231,7 +231,7 @@ class AuthenticationServiceProvider extends ServiceProvider {
 
         $this->publishes([
                                  __DIR__ . '/../../resources/views' => base_path('resources/views/vendor/laravel-authentication-acl'),
-                         ], 'acl');
+                         ]);
     }
 
     protected function publishMigrations()
@@ -240,6 +240,6 @@ class AuthenticationServiceProvider extends ServiceProvider {
         $this->publishes([
                                  __DIR__ . '/../../database/migrations' => $this->app->databasePath() . '/migrations',
                                  //                                 __DIR__.'/../../database/seeds' => $this->app->databasePath().'/seeds',
-                         ], 'acl');
+                         ]);
     }
 }
