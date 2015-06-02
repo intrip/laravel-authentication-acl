@@ -75,7 +75,7 @@ After installing the package you can find all his configuration files under lara
 
   1. How to add a new menu item?
 
-    First go to menu.php and add the new menu item entry along with the permissions.
+    First go to acl_menu.php and add the new menu item entry along with the permissions.
     And secondly go to your routes.php and add for the specified route the following
     'before' => array('logged', 'can_see'), that way a user must be login first and
     have the appropriate permissions in order to access the specified route.
