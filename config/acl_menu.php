@@ -13,7 +13,7 @@ return [
             [
                     "name"        => "Dashboard",
                     "route"       => "dashboard",
-                    "link"        => '/admin/users/dashboard',
+                    "link"        => url('admin/users/dashboard'),
                     "permissions" => []
             ],
             [
@@ -32,7 +32,7 @@ return [
                 /*
                  * the actual link associated to the menu item
                  */
-                "link"        => '/admin/users/list',
+                "link"        => url('admin/users/list'),
                 /*
                  * the list of 'permission name' associated to the menu
                  * item: if the logged user has one or more of the permission
@@ -52,13 +52,13 @@ return [
             [
                     "name"        => "Groups",
                     "route"       => "groups",
-                    "link"        => '/admin/groups/list',
+                    "link"        => url('admin/groups/list'),
                     "permissions" => ["_superadmin", "_group-editor"]
             ],
             [
                     "name"        => "Permission",
                     "route"       => "permission",
-                    "link"        => '/admin/permissions/list',
+                    "link"        => url('admin/permissions/list'),
                     "permissions" => ["_superadmin", "_permission-editor"]
             ],
             [
@@ -67,7 +67,7 @@ return [
                  */
                 "name"        => "",
                 "route"       => "selfprofile",
-                "link"        => '/admin/users/profile/self',
+                "link"        => url('admin/users/profile/self'),
                 "permissions" => []
             ],
 
