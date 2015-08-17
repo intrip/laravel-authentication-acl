@@ -18,7 +18,7 @@ a simple admin panel with an ACL using Laravel framework.
 To install this software you need:
 
   * Laravel framework 5.*
-  * Php 5.4+
+  * Php 5.5+
   * GD Library or Imagick
   * Enable Fileinfo extension(may be needed for windows users) <a href="http://php.net/manual/en/fileinfo.installation.php">how to enable it</a>
 
