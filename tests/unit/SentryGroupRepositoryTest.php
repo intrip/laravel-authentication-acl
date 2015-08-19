@@ -132,7 +132,7 @@ class SentryGroupRepositoryTest extends DbTestCase
     {
         $per_page = 5;
         $config = m::mock('StdClass');
-        $config->shouldReceive('get')->with('laravel-authentication-acl::groups_per_page')->andReturn($per_page)->getMock();
+        $config->shouldReceive('get')->with('acl_base.groups_per_page')->andReturn($per_page)->getMock();
         $repo = new SentryGroupRepository($config);
 
         return $repo;

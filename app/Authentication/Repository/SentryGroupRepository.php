@@ -98,7 +98,7 @@ class SentryGroupRepository implements BaseRepositoryInterface
         $q = new Group;
         $q = $this->applySearchFilters($search_filters, $q);
 
-        $results_per_page = $this->config_reader->get('laravel-authentication-acl::groups_per_page');
+        $results_per_page = $this->config_reader->get('acl_base.groups_per_page');
         return $q->paginate($results_per_page);
     }
 
