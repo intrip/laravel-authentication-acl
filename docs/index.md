@@ -48,7 +48,7 @@ To install authentication follow this steps:
 
   6. Now you need to install the application, to do that run the command: `php artisan authentication:install`.
 
-  Congratulations! You have succesfully installed Laravel Authentication ACL package!
+  Congratulations! You have successfully installed Laravel Authentication ACL package!
 
   Here is the main application links:
 
@@ -59,7 +59,7 @@ To install authentication follow this steps:
 * http://url_of_your_application/user/logout the logout page
 
 ### Note on sending emails ###
-Keep in mind this software will send various notification emails, dont't forget to edit your _laravel config/mail.php_ file aswell.
+Keep in mind this software will send various notification emails, don't forget to edit your _laravel config/mail.php_ file aswell.
 
 ## <a name="configuration">Configuration</a> ##
 
