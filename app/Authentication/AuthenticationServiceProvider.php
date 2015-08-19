@@ -71,6 +71,8 @@ class AuthenticationServiceProvider extends ServiceProvider {
         require __DIR__ . "/validators.php";
         // package routes
         require __DIR__ . '/../Http/routes.php';
+        // other bootstrap commands
+        require __DIR__ . '/bootstrap.php';
 
         $this->registerCommands();
 

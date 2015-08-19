@@ -22,8 +22,6 @@ class TestCase extends LaravelTestCase {
     {
         parent::setUp();
         $this->useNullLogger();
-        // increase nesting level for swiftmailer send call stack
-        ini_set('xdebug.max_nesting_level', 150);
     }
 
     public function useNullLogger()
