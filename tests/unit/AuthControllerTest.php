@@ -143,7 +143,7 @@ class AuthControllerTest extends DbTestCase {
 
     /**
      * @test
-     * TODO fix this when try to send mail
+     * @jtodoIMP TODO fix this when try to send mail
      **/
     public function it_process_recovery_data_and_redirect_with_success()
     {

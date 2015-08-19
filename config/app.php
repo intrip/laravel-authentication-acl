@@ -136,6 +136,9 @@ return [
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
 
+        // Laravel 5.1 upgrade
+        //'Illuminate\Broadcasting\BroadcastServiceProvider',
+
 		/*
 		 * Application Service Providers...
 		 */

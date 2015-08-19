@@ -6,7 +6,6 @@
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
 use App;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\MessageBag;
 use LaravelAcl\Authentication\Exceptions\PermissionException;
 use LaravelAcl\Authentication\Validators\UserProfileUserValidator;
@@ -123,7 +122,7 @@ class UserProfileService
      */
     protected function saveCustomProfileFields($input, $user_profile)
     {
-        $custom_profile_repository = App::make('custom_profile_repository', $user_profile->id);
+        $custom_profile_repository = App::make('custom_profile_repository', [$user_profile->id]);
         foreach($input as $input_key => $value)
         {
             if(($profile_field_type_id_position = $this->isCustomFieldKey($input_key)) !== false)

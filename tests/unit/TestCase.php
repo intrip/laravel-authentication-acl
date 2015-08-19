@@ -1,6 +1,7 @@
 <?php namespace LaravelAcl\Authentication\Tests\Unit;
 
 use Carbon\Carbon;
+use Illuminate\Queue\NullQueue;
 use Illuminate\Support\Facades\Mail;
 use LaravelAcl\Authentication\Tests\Unit\Stubs\NullLogger;
 use Illuminate\Config\EnvironmentVariables;
@@ -14,11 +15,15 @@ use Illuminate\Foundation\Testing\TestCase as LaravelTestCase;
 class TestCase extends LaravelTestCase {
 
     protected $custom_environment;
+    // Laravel 5.1 upgrade
+    protected $baseUrl = 'http://localhost';
 
     public function setUp()
     {
         parent::setUp();
         $this->useNullLogger();
+        // increase nesting level for swiftmailer send call stack
+        ini_set('xdebug.max_nesting_level', 150);
     }
 
     public function useNullLogger()

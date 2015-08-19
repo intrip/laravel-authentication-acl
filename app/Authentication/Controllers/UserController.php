@@ -183,7 +183,7 @@ class UserController extends Controller {
         {
             $user_profile = new UserProfile(["user_id" => $user_id]);
         }
-        $custom_profile_repo = App::make('custom_profile_repository', $user_profile->id);
+        $custom_profile_repo = App::make('custom_profile_repository', [$user_profile->id]);
 
         return View::make('laravel-authentication-acl::admin.user.profile')->with([
                                                                                           'user_profile'   => $user_profile,
@@ -215,7 +215,7 @@ class UserController extends Controller {
     {
         $logged_user = $this->auth->getLoggedUser();
 
-        $custom_profile_repo = App::make('custom_profile_repository', $logged_user->user_profile()->first()->id);
+        $custom_profile_repo = App::make('custom_profile_repository', [$logged_user->user_profile()->first()->id]);
 
         return View::make('laravel-authentication-acl::admin.user.self-profile')
                    ->with([
