@@ -24,6 +24,10 @@ class Kernel extends HttpKernel {
 	 * @var array
 	 */
 	protected $routeMiddleware = [
+        'admin_logged' => Middleware\AdminLogged::class,
+        'logged' => Middleware\Logged::class,
+        'can_see' => Middleware\CanSee::class,
+        'has_perm' => Middleware\HasPerm::class,
 	];
 
 }

@@ -13,8 +13,8 @@ class HasPermFilterTest extends TestCase  {
     {
         parent::setUp();
         Route::get('no_perm', function(){return '';});
-        Route::get('with_perm', ['before' => ["has_perm:{$this->perm_1}"], 'uses' => function(){return '';}]);
-        Route::get('with_perms', ['before' => ["has_perm:{$this->perm_1},{$this->perm_2}"], 'uses' => function(){return '';}]);
+        Route::get('with_perm', ['middleware' => ["has_perm:{$this->perm_1}"], 'uses' => function(){return '';}]);
+        Route::get('with_perms', ['middleware' => ["has_perm:{$this->perm_1},{$this->perm_2}"], 'uses' => function(){return '';}]);
 
     }
 

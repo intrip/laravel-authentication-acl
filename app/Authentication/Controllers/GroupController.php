@@ -4,6 +4,7 @@
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
+use Illuminate\Http\Request;
 use Illuminate\Support\MessageBag;
 use LaravelAcl\Authentication\Presenters\GroupPresenter;
 use LaravelAcl\Library\Form\FormModel;
@@ -12,7 +13,7 @@ use LaravelAcl\Authentication\Models\Group;
 use LaravelAcl\Authentication\Exceptions\UserNotFoundException;
 use LaravelAcl\Authentication\Validators\GroupValidator;
 use LaravelAcl\Library\Exceptions\JacopoExceptionsInterface;
-use View, Input, Redirect, App, Config;
+use View, Redirect, App, Config;
 
 class GroupController extends Controller
 {
@@ -37,18 +38,18 @@ class GroupController extends Controller
         $this->form_model = $fh;
     }
 
-    public function getList()
+    public function getList(Request $request)
     {
-        $groups = $this->group_repository->all(Input::all());
+        $groups = $this->group_repository->all($request->all());
 
-        return View::make('laravel-authentication-acl::admin.group.list')->with(["groups" => $groups]);
+        return View::make('laravel-authentication-acl::admin.group.list')->with(["groups" => $groups, "request" => $request]);
     }
 
-    public function editGroup()
+    public function editGroup(Request $request)
     {
         try
         {
-            $obj = $this->group_repository->find(Input::get('id'));
+            $obj = $this->group_repository->find($request->get('id'));
         }
         catch(UserNotFoundException $e)
         {
@@ -59,13 +60,13 @@ class GroupController extends Controller
         return View::make('laravel-authentication-acl::admin.group.edit')->with(["group" => $obj, "presenter" => $presenter]);
     }
 
-    public function postEditGroup()
+    public function postEditGroup(Request $request)
     {
-        $id = Input::get('id');
+        $id = $request->get('id');
 
         try
         {
-            $obj = $this->f->process(Input::all());
+            $obj = $this->f->process($request->all());
         }
         catch(JacopoExceptionsInterface $e)
         {
@@ -76,11 +77,11 @@ class GroupController extends Controller
         return Redirect::route('groups.edit',["id" => $obj->id])->withMessage(Config::get('acl_messages.flash.success.group_edit_success'));
     }
 
-    public function deleteGroup()
+    public function deleteGroup(Request $request)
     {
         try
         {
-            $this->f->delete(Input::all());
+            $this->f->delete($request->all());
         }
         catch(JacopoExceptionsInterface $e)
         {
@@ -90,13 +91,13 @@ class GroupController extends Controller
         return Redirect::route('groups.list')->withMessage(Config::get('acl_messages.flash.success.group_delete_success'));
     }
 
-    public function editPermission()
+    public function editPermission(Request $request)
     {
         // prepare input
-        $input = Input::all();
-        $operation = Input::get('operation');
+        $input = $request->all();
+        $operation = $request->get('operation');
         $this->form_model->prepareSentryPermissionInput($input, $operation);
-        $id = Input::get('id');
+        $id = $request->get('id');
 
         try
         {

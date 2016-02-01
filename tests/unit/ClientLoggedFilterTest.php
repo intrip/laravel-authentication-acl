@@ -10,8 +10,8 @@ class ClientLoggedFilterTest extends TestCase  {
     public function setUp()
     {
         parent::setUp();
-        Route::get('check', ['before' => 'logged', 'uses' => function(){return '';}]);
-        Route::get('check_custom', ['before' => "logged:{$this->custom_url}", 'uses' => function(){return '';}]);
+        Route::get('check', ['middleware' => 'logged', 'uses' => function(){return '';}]);
+        Route::get('check_custom', ['middleware' => "logged:{$this->custom_url}", 'uses' => function(){return '';}]);
     }
 
     public function tearDown()

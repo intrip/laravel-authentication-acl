@@ -4,9 +4,10 @@
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
+use Illuminate\Support\Facades\Request;
 use LaravelAcl\Authentication\Exceptions\UserNotFoundException;
 use LaravelAcl\Library\Validators\AbstractValidator;
-use App, Session, Input, Config;
+use App, Session, Config;
 
 class UserSignupEmailValidator extends AbstractValidator
 {
@@ -33,7 +34,7 @@ class UserSignupEmailValidator extends AbstractValidator
 
         // send email
 
-        $this->resendConfirmationEmail($value);
+        $this->resendConfirmationEmail();
         // set session message
         Session::flash('message', "We sent you again the mail confirmation. Please check your inbox.");
         return false;
@@ -43,7 +44,7 @@ class UserSignupEmailValidator extends AbstractValidator
      */
     protected function resendConfirmationEmail()
     {
-        $data = Input::all();
+        $data = Request::all();
         $data['password'] = 'Cannot decipher password, please use password recovery after if it\'s needed.';
 
         App::make('register_service')->sendRegistrationMailToClient($data);

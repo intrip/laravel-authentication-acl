@@ -1,16 +1,16 @@
 <div class="panel panel-info">
     <div class="panel-heading">
-        <h3 class="panel-title bariol-thin"><i class="fa fa-user"></i> {!! Input::all() ? 'Search results:' : 'Users' !!}</h3>
+        <h3 class="panel-title bariol-thin"><i class="fa fa-user"></i> {!! $request->all() ? 'Search results:' : 'Users' !!}</h3>
     </div>
     <div class="panel-body">
         <div class="row">
             <div class="col-lg-10 col-md-9 col-sm-9">
                 {!! Form::open(['method' => 'get', 'class' => 'form-inline']) !!}
                     <div class="form-group">
-                        {!! Form::select('order_by', ["" => "select column", "first_name" => "First name", "last_name" => "Last name", "email" => "Email", "last_login" => "Last login", "active" => "Active"], Input::get('order_by',''), ['class' => 'form-control']) !!}
+                        {!! Form::select('order_by', ["" => "select column", "first_name" => "First name", "last_name" => "Last name", "email" => "Email", "last_login" => "Last login", "active" => "Active"], $request->get('order_by',''), ['class' => 'form-control']) !!}
                     </div>
                     <div class="form-group">
-                        {!! Form::select('ordering', ["asc" => "Ascending", "desc" => "descending"], Input::get('ordering','asc'), ['class' =>'form-control']) !!}
+                        {!! Form::select('ordering', ["asc" => "Ascending", "desc" => "descending"], $request->get('ordering','asc'), ['class' =>'form-control']) !!}
                     </div>
                     <div class="form-group">
                         {!! Form::submit('Order', ['class' => 'btn btn-default']) !!}
@@ -57,7 +57,7 @@
                       @endforeach
               </table>
               <div class="paginator">
-                  {!! $users->appends(Input::except(['page']) )->render() !!}
+                  {!! $users->appends($request->except(['page']) )->render() !!}
               </div>
               @else
                   <span class="text-warning"><h5>No results found.</h5></span>

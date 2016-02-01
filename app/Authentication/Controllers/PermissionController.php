@@ -4,11 +4,12 @@
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
+use Illuminate\Http\Request;
 use LaravelAcl\Library\Form\FormModel;
 use LaravelAcl\Authentication\Models\Permission;
 use LaravelAcl\Authentication\Validators\PermissionValidator;
 use LaravelAcl\Library\Exceptions\JacopoExceptionsInterface;
-use View, Input, Redirect, App, Config;
+use View, Redirect, App, Config;
 
 class PermissionController extends Controller
 {
@@ -35,11 +36,11 @@ class PermissionController extends Controller
         return View::make('laravel-authentication-acl::admin.permission.list')->with(["permissions" => $objs]);
     }
 
-    public function editPermission()
+    public function editPermission(Request $request)
     {
         try
         {
-            $obj = $this->r->find(Input::get('id'));
+            $obj = $this->r->find($request->get('id'));
         }
         catch(JacopoExceptionsInterface $e)
         {
@@ -49,13 +50,13 @@ class PermissionController extends Controller
         return View::make('laravel-authentication-acl::admin.permission.edit')->with(["permission" => $obj]);
     }
 
-    public function postEditPermission()
+    public function postEditPermission(Request $request)
     {
-        $id = Input::get('id');
+        $id = $request->get('id');
 
         try
         {
-            $obj = $this->f->process(Input::all());
+            $obj = $this->f->process($request->all());
         }
         catch(JacopoExceptionsInterface $e)
         {
@@ -67,11 +68,11 @@ class PermissionController extends Controller
         return Redirect::route("permission.edit",["id" => $obj->id])->withMessage(Config::get('acl_messages.flash.success.permission_permission_edit_success'));
     }
 
-    public function deletePermission()
+    public function deletePermission(Request $request)
     {
         try
         {
-            $this->f->delete(Input::all());
+            $this->f->delete($request->all());
         }
         catch(JacopoExceptionsInterface $e)
         {

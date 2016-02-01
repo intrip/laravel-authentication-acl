@@ -78,8 +78,7 @@ class ReminderService {
         $this->prepareResetPasswordLink($token, $to);
 
         // send email with change password link
-        $success = $this->mailer->sendTo($to, $this->body, $this->subject, $this->template);
-
+        $success = $this->mailer->sendTo($to, $this->body->toHtml(), $this->subject, $this->template);
 
         if(! $success)
         {

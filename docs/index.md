@@ -1,5 +1,12 @@
 # Laravel Authentication ACL documentation #
 
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="4BZZUF88YDMFN">
+<input type="image" src="https://www.paypalobjects.com/it_IT/IT/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal è il metodo rapido e sicuro per pagare e farsi pagare online.">
+<img alt="" border="0" src="https://www.paypalobjects.com/it_IT/i/scr/pixel.gif" width="1" height="1">
+</form>
+
 Laravel Authentication ACL is a Laravel 5 package, based on <a href="https://github.com/cartalyst/sentry" target="_blank">sentry2</a>. <br/>
 This package is made with the purpose to help developer setting up
 a simple admin panel with an ACL using Laravel framework.
@@ -17,8 +24,8 @@ a simple admin panel with an ACL using Laravel framework.
 
 To install this software you need:
 
-  * Laravel framework 5.*
-  * Php 5.5+
+  * Laravel framework 5.2+
+  * Php>=5.5.9
   * GD Library or Imagick
   * Enable Fileinfo extension(may be needed for windows users) <a href="http://php.net/manual/en/fileinfo.installation.php">how to enable it</a>
 
@@ -77,7 +84,7 @@ After installing the package you can find all his configuration files under lara
 
     First go to acl_menu.php and add the new menu item entry along with the permissions.
     And secondly go to your routes.php and add for the specified route the following
-    'before' => array('logged', 'can_see'), that way a user must be login first and
+    'middleware' => array('logged', 'can_see'), that way a user must be login first and
     have the appropriate permissions in order to access the specified route.
 
   2. How to add permissions to a route that is not in the menu?
@@ -93,10 +100,10 @@ After installing the package you can find all his configuration files under lara
     ```
     <br/>
     __Option2__ : use the 'has_permission' filter. In order to do that add the 'has_permission' filter to
-    your before option in the routes file as following:
+    your middleware option in the routes file as following:
 
         Route::get('/example', [
-                'before' => 'has_perm:_permissionA,_permissionB'
+                'middleware' => 'has_perm:_permissionA,_permissionB'
                 'uses' => 'Jacopo\Authentication\Controllers\UserController@getList'
         ]);
     In this case if the user has '_permissionA' or '_permissionB' permission he can see the page, otherwise gets a 401 error.
@@ -129,7 +136,7 @@ After installing the package you can find all his configuration files under lara
 
    ```
    Route::get('check_custom', [
-   'before' => "logged:/custom_url",
+   'middleware' => "logged:/custom_url",
     'uses' => function(){
          // put your code here
     }]);

@@ -5,6 +5,7 @@
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
+use Illuminate\Http\Request;
 use Illuminate\Support\MessageBag;
 use LaravelAcl\Authentication\Exceptions\PermissionException;
 use LaravelAcl\Authentication\Exceptions\ProfileNotFoundException;
@@ -20,7 +21,7 @@ use LaravelAcl\Authentication\Exceptions\UserNotFoundException;
 use LaravelAcl\Authentication\Validators\UserValidator;
 use LaravelAcl\Library\Exceptions\JacopoExceptionsInterface;
 use LaravelAcl\Authentication\Validators\UserProfileValidator;
-use View, Input, Redirect, App, Config;
+use View, Redirect, App, Config;
 use LaravelAcl\Authentication\Interfaces\AuthenticateInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -56,18 +57,18 @@ class UserController extends Controller {
         $this->custom_profile_repository = App::make('custom_profile_repository');
     }
 
-    public function getList()
+    public function getList(Request $request)
     {
-        $users = $this->user_repository->all(Input::except(['page']));
+        $users = $this->user_repository->all($request->except(['page']));
 
-        return View::make('laravel-authentication-acl::admin.user.list')->with(["users" => $users]);
+        return View::make('laravel-authentication-acl::admin.user.list')->with(["users" => $users, "request" => $request]);
     }
 
-    public function editUser()
+    public function editUser(Request $request)
     {
         try
         {
-            $user = $this->user_repository->find(Input::get('id'));
+            $user = $this->user_repository->find($request->get('id'));
         } catch(JacopoExceptionsInterface $e)
         {
             $user = new User;
@@ -77,14 +78,14 @@ class UserController extends Controller {
         return View::make('laravel-authentication-acl::admin.user.edit')->with(["user" => $user, "presenter" => $presenter]);
     }
 
-    public function postEditUser()
+    public function postEditUser(Request $request)
     {
-        $id = Input::get('id');
+        $id = $request->get('id');
 
         DbHelper::startTransaction();
         try
         {
-            $user = $this->f->process(Input::all());
+            $user = $this->f->process($request->all());
             $this->profile_repository->attachEmptyProfile($user);
         } catch(JacopoExceptionsInterface $e)
         {
@@ -100,11 +101,11 @@ class UserController extends Controller {
                        ->withMessage(Config::get('acl_messages.flash.success.user_edit_success'));
     }
 
-    public function deleteUser()
+    public function deleteUser(Request $request)
     {
         try
         {
-            $this->f->delete(Input::all());
+            $this->f->delete($request->all());
         } catch(JacopoExceptionsInterface $e)
         {
             $errors = $this->f->getErrors();
@@ -114,10 +115,10 @@ class UserController extends Controller {
                        ->withMessage(Config::get('acl_messages.flash.success.user_delete_success'));
     }
 
-    public function addGroup()
+    public function addGroup(Request $request)
     {
-        $user_id = Input::get('id');
-        $group_id = Input::get('group_id');
+        $user_id = $request->get('id');
+        $group_id = $request->get('group_id');
 
         try
         {
@@ -131,10 +132,10 @@ class UserController extends Controller {
                        ->withMessage(Config::get('acl_messages.flash.success.user_group_add_success'));
     }
 
-    public function deleteGroup()
+    public function deleteGroup(Request $request)
     {
-        $user_id = Input::get('id');
-        $group_id = Input::get('group_id');
+        $user_id = $request->get('id');
+        $group_id = $request->get('group_id');
 
         try
         {
@@ -148,13 +149,13 @@ class UserController extends Controller {
                        ->withMessage(Config::get('acl_messages.flash.success.user_group_delete_success'));
     }
 
-    public function editPermission()
+    public function editPermission(Request $request)
     {
         // prepare input
-        $input = Input::all();
-        $operation = Input::get('operation');
+        $input = $request->all();
+        $operation = $request->get('operation');
         $this->form_helper->prepareSentryPermissionInput($input, $operation);
-        $id = Input::get('id');
+        $id = $request->get('id');
 
         try
         {
@@ -168,9 +169,9 @@ class UserController extends Controller {
                        ->withMessage(Config::get('acl_messages.flash.success.user_permission_add_success'));
     }
 
-    public function editProfile()
+    public function editProfile(Request $request)
     {
-        $user_id = Input::get('user_id');
+        $user_id = $request->get('user_id');
 
         try
         {
@@ -191,9 +192,9 @@ class UserController extends Controller {
                                                                                   ]);
     }
 
-    public function postEditProfile()
+    public function postEditProfile(Request $request)
     {
-        $input = Input::all();
+        $input = $request->all();
         $service = new UserProfileService($this->profile_validator);
 
         try
@@ -211,7 +212,7 @@ class UserController extends Controller {
                        ->withMessage(Config::get('acl_messages.flash.success.user_profile_edit_success'));
     }
 
-    public function editOwnProfile()
+    public function editOwnProfile(Request $request)
     {
         $logged_user = $this->auth->getLoggedUser();
 
@@ -225,7 +226,7 @@ class UserController extends Controller {
                           ]);
     }
 
-    public function signup()
+    public function signup(Request $request)
     {
         $enable_captcha = Config::get('acl_base.captcha_signup');
 
@@ -238,13 +239,13 @@ class UserController extends Controller {
         return View::make('laravel-authentication-acl::client.auth.signup');
     }
 
-    public function postSignup()
+    public function postSignup(Request $request)
     {
         $service = App::make('register_service');
 
         try
         {
-            $service->register(Input::all());
+            $service->register($request->all());
         } catch(JacopoExceptionsInterface $e)
         {
             return Redirect::route('user.signup')->withErrors($service->getErrors())->withInput();
@@ -253,16 +254,16 @@ class UserController extends Controller {
         return Redirect::route("user.signup-success");
     }
 
-    public function signupSuccess()
+    public function signupSuccess(Request $request)
     {
         $email_confirmation_enabled = Config::get('acl_base.email_confirmation');
         return $email_confirmation_enabled ? View::make('laravel-authentication-acl::client.auth.signup-email-confirmation') : View::make('laravel-authentication-acl::client.auth.signup-success');
     }
 
-    public function emailConfirmation()
+    public function emailConfirmation(Request $request)
     {
-        $email = Input::get('email');
-        $token = Input::get('token');
+        $email = $request->get('email');
+        $token = $request->get('token');
 
         try
         {
@@ -274,10 +275,10 @@ class UserController extends Controller {
         return View::make('laravel-authentication-acl::client.auth.email-confirmation');
     }
 
-    public function addCustomFieldType()
+    public function addCustomFieldType(Request $request)
     {
-        $description = Input::get('description');
-        $user_id = Input::get('user_id');
+        $description = $request->get('description');
+        $user_id = $request->get('user_id');
 
         try
         {
@@ -292,10 +293,10 @@ class UserController extends Controller {
                        ->with('message', Config::get('acl_messages.flash.success.custom_field_added'));
     }
 
-    public function deleteCustomFieldType()
+    public function deleteCustomFieldType(Request $request)
     {
-        $id = Input::get('id');
-        $user_id = Input::get('user_id');
+        $id = $request->get('id');
+        $user_id = $request->get('user_id');
 
         try
         {
@@ -314,14 +315,14 @@ class UserController extends Controller {
                        ->with('message', Config::get('acl_messages.flash.success.custom_field_removed'));
     }
 
-    public function changeAvatar()
+    public function changeAvatar(Request $request)
     {
-        $user_id = Input::get('user_id');
-        $profile_id = Input::get('user_profile_id');
+        $user_id = $request->get('user_id');
+        $profile_id = $request->get('user_profile_id');
 
         // validate input
         $validator = new UserProfileAvatarValidator();
-        if(!$validator->validate(Input::all()))
+        if(!$validator->validate($request->all()))
         {
             return Redirect::route('users.profile.edit', ['user_id' => $user_id])
                            ->withInput()->withErrors($validator->getErrors());

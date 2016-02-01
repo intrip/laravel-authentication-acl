@@ -33,5 +33,5 @@
 <span class="text-warning"><h5>No results found.</h5></span>
 @endif
 <div class="paginator">
-    {!! $groups->appends(Input::except(['page']) )->render() !!}
+    {!! $groups->appends($request->except(['page']) )->render() !!}
 </div>

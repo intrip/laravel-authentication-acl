@@ -3,6 +3,7 @@
 use App;
 use Cartalyst\Sentry\Users\UserNotActivatedException;
 use Cartalyst\Sentry\Users\UserNotFoundException;
+use Illuminate\Support\Facades\Config;
 use LaravelAcl\Authentication\Classes\SentryAuthenticator;
 use LaravelAcl\Authentication\Models\User;
 use LaravelAcl\Authentication\Tests\Unit\Traits\UserFactory;
@@ -454,7 +455,6 @@ class SentryAuthenticatorTest extends DbTestCase
 
     /**
      * @test
-     * @group err
      **/
     public function failCheckWithBannedUser()
     {

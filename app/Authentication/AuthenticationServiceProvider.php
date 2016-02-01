@@ -29,15 +29,12 @@ class AuthenticationServiceProvider extends ServiceProvider {
     protected $providers = [
             'LaravelAcl\Library\LibraryServiceProvider',
             'Cartalyst\Sentry\SentryServiceProvider',
-            'Intervention\Image\ImageServiceProvider',
-            'Illuminate\Html\HtmlServiceProvider'
+            'Intervention\Image\ImageServiceProvider'
     ];
 
     protected $aliases = [
             "Sentry" => 'Cartalyst\Sentry\Facades\Laravel\Sentry',
-            "Image"  => 'Intervention\Image\Facades\Image',
-            'Form'   => 'Illuminate\Html\FormFacade',
-            'HTML'   => 'Illuminate\Html\HtmlFacade'
+            "Image"  => 'Intervention\Image\Facades\Image'
     ];
 
     /**
@@ -61,8 +58,6 @@ class AuthenticationServiceProvider extends ServiceProvider {
 
         // setup views path
         $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'laravel-authentication-acl');
-        // include filters
-        require __DIR__ . "/filters.php";
         // include view composers
         require __DIR__ . "/composers.php";
         // include event subscribers

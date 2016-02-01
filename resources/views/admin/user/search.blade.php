@@ -36,16 +36,16 @@
         <span class="text-danger">{!! $errors->first('code') !!}</span>
         <div class="form-group">
             {!! Form::label('activated', 'Active: ') !!}
-            {!! Form::select('activated', ['' => 'Any', 1 => 'Yes', 0 => 'No'], Input::get('activated',''), ["class" => "form-control"]) !!}
+            {!! Form::select('activated', ['' => 'Any', 1 => 'Yes', 0 => 'No'], $request->get('activated',''), ["class" => "form-control"]) !!}
         </div>
         <div class="form-group">
             {!! Form::label('banned', 'Banned: ') !!}
-            {!! Form::select('banned', ['' => 'Any', 1 => 'Yes', 0 => 'No'], Input::get('banned',''), ["class" => "form-control"]) !!}
+            {!! Form::select('banned', ['' => 'Any', 1 => 'Yes', 0 => 'No'], $request->get('banned',''), ["class" => "form-control"]) !!}
         </div>
         <div class="form-group">
             {!! Form::label('group_id', 'Group: ') !!}
             <?php $group_values[""] = "Any"; ?>
-            {!! Form::select('group_id', $group_values, Input::get('group_id',''), ["class" => "form-control"]) !!}
+            {!! Form::select('group_id', $group_values, $request->get('group_id',''), ["class" => "form-control"]) !!}
         </div>
         @include('laravel-authentication-acl::admin.user.partials.sorting')
         <div class="form-group">

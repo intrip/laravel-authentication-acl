@@ -25,12 +25,12 @@ class SwiftMailer implements MailerInterface
         }
         catch( Swift_TransportException $e)
         {
-            Log::error('impossibile inviare l\'email:'.$e->getMessage());
+            Log::error('Cannot send the email:'.$e->getMessage());
             return false;
         }
         catch( Swift_RfcComplianceException $e)
         {
-            Log::error('impossibile inviare l\'email:'.$e->getMessage());
+            Log::error('Cannot send the email:'.$e->getMessage());
             return false;
         }
 

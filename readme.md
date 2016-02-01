@@ -4,7 +4,7 @@ laravel-authentication-acl
 [![Build Status](https://travis-ci.org/intrip/laravel-authentication-acl.svg?branch=1.3)](https://travis-ci.org/intrip/laravel-authentication-acl)
 [![Total Downloads](https://poser.pugx.org/jacopo/laravel-authentication-acl/d/total.svg)](https://packagist.org/packages/jacopo/laravel-authentication-acl)
 
-## This is the Laravel 5 Version, for Laravel 4.2 version use the 1.2 branch
+## This is the Laravel 5.2+ Version, for Laravel 5.1/5.0 use the version 1.3.11, for Laravel4 version use the 1.2 branch
 
 Laravel Authentication ACL is a Laravel 5 package, based on <a href="https://github.com/cartalyst/sentry" target="_blank">sentry2</a>. <br/>
 This package is made with the purpose of helping other developers to set-up
@@ -37,6 +37,16 @@ You can see the full documentation and usage [here](docs/index.md)
  - Works with major DBMS (mysql, sqlite, postgres)
  - 100% object oriented
  - The code is fully tested with Phpunit
+
+### Please support this project
+Please support the project development, even a small donation can help the life of this project! 
+
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="4BZZUF88YDMFN">
+<input type="image" src="https://www.paypalobjects.com/it_IT/IT/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal è il metodo rapido e sicuro per pagare e farsi pagare online.">
+<img alt="" border="0" src="https://www.paypalobjects.com/it_IT/i/scr/pixel.gif" width="1" height="1">
+</form>
 
 ####Interested in some new feature?
 There's something you like to see in this package?

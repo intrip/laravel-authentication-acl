@@ -24,12 +24,10 @@ Route::get('/user/logout', [
         "uses" => 'LaravelAcl\Authentication\Controllers\AuthController@getLogout'
 ]);
 Route::post('/user/login', [
-        "before" => "csrf",
         "uses"   => 'LaravelAcl\Authentication\Controllers\AuthController@postAdminLogin',
         "as"     => "user.login.process"
 ]);
 Route::post('/login', [
-        "before" => "csrf",
         "uses"   => 'LaravelAcl\Authentication\Controllers\AuthController@postClientLogin',
         "as"     => "user.login"
 ]);
@@ -46,7 +44,6 @@ Route::get('/user/recovery-password', [
         "uses" => 'LaravelAcl\Authentication\Controllers\AuthController@getReminder'
 ]);
 Route::post('/user/change-password/', [
-        "before" => "csrf",
         'uses'   => 'LaravelAcl\Authentication\Controllers\AuthController@postChangePassword',
         "as"     => "user.reminder.process"
 ]);
@@ -60,7 +57,6 @@ Route::get('/user/change-password-success', [
         ]
 );
 Route::post('/user/reminder', [
-        "before" => "csrf",
         'uses'   => 'LaravelAcl\Authentication\Controllers\AuthController@postReminder',
         "as"     => "user.reminder"
 ]);
@@ -77,7 +73,6 @@ Route::get('/user/reminder-success', [
  * User signup
  */
 Route::post('/user/signup', [
-        "before" => "csrf",
         'uses'   => 'LaravelAcl\Authentication\Controllers\UserController@postSignup',
         "as" => "user.signup.process"
 ]);
@@ -105,7 +100,7 @@ Route::get('/user/signup-success', [
   |--------------------------------------------------------------------------
   |
   */
-Route::group(['before' => ['admin_logged', 'can_see']], function ()
+Route::group(['middleware' => ['admin_logged', 'can_see']], function ()
 {
     /**
      * dashboard
@@ -127,27 +122,22 @@ Route::group(['before' => ['admin_logged', 'can_see']], function ()
             'uses' => 'LaravelAcl\Authentication\Controllers\UserController@editUser'
     ]);
     Route::post('/admin/users/edit', [
-            "before" => "csrf",
             'as'     => 'users.edit',
             'uses'   => 'LaravelAcl\Authentication\Controllers\UserController@postEditUser'
     ]);
     Route::get('/admin/users/delete', [
-            "before" => "csrf",
             'as'     => 'users.delete',
             'uses'   => 'LaravelAcl\Authentication\Controllers\UserController@deleteUser'
     ]);
     Route::post('/admin/users/groups/add', [
-            "before" => "csrf",
             'as'     => 'users.groups.add',
             'uses'   => 'LaravelAcl\Authentication\Controllers\UserController@addGroup'
     ]);
     Route::post('/admin/users/groups/delete', [
-            "before" => "csrf",
             'as'     => 'users.groups.delete',
             'uses'   => 'LaravelAcl\Authentication\Controllers\UserController@deleteGroup'
     ]);
     Route::post('/admin/users/editpermission', [
-            "before" => "csrf",
             'as'     => 'users.edit.permission',
             'uses'   => 'LaravelAcl\Authentication\Controllers\UserController@editPermission'
     ]);
@@ -156,22 +146,18 @@ Route::group(['before' => ['admin_logged', 'can_see']], function ()
             'uses' => 'LaravelAcl\Authentication\Controllers\UserController@editProfile'
     ]);
     Route::post('/admin/users/profile/edit', [
-            'before' => 'csrf',
             'as'     => 'users.profile.edit',
             'uses'   => 'LaravelAcl\Authentication\Controllers\UserController@postEditProfile'
     ]);
     Route::post('/admin/users/profile/addField', [
-            'before' => 'csrf',
             'as'     => 'users.profile.addfield',
             'uses'   => 'LaravelAcl\Authentication\Controllers\UserController@addCustomFieldType'
     ]);
     Route::post('/admin/users/profile/deleteField', [
-            'before' => 'csrf',
             'as'     => 'users.profile.deletefield',
             'uses'   => 'LaravelAcl\Authentication\Controllers\UserController@deleteCustomFieldType'
     ]);
     Route::post('/admin/users/profile/avatar', [
-            'before' => 'csrf',
             'as'     => 'users.profile.changeavatar',
             'uses'   => 'LaravelAcl\Authentication\Controllers\UserController@changeAvatar'
     ]);
@@ -192,17 +178,14 @@ Route::group(['before' => ['admin_logged', 'can_see']], function ()
             'uses' => 'LaravelAcl\Authentication\Controllers\GroupController@editGroup'
     ]);
     Route::post('/admin/groups/edit', [
-            "before" => "csrf",
             'as'     => 'groups.edit',
             'uses'   => 'LaravelAcl\Authentication\Controllers\GroupController@postEditGroup'
     ]);
     Route::get('/admin/groups/delete', [
-            "before" => "csrf",
             'as'     => 'groups.delete',
             'uses'   => 'LaravelAcl\Authentication\Controllers\GroupController@deleteGroup'
     ]);
     Route::post('/admin/groups/editpermission', [
-            "before" => "csrf",
             'as'     => 'groups.edit.permission',
             'uses'   => 'LaravelAcl\Authentication\Controllers\GroupController@editPermission'
     ]);
@@ -219,18 +202,16 @@ Route::group(['before' => ['admin_logged', 'can_see']], function ()
             'uses' => 'LaravelAcl\Authentication\Controllers\PermissionController@editPermission'
     ]);
     Route::post('/admin/permissions/edit', [
-            "before" => "csrf",
             'as'     => 'permission.edit',
             'uses'   => 'LaravelAcl\Authentication\Controllers\PermissionController@postEditPermission'
     ]);
     Route::get('/admin/permissions/delete', [
-            "before" => "csrf",
             'as'     => 'permission.delete',
             'uses'   => 'LaravelAcl\Authentication\Controllers\PermissionController@deletePermission'
     ]);
 });
 
-//////////////////// Other routes //////////////////////////
+//////////////////// Automatic error handling //////////////////////////
 
 if(Config::get('acl_base.handle_errors'))
 {

@@ -1,6 +1,7 @@
 <?php namespace LaravelAcl\Authentication\Controllers;
 
-use View, Sentry, Input, Redirect, App, Config;
+use Illuminate\Http\Request;
+use Sentry, Redirect, App, Config;
 use LaravelAcl\Authentication\Validators\ReminderValidator;
 use LaravelAcl\Library\Exceptions\JacopoExceptionsInterface;
 use LaravelAcl\Authentication\Services\ReminderService;
@@ -28,9 +29,9 @@ class AuthController extends Controller {
         return view('laravel-authentication-acl::admin.auth.login');
     }
 
-    public function postAdminLogin()
+    public function postAdminLogin(Request $request)
     {
-        list($email, $password, $remember) = $this->getLoginInput();
+        list($email, $password, $remember) = $this->getLoginInput($request);
 
         try
         {
@@ -48,9 +49,9 @@ class AuthController extends Controller {
         return redirect()->route('dashboard.default');
     }
 
-    public function postClientLogin()
+    public function postClientLogin(Request $request)
     {
-        list($email, $password, $remember) = $this->getLoginInput();
+        list($email, $password, $remember) = $this->getLoginInput($request);
 
         try
         {
@@ -93,9 +94,9 @@ class AuthController extends Controller {
      *
      * @return mixed
      */
-    public function postReminder()
+    public function postReminder(Request $request)
     {
-        $email = Input::get('email');
+        $email = $request->get('email');
 
         try
         {
@@ -109,21 +110,21 @@ class AuthController extends Controller {
         }
     }
 
-    public function getChangePassword()
+    public function getChangePassword(Request $request)
     {
-        $email = Input::get('email');
-        $token = Input::get('token');
+        $email = $request->get('email');
+        $token = $request->get('token');
 
-        return View::make("laravel-authentication-acl::client.auth.changepassword", array("email" => $email, "token" => $token) );
+        return view("laravel-authentication-acl::client.auth.changepassword", array("email" => $email, "token" => $token) );
     }
 
-    public function postChangePassword()
+    public function postChangePassword(Request $request)
     {
-        $email = Input::get('email');
-        $token = Input::get('token');
-        $password = Input::get('password');
+        $email = $request->get('email');
+        $token = $request->get('token');
+        $password = $request->get('password');
 
-        if (! $this->reminder_validator->validate(Input::all()) )
+        if (! $this->reminder_validator->validate($request->all()) )
         {
           return redirect()->route("user.change-password")->withErrors($this->reminder_validator->getErrors())->withInput();
         }
@@ -145,11 +146,11 @@ class AuthController extends Controller {
     /**
      * @return array
      */
-    private function getLoginInput()
+    private function getLoginInput(Request $request)
     {
-        $email    = Input::get('email');
-        $password = Input::get('password');
-        $remember = Input::get('remember');
+        $email    = $request->get('email');
+        $password = $request->get('password');
+        $remember = $request->get('remember');
 
         return array($email, $password, $remember);
     }
