@@ -32,22 +32,20 @@ class Kernel extends HttpKernel {
             ],
     ];
 
-    //    protected $routeMiddleware = [
-    //            'auth' => \App\Http\Middleware\Authenticate::class,
-    //            'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-    //            'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
-    //            'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-    //    ];
-
 	/**
 	 * The application's route middleware.
 	 *
 	 * @var array
 	 */
 	protected $routeMiddleware = [
-        'admin_logged' => Middleware\AdminLogged::class,
-        'logged' => Middleware\Logged::class,
-        'can_see' => Middleware\CanSee::class,
-        'has_perm' => Middleware\HasPerm::class,
+        // 5.2 laravel default middleware
+        //            'auth' => \App\Http\Middleware\Authenticate::class,
+        //            'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+        //            'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        //            'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'admin_logged' => \LaravelAcl\Http\Middleware\AdminLogged::class,
+        'logged' => \LaravelAcl\Http\Middleware\Logged::class,
+        'can_see' => \LaravelAcl\Http\Middleware\CanSee::class,
+        'has_perm' => \LaravelAcl\Http\Middleware\HasPerm::class,
 	];
 }

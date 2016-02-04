@@ -48,7 +48,13 @@ To install authentication follow this steps:
   _Note_: you need to setup your database configuration before running the command, check out: <a href="http://laravel.com/docs/5.0/database#configuration" target="_blank">configuring laravel database</a>
   Now you can find various configuration files under _config/_ folder.
 
-  6. Now you need to install the application, to do that run the command: `php artisan authentication:install`.
+  6. Now open the file _app/Http/Kernel.php_ and add the following lines to your $routeMiddleware array: 
+             'admin_logged' => \LaravelAcl\Http\Middleware\AdminLogged::class,
+             'logged' => \LaravelAcl\Http\Middleware\Logged::class,
+             'can_see' => \LaravelAcl\Http\Middleware\CanSee::class,
+             'has_perm' => \LaravelAcl\Http\Middleware\HasPerm::class,
+
+  7. Now you need to install the application, to do that run the command: `php artisan authentication:install`.
 
   Congratulations! You have successfully installed Laravel Authentication ACL package!
 
