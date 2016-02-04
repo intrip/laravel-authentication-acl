@@ -135,11 +135,15 @@ return [
             /*
              * Application Service Providers...
              */
+//            App\Providers\AppServiceProvider::class,
+//            App\Providers\AuthServiceProvider::class,
+//            App\Providers\EventServiceProvider::class,
+//            App\Providers\RouteServiceProvider::class,
+
             LaravelAcl\Providers\AppServiceProvider::class,
             LaravelAcl\Providers\EventServiceProvider::class,
             LaravelAcl\Providers\RouteServiceProvider::class,
             LaravelAcl\Authentication\AuthenticationServiceProvider::class,
-            Collective\Html\HtmlServiceProvider::class,
 
     ],
 
@@ -185,8 +189,6 @@ return [
             'URL'       => Illuminate\Support\Facades\URL::class,
             'Validator' => Illuminate\Support\Facades\Validator::class,
             'View'      => Illuminate\Support\Facades\View::class,
-            'Form'      => Collective\Html\FormFacade::class,
-            'HTML'      => Collective\Html\HtmlFacade::class
     ],
 
 ];

@@ -117,6 +117,7 @@ class DbTestCase extends TestCase {
 
     protected function createTestDbSchema()
     {
+        $this->artisan->call('migrate', ['--path' => 'vendor/jacopo/authentication-sentry/src/migrations']);
         $this->artisan->call('migrate');
     }
 

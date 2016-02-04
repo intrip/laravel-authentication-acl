@@ -27,14 +27,18 @@ class AuthenticationServiceProvider extends ServiceProvider {
     protected $defer = false;
 
     protected $providers = [
-            'LaravelAcl\Library\LibraryServiceProvider',
-            'Cartalyst\Sentry\SentryServiceProvider',
-            'Intervention\Image\ImageServiceProvider'
+            \LaravelAcl\Library\LibraryServiceProvider::class,
+            \Cartalyst\Sentry\SentryServiceProvider::class,
+            \Intervention\Image\ImageServiceProvider::class,
+            \Collective\Html\HtmlServiceProvider::class
     ];
 
     protected $aliases = [
-            "Sentry" => 'Cartalyst\Sentry\Facades\Laravel\Sentry',
-            "Image"  => 'Intervention\Image\Facades\Image'
+            "Sentry" => \Cartalyst\Sentry\Facades\Laravel\Sentry::class,
+            "Image"  => \Intervention\Image\Facades\Image::class,
+            'Form'   => \Collective\Html\FormFacade::class,
+            'Html'   => \Collective\Html\HtmlFacade::class,
+            'HTML'   => \Collective\Html\HtmlFacade::class
     ];
 
     /**
@@ -236,7 +240,6 @@ class AuthenticationServiceProvider extends ServiceProvider {
 
         $this->publishes([
                                  __DIR__ . '/../../database/migrations' => $this->app->databasePath() . '/migrations',
-                                 //                                 __DIR__.'/../../database/seeds' => $this->app->databasePath().'/seeds',
                          ]);
     }
 }
