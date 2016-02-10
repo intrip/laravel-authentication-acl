@@ -17,7 +17,7 @@ class CustomProfileRepository
 
     public function __construct($profile_id)
     {
-        $this->profile_id = $profile_id;
+        $this->profile_id = is_array($profile_id) ? array_shift($profile_id) : $profile_id;
     }
 
     public static function getAllTypes()
