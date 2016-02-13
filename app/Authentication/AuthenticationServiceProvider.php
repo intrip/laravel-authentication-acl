@@ -223,6 +223,7 @@ class AuthenticationServiceProvider extends ServiceProvider {
                                  __DIR__ . '/../../config/acl_base.php'        => config_path('acl_base.php'),
                                  __DIR__ . '/../../config/acl_menu.php'        => config_path('acl_menu.php'),
                                  __DIR__ . '/../../config/acl_permissions.php' => config_path('acl_permissions.php'),
+                                 __DIR__ . '/../../config/acl_messages.php'    => config_path('acl_messages.php'),
                                  __DIR__ . '/../../config/acl_sentry.php'      => config_path('acl_sentry.php'),
                          ]);
     }
