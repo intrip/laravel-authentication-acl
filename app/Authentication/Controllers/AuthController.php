@@ -46,7 +46,7 @@ class AuthController extends Controller {
             return redirect()->route("user.admin.login")->withInput()->withErrors($errors);
         }
 
-        return redirect()->route('dashboard.default');
+        return Redirect::to(Config::get('acl_base.admin_login_redirect_url'));
     }
 
     public function postClientLogin(Request $request)
