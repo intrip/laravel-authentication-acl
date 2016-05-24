@@ -47,6 +47,16 @@ return [
   */
   "user_login_redirect_url" => "/",
 
+    /*
+  |--------------------------------------------------------------------------
+  | Admin login redirection url
+  |--------------------------------------------------------------------------
+  |
+  | The admin login redirection url
+  |
+  */
+   "admin_login_redirect_url" => "/admin/users/dashboard",
+
   /*
   |--------------------------------------------------------------------------
   | User per page
