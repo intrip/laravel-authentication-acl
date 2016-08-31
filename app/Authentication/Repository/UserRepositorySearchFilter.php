@@ -39,7 +39,7 @@ class UserRepositorySearchFilter
 
         $q = $this->createAllSelect($q);
 
-        $users = $q->get();
+        $users = $q->get()->all();
 
         $user_emails = array_flip(array_map((function ($element)
         {

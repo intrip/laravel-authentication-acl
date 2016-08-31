@@ -19,7 +19,7 @@ a simple admin panel with an ACL using Laravel framework.
 
 To install this software you need:
 
-  * Laravel framework 5.2+
+  * Laravel framework 5.3+
   * Php>=5.5.9
   * GD Library or Imagick
   * Enable Fileinfo extension(may be needed for windows users) <a href="http://php.net/manual/en/fileinfo.installation.php">how to enable it</a>
@@ -31,12 +31,34 @@ To install authentication follow this steps:
   1. Create an empty <a href="http://laravel.com/docs/quick" target="_blank">Laravel 5</a> installation if you don't have any.
 
   2. Add to your _composer.json_ require field the following lines:
+  
+      __For Laravel version 5.3:__
+      
       ```
       "require": {
         ...
         "jacopo/laravel-authentication-acl": "1.3.*"
       },
       ```
+  
+      __For Laravel version 5.2:__
+      
+      ```
+      "require": {
+          ...
+          "jacopo/laravel-authentication-acl": "1.3.15"
+      },
+     ```
+
+      __For Laravel version  5.1 or 5.0:__
+      
+      ```
+      "require": {
+          ...
+          "jacopo/laravel-authentication-acl": "1.3.11"
+      },
+      ```
+                  
 
   3. Now run `composer install` command.
 
