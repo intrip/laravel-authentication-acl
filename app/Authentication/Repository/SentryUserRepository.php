@@ -15,8 +15,6 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Config;
 use LaravelAcl\Authentication\Exceptions\UserExistsException;
 use LaravelAcl\Authentication\Exceptions\UserNotFoundException as NotFoundException;
-use LaravelAcl\Authentication\Models\Group;
-use LaravelAcl\Authentication\Models\User;
 use LaravelAcl\Authentication\Repository\Interfaces\UserRepositoryInterface;
 use LaravelAcl\Library\Repository\EloquentBaseRepository;
 
@@ -29,10 +27,22 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
      */
     protected $sentry;
 
+    protected $groupModel =  \LaravelAcl\Authentication\Models\Group::class;
+    protected $userModel =  \LaravelAcl\Authentication\Models\User::class;
+
     public function __construct()
     {
         $this->sentry = App::make('sentry');
-        return parent::__construct(new User);
+
+        if (method_exists($this->sentry, 'getGroupProvider')) {
+            $this->groupModel = get_class( $this->sentry->getGroupProvider()->createModel());
+        }
+
+        if (method_exists($this->sentry, 'getUserProvider')) {
+            $this->userModel = get_class ($this->sentry->getUserProvider()->createModel());
+        }
+
+        return parent::__construct( new $this->userModel );
     }
 
     /**
@@ -110,8 +120,10 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
     {
         try
         {
-            $group = Group::findOrFail($group_id);
-            $user = User::findOrFail($user_id);
+            $group = new $this->groupModel;
+            $group = $group->findOrFail($group_id);
+            $user = $this->find($user_id);
+
             $user->addGroup($group);
         } catch(ModelNotFoundException $e)
         {
@@ -129,8 +141,9 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
     {
         try
         {
-            $group = Group::findOrFail($group_id);
-            $user = User::findOrFail($user_id);
+            $group = new $this->groupModel;
+            $group = $group->findOrFail($group_id);
+            $user = $this->find($user_id);
             $user->removeGroup($group);
         } catch(ModelNotFoundException $e)
         {

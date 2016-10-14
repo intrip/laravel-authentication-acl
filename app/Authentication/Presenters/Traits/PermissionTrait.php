@@ -15,7 +15,7 @@ trait PermissionTrait
      */
     public function permissions_obj($model = null)
     {
-        $model = $model ? $model : new Permission;
+        $model = $model ? $model : $this->getPermissionModel();
         $objs = [];
         $permissions = $this->resource->permissions;
         if(! empty($permissions) ) foreach ($permissions as $permission => $status)
@@ -24,4 +24,13 @@ trait PermissionTrait
         }
         return $objs;
     }
-} 
+
+    public function getPermissionModel(){
+        $config = config('cartalyst.sentry');
+        if (isset($config['permission']) && isset($config['permission']['model'])) {
+            return new $config['permission']['model'];
+        }
+
+        return new Permission;
+    }
+}

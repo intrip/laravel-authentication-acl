@@ -10,8 +10,9 @@ use LaravelAcl\Authentication\Models\Group;
 use LaravelAcl\Authentication\Exceptions\UserNotFoundException as NotFoundException;
 use App, Event;
 use Cartalyst\Sentry\Groups\GroupNotFoundException;
+use LaravelAcl\Library\Repository\EloquentBaseRepository;
 
-class SentryGroupRepository implements BaseRepositoryInterface
+class SentryGroupRepository extends EloquentBaseRepository implements BaseRepositoryInterface
 {
     /**
      * Sentry instance
@@ -21,12 +22,19 @@ class SentryGroupRepository implements BaseRepositoryInterface
 
     protected $config_reader;
 
+    protected $groupModel =  \LaravelAcl\Authentication\Models\Group::class;
+
     public function __construct($config_reader = null)
     {
         $this->sentry = App::make('sentry');
         $this->config_reader = $config_reader ? $config_reader : App::make('config');
-    }
 
+        if (method_exists($this->sentry, 'getGroupProvider')) {
+            $this->groupModel = get_class( $this->sentry->getGroupProvider()->createModel());
+        }
+
+        return parent::__construct( new $this->groupModel );
+    }
     /**
      * Create a new object
      *
@@ -95,7 +103,7 @@ class SentryGroupRepository implements BaseRepositoryInterface
      */
     public function all(array $search_filters = [])
     {
-        $q = new Group;
+        $q = $this->sentry->getGroupProvider()->createModel();
         $q = $this->applySearchFilters($search_filters, $q);
 
         $results_per_page = $this->config_reader->get('acl_base.groups_per_page');

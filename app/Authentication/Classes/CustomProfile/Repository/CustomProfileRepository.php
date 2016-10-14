@@ -3,8 +3,6 @@
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
-use LaravelAcl\Authentication\Models\ProfileField;
-use LaravelAcl\Authentication\Models\ProfileFieldType;
 
 /**
  * Class CustomProfileRepository
@@ -15,21 +13,38 @@ class CustomProfileRepository
 {
     protected $profile_id;
 
+    protected static $profile_field = 'LaravelAcl\Authentication\Models\ProfileField';
+    protected static $profile_field_type = 'LaravelAcl\Authentication\Models\ProfileFieldType';
+
+    protected static $profile_field_model = NULL;
+    protected static $profile_field_type_model = NULL;
+
+
     public function __construct($profile_id)
     {
+        $config = config('cartalyst.sentry');
+        if (isset($config['profile_field']) && isset($config['profile_field']['model'])) {
+            self::$profile_field = $config['profile_field']['model'];
+        }
+        if (isset($config['profile_field_type']) && isset($config['profile_field_type']['model'])) {
+            self::$profile_field_type = $config['profile_field_type']['model'];
+        }
+        self::$profile_field_model = new self::$profile_field;
+        self::$profile_field_type_model = new self::$profile_field_type;
+
         $this->profile_id = is_array($profile_id) ? array_shift($profile_id) : $profile_id;
     }
 
     public static function getAllTypes()
     {
-        return ProfileFieldType::all();
+        return self::$profile_field_type_model->all();
     }
 
     public static function addNewType($description)
     {
         // firing event so it can get catched for permission handling
         Event::fire('customprofile.creating');
-        $profile_field_type = ProfileFieldType::create(["description" => $description]);
+        $profile_field_type = self::$profile_field_type_model->create(["description" => $description]);
 
         return $profile_field_type;
     }
@@ -38,7 +53,7 @@ class CustomProfileRepository
     {
         // firing event so it can get catched for permission handling
         Event::fire('customprofile.deleting');
-        $success = ProfileFieldType::findOrFail($id)->delete();
+        $success = self::$profile_field_type_model->findOrFail($id)->delete();
 
         return $success;
     }
@@ -64,7 +79,7 @@ class CustomProfileRepository
      */
     protected function createNewField($profile_type_field_id, $field_value)
     {
-        return ProfileField::create([
+        return self::$profile_field_model->create([
                                     "profile_id"            => $this->profile_id,
                                     "profile_field_type_id" => $profile_type_field_id,
                                     "value"                 => $field_value
@@ -90,7 +105,7 @@ class CustomProfileRepository
 
     public function getAllFields()
     {
-        return ProfileField::where('profile_id','=',$this->profile_id)
+        return self::$profile_field_model->where('profile_id','=',$this->profile_id)
                 ->get();
     }
     
@@ -101,7 +116,7 @@ class CustomProfileRepository
      */
     public function findField($profile_type_field_id)
     {
-        return ProfileField::where('profile_id', '=', $this->profile_id)
+        return  self::$profile_field_model->where('profile_id', '=', $this->profile_id)
                 ->where('profile_field_type_id', '=', $profile_type_field_id)
                 ->firstOrFail();
     }

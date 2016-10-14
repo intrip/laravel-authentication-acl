@@ -14,6 +14,8 @@ class EloquentPermissionRepository extends EloquentBaseRepository
     protected $group_repo;
     protected $user_repo;
 
+    protected $permissions_model = 'LaravelAcl\Authentication\Models\Permission';
+
     public function __construct()
     {
         $this->group_repo = App::make('group_repository');
@@ -22,7 +24,11 @@ class EloquentPermissionRepository extends EloquentBaseRepository
         Event::listen(['repository.deleting','repository.updating'], '\LaravelAcl\Authentication\Repository\EloquentPermissionRepository@checkIsNotAssociatedToAnyUser');
         Event::listen(['repository.deleting','repository.updating'], '\LaravelAcl\Authentication\Repository\EloquentPermissionRepository@checkIsNotAssociatedToAnyGroup');
 
-        return parent::__construct(new Permission);
+        $config = config('cartalyst.sentry');
+        if (isset($config['permission']) && isset($config['permission']['model'])) {
+            $this->permissions_model = $config['permission']['model'];
+        }
+        return parent::__construct(new $this->permissions_model);
     }
 
     /**

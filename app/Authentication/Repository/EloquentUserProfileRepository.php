@@ -4,11 +4,10 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use LaravelAcl\Authentication\Classes\Images\ImageHelperTrait;
 use LaravelAcl\Authentication\Exceptions\UserNotFoundException;
 use LaravelAcl\Authentication\Exceptions\ProfileNotFoundException;
-use LaravelAcl\Authentication\Models\User;
-use LaravelAcl\Authentication\Models\UserProfile;
 use LaravelAcl\Authentication\Repository\Interfaces\UserProfileRepositoryInterface;
 use LaravelAcl\Library\Repository\EloquentBaseRepository;
 use LaravelAcl\Library\Repository\Interfaces\BaseRepositoryInterface;
+use App;
 
 /**
  * Class EloquentUserProfileRepository
@@ -17,6 +16,10 @@ use LaravelAcl\Library\Repository\Interfaces\BaseRepositoryInterface;
  */
 class EloquentUserProfileRepository extends EloquentBaseRepository implements UserProfileRepositoryInterface
 {
+    protected $userprofile = 'LaravelAcl\Authentication\Models\UserProfile';
+
+    protected $user_repo;
+
     use ImageHelperTrait;
 
     /**
@@ -24,14 +27,20 @@ class EloquentUserProfileRepository extends EloquentBaseRepository implements Us
      */
     public function __construct()
     {
-        return parent::__construct(new UserProfile);
+        $this->user_repo = App::make('user_repository');
+
+        $config = config('cartalyst.sentry');
+        if (isset($config['users_profile']) && isset($config['users_profile']['model'])) {
+            $this->userprofile = $config['users_profile']['model'];
+        }
+        return parent::__construct(new $this->userprofile);
     }
 
     public function getFromUserId($user_id)
     {
         // checks if the user exists
         try {
-            User::findOrFail($user_id);
+            $this->user_repo->getModel()->findOrFail($user_id);
         } catch (ModelNotFoundException $e) {
             throw new UserNotFoundException;
         }

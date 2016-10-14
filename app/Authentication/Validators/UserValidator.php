@@ -5,6 +5,8 @@ use LaravelAcl\Library\Validators\AbstractValidator;
 
 class UserValidator extends AbstractValidator
 {
+    protected static $table_name = 'users';
+
     protected static $rules = [
         "email" => ["required", "email"],
         "password" => ["confirmed"]
@@ -12,20 +14,16 @@ class UserValidator extends AbstractValidator
 
     public function __construct()
     {
-        Event::listen('validating', function($input)
-        {
+        Event::listen('validating', function ($input) {
             // check if the input comes form the correct form
-            if(!isset($input['form_name']) || $input['form_name']!='user')
+            if (!isset($input['form_name']) || $input['form_name'] != 'user')
                 return true;
-
-            if(empty($input["id"]))
-            {
+            $table_name = isset($input['_table_name']) ? $input['_table_name'] : $this::$table_name;
+            if (empty($input["id"])) {
                 static::$rules["password"][] = "required";
-                static::$rules["email"][] = "unique:users,email";
-            }
-            else
-            {
-                static::$rules["email"][] = "unique:users,email,{$input['id']}";
+                static::$rules["email"][] = "unique:{$table_name},email";
+            } else {
+                static::$rules["email"][] = "unique:{$table_name},email,{$input['id']}";
             }
         });
 
@@ -40,8 +38,8 @@ class UserValidator extends AbstractValidator
     public static function resetStatic()
     {
         static::$rules = [
-                "email" => ["required", "email"],
-                "password" => ["confirmed"]
+            "email" => ["required", "email"],
+            "password" => ["confirmed"]
         ];
     }
 } 

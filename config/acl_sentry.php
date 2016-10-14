@@ -137,6 +137,70 @@ return array(
 
     ),
 
+    'users_profile' => array(
+
+        /*
+        |--------------------------------------------------------------------------
+        | Model
+        |--------------------------------------------------------------------------
+        |
+        | When using the "eloquent" driver, we need to know which
+        | Eloquent models should be used throughout Sentry.
+        |
+        */
+
+        'model' => 'LaravelAcl\Authentication\Models\UserProfile',
+
+    ),
+
+
+    'profile_field' => array(
+
+        /*
+        |--------------------------------------------------------------------------
+        | Model
+        |--------------------------------------------------------------------------
+        |
+        | When using the "eloquent" driver, we need to know which
+        | Eloquent models should be used throughout Sentry.
+        |
+        */
+
+        'model' => 'LaravelAcl\Authentication\Models\ProfileField',
+
+    ),
+    'profile_field_type' => array(
+
+        /*
+        |--------------------------------------------------------------------------
+        | Model
+        |--------------------------------------------------------------------------
+        |
+        | When using the "eloquent" driver, we need to know which
+        | Eloquent models should be used throughout Sentry.
+        |
+        */
+
+        'model' => 'LaravelAcl\Authentication\Models\ProfileFieldType',
+
+    ),
+
+    'permission' => array(
+
+        /*
+        |--------------------------------------------------------------------------
+        | Model
+        |--------------------------------------------------------------------------
+        |
+        | When using the "eloquent" driver, we need to know which
+        | Eloquent models should be used throughout Sentry.
+        |
+        */
+
+        'model' => 'LaravelAcl\Authentication\Models\Permission',
+
+    ),
+
     /*
     |--------------------------------------------------------------------------
     | User Groups Pivot Table
