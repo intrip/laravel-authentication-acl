@@ -41,7 +41,7 @@ You can see the full documentation and usage [here](docs/index.md)
 ### Please support this project
 Please support the project development, even a small donation can help the life of this project!
 
-<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=KZWJBEK4MMP8W" target="_blank"><img src="https://www.paypalobjects.com/it_IT/IT/i/btn/btn_donate_LG.gif"></a>
+<a href="https://www.paypal.me/jacopobeschi" target="_blank"><img src="https://www.paypalobjects.com/it_IT/IT/i/btn/btn_donate_LG.gif"></a>
 
 ####Interested in some new feature?
 There's something you like to see in this package?
