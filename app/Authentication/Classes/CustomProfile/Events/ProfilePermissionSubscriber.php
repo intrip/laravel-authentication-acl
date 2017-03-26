@@ -7,7 +7,7 @@ use LaravelAcl\Authentication\Exceptions\PermissionException;
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
-class ProfilePermissionSubscriber 
+class ProfilePermissionSubscriber
 {
     protected $permission_error_message = "You don't have the permission to edit custom the user profiles.";
 
@@ -32,4 +32,4 @@ class ProfilePermissionSubscriber
         $events->listen('customprofile.deleting', 'LaravelAcl\Authentication\Classes\CustomProfile\Events\ProfilePermissionSubscriber@checkProfileTypePermission');
     }
 
-} 
+}

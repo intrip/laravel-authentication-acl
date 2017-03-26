@@ -14,7 +14,7 @@ use App;
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
 class AuthControllerTest extends DbTestCase {
-    use Helper, UserFactory;
+    use UserFactory, Traits\MailTracking;
 
     protected $current_email;
 
@@ -41,12 +41,12 @@ class AuthControllerTest extends DbTestCase {
         $remember = "1";
         $this->mockAuthenticatorSuccess($email, $password, $remember);
 
-        $this->route('POST', 'user.login', [
+        $response = $this->post('/login', [
                 "email"    => $email,
                 "password" => $password,
                 "remember" => $remember
         ]);
-        $this->assertRedirectedTo(Config::get('acl_base.config.user_login_redirect_url'));
+        $response->assertRedirect(Config::get('acl_base.user_login_redirect_url'));
     }
 
     /**
@@ -59,13 +59,13 @@ class AuthControllerTest extends DbTestCase {
         $remember = "1";
         $this->mockAuthenticatorSuccess($email, $password, $remember);
 
-        $this->route('POST', 'user.login.process', [
+        $response = $this->post('user/login', [
                 "email"    => $email,
                 "password" => $password,
                 "remember" => $remember
         ]);
 
-        $this->assertRedirectedTo('/admin/users/dashboard');
+        $response->assertRedirect('/admin/users/dashboard');
     }
 
     /**
@@ -95,14 +95,14 @@ class AuthControllerTest extends DbTestCase {
 
         $this->mockAuthenticationFails($email, $password, $remember);
 
-        $this->route('POST', "user.login", [
+        $response = $this->post("/login", [
                 "email"    => $email,
                 "password" => $password,
                 "remember" => $remember
         ]);
 
-        $this->assertRedirectedToRoute('user.login');
-        $this->assertSessionHasErrors();
+        $response->assertRedirect('/login');
+        $response->assertSessionHas('errors');
     }
 
     /**
@@ -116,14 +116,14 @@ class AuthControllerTest extends DbTestCase {
 
         $this->mockAuthenticationFails($email, $password, $remember);
 
-        $this->route('POST', 'user.login.process', [
+        $response = $this->post('user/login', [
                 "email"    => $email,
                 "password" => $password,
                 "remember" => $remember
         ]);
 
-        $this->assertRedirectedToRoute('user.admin.login');
-        $this->assertSessionHasErrors();
+        $response->assertRedirect('/admin/login');
+        $response->assertSessionHas('errors');
     }
 
     /**
@@ -147,14 +147,13 @@ class AuthControllerTest extends DbTestCase {
      **/
     public function it_process_recovery_data_and_redirect_with_success()
     {
-        StateKeeper::set('expected_to', $this->current_email);
-        StateKeeper::set('expected_subject', 'Password recovery request');
-        StateKeeper::set('expected_body', 'We received a request to change your password, if you authorize it');
+        $response = $this->post('/user/reminder', ["email" => $this->current_email]);
 
-        Event::listen('mailer.sending', 'LaravelAcl\Authentication\Tests\Unit\AuthControllerTest@checkForSingleMailData');
-
-        $this->route('POST', 'user.reminder', ["email" => $this->current_email]);
-        $this->assertRedirectedTo('/user/reminder-success');
+        $response->assertRedirect('/user/reminder-success');
+        $this->seeEmailWasSent();
+        $this->seeEmailTo($this->current_email);
+        $this->seeEmailSubject('Password recovery request');
+        $this->seeEmailContains('We received a request to change your password, if you authorize it');
     }
 
     /**
@@ -170,10 +169,10 @@ class AuthControllerTest extends DbTestCase {
                                   ->getMock();
         $this->app->instance('LaravelAcl\Authentication\Services\ReminderService', $mock_reminder_service);
 
-        $this->action('POST', 'LaravelAcl\Authentication\Controllers\AuthController@postReminder');
+        $response = $this->post('/user/reminder');
 
-        $this->assertRedirectedToAction('LaravelAcl\Authentication\Controllers\AuthController@getReminder');
-        $this->assertSessionHasErrors();
+        $response->assertRedirect('/user/recovery-password');
+        $response->assertSessionHas('errors');
     }
 
     /**
@@ -188,8 +187,8 @@ class AuthControllerTest extends DbTestCase {
 
         $this->app->instance('LaravelAcl\Authentication\Services\ReminderService', $mock_reminder_service);
 
-        $this->action('POST', 'LaravelAcl\Authentication\Controllers\AuthController@postChangePassword', ["password" => "newpassword"]);
-        $this->assertRedirectedTo('/user/change-password-success');
+        $response = $this->post('/user/change-password', ["password" => "newpassword"]);
+        $response->assertRedirect('/user/change-password-success');
     }
 
     /**
@@ -205,22 +204,22 @@ class AuthControllerTest extends DbTestCase {
                                   ->getMock();
         $this->app->instance('LaravelAcl\Authentication\Services\ReminderService', $mock_reminder_service);
 
-        $this->action('POST', 'LaravelAcl\Authentication\Controllers\AuthController@postChangePassword', ["password" => "newpassword"]);
+        $response = $this->post('/user/change-password', ["password" => "newpassword"]);
 
-        $this->assertRedirectedToAction('LaravelAcl\Authentication\Controllers\AuthController@getChangePassword');
-        $this->assertSessionHasErrors();
+        $response->assertRedirect('/user/change-password');
+        $response->assertSessionHas('errors');
     }
 
     /**
      * @test
      **/
-    public function itValidatePasswordOnChangePassword()
+    public function it_validate_password_on_change_password()
     {
-        $this->action('POST', 'LaravelAcl\Authentication\Controllers\AuthController@postChangePassword', ["password" => ""]);
+        $response = $this->post('/user/change-password', ["password" => ""]);
 
-        $this->assertRedirectedToAction('LaravelAcl\Authentication\Controllers\AuthController@getChangePassword');
-        $this->assertSessionHasErrors();
-        $this->assertSessionHas("_old_input");
+        $response->assertRedirect('/user/change-password');
+        $response->assertSessionHas('errors');
+        $response->assertSessionHas("_old_input");
     }
 }
  

@@ -19,19 +19,17 @@
   "license": "MIT",
   "type": "project",
   "require": {
-    "laravel/framework": "5.3.*",
-    "laravelcollective/html" : "5.3.*",
+    "laravel/framework": "5.4.*",
+    "laravelcollective/html" : "5.4.*",
     "intervention/image": "2.*",
-    "jacopo/authentication-sentry": "3.0.4",
-    "gregwar/captcha": "1.0.11"
+    "jacopo/authentication-sentry": "3.0.7",
+    "gregwar/captcha": "1.1.1"
   },
   "require-dev": {
-    "phpunit/phpunit": "~4.0",
-    "phpspec/phpspec": "~2.1",
+    "phpunit/phpunit": "~5.7",
     "mockery/mockery": "0.9.*",
-    "fzaninotto/faker": "1.4.*",
-    "doctrine/dbal": "2.5.*"
-
+    "fzaninotto/faker": "~1.4",
+    "sebastian/exporter": "^2.0"
   },
   "autoload": {
     "classmap": [

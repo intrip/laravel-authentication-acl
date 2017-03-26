@@ -7,8 +7,6 @@ use Mockery as m;
 use App;
 
 class DashboardControllerTest extends DbTestCase  {
-
-    use Helper;
     use AuthHelper;
 
     public function setUp()
@@ -29,9 +27,9 @@ class DashboardControllerTest extends DbTestCase  {
     {
         $this->loginAnUser();
 
-        $this->route('GET', 'dashboard.default');
+        $response = $this->get(route('dashboard.default'));
 
-        $this->assertResponseOk();
+        $response->assertStatus(200);
     }
 }
  

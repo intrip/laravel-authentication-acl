@@ -15,7 +15,6 @@ class HasPermFilterTest extends TestCase  {
         Route::get('no_perm', function(){return '';});
         Route::get('with_perm', ['middleware' => ["has_perm:{$this->perm_1}"], 'uses' => function(){return '';}]);
         Route::get('with_perms', ['middleware' => ["has_perm:{$this->perm_1},{$this->perm_2}"], 'uses' => function(){return '';}]);
-
     }
 
     public function tearDown()
@@ -40,8 +39,8 @@ class HasPermFilterTest extends TestCase  {
         $helper_has_perm->shouldReceive('hasPermission')->with([$this->perm_1])->andReturn(false);
         App::instance('authentication_helper', $helper_has_perm);
 
-        $this->call('GET','with_perm');
-        $this->assertResponseStatus('401');
+        $response = $this->get('with_perm');
+        $response->assertStatus(401);
     }
     
     /**

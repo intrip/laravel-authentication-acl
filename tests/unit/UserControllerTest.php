@@ -19,7 +19,6 @@ use Mockery as m;
  */
 class UserControllerTest extends DbTestCase
 {
-    use Helper;
     use AuthHelper;
 
     protected $custom_type_repository;
@@ -50,9 +49,9 @@ class UserControllerTest extends DbTestCase
         $mock_register = m::mock('StdClass')->shouldReceive('register')->once()->getMock();
         App::instance('register_service', $mock_register);
 
-        $this->route('POST', "user.signup.process");
+        $response = $this->post("user/signup");
 
-        $this->assertRedirectedToRoute("user.signup-success");
+        $response->assertRedirect("user/signup-success");
 
     }
 
@@ -64,10 +63,10 @@ class UserControllerTest extends DbTestCase
         $mock_register = m::mock('StdClass')->shouldReceive('register')->once()->andThrow(new ValidationException())->shouldReceive('getErrors')->once()->getMock();
         App::instance('register_service', $mock_register);
 
-        $this->action('POST', 'LaravelAcl\Authentication\Controllers\UserController@postSignup');
+        $response = $this->post('user/signup');
 
-        $this->assertRedirectedToAction('LaravelAcl\Authentication\Controllers\UserController@signup');
-        $this->assertSessionHasErrors();
+        $response->assertRedirect('user/signup');
+        $response->assertSessionHas('errors');
     }
 
     /**
@@ -75,9 +74,9 @@ class UserControllerTest extends DbTestCase
      **/
     public function it_show_the_signup_view_on_signup()
     {
-        $this->action('GET', 'LaravelAcl\Authentication\Controllers\UserController@signup');
+        $response = $this->get('user/signup');
 
-        $this->assertResponseOk();
+        $response->assertStatus(200);
     }
 
     /**
@@ -86,9 +85,9 @@ class UserControllerTest extends DbTestCase
     public function itShowCaptchaOnSignupIfEnabled()
     {
         $this->enableCaptchaCheck();
-        $this->action('GET', 'LaravelAcl\Authentication\Controllers\UserController@signup');
+        $response = $this->get('user/signup');
 
-        $this->assertViewHas("captcha");
+        $response->assertViewHas("captcha");
     }
 
     /**
@@ -97,7 +96,7 @@ class UserControllerTest extends DbTestCase
     public function it_doesnt_show_captcha_on_signup_if_disabled()
     {
         $this->disableCaptchaCheck();
-        $response = $this->route('GET', "user.signup");
+        $response = $this->get("user/signup");
 
         $this->assertArrayNotHasKey("captcha", $response->original->getData());
     }
@@ -119,9 +118,10 @@ class UserControllerTest extends DbTestCase
     {
         $this->replaceGetEmailConfirmation(true);
 
-        $response = $this->route('GET', 'user.signup-success');
+        $response = $this->get('user/signup-success');
+        $data = $response->getOriginalContent()->render();
 
-        $this->assertResponseIncludes($response, 'You account has been created. However');
+        $this->assertContains('You account has been created. However', $data);
     }
 
     private function replaceGetEmailConfirmation($active)
@@ -136,9 +136,10 @@ class UserControllerTest extends DbTestCase
     {
         $this->replaceGetEmailConfirmation(false);
 
-        $response = $this->route('GET', 'user.signup-success');
+        $response = $this->get('user/signup-success');
+        $data = $response->getOriginalContent()->render();
 
-        $this->assertResponseIncludes($response, 'Now you can login to the website ');
+        $this->assertContains('Now you can login to the website ', $data);
     }
 
     /**
@@ -152,13 +153,13 @@ class UserControllerTest extends DbTestCase
             $token)->getMock();
         App::instance('register_service', $mock_service);
 
-        $this->action('GET', 'LaravelAcl\Authentication\Controllers\UserController@emailConfirmation',
-            '', [
+        $response = $this->get(route("user.email-confirmation",
+            [
                 "email" => $email,
                 "token" => $token
-            ]);
+            ]));
 
-        $this->assertResponseOk();
+        $response->assertStatus(200);
     }
 
     /**
@@ -172,14 +173,14 @@ class UserControllerTest extends DbTestCase
             $token)->andThrow(new \LaravelAcl\Authentication\Exceptions\TokenMismatchException)->shouldReceive('getErrors')->once()->andReturn("")->getMock();
         App::instance('register_service', $mock_service);
 
-        $this->action('GET', 'LaravelAcl\Authentication\Controllers\UserController@emailConfirmation',
-            '', [
+        $response = $this->get(route("user.email-confirmation",
+            [
                 "email" => $email,
                 "token" => $token
-            ]);
+            ]));
 
-        $this->assertResponseOk();
-        $this->assertViewHas('errors');
+        $response->assertStatus(200);
+        $response->assertViewHas('errors');
     }
 
     /**
@@ -193,14 +194,14 @@ class UserControllerTest extends DbTestCase
             $token)->andThrow(new \LaravelAcl\Authentication\Exceptions\UserNotFoundException())->shouldReceive('getErrors')->once()->andReturn("")->getMock();
         App::instance('register_service', $mock_service);
 
-        $this->route('GET', "user.email-confirmation",
-            '', [
+        $response = $this->get(route("user.email-confirmation",
+            [
                 "email" => $email,
                 "token" => $token
-            ]);
+            ]));
 
-        $this->assertResponseOk();
-        $this->assertViewHas('errors');
+        $response->assertStatus(200);
+        $response->assertViewHas('errors');
     }
 
     /**
@@ -215,12 +216,12 @@ class UserControllerTest extends DbTestCase
             "old" => "old input"
         ]);
 
-        $this->route('GET', 'users.list', [
+        $response = $this->get('admin/users/list', [
             "new" => "new input",
             "intersect" => "new intersect"
         ]);
 
-        $this->assertResponseOk();
+        $response->assertStatus(200);
     }
 
     /**
@@ -239,16 +240,15 @@ class UserControllerTest extends DbTestCase
             "activated" => true
         ];
 
-        $this->route('POST', 'users.edit', $input_data);
+        $response = $this->post('admin/users/edit', $input_data);
 
         $user_created = User::get()->last();
         $this->assertNotNull($user_created);
         $profile_created = UserProfile::get()->last();
         $this->assertNotNull($profile_created);
 
-        $this->assertRedirectedToRoute('users.edit',
-            ['id' => $user_created->id]);
-        $this->assertSessionHas('message');
+        $response->assertRedirect(route('users.edit', ['id' => $user_created->id]));
+        $response->assertSessionHas('message');
     }
 
     /**
@@ -267,14 +267,13 @@ class UserControllerTest extends DbTestCase
                 "password_confirmation" => ''
         ];
 
-        $this->route('POST', 'users.edit', $input_data);
+        $response = $this->post('admin/users/edit', $input_data);
 
         $user_updated = User::find($this->current_user->id);
         $this->assertEquals($new_email, $user_updated->email);
 
-        $this->assertRedirectedToRoute('users.edit',
-                                        ['id' => $user_updated->id]);
-        $this->assertSessionHas('message');
+        $response->assertRedirect(route('users.edit', ['id' => $user_updated->id]));
+        $response->assertSessionHas('message');
     }
 
     /**
@@ -285,14 +284,14 @@ class UserControllerTest extends DbTestCase
         $this->loginAnAdmin();
 
         $field_description = "field desc";
-        $this->route('POST', 'users.profile.addfield', ['description' => $field_description, 'user_id' => $this->current_user->id]);
+        $response = $this->post('admin/users/profile/addField', ['description' => $field_description, 'user_id' => $this->current_user->id]);
 
         $profile_fields = $this->custom_type_repository->getAllTypes();
         // check that have created a field type
         $this->assertCount(1, $profile_fields);
 
-        $this->assertRedirectedToRoute('users.profile.edit', ["user_id" => $this->current_user->id]);
-        $this->assertSessionHas('message');
+        $response->assertRedirect(route('users.profile.edit', ["user_id" => $this->current_user->id]));
+        $response->assertSessionHas('message');
     }
 
     /**
@@ -305,10 +304,10 @@ class UserControllerTest extends DbTestCase
         // login another user
         $this->loginAnUser();
 
-        $this->route('POST', 'users.profile.addfield', ['description' => "field desc", 'user_id' => $fake_user->id]);
+        $response = $this->post(route('users.profile.addfield', ['description' => "field desc", 'user_id' => $fake_user->id]));
 
-        $this->assertRedirectedToRoute('users.profile.edit', ["user_id" => $fake_user->id]);
-        $this->assertSessionHas('errors');
+        $response->assertRedirect(route('users.profile.edit', ["user_id" => $fake_user->id]));
+        $response->assertSessionHas('errors');
     }
 
     /**
@@ -328,7 +327,7 @@ class UserControllerTest extends DbTestCase
                 "operation" => $this->remove_operation,
         ];
 
-        $response = $this->route('POST', 'users.edit.permission', $input);
+        $response = $this->post('admin/users/editpermission', $input);
 
         $user_found = User::find($user_created->id);
         $this->assertEmpty($user_found->permissions);
@@ -351,7 +350,7 @@ class UserControllerTest extends DbTestCase
             "operation" => $this->add_operation,
         ];
 
-        $this->route('POST', 'users.edit.permission', $input);
+        $this->post('admin/users/editpermission', $input);
 
         $user_found = User::find($user_created->id);
         $this->assertUserHasPermission($user_found, $permission_name);
@@ -367,13 +366,13 @@ class UserControllerTest extends DbTestCase
         $field_id = $this->createFieldType();
         $user_id = 1;
 
-        $this->route('POST', 'users.profile.deletefield', ["id" => $field_id, "user_id" => $user_id]);
+        $response = $this->post('admin/users/profile/deleteField', ["id" => $field_id, "user_id" => $user_id]);
 
         $profile_fields = $this->custom_type_repository->getAllTypes();
         $this->assertCount(0, $profile_fields);
 
-        $this->assertRedirectedToRoute('users.profile.edit', ["user_id" => $user_id]);
-        $this->assertSessionHas('message');
+        $response->assertRedirect(route('users.profile.edit', ["user_id" => $user_id]));
+        $response->assertSessionHas('message');
     }
 
     /**
@@ -388,12 +387,12 @@ class UserControllerTest extends DbTestCase
 
         $this->stopPermissionCheckEvent();
         $field_id = 1;
-        $this->route('POST', 'users.profile.deletefield', ["id" => $field_id, "user_id" => $fake_user->id]);
+        $response = $this->post('admin/users/profile/deleteField', ["id" => $field_id, "user_id" => $fake_user->id]);
 
-        $this->assertRedirectedToRoute('users.profile.edit', ["user_id" => $fake_user->id]);
-        $this->assertSessionHas('errors');
+        $response->assertRedirect(route('users.profile.edit', ["user_id" => $fake_user->id]));
+        $response->assertSessionHas('errors');
     }
-    
+
     /**
      * @test
      **/
@@ -403,9 +402,9 @@ class UserControllerTest extends DbTestCase
         $created_user_profile = $this->make('LaravelAcl\Authentication\Models\UserProfile', $this->getUserProfileStub($created_user))->first();
         $this->loginUser($created_user);
 
-        $response = $this->route('GET','users.selfprofile.edit');
+        $response = $this->get('admin/users/profile/self');
 
-        $this->assertResponseOk();
+        $response->assertStatus(200);
         $view_user_profile = $response->original->user_profile;
         $this->assertObjectHasAllAttributes($created_user_profile->toArray(), $view_user_profile);
     }

@@ -28,7 +28,7 @@ class ClientLoggedFilterTest extends TestCase  {
 
         $this->call('GET', 'check');
     }
-    
+
     /**
      * @test
      **/
@@ -36,11 +36,11 @@ class ClientLoggedFilterTest extends TestCase  {
     {
         $this->authCheck(true);
 
-        $this->call('GET', 'check');
+        $response = $this->get('check');
 
-        $this->assertRedirectedTo('/login');
+        $response->assertRedirect('/login');
     }
-    
+
     /**
      * @test
      **/
@@ -48,9 +48,9 @@ class ClientLoggedFilterTest extends TestCase  {
     {
         $this->authCheck(true);
 
-        $this->call('GET', 'check_custom');
+        $response = $this->call('GET', 'check_custom');
 
-        $this->assertRedirectedTo($this->custom_url);
+        $response->assertRedirect($this->custom_url);
     }
 
     /**

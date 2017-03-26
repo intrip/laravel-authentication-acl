@@ -1,4 +1,4 @@
-<?php  namespace LaravelAcl\Authentication\Tests\Unit\Traits; 
+<?php  namespace LaravelAcl\Authentication\Tests\Unit\Traits;
 
 use Illuminate\Support\Facades\App;
 

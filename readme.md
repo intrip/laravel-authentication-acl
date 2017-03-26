@@ -4,7 +4,7 @@ laravel-authentication-acl
 [![Build Status](https://travis-ci.org/intrip/laravel-authentication-acl.svg?branch=1.3)](https://travis-ci.org/intrip/laravel-authentication-acl)
 [![Total Downloads](https://poser.pugx.org/jacopo/laravel-authentication-acl/d/total.svg)](https://packagist.org/packages/jacopo/laravel-authentication-acl)
 
-## This is the Laravel 5.3 Version, for Laravel 5.2 use the version 1.3.15, for Laravel 5.1/5.0 use the version 1.3.11, for Laravel4 version use the 1.2 branch
+## This is the Laravel 5.4 Version, for Laravel 5.3 use the version 1.3.*, for Laravel 5.2 use the version 1.3.15, for Laravel 5.1/5.0 use the version 1.3.11, for Laravel4 version use the 1.2 branch
 
 Laravel Authentication ACL is a Laravel 5 package, based on <a href="https://github.com/cartalyst/sentry" target="_blank">sentry2</a>. <br/>
 This package is made with the purpose of helping other developers to set-up

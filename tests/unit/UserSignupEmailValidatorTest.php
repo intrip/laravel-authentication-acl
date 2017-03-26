@@ -9,8 +9,9 @@ use App, Input, Session, Config, Event;
 use LaravelAcl\Authentication\Tests\Unit\Traits\Helper;
 use LaravelAcl\Authentication\Validators\UserSignupEmailValidator;
 use Mockery as m;
+
 class UserSignupEmailValidatorTest extends DbTestCase {
-    use Helper;
+    use Traits\MailTracking;
 
     protected $user_repository;
 
@@ -49,7 +50,7 @@ class UserSignupEmailValidatorTest extends DbTestCase {
         $validator = new UserSignupEmailValidator();
         $this->assertTrue($validator->validateEmailUnique("email", $fake_mail, $input));
     }
-    
+
     /**
      * @test
      **/
@@ -65,30 +66,22 @@ class UserSignupEmailValidatorTest extends DbTestCase {
             "last_name" => ""
         ];
 
-        StateKeeper::set('expected_to', $input["email"]);
-        StateKeeper::set('expected_subject',"Registration request to: " . Config::get('acl_base.app_name'));
-        StateKeeper::set('expected_body', 'You account has been created. However, before you can use it you need to confirm your email address first by clicking the');
         $mock_register_service = m::mock('register_service')
-            ->shouldReceive('sendRegistrationMailToClient')
-            ->getMock();
+          ->shouldReceive('sendRegistrationMailToClient')
+          ->getMock();
         App::instance('register_service', $mock_register_service);
-        $this->activateSingleEmailCheck();
 
         $this->user_repository->create($input);
         $validator = new UserSignupEmailValidator();
 
         $this->assertFalse($validator->validateEmailUnique("email", $input["email"], $input));
         $this->assertTrue(Session::has('message'));
+
     }
 
     private function enableEmailConfirmation()
     {
         Config::set('acl_base.email_confirmation', true);
-    }
-
-    public function activateSingleEmailCheck()
-    {
-        Event::listen('mailer.sending', 'LaravelAcl\Authentication\Tests\Unit\UserSignupEmailValidatorTest@checkForSingleMailData');
     }
 }
  
