@@ -172,7 +172,7 @@ class AuthenticationServiceProvider extends ServiceProvider {
 
     private function registerInstallCommand()
     {
-        $this->app['authentication.install'] = $this->app->share(function ($app)
+        $this->app->singleton('authentication.install', function ($app)
         {
             return new InstallCommand;
         });

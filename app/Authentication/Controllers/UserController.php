@@ -24,6 +24,7 @@ use LaravelAcl\Authentication\Validators\UserProfileValidator;
 use View, Redirect, App, Config;
 use LaravelAcl\Authentication\Interfaces\AuthenticateInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use LaravelAcl\Library\Form\FormModel;
 
 class UserController extends Controller {
     /**
@@ -48,7 +49,8 @@ class UserController extends Controller {
     {
         $this->user_repository = App::make('user_repository');
         $this->user_validator = $v;
-        $this->f = App::make('form_model', [$this->user_validator, $this->user_repository]);
+        //@todo use IOC correctly with a factory and passing the correct parameters
+        $this->f = new FormModel($this->user_validator, $this->user_repository);
         $this->form_helper = $fh;
         $this->profile_validator = $vp;
         $this->profile_repository = App::make('profile_repository');
@@ -347,4 +349,4 @@ class UserController extends Controller {
         return View::make('laravel-authentication-acl::client.auth.captcha-image')
                    ->with(['captcha' => App::make('captcha_validator')]);
     }
-} 
+}

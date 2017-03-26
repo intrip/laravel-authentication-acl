@@ -19,7 +19,7 @@ class SwiftMailer implements MailerInterface
     {
         try
         {
-            App::make('mailer')->queue($template, ["body" => $body], function($message) use($to, $subject){
+            App::make('mailer')->send($template, ["body" => $body], function($message) use($to, $subject){
                 $message->to($to)->subject($subject);
             });
         }

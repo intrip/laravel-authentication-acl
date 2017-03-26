@@ -32,6 +32,15 @@ To install authentication follow this steps:
 
   2. Add to your _composer.json_ require field the following lines:
   
+      __For Laravel version 5.4:__
+
+      ```
+      "require": {
+        ...
+        "jacopo/laravel-authentication-acl": "1.4.*"
+      },
+      ```
+
       __For Laravel version 5.3:__
       
       ```
