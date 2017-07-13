@@ -44,7 +44,7 @@ class PermissionController extends Controller
         }
         catch(JacopoExceptionsInterface $e)
         {
-            $obj = new Permission;
+            $obj = $this->r->getModel();
         }
 
         return View::make('laravel-authentication-acl::admin.permission.edit')->with(["permission" => $obj]);

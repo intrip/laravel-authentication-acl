@@ -15,7 +15,6 @@ use LaravelAcl\Authentication\Presenters\UserPresenter;
 use LaravelAcl\Authentication\Services\UserProfileService;
 use LaravelAcl\Authentication\Validators\UserProfileAvatarValidator;
 use LaravelAcl\Library\Exceptions\NotFoundException;
-use LaravelAcl\Authentication\Models\User;
 use LaravelAcl\Authentication\Helpers\FormHelper;
 use LaravelAcl\Authentication\Exceptions\UserNotFoundException;
 use LaravelAcl\Authentication\Validators\UserValidator;
@@ -71,7 +70,7 @@ class UserController extends Controller {
             $user = $this->user_repository->find($request->get('id'));
         } catch(JacopoExceptionsInterface $e)
         {
-            $user = new User;
+            $user = $this->user_repository->getModel();
         }
         $presenter = new UserPresenter($user);
 

@@ -23,6 +23,22 @@ class UserRepositorySearchFilter
     public function __construct($per_page = 5)
     {
         $this->per_page = $per_page;
+        $config = config('cartalyst.sentry');
+        if (isset($config['users']) && isset($config['users']['model'])) {
+            $this->user_table_name = (new $config['users']['model'])->getTable();
+        }
+
+        if (isset($config['users_profile']) && isset($config['users_profile']['model'])) {
+            $this->profile_table_name = (new $config['users_profile']['model'])->getTable();
+        }
+
+        if (isset($config['groups']) && isset($config['groups']['model'])) {
+            $this->groups_table_name = (new $config['groups']['model'])->getTable();
+        }
+
+        if (isset($config['user_groups_pivot_table'])) {
+            $this->user_groups_table_name = $config['user_groups_pivot_table'];
+        }
     }
 
     /**
