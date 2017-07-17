@@ -37,6 +37,7 @@ Admin area: edit permission
                 </div>
                 <span class="text-danger">{!! $errors->first('permission') !!}</span>
                 {!! Form::hidden('id') !!}
+                <a href="{{ isset($permission->id)?request()->getPathInfo():route('permission.list') }}" class="btn btn-warning pull-left">Back</a>
                 <a href="{!! URL::route('permission.delete',['id' => $permission->id, '_token' => csrf_token()]) !!}" class="btn btn-danger pull-right margin-left-5 delete">Delete</a>
                 {!! Form::submit('Save', array("class"=>"btn btn-info pull-right ")) !!}
                 {!! Form::close() !!}

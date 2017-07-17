@@ -45,10 +45,10 @@ class UserRepositorySearchFilter
         {
             return $element->email;
         }), $users));
-        $users_emails_unique = array_unique($user_emails);
-        $results = array_only($users, array_values($users_emails_unique));
-
-        return new Paginator($results, $this->per_page);
+//        $users_emails_unique = array_unique($user_emails);
+//        $results = array_only($users, array_values($users_emails_unique));
+//        $paginator = new Paginator($results, $this->per_page);
+        return $q->paginate($this->per_page);
     }
 
     /**
@@ -129,7 +129,7 @@ class UserRepositorySearchFilter
      */
     private function isValidFilterValue($value)
     {
-        return $value !== '';
+        return $value !== null;
     }
 
     /**

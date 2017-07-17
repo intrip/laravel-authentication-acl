@@ -34,6 +34,7 @@ Admin area: edit group
                         </div>
                         <span class="text-danger">{!! $errors->first('name') !!}</span>
                         {!! Form::hidden('id') !!}
+                        <a href="{{ isset($group->id)?request()->getPathInfo():route('groups.list') }}" class="btn btn-warning pull-left">Back</a>
                         <a href="{!! URL::route('groups.delete',['id' => $group->id, '_token' => csrf_token()]) !!}" class="btn btn-danger pull-right margin-left-5 delete">Delete</a>
                         {!! Form::submit('Save', array("class"=>"btn btn-info pull-right ")) !!}
                         {!! Form::close() !!}
