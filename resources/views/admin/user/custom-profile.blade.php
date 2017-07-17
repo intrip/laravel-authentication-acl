@@ -5,7 +5,7 @@
 <div class="form-group">
     <div class="input-group">
         <span class="input-group-addon form-button button-add-profile-field"><span class="glyphicon glyphicon-plus-sign add-input"></span></span>
-        {!! Form::text('description','',['class' =>'form-control','placeholder' => 'Custom field name', 'required' => 'required']) !!}
+        {!! Form::text('description','',['class' =>'form-control','placeholder' => 'Custom field name']) !!}
         {!! Form::hidden('user_id',$user_profile->user_id) !!}
     </div>
 </div>
@@ -18,7 +18,7 @@
     <div class="input-group">
         <span class="input-group-addon form-button button-del-profile-field" name="{!! $profile_data->id !!}"><span
                     class="glyphicon glyphicon-minus-sign add-input"></span></span>
-        {!! Form::text('profile_description', $profile_data->description, ['class' => 'form-control', 'readonly' => 'readonly', 'required' => 'required']) !!}
+        {!! Form::text('profile_description', $profile_data->description, ['class' => 'form-control', 'readonly' => 'readonly']) !!}
         {!! Form::hidden('id', $profile_data->id) !!}
         {!! Form::hidden('user_id',$user_profile->user_id) !!}
     </div>
