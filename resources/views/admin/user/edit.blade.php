@@ -11,10 +11,10 @@ Admin area: edit user
         {{-- successful message --}}
         <?php $message = Session::get('message'); ?>
         @if( isset($message) )
-        <div class="alert alert-success">{!! $message !!}</div>
+        <div class="alert alert-success text-center">{!! $message !!}</div>
         @endif
         @if($errors->has('model') )
-            <div class="alert alert-danger">{!! $errors->first('model') !!}</div>
+            <div class="alert alert-danger text-center">{!! $errors->first('model') !!}</div>
         @endif
         <div class="panel panel-info">
             <div class="panel-heading">
@@ -63,7 +63,9 @@ Admin area: edit user
                     </div>
                     {!! Form::hidden('id') !!}
                     {!! Form::hidden('form_name','user') !!}
-                    <a href="{!! URL::route('users.delete',['id' => $user->id, '_token' => csrf_token()]) !!}" class="btn btn-danger pull-right margin-left-5 delete">Delete user</a>
+<!--                    <a href="{!! URL::route('users.delete',['id' => $user->id, '_token' => csrf_token()]) !!}" class="btn btn-danger pull-right margin-left-5 delete">Delete user</a>-->
+                    <a href="{{ isset($user->id)?request()->getPathInfo():route('users.list') }}" class="btn btn-warning pull-left">Back</a>
+                    
                     {!! Form::submit('Save', array("class"=>"btn btn-info pull-right ")) !!}
                     {!! Form::close() !!}
                     </div>
