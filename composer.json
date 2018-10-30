@@ -19,8 +19,8 @@
   "license": "MIT",
   "type": "project",
   "require": {
-    "laravel/framework": "5.4.*",
-    "laravelcollective/html" : "5.4.*",
+    "laravel/framework": ">=5.5.0",
+    "laravelcollective/html": ">=5.5.0",
     "intervention/image": "2.*",
     "jacopo/authentication-sentry": "3.0.7",
     "gregwar/captcha": "1.1.1"

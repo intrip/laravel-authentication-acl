@@ -13,6 +13,7 @@ use Illuminate\Support\MessageBag;
 use LaravelAcl\Library\Exceptions\NotFoundException;
 use LaravelAcl\Authentication\Exceptions\PermissionException;
 use Event;
+use LaravelAcl\Library\Form\formInterface as FormInterface;
 
 class FormModel implements FormInterface{
 
