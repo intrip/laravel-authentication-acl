@@ -47,4 +47,9 @@ class InstallCommand extends Command {
 
         $this->info('## Laravel Authentication ACL Installed successfully ##');
     }
+
+    public function handle()
+    {
+        $this->fire();
+    }
 }
