@@ -1,7 +1,7 @@
 laravel-authentication-acl
 ==========================
 
-[![Build Status](https://travis-ci.org/intrip/laravel-authentication-acl.svg?branch=1.3)](https://travis-ci.org/intrip/laravel-authentication-acl)
+[![Build Status](https://travis-ci.org/intrip/laravel-authentication-acl.svg?branch=1.5)](https://travis-ci.org/intrip/laravel-authentication-acl)
 [![Total Downloads](https://poser.pugx.org/jacopo/laravel-authentication-acl/d/total.svg)](https://packagist.org/packages/jacopo/laravel-authentication-acl)
 
 # We are looking for someone to take ownership of this project. Sadly I don't have enough time to maintain it anymore, please get in touch /w me if you are interested.
