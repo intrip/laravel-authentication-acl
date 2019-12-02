@@ -29,7 +29,7 @@
     "intervention/image": "2.*",
     "cartalyst/sentry": "2.1.*",
     "jacopo/laravel-library": "1.2.*",
-    "gregwar/captcha": "1.0.11"
+    "gregwar/captcha": "1.1.7"
   },
   "require-dev": {
     "mockery/mockery": "0.9.0",

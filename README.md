@@ -41,3 +41,12 @@ You can see the full documentation and usage [here](docs/index.md)
 ####Interested in some new feature?
 There's something you like to see in this package?
 Contact me and i'll do my best to implement that in next releases.
+
+### Running with docker:
+
+Running with docker (PHP 7.2)
+
+    docker build -t acl .
+    docker run --name acl-container -v $(pwd):/app -it acl
+    docker exec -i -t acl-container bash
+    
