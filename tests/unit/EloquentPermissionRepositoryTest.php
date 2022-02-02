@@ -77,7 +77,7 @@ class EloquentPermissionRepositoryTest extends DbTestCase {
     public function validateThatPermissionIsNotAssociatedToAnyGroupAndAnyUser_OnRepositoryUpdate()
     {
         $false_stub = new FalseGetterStub;
-        Event::fire('repository.updating', [$false_stub]);
+        Event::dispatch('repository.updating', [$false_stub]);
     }
 
     /**
@@ -86,7 +86,7 @@ class EloquentPermissionRepositoryTest extends DbTestCase {
     public function validateThatPermissionIsNotAssociatedToAnyGroupAndAnyUser_OnRepositoryDelete()
     {
         $false_stub = new FalseGetterStub;
-        Event::fire('repository.deleting', [$false_stub]);
+        Event::dispatch('repository.deleting', [$false_stub]);
     }
 
     protected function getModelGroupStub()

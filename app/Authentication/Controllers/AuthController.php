@@ -71,7 +71,7 @@ class AuthController extends Controller {
 
     /**
      * Logout utente
-     * 
+     *
      * @return string
      */
     public function getLogout()

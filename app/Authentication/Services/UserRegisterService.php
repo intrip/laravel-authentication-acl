@@ -59,7 +59,7 @@ class UserRegisterService
      */
     public function register(array $input)
     {
-        Event::fire('service.registering', [$input]);
+        Event::dispatch('service.registering', [$input]);
         $this->validateInput($input);
 
         $input['activated'] = $this->getDefaultActivatedState();
@@ -67,7 +67,7 @@ class UserRegisterService
 
         $this->sendRegistrationMailToClient($input);
 
-        Event::fire('service.registered', [$input, $user]);
+        Event::dispatch('service.registered', [$input, $user]);
 
         return $user;
     }
@@ -173,7 +173,7 @@ class UserRegisterService
         }
 
         $this->user_repository->activate($email);
-        Event::fire('service.activated', $user);
+        Event::dispatch('service.activated', $user);
     }
 
     public function getErrors()

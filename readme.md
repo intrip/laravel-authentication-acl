@@ -6,9 +6,9 @@ laravel-authentication-acl
 
 # We are looking for someone to take ownership of this project. Sadly I don't have enough time to maintain it anymore, please get in touch /w me if you are interested.
 
-## This is the Laravel 5.4 Version, for Laravel 5.3 use the version 1.3.*, for Laravel 5.2 use the version 1.3.15, for Laravel 5.1/5.0 use the version 1.3.11, for Laravel4 version use the 1.2 branch
+## This is the Laravel 8.0 Version, for Laravel 5.5 use the version 1.5.*, for Laravel 5.4 use the version 1.4.*, for Laravel 5.3 use the version 1.3.*, for Laravel 5.2 use the version 1.3.15, for Laravel 5.1/5.0 use the version 1.3.11, for Laravel4 version use the 1.2 branch
 
-Laravel Authentication ACL is a Laravel 5 package, based on <a href="https://github.com/cartalyst/sentry" target="_blank">sentry2</a>. <br/>
+Laravel Authentication ACL is a Laravel 5+ package, based on <a href="https://github.com/cartalyst/sentry" target="_blank">sentry2</a>. <br/>
 This package is made with the purpose of helping other developers to set-up
 a fully featured admin panel with an ACL using Laravel framework.
 
