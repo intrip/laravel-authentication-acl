@@ -74,7 +74,7 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
     {
         $this->ClearEmptyPassword($data);
         $obj = $this->find($id);
-        Event::fire('repository.updating', [$obj]);
+        Event::dispatch('repository.updating', [$obj]);
         $obj->update($data);
         return $obj;
     }

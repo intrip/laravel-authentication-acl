@@ -32,7 +32,7 @@ Route::group(['middleware' => ['web']], function ()
     ]);
     Route::post('/login', [
             "uses" => 'LaravelAcl\Authentication\Controllers\AuthController@postClientLogin',
-            "as"   => "user.login"
+            "as"   => "user.login.post"
     ]);
 
     /**
@@ -124,7 +124,7 @@ Route::group(['middleware' => ['web']], function ()
                 'uses' => 'LaravelAcl\Authentication\Controllers\UserController@editUser'
         ]);
         Route::post('/admin/users/edit', [
-                'as'   => 'users.edit',
+                'as'   => 'users.edit.post',
                 'uses' => 'LaravelAcl\Authentication\Controllers\UserController@postEditUser'
         ]);
         Route::get('/admin/users/delete', [
@@ -148,7 +148,7 @@ Route::group(['middleware' => ['web']], function ()
                 'uses' => 'LaravelAcl\Authentication\Controllers\UserController@editProfile'
         ]);
         Route::post('/admin/users/profile/edit', [
-                'as'   => 'users.profile.edit',
+                'as'   => 'users.profile.edit.post',
                 'uses' => 'LaravelAcl\Authentication\Controllers\UserController@postEditProfile'
         ]);
         Route::post('/admin/users/profile/addField', [
@@ -180,7 +180,7 @@ Route::group(['middleware' => ['web']], function ()
                 'uses' => 'LaravelAcl\Authentication\Controllers\GroupController@editGroup'
         ]);
         Route::post('/admin/groups/edit', [
-                'as'   => 'groups.edit',
+                'as'   => 'groups.edit.post',
                 'uses' => 'LaravelAcl\Authentication\Controllers\GroupController@postEditGroup'
         ]);
         Route::get('/admin/groups/delete', [
@@ -204,7 +204,7 @@ Route::group(['middleware' => ['web']], function ()
                 'uses' => 'LaravelAcl\Authentication\Controllers\PermissionController@editPermission'
         ]);
         Route::post('/admin/permissions/edit', [
-                'as'   => 'permission.edit',
+                'as'   => 'permission.edit.post',
                 'uses' => 'LaravelAcl\Authentication\Controllers\PermissionController@postEditPermission'
         ]);
         Route::get('/admin/permissions/delete', [

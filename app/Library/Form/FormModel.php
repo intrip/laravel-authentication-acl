@@ -13,6 +13,7 @@ use Illuminate\Support\MessageBag;
 use LaravelAcl\Library\Exceptions\NotFoundException;
 use LaravelAcl\Authentication\Exceptions\PermissionException;
 use Event;
+use LaravelAcl\Library\Form\FormInterface as FormInterface;
 
 class FormModel implements FormInterface{
 
@@ -52,7 +53,7 @@ class FormModel implements FormInterface{
     {
         if($this->v->validate($input))
         {
-            Event::fire("form.processing", array($input));
+            Event::dispatch("form.processing", array($input));
             return $this->callRepository($input);
         }
         else

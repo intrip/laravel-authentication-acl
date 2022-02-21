@@ -43,7 +43,7 @@ class EloquentBaseRepository implements BaseRepositoryInterface
     public function update($id, array $data)
     {
         $obj = $this->find($id);
-        Event::fire('repository.updating', [$obj]);
+        Event::dispatch('repository.updating', [$obj]);
         $obj->update($data);
         return $obj;
     }
@@ -57,7 +57,7 @@ class EloquentBaseRepository implements BaseRepositoryInterface
     public function delete($id)
     {
         $obj = $this->find($id);
-        Event::fire('repository.deleting', [$obj]);
+        Event::dispatch('repository.deleting', [$obj]);
         return $obj->delete();
     }
 
