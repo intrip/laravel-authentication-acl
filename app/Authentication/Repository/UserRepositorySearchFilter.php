@@ -129,7 +129,7 @@ class UserRepositorySearchFilter
      */
     private function isValidFilterValue($value)
     {
-        return $value !== '';
+        return !empty($value);
     }
 
     /**
